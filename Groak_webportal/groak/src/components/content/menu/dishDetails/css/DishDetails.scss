@@ -1,0 +1,105 @@
+@import '../../../../../globalCSS/globalCSS';
+
+.dish-details {
+    form {
+        .dish-images {
+            .normal-buttons {
+                margin-bottom: 0;
+            }
+
+            .image-container {
+                display: flex;
+                flex-flow: column;
+                width: 30%;
+                margin: 0 auto;
+                align-items: flex-end;
+            }
+            img {
+                width: 100%;
+            }
+        }
+
+        .dish-ingredients-information {
+            .ingredient-element {
+                display: flex;
+                flex-flow: row;
+                width: 500px;
+                min-width: 500px;
+                justify-content: space-evenly;
+                align-items: center;
+                .delete {
+                    box-shadow: $buttonShadow;
+                    color: white;
+                    background-color: $pinkButtonColor;
+                }
+            }
+
+            .normal-buttons {
+                min-width: 200px;
+                margin: 0;
+            }
+        }
+
+        .dish-extras-information {
+            .extra-element {
+                margin-bottom: 50px;
+                .dish-extras-main-information {
+                    .delete {
+                        box-shadow: $buttonShadow;
+                        color: white;
+                        background-color: $pinkButtonColor;
+                        &:hover {
+                            background-color: $pinkSelectedButtonColor;
+                        }
+                    }
+                }
+                .dish-extras-options-information {
+                    .add {
+                        box-shadow: $buttonShadow;
+                    }
+                    .option-element {
+                        display: flex;
+                        flex-flow: row;
+                        justify-content: space-evenly;
+                        align-items: center;
+                        .delete {
+                            box-shadow: $buttonShadow;
+                            color: white;
+                            background-color: $pinkButtonColor;
+                            &:hover {
+                                background-color: $pinkSelectedButtonColor;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .normal-buttons {
+                min-width: 200px;
+                margin: 0;
+            }
+        } 
+
+        .dish-details-main-buttons {
+            margin-top: 50px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            
+            .dish-details-cancel-submit-buttons {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                .success-buttons {
+                    margin: $margin;
+                }
+
+                .cancel-buttons {
+                    margin: $margin;  
+                }
+            }
+        }  
+    }
+}

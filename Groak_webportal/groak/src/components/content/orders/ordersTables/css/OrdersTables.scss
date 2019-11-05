@@ -1,0 +1,35 @@
+@import '../../../../../globalCSS/globalCSS';
+
+.orders {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    @media (max-width: $padMaxWidth) {
+        flex-flow: column;
+    }
+
+    .orders-table {
+        width: 45%;
+        margin: $margin auto;
+        border-radius: $borderRadius;
+
+        @media (max-width: $padMaxWidth) {
+            width: 90%
+        }
+
+        .table-header {
+            position: sticky;
+            top: 0;
+        }
+        .table-body {
+            height: 300px;
+            overflow: auto;
+            .table-row {
+                height: 63px;
+                cursor: pointer;
+            }
+        }
+    }
+}

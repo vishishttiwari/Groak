@@ -1,0 +1,89 @@
+@import '../../../../globalCSS/globalCSS';
+
+$borderStyle: solid;
+$borderTopStyle: none;
+$borderWidth: 2px;
+$padding: 10px;
+
+.authentication {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    width: 350px;
+    
+    form {
+        display: flex;
+        flex-direction: column;
+
+        .autocomplete-dropdown-container {
+            .loading {
+                border-style: $borderStyle;
+                border-top-style: $borderTopStyle;
+                border-width: $borderWidth;
+                border-color: $primaryColor;
+                color: $primaryColor;
+                padding: $padding;
+            }
+
+            .suggestion-item {
+                border-style: $borderStyle;
+                border-top-style: $borderTopStyle;
+                border-width: $borderWidth;
+                border-color: $primaryColor;
+                color: $primaryColor;
+                padding: $padding;
+            }
+
+            .suggestion-item--active {
+                border-style: $borderStyle;
+                border-top-style: $borderTopStyle;
+                border-width: $borderWidth;
+                border-color: $primaryColor;
+                padding: $padding;
+                background-color: $borderColor;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
+
+        .submit-button {
+            width: $buttonWidth;
+            min-width: $buttonMinWidth;
+            margin-top: $margin;
+            margin-left: auto;
+            margin-right: auto;
+            height: $buttonHeight;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            box-shadow: $buttonShadow;
+            color: white;
+            background-color: $primaryColor;
+        }
+
+        .other-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 10px;
+            width: 100%;
+            
+            button {
+                color: $primaryColor;
+                box-shadow: 0;
+                font-size: 13px;
+                border: none;
+                box-shadow: 0;
+                outline: none;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: white;
+                }
+            }
+        }
+    }
+}

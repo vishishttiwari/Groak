@@ -1,0 +1,87 @@
+@import '../../../../../globalCSS/globalCSS';
+
+.order-details {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-top: $margin;
+
+    @media (max-width: $phoneMaxWidth) {
+        flex-flow: column;
+    }
+    
+    .order-dishes {
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        justify-content: left;
+        width: 75%;
+        height: 0;
+
+        @media (max-width: $phoneMaxWidth) {
+            width: 100%;
+            justify-content: center;
+            height: auto;
+        }
+
+        .card {
+            width: $cardWidth;
+            margin-bottom: $cardMargin;
+            margin-left: $cardMargin/2;
+            margin-right: $cardMargin/2;
+            display: flex;
+            flex-flow: column;
+            box-shadow: $cardShadow;
+            height: auto;
+        }
+
+        .sub-header {
+            margin-left: $commentMarginLeft;
+            margin-bottom: $cardMargin;
+            text-transform: 'capitalize';
+        }
+    }
+
+    .order-others {
+        display: flex;
+        flex-flow: column;
+        flex-wrap: wrap;
+
+        @media (max-width: $phoneMaxWidth) {
+            align-items: center;
+        }
+
+        .card {
+            width: $cardWidth;
+            margin-bottom: $cardMargin;
+            display: 'flex';
+            flex-flow: 'column';
+            box-shadow: $cardShadow;
+        }
+
+        .success-buttons {
+            width: $cardWidth;
+            margin-top: 0;
+            margin-bottom: $cardMargin;
+        }
+
+        .cancel-buttons {
+            width: $cardWidth;
+            margin-bottom: $cardMargin;
+            margin-top: 0;
+        }
+
+        .delete-buttons {
+            width: $cardWidth;
+            margin-bottom: $cardMargin;
+            margin-top: 0;
+        }
+
+        .sub-header {
+            margin-left: $commentMarginLeft;
+            text-transform: 'capitalize';
+        }
+    }
+}

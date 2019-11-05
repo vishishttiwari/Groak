@@ -1,0 +1,124 @@
+:export {
+  primaryColor: #800000;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.tables {
+  margin-bottom: 20px;
+}
+
+.tables .tables-canvas {
+  background-color: white;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  margin: 0 auto;
+  height: 800px;
+  width: 1200px;
+}
+
+.tables .tables-canvas .table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  height: 90px;
+  width: 90px;
+  border-radius: 10px;
+  border: 1px solid #DDDDDD;
+  cursor: pointer;
+}
+
+.tables .tables-canvas .table .table-name {
+  display: block;
+  font-weight: 100;
+  font-size: 15px;
+  height: 40px;
+  margin: 10px 10px 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tables .tables-canvas .table .table-desc {
+  display: none;
+  font-weight: 100;
+  font-size: 15px;
+  margin: 10px;
+}
+
+.tables .tables-canvas .table .table-time {
+  display: none;
+  font-weight: 100;
+  font-size: 15px;
+  margin: 0;
+}
+
+.tables .tables-canvas .table .table-image {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  height: 45px;
+  width: 40px;
+  margin: 0;
+}
+
+.tables .tables-canvas .table:hover .table-name {
+  display: none;
+}
+
+.tables .tables-canvas .table:hover .table-desc {
+  display: inline;
+}
+
+.tables .tables-canvas .table:hover .table-time {
+  display: inline;
+}
+
+.tables .tables-canvas .table:hover .table-image {
+  display: none;
+}
+
+.table-alert-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+}
+
+@media (max-width: 700px) {
+  .table-alert-buttons {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+  }
+}
+
+.table-alert-buttons .table-alert-button {
+  margin: 5px;
+  width: 100px;
+}
+/*# sourceMappingURL=Tables.css.map */

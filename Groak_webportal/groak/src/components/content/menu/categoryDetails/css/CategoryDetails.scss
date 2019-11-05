@@ -1,0 +1,89 @@
+@import '../../../../../globalCSS/globalCSS';
+
+$screenMargin: 2*($margin + 20);
+$cardFullWidth: ($cardWidth + $cardMargin);
+
+.category-details {
+    form {
+        .days {
+            .check-box {
+                color: $primaryColor;
+            }
+        }
+
+        .times {
+            display: flex;
+            flex-flow: row;
+        }
+
+        .category-dishes {
+
+            p {
+                margin-bottom: $margin;
+            }
+
+            .dishes {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                margin: 0 auto;
+
+                @for $i from 1 through 50 {
+                    @media (min-width: $screenMargin + $i*$cardFullWidth) and (max-width: $screenMargin + ($i+1)*$cardFullWidth) {
+                        width: $i*$cardFullWidth;
+                    }
+                }
+
+                .card {
+                    width: $cardWidth;
+                    margin-bottom: $cardMargin;
+                    margin-right: $cardMargin/2;
+                    margin-left: $cardMargin/2;
+                    display: flex;
+                    flex-flow: column;
+                    box-shadow: $cardShadow;
+                    background-color: $secondaryColor;
+                }
+
+                .media {
+                    background-color: white;
+                    height: 200px;
+                }
+
+                .actions {
+                    margin-top: auto;
+                    display: flex;
+                    flex-flow: 'row';
+                    justify-content: center;
+                }
+
+                .check-box {
+                    color: $primaryColor;
+                }
+            }
+        }
+
+        .category-details-main-buttons {
+            margin-top: 50px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+
+            .category-details-cancel-submit-buttons {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                .success-buttons {
+                    margin: $margin;
+                }
+
+                .cancel-buttons {
+                    margin: $margin;  
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,75 @@
+:export {
+  primaryColor: #800000;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.top-navigation-items-desktop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+@media (max-width: 700px) {
+  .top-navigation-items-desktop {
+    display: none;
+  }
+}
+
+.top-navigation-items-desktop .top-navigation-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.top-navigation-items-desktop .top-navigation-item .navigation-item {
+  text-decoration: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-bottom: 1px solid transparent;
+  width: 100px;
+}
+
+.top-navigation-items-desktop .top-navigation-item .navigation-item .navigation-button {
+  color: white;
+  font-weight: 100;
+  font-size: 18px;
+  text-transform: capitalize;
+  padding: 17px;
+  width: 100px;
+}
+
+.top-navigation-items-desktop .top-navigation-item .navigation-item:hover {
+  background-color: #600000;
+  border-bottom: 1px solid #40A4C8;
+}
+
+.top-navigation-items-mobile {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .top-navigation-items-mobile {
+    display: block;
+  }
+}
+
+.top-navigation-items-mobile .navigation-item .navigation-button {
+  color: white;
+}
+/*# sourceMappingURL=TopNavigationItems.css.map */

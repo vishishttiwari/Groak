@@ -1,0 +1,76 @@
+:export {
+  primaryColor: #800000;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.qr .qr-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+  .qr .qr-content {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+  }
+}
+
+.qr .qr-content .qr-page {
+  width: 65%;
+  height: 1200px;
+  min-width: 300px;
+}
+
+@media (max-width: 1200px) {
+  .qr .qr-content .qr-page {
+    width: 100%;
+  }
+}
+
+.qr .qr-content form {
+  width: 25%;
+  margin: 0 20px;
+}
+
+@media (max-width: 1200px) {
+  .qr .qr-content form {
+    width: auto;
+    margin: 20px 0;
+  }
+}
+
+.qr .qr-content form .width-slider {
+  width: 95%;
+}
+
+.qr .qr-content form .check-box {
+  color: #800000;
+}
+
+.qr .qr-content form .qr-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=QR.css.map */

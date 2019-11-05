@@ -1,0 +1,18 @@
+@import '../../../../globalCSS/globalCSS';
+
+header {
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $topBarHeight;
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-weight: 100;
+            font-size: 30px;
+            width: 100%;
+        }
+    }
+}

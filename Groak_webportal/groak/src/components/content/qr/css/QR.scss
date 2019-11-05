@@ -1,0 +1,48 @@
+@import '../../../../globalCSS/globalCSS';
+
+.qr {
+    .qr-content {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin-bottom: $margin;
+
+        @media (max-width: $padMaxWidth) {
+            flex-flow: column;
+        }
+
+        .qr-page {
+            width: 65%;
+            height: 1200px;
+            min-width: 300px;
+            
+            @media (max-width: $padMaxWidth) {
+                width: 100%;
+            }
+        }
+
+        form {
+            width: 25%;
+            margin: 0 $margin;
+
+            @media (max-width: $padMaxWidth) {
+                width: auto;
+                margin: $margin 0;
+            }
+
+            .width-slider {
+                width: 95%;
+            }
+
+            .check-box {
+                color: $primaryColor;
+            }
+
+            .qr-buttons {
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+            }
+        }
+    }
+}

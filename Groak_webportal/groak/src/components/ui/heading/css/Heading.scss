@@ -1,0 +1,30 @@
+@import '../../../../globalCSS/globalCSS';
+
+.heading {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: $phoneMaxWidth) {
+        flex-flow: column;
+        margin-bottom: $margin;
+    }
+
+    .button {
+        width: $buttonWidth;
+        min-width: $buttonMinWidth;
+        height: $buttonHeight;
+        margin-right: $margin;
+        box-shadow: $buttonShadow;
+        font-weight: $buttonFontWeight;
+        font-size: $buttonFontSize;
+        color: white;
+        background-color: $greenButtonColor;
+
+        &:hover {
+            background-color: $greenSelectedButtonColor;
+        }
+    }
+}
+

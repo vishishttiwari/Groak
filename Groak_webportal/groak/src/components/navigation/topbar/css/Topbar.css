@@ -1,0 +1,31 @@
+:export {
+  primaryColor: #800000;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+header .topbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 56px;
+}
+
+header .topbar .logo {
+  color: white;
+  text-decoration: none;
+  font-weight: 100;
+  font-size: 30px;
+  width: 100%;
+}
+/*# sourceMappingURL=Topbar.css.map */

@@ -1,0 +1,95 @@
+@import '../../../../globalCSS/globalCSS';
+
+$canvasWidth: 1200px;
+$tableImageDimensions: 50px;
+$tableHeight: 90px;
+$tableWidth: 90px;
+$ImageHeight: 45px;
+$ImageWidth: 40px;
+
+.tables {
+    margin-bottom: $margin;
+    
+    .tables-canvas {
+        background-color: white;
+        border: $border;
+        border-radius: $borderRadius;
+        overflow: hidden;
+        display: flex;
+        flex-flow: column;
+        margin: 0 auto;
+        height: 800px;
+        width: $canvasWidth;
+        
+        .table {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            position: absolute;
+            height: $tableHeight;
+            width: $tableWidth;
+            border-radius: $borderRadius;
+            border: $border;
+            cursor: pointer;
+
+            .table-name {
+                display: block;
+                font-weight: 100;
+                font-size: 15px;
+                height: 40px;
+                margin: 10px 10px 0 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .table-desc {
+                display: none;
+                font-weight: 100;
+                font-size: 15px;
+                margin: 10px;
+            }
+            .table-time {
+                display: none;
+                font-weight: 100;
+                font-size: 15px;
+                margin: 0;
+            }
+
+            .table-image {
+                user-select: none;
+                height: $ImageHeight;
+                width: $ImageWidth;
+                margin: 0;
+            }
+
+            &:hover {
+                .table-name {
+                    display: none;
+                }
+                .table-desc {
+                    display: inline;
+                }
+                .table-time {
+                    display: inline;
+                }
+                .table-image {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.table-alert-buttons {
+    display: flex;
+    flex-flow: row;
+
+    @media (max-width: $phoneMaxWidth) {
+        flex-flow: column;
+    }
+
+    .table-alert-button {
+        margin: 5px;
+        width: 100px;
+    }
+}

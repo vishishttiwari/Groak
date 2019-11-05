@@ -1,0 +1,61 @@
+:export {
+  primaryColor: #800000;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.orders {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+@media (max-width: 1200px) {
+  .orders {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+  }
+}
+
+.orders .orders-table {
+  width: 45%;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+  .orders .orders-table {
+    width: 90%;
+  }
+}
+
+.orders .orders-table .table-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.orders .orders-table .table-body {
+  height: 300px;
+  overflow: auto;
+}
+
+.orders .orders-table .table-body .table-row {
+  height: 63px;
+  cursor: pointer;
+}
+/*# sourceMappingURL=OrdersTables.css.map */
