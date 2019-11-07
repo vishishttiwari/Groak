@@ -50,7 +50,9 @@ export const addRestaurantFirestoreAPI = (restaurantId, data) => {
     const categoryId = randomNumber();
     const tableId = randomNumber();
 
-    batch.set(db.collection('restaurants/').doc(restaurantId), data);
+    const newData = { ...data, location: db.GeoPoint(data.address.latitude, data.address.longitude) };
+
+    batch.set(db.collection('restaurants/').doc(restaurantId), newData);
     batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, categoryId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, tableId));
