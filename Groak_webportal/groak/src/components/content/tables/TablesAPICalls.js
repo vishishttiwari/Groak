@@ -3,7 +3,7 @@
  */
 import { addTableFirestoreAPI, fetchTablesFirestoreAPI, fetchTableFirestoreAPI, updateTableFirestoreAPI, deleteTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderUpdated, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest } from '../../../catalog/NotificationsComments';
-import { OrderStatus } from '../../../catalog/Others';
+import { TableStatus } from '../../../catalog/Others';
 
 let tablesSnapshot;
 
@@ -67,13 +67,13 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
                     // This if is used to check if changes have occurred in status. We dont
                     // want to report any changes that occur on lets say the x and y coordinates of the table etc.
                     if (oldStatus !== status) {
-                        if (status === OrderStatus.ordered) {
+                        if (status === TableStatus.ordered) {
                             snackbar(OrderAdded(change.doc.data().name), { variant: 'success' });
-                        } else if (status === OrderStatus.updated) {
+                        } else if (status === TableStatus.updated) {
                             snackbar(OrderUpdated(change.doc.data().name), { variant: 'info' });
-                        } else if (status === OrderStatus.requested) {
+                        } else if (status === TableStatus.requested) {
                             snackbar(SpecialRequest(change.doc.data().name), { variant: 'info' });
-                        } else if (status === OrderStatus.payment) {
+                        } else if (status === TableStatus.payment) {
                             snackbar(OrderReadyForPayment(change.doc.data().name), { variant: 'success' });
                         }
                     }

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import TableImage from '../../../assets/icons/table1.png';
-import { OrderStatusStyle, OrderStatusText, OrderStatus, useInterval, refreshPeriod } from '../../../catalog/Others';
+import { TableStatusStyle, TableStatusText, TableStatus, useInterval, refreshPeriod } from '../../../catalog/Others';
 import { getTimeInAMPMFromTimeStamp, differenceInMinutesFromNow } from '../../../catalog/TimesDates';
 import { OrderLate } from '../../../catalog/NotificationsComments';
 
@@ -16,7 +16,7 @@ const Table = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (table.status === OrderStatus.approved && table.serveTime && differenceInMinutesFromNow(table.serveTime) < 0) {
+        if (table.status === TableStatus.approved && table.serveTime && differenceInMinutesFromNow(table.serveTime) < 0) {
             if (!overdue) {
                 setOverdue(true);
             }
@@ -27,7 +27,7 @@ const Table = (props) => {
      * Called every 5 seconds
      */
     useInterval(() => {
-        if (table.status === OrderStatus.approved && table.serveTime && differenceInMinutesFromNow(table.serveTime) < 0) {
+        if (table.status === TableStatus.approved && table.serveTime && differenceInMinutesFromNow(table.serveTime) < 0) {
             if (!overdue) {
                 setOverdue(true);
                 enqueueSnackbar(OrderLate(table.name), { variant: 'error' });
@@ -36,10 +36,10 @@ const Table = (props) => {
     }, refreshPeriod);
 
     return (
-        <div className="table" style={overdue ? OrderStatusStyle.requested : OrderStatusStyle[table.status]}>
+        <div className="table" style={overdue ? TableStatusStyle.requested : TableStatusStyle[table.status]}>
             <p className="table-name">{table.name}</p>
-            <p className="table-desc">{overdue ? 'Order Overdue' : OrderStatusText[table.status]}</p>
-            {table.status === OrderStatus.approved ? <p className="table-time">{getTimeInAMPMFromTimeStamp(table.serveTime)}</p> : null}
+            <p className="table-desc">{overdue ? 'Order Overdue' : TableStatusText[table.status]}</p>
+            {table.status === TableStatus.approved ? <p className="table-time">{getTimeInAMPMFromTimeStamp(table.serveTime)}</p> : null}
             <img draggable="false" className="table-image" src={TableImage} alt={table.name} />
         </div>
     );

@@ -11,7 +11,7 @@ import { context } from '../../../../globalState/globalState';
 import { updateOrderAPI } from '../OrdersAPICalls';
 
 import { getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { randomNumber, calculateCostFromDishes, TextFieldLabelStyles, textFieldLabelProps, OrderStatus } from '../../../../catalog/Others';
+import { randomNumber, calculateCostFromDishes, TextFieldLabelStyles, textFieldLabelProps, TableStatus } from '../../../../catalog/Others';
 
 
 const OrderOthers = (props) => {
@@ -58,7 +58,7 @@ const OrderOthers = (props) => {
      */
     const setServeTimeHandler = async () => {
         const serveDate = getCurrentDateTimePlusMinutes(serveTime);
-        const data = { serveTime: serveDate, status: OrderStatus.approved };
+        const data = { serveTime: serveDate, status: TableStatus.approved };
         history.goBack();
         await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
     };
@@ -77,7 +77,7 @@ const OrderOthers = (props) => {
      * @param {*} id order for which srrved was used
      */
     const servedClickHandler = async () => {
-        const data = { status: OrderStatus.served };
+        const data = { status: TableStatus.served };
         history.goBack();
         await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
     };
@@ -86,7 +86,7 @@ const OrderOthers = (props) => {
      * This function is for deleting an order by changing the status at table to available
      */
     const makeAvailableHandler = async () => {
-        const data = { status: OrderStatus.available };
+        const data = { status: TableStatus.available };
         history.goBack();
         await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
     };
@@ -100,7 +100,7 @@ const OrderOthers = (props) => {
             >
                 Set Serve Time
             </Button>
-            {status === OrderStatus.payment ? (
+            {status === TableStatus.payment ? (
                 <Button
                     className="success-buttons"
                     variant="contained"
@@ -109,7 +109,7 @@ const OrderOthers = (props) => {
                     Paid
                 </Button>
             ) : null}
-            {status === OrderStatus.approved ? (
+            {status === TableStatus.approved ? (
                 <Button
                     className="success-buttons"
                     variant="contained"
@@ -125,7 +125,7 @@ const OrderOthers = (props) => {
             >
                 Go Back
             </Button>
-            {status === OrderStatus.ordered || status === OrderStatus.updated || status === OrderStatus.requested || status === OrderStatus.approved ? (
+            {status === TableStatus.ordered || status === TableStatus.updated || status === TableStatus.requested || status === TableStatus.approved ? (
                 <Card className="card">
                     <CardHeader
                         title="Serve Time"

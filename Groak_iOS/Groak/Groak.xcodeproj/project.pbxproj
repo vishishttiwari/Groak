@@ -1,0 +1,477 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
+		7C25A46D2373A50C009F26F9 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A46C2373A50C009F26F9 /* Table.swift */; };
+		7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */; };
+		7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */; };
+		7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */; };
+		7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D7237374C100C6EF37 /* Assets.xcassets */; };
+		7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */; };
+		7CDDD9E3237378AE00C6EF37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */; };
+		7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E423737B4300C6EF37 /* Catalog.swift */; };
+		7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */; };
+		7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */; };
+		7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */; };
+		7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */; };
+		7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9F22373837E00C6EF37 /* Firebase.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
+		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
+		7C25A46C2373A50C009F26F9 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsTables.swift; sourceTree = "<group>"; };
+		7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		7CDDD9CB237374C000C6EF37 /* Groak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Groak.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CDDD9D7237374C100C6EF37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CDDD9DA237374C100C6EF37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CDDD9DC237374C100C6EF37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7CDDD9E423737B4300C6EF37 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
+		7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraQRCodeView.swift; sourceTree = "<group>"; };
+		7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsRestaurants.swift; sourceTree = "<group>"; };
+		7CDDD9F22373837E00C6EF37 /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Groak.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CDDD9C8237374C000C6EF37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7CDDD9C2237374C000C6EF37 = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9CD237374C000C6EF37 /* Groak */,
+				7CDDD9CC237374C000C6EF37 /* Products */,
+				CE16F9FEE08D6C1E232D2D9C /* Pods */,
+				C892FF093140860B55151A5F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7CDDD9CC237374C000C6EF37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9CB237374C000C6EF37 /* Groak.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CDDD9CD237374C000C6EF37 /* Groak */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */,
+				7CDDD9E423737B4300C6EF37 /* Catalog.swift */,
+				7CDDD9EE2373823C00C6EF37 /* Firebase */,
+				7CDDD9E623737BC200C6EF37 /* ViewController */,
+				7CDDD9F42373A49400C6EF37 /* RestaurantObjects */,
+				7CDDD9D7237374C100C6EF37 /* Assets.xcassets */,
+				7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */,
+				7CDDD9DC237374C100C6EF37 /* Info.plist */,
+				7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */,
+			);
+			path = Groak;
+			sourceTree = "<group>";
+		};
+		7CDDD9E623737BC200C6EF37 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9E723737BCE00C6EF37 /* Intro */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7CDDD9E723737BCE00C6EF37 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */,
+				7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */,
+				7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		7CDDD9EE2373823C00C6EF37 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9F22373837E00C6EF37 /* Firebase.swift */,
+				7CDDD9EF2373828600C6EF37 /* FirestoreAPICalls */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		7CDDD9EF2373828600C6EF37 /* FirestoreAPICalls */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */,
+				7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */,
+			);
+			path = FirestoreAPICalls;
+			sourceTree = "<group>";
+		};
+		7CDDD9F42373A49400C6EF37 /* RestaurantObjects */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */,
+				7C25A46C2373A50C009F26F9 /* Table.swift */,
+			);
+			path = RestaurantObjects;
+			sourceTree = "<group>";
+		};
+		C892FF093140860B55151A5F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE16F9FEE08D6C1E232D2D9C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */,
+				5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7CDDD9CA237374C000C6EF37 /* Groak */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CDDD9DF237374C100C6EF37 /* Build configuration list for PBXNativeTarget "Groak" */;
+			buildPhases = (
+				1B17B3D4F42BF5F8FF946EF0 /* [CP] Check Pods Manifest.lock */,
+				7CDDD9C7237374C000C6EF37 /* Sources */,
+				7CDDD9C8237374C000C6EF37 /* Frameworks */,
+				7CDDD9C9237374C000C6EF37 /* Resources */,
+				E7F8D4993AF936F411E205DC /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Groak;
+			productName = Groak;
+			productReference = 7CDDD9CB237374C000C6EF37 /* Groak.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CDDD9C3237374C000C6EF37 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1110;
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = Groak;
+				TargetAttributes = {
+					7CDDD9CA237374C000C6EF37 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = 7CDDD9C6237374C000C6EF37 /* Build configuration list for PBXProject "Groak" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7CDDD9C2237374C000C6EF37;
+			productRefGroup = 7CDDD9CC237374C000C6EF37 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CDDD9CA237374C000C6EF37 /* Groak */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CDDD9C9237374C000C6EF37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */,
+				7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */,
+				7CDDD9E3237378AE00C6EF37 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1B17B3D4F42BF5F8FF946EF0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Groak-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7F8D4993AF936F411E205DC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Groak/Pods-Groak-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Groak/Pods-Groak-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Groak/Pods-Groak-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CDDD9C7237374C000C6EF37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */,
+				7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */,
+				7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */,
+				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
+				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
+				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
+				7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */,
+				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
+				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
+				7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CDDD9DA237374C100C6EF37 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7CDDD9DD237374C100C6EF37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7CDDD9DE237374C100C6EF37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7CDDD9E0237374C100C6EF37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BJE8EA5CE5;
+				INFOPLIST_FILE = Groak/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.groak.Groak;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7CDDD9E1237374C100C6EF37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BJE8EA5CE5;
+				INFOPLIST_FILE = Groak/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.groak.Groak;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CDDD9C6237374C000C6EF37 /* Build configuration list for PBXProject "Groak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CDDD9DD237374C100C6EF37 /* Debug */,
+				7CDDD9DE237374C100C6EF37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CDDD9DF237374C100C6EF37 /* Build configuration list for PBXNativeTarget "Groak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CDDD9E0237374C100C6EF37 /* Debug */,
+				7CDDD9E1237374C100C6EF37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7CDDD9C3237374C000C6EF37 /* Project object */;
+}

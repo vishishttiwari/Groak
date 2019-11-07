@@ -10,7 +10,7 @@ import { context } from '../../../globalState/globalState';
 
 import Table from './Table';
 import { updateTableAPI } from './TablesAPICalls';
-import { OrderStatus } from '../../../catalog/Others';
+import { TableStatus } from '../../../catalog/Others';
 
 const TablesCanvas = (props) => {
     const { history, tables, setState, tableClickHandler } = props;
@@ -59,7 +59,7 @@ const TablesCanvas = (props) => {
 
     const clickHandler = async (status, id) => {
         if (!dragged) {
-            if (status === OrderStatus.available) {
+            if (status === TableStatus.available) {
                 tableClickHandler(id);
             } else {
                 history.push(`/orders/${id}`);

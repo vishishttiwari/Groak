@@ -1,6 +1,6 @@
 import { db, getCurrentDateTime } from '../Firebase';
 import { createOrderReference } from './FirestoreAPICallsOrders';
-import { OrderStatus } from '../../catalog/Others';
+import { TableStatus } from '../../catalog/Others';
 
 export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
@@ -40,7 +40,7 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
-        status: OrderStatus.available,
+        status: TableStatus.available,
         x: data.x,
         y: data.y,
     };
@@ -56,7 +56,7 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         updated: getCurrentDateTime(),
         reference: createOrderReference(restaurantId, tableId),
         restaurantReference: db.collection('restaurants').doc(restaurantId),
-        status: OrderStatus.available,
+        status: TableStatus.available,
         table: data.name,
         tableReference: createTableReferenceInTableCollections(tableId),
     };

@@ -3,7 +3,7 @@
  */
 import { fetchOrdersFirestoreAPI, fetchOrderFirestoreAPI, updateOrderFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { differenceInMinutesFromNow } from '../../../catalog/TimesDates';
-import { OrderStatus } from '../../../catalog/Others';
+import { TableStatus } from '../../../catalog/Others';
 import { ErrorFetchingOrders, ErrorFetchingOrder, ErrorUpdatingOrder, ErrorUnsubscribingOrders, ErrorUnsubscribingOrder, OrderAdded, OrderUpdated, OrderReadyForPayment } from '../../../catalog/NotificationsComments';
 
 let ordersSnapshot;
@@ -61,19 +61,19 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                 // The modified if is called whenever something is changed while we are at the page.
                 if (change.type === 'added') {
                     const { status } = change.doc.data();
-                    if (status === OrderStatus.ordered) {
+                    if (status === TableStatus.ordered) {
                         newNewOrders.unshift({ id: change.doc.id, ...change.doc.data() });
-                    } else if (status === OrderStatus.updated || status === OrderStatus.requested) {
+                    } else if (status === TableStatus.updated || status === TableStatus.requested) {
                         newUpdatedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
-                    } else if (status === OrderStatus.approved) {
+                    } else if (status === TableStatus.approved) {
                         if (differenceInMinutesFromNow(change.doc.data().serveTime) < 0) {
                             newOverdueOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         } else {
                             newCurrentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         }
-                    } else if (status === OrderStatus.served) {
+                    } else if (status === TableStatus.served) {
                         newServedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
-                    } else if (status === OrderStatus.payment) {
+                    } else if (status === TableStatus.payment) {
                         newPaymentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                     }
                 } else if (change.type === 'modified') {
@@ -98,21 +98,21 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                         return (order.id !== change.doc.id);
                     });
                     // Make sure on client that do not change status to updated if status is requested
-                    if (status === OrderStatus.ordered) {
+                    if (status === TableStatus.ordered) {
                         newNewOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         snackbar(OrderAdded(change.doc.data().table), { variant: 'success' });
-                    } else if (status === OrderStatus.updated || status === OrderStatus.requested) {
+                    } else if (status === TableStatus.updated || status === TableStatus.requested) {
                         newUpdatedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         snackbar(OrderUpdated(change.doc.data().table), { variant: 'info' });
-                    } else if (status === OrderStatus.approved) {
+                    } else if (status === TableStatus.approved) {
                         if (differenceInMinutesFromNow(change.doc.data().serveTime) < 0) {
                             newOverdueOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         } else {
                             newCurrentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         }
-                    } else if (status === OrderStatus.served) {
+                    } else if (status === TableStatus.served) {
                         newServedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
-                    } else if (status === OrderStatus.payment) {
+                    } else if (status === TableStatus.payment) {
                         newPaymentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         snackbar(OrderReadyForPayment(change.doc.data().table), { variant: 'info' });
                     }

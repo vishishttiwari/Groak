@@ -12,7 +12,7 @@ export const iosAppLink = 'https://apps.apple.com/us/app/menu-door-menu-explorer
 export const refreshPeriod = 5000;
 export const cuisines = ['Asian Fusion', 'Bagels', 'Bakery', 'Bar/Lounge/Pub', 'Barbeque', 'Breakfast', 'British', 'Brunch', 'Buffets', 'Burgers', 'Cajun/Creole', 'Caribbean', 'Chinese', 'Coffee/Espresso', 'Country Food', 'Cuban', 'Deli', 'Doughnuts', 'Family Fare', 'Fast Food', 'Fine Dining', 'Food Trucks', 'French', 'German', 'Gluten-free', 'Greek', 'Hot Dogs', 'Ice Cream', 'Indian', 'Irish', 'Italian', 'Japanese', 'Latin American', 'Live Entertainment', 'Mediterranean', 'Mexican', 'Nouvelle', 'Pancakes/Waffles', 'Pizza', 'Polish', 'Sandwiches', 'Seafood', 'Soul Food', 'Soup & Salad', 'Southern', 'Spanish', 'Sports Bar', 'Steaks', 'Sushi', 'Tapas', 'Thai', 'Vegan Friendly', 'Vegetarian'];
 
-export const OrderStatus = {
+export const TableStatus = {
     available: 'available',
     seated: 'seated',
     ordered: 'ordered',
@@ -23,7 +23,7 @@ export const OrderStatus = {
     payment: 'payment',
 };
 
-export const OrderStatusText = {
+export const TableStatusText = {
     available: 'Table Available',
     seated: 'Customers are seated',
     ordered: 'Order Requested',
@@ -34,7 +34,7 @@ export const OrderStatusText = {
     payment: 'Ready for Payment',
 };
 
-export const OrderStatusStyle = {
+export const TableStatusStyle = {
     available: { backgroundColor: CSSVariables.tableGreenColor },
     seated: { backgroundColor: CSSVariables.tableOrangeColor },
     ordered: { backgroundColor: CSSVariables.tableRedColor },

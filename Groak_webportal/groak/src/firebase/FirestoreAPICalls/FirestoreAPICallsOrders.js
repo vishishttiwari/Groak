@@ -1,5 +1,5 @@
 import { db, deleteField, getCurrentDateTime } from '../Firebase';
-import { OrderStatus } from '../../catalog/Others';
+import { TableStatus } from '../../catalog/Others';
 
 export const createOrderReference = (restaurantId, orderId) => {
     return db.collection(`restaurants/${restaurantId}/orders`).doc(orderId);
@@ -16,17 +16,17 @@ export const fetchOrderFirestoreAPI = (restaurantId, orderId, getOrderFunction) 
 export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
     const batch = db.batch();
 
-    if (data.status === OrderStatus.available) {
+    if (data.status === TableStatus.available) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, serveTime: deleteField });
         batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: deleteField });
         const newData = { ...data, updated: getCurrentDateTime(), serveTime: deleteField, comments: [], requests: [], dishes: [], items: 0 };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
-    } else if (data.status === OrderStatus.approved) {
+    } else if (data.status === TableStatus.approved) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, serveTime: data.serveTime });
         batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: data.serveTime });
         const newData = { ...data, updated: getCurrentDateTime() };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
-    } else if (data.status === OrderStatus.served || data.status === OrderStatus.payment) {
+    } else if (data.status === TableStatus.served || data.status === TableStatus.payment) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, serveTime: deleteField });
         batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: deleteField });
         const newData = { ...data, updated: getCurrentDateTime(), serveTime: deleteField };

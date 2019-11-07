@@ -11,7 +11,7 @@ import './css/OrdersTables.css';
 import OrdersTable from './OrdersTable';
 import { fetchOrdersAPI, unsubscribeFetchOrdersAPI, updateOrderAPI } from '../OrdersAPICalls';
 import { differenceInMinutesFromNow } from '../../../../catalog/TimesDates';
-import { refreshPeriod, useInterval, OrderStatus } from '../../../../catalog/Others';
+import { refreshPeriod, useInterval, TableStatus } from '../../../../catalog/Others';
 import { OrderLate } from '../../../../catalog/NotificationsComments';
 import Spinner from '../../../ui/spinner/Spinner';
 
@@ -118,7 +118,7 @@ const Orders = (props) => {
      */
     const servedClickHandler = async (event, id) => {
         event.stopPropagation();
-        const data = { status: OrderStatus.served };
+        const data = { status: TableStatus.served };
         await updateOrderAPI(globalState.restaurantId, id, data, enqueueSnackbar);
     };
 
@@ -130,7 +130,7 @@ const Orders = (props) => {
      */
     const paidClickHandler = async (event, id) => {
         event.stopPropagation();
-        const data = { status: OrderStatus.available };
+        const data = { status: TableStatus.available };
         await updateOrderAPI(globalState.restaurantId, id, data, enqueueSnackbar);
     };
 

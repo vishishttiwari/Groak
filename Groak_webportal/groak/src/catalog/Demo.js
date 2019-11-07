@@ -7,7 +7,7 @@ import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPI
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
-import { OrderStatus } from './Others';
+import { TableStatus } from './Others';
 
 export const DemoRestaurantQRStylePage = {
     pageSize: 'A4',
@@ -158,7 +158,7 @@ export const createDemoTable = (restaurantId, tableId) => {
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
-        status: OrderStatus.available,
+        status: TableStatus.available,
         x: 0,
         y: 0,
     };
@@ -179,7 +179,7 @@ export const createDemoOrder = (restaurantId, tableId) => {
         updated: getCurrentDateTime(),
         reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
         restaurantReference: createRestaurantReference(restaurantId),
-        status: OrderStatus.available,
+        status: TableStatus.available,
         table: DemoTableName,
         tableReference: createTableReferenceInTableCollections(tableId),
     };

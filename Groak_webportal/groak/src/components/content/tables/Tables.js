@@ -7,7 +7,7 @@ import { context } from '../../../globalState/globalState';
 
 import './css/Tables.css';
 import { fetchTablesAPI, addTableAPI, deleteTableAPI, updateTableAPI, unsubscribeFetchTablesAPI } from './TablesAPICalls';
-import { randomNumber, OrderStatus } from '../../../catalog/Others';
+import { randomNumber, TableStatus } from '../../../catalog/Others';
 import Heading from '../../ui/heading/Heading';
 import TablesCanvas from './TablesCanvas';
 import AddTableAlert from './TableAlert/AddTableAlert';
@@ -69,7 +69,7 @@ const Tables = () => {
         const newTables = [...state.tables];
         const newTable = {
             id: randomNumber(),
-            status: OrderStatus.available,
+            status: TableStatus.available,
             name,
             x: 0,
             y: 0,
