@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+// Contains all API calls for fetching restaurant information
 
 import Foundation
 import Firebase
@@ -15,6 +16,7 @@ internal class FirestoreAPICallsRestaurants {
     
     var dataReceivedForFetchRestaurant: ((_ restaurant: Restaurant?) -> ())?
     
+    // Fetch all restaurant info from restaurantId
     func fetchRestaurantFirestoreAPI(restaurantId: String) {
         if (!restaurantId.isAlphanumeric) {
             self.dataReceivedForFetchRestaurant?(nil)
@@ -30,6 +32,7 @@ internal class FirestoreAPICallsRestaurants {
         }
     }
     
+    // Fetch all restaurant info from restaurant reference
     func fetchRestaurantFirestoreAPI(restaurantReference: DocumentReference) {
         restaurantReference.getDocument{(document, error) in
             if let document = document, document.exists {
@@ -41,6 +44,8 @@ internal class FirestoreAPICallsRestaurants {
         }
     }
     
+    // Fetch the closest restaurant to the user coordinate
+    // TODO: This is not taking into consideration the longitude. Make sure you implement this later
     func fetchClosestRestaurantFirestoreAPI(currentLocation: CLLocationCoordinate2D) {
         let minGeoPoint = DistanceCatalog.getMinGeoPoint(currentLocation: currentLocation)
         let maxGeoPoint = DistanceCatalog.getMaxGeoPoint(currentLocation: currentLocation)
