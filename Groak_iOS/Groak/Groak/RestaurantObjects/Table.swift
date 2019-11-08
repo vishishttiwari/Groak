@@ -22,39 +22,35 @@ internal enum TableStatus {
 
 internal class Table {
     var tableName: String
-    var tableReference: DocumentReference
-    var orderReference: DocumentReference
-    var restaurantReference: DocumentReference
+    var tableReference: DocumentReference?
+    var orderReference: DocumentReference?
+    var restaurantReference: DocumentReference?
     var tableStatus: TableStatus
     
     init() {
-        let db = Firebase.db;
-        
         tableName = ""
-        tableReference = db.collection("temp").document("temp")
-        orderReference = db.collection("temp").document("temp")
-        restaurantReference = db.collection("temp").document("temp")
+        tableReference = nil
+        orderReference = nil
+        restaurantReference = nil
         tableStatus = TableStatus.available
     }
     
     init(table: [String: Any]) {
-        let db = Firebase.db;
-        
         tableName = table["name"] as? String ?? ""
-        tableReference = table["tableReference"] as? DocumentReference ?? db.collection("temp").document("temp")
-        orderReference = table["orderReference"] as? DocumentReference ?? db.collection("temp").document("temp")
-        restaurantReference = table["restaurantReference"] as? DocumentReference ?? db.collection("temp").document("temp")
+        tableReference = table["originalReference"] as? DocumentReference
+        orderReference = table["orderReference"] as? DocumentReference
+        restaurantReference = table["restaurantReference"] as? DocumentReference
         tableStatus = table["status"] as? TableStatus ?? TableStatus.available
     }
     
     func success() -> Bool {
         if (tableName.count == 0) {
             return false;
-        } else if (tableReference.documentID == "temp") {
+        } else if (tableReference == nil) {
             return false;
-        } else if (orderReference.documentID == "temp") {
+        } else if (orderReference == nil) {
             return false;
-        } else if (restaurantReference.documentID == "temp") {
+        } else if (restaurantReference == nil) {
             return false;
         }
         return true;
@@ -62,9 +58,9 @@ internal class Table {
     
     var description : String {
         var str = "Table Name: \(tableName)\n"
-        str += "Table Reference: \(tableReference.documentID)\n"
-        str += "Order Reference: \(orderReference.documentID)\n"
-        str += "Restaurant Reference: \(restaurantReference.documentID)\n"
+        str += "Table Reference: \(tableReference?.documentID ?? "Table reference not present")\n"
+        str += "Order Reference: \(orderReference?.documentID ?? "Order reference not present")\n"
+        str += "Restaurant Reference: \(restaurantReference?.documentID ?? "Restaurant reference not present")\n"
         str += "Table Status: \(tableStatus)"
         
         return str;

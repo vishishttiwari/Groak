@@ -21,13 +21,17 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
     private var videoOutput = AVCaptureMetadataOutput()
     private var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    private var qrCodeProcessing: Bool = false
+    private let fsTable = FirestoreAPICallsTables.init();
+    private let fsRestaurant = FirestoreAPICallsRestaurants.init();
+    
     required init() {
         super.init(frame: .zero)
         
         self.frame.origin.x = 0
         self.frame.origin.y = 0
-        self.frame.size.width = Catalog.screenSize.width
-        self.frame.size.height = Catalog.screenSize.height
+        self.frame.size.width = DimensionsCatalog.screenSize.width
+        self.frame.size.height = DimensionsCatalog.screenSize.height
         
         setupDevice()
         setupInput()
@@ -73,36 +77,49 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
         self.layer.addSublayer(cameraPreviewLayer!)                                             // Show video on the viewController
     }
     
-    // This method starts the session of capturing frames from camera and showing it on screen
     private func startRunningCaptureSession() {
         captureSession.commitConfiguration()
+    }
+    
+    // This method starts the session of capturing frames from camera and showing it on screen.
+    // This method is called when a close graok restaurant is found
+    func startScanningForQR() {
         captureSession.startRunning()
         
-        let focusFrame = CGRect.init(x: 0, y: 0, width: self.frame.width, height: self.frame.height/2)
+        let focusFrame = CGRect.init(x: 0, y: 0, width: self.frame.width, height: DimensionsCatalog.bottomSheetHeight)
         videoOutput.rectOfInterest = cameraPreviewLayer!.metadataOutputRectConverted(fromLayerRect: focusFrame)
     }
     
-    // This sets up the qr code scanner
+    // This method stop capturing frames. Its called when a restaurant is found which is same as the closest groak restaurant
+    func stopScanningForQR() {
+        captureSession.stopRunning()
+    }
+    
+    // This method is whenever a frame is received
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if metadataObjects.count != 0 {
-            if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject {
+        
+        // If the object found is qr and no qr is being processed right now then this is called. It fetches the table
+        // Processing is used to make sure that multple requests to the database is not made. Once a qr code is being processed,
+        // a different qr code will not be processed until the result of first one is received
+        if metadataObjects.count != 0, !qrCodeProcessing, let object = metadataObjects[0] as?
+            AVMetadataMachineReadableCodeObject, object.type == .qr {
+            qrCodeProcessing = true
+            fsTable.fetchTableFirestoreAPI(tableId: object.stringValue ?? "")
+            fsTable.dataReceivedForFetchTable = { (_ table: Table?) -> () in
                 
-                if object.type == .qr {
-                    let fsTable = FirestoreAPICallsTables.init();
-                    fsTable.fetchTableFirestoreAPI(tableId: object.stringValue ?? "")
-                    fsTable.dataReceivedForFetchTable = { (_ table: Table?) -> () in
+                // If a valid table is found then the restaurant to which that table belongs is found
+                if let table = table, let restaurantReference = table.restaurantReference, table.success() {
+                    self.fsRestaurant.fetchRestaurantFirestoreAPI(restaurantReference: restaurantReference)
+                    self.fsRestaurant.dataReceivedForFetchRestaurant = { (_ restaurant: Restaurant?) -> () in
                         
-                        if let table = table, table.success() {
-                            let fsRestaurant = FirestoreAPICallsRestaurants.init();
-                            fsRestaurant.fetchRestaurantFirestoreAPI(restaurantReference: table.restaurantReference)
-                            fsRestaurant.dataReceivedForFetchRestaurant = { (_ restaurant: Restaurant?) -> () in
-                                
-                                if let restaurant = restaurant, restaurant.success() {
-                                    self.restaurantFound?(restaurant)
-                                }
-                            }
+                        // Once a valid restaurant is found then return that restaurant
+                        if let restaurant = restaurant, restaurant.success() {
+                            self.restaurantFound?(restaurant)
                         }
+                        self.qrCodeProcessing = false;
                     }
+                } else {
+                    self.qrCodeProcessing = false
                 }
             }
         }
