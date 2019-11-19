@@ -17,6 +17,16 @@
 		7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4792375297F009F26F9 /* DimensionsCatalog.swift */; };
 		7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A47B237529E6009F26F9 /* FontCatalog.swift */; };
 		7C25A47E2375F9AC009F26F9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A47D2375F9AC009F26F9 /* MenuViewController.swift */; };
+		7C25A4812383534E009F26F9 /* MenuCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4802383534E009F26F9 /* MenuCategory.swift */; };
+		7C25A48323835FA8009F26F9 /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A48223835FA8009F26F9 /* MenuHeaderView.swift */; };
+		7C25A48523836000009F26F9 /* TimeCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A48423836000009F26F9 /* TimeCatalog.swift */; };
+		7C25A487238369E5009F26F9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A486238369E5009F26F9 /* MenuView.swift */; };
+		7C25A48F238372D0009F26F9 /* CategoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A48E238372D0009F26F9 /* CategoryHeader.swift */; };
+		7C25A4912383738E009F26F9 /* DishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4902383738E009F26F9 /* DishCell.swift */; };
+		7C25A49323837926009F26F9 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A49223837926009F26F9 /* Dish.swift */; };
+		7C25A49523838130009F26F9 /* FirestoreAPICallsDishes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A49423838130009F26F9 /* FirestoreAPICallsDishes.swift */; };
+		7C25A49723838EB3009F26F9 /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A49623838EB3009F26F9 /* DefaultCell.swift */; };
+		7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4992383B752009F26F9 /* CategoryCell.swift */; };
 		7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */; };
 		7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D7237374C100C6EF37 /* Assets.xcassets */; };
 		7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */; };
@@ -41,6 +51,16 @@
 		7C25A4792375297F009F26F9 /* DimensionsCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionsCatalog.swift; sourceTree = "<group>"; };
 		7C25A47B237529E6009F26F9 /* FontCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontCatalog.swift; sourceTree = "<group>"; };
 		7C25A47D2375F9AC009F26F9 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		7C25A4802383534E009F26F9 /* MenuCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCategory.swift; sourceTree = "<group>"; };
+		7C25A48223835FA8009F26F9 /* MenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
+		7C25A48423836000009F26F9 /* TimeCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCatalog.swift; sourceTree = "<group>"; };
+		7C25A486238369E5009F26F9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		7C25A48E238372D0009F26F9 /* CategoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeader.swift; sourceTree = "<group>"; };
+		7C25A4902383738E009F26F9 /* DishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishCell.swift; sourceTree = "<group>"; };
+		7C25A49223837926009F26F9 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
+		7C25A49423838130009F26F9 /* FirestoreAPICallsDishes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsDishes.swift; sourceTree = "<group>"; };
+		7C25A49623838EB3009F26F9 /* DefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
+		7C25A4992383B752009F26F9 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		7CDDD9CB237374C000C6EF37 /* Groak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Groak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDDD9D7237374C100C6EF37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				7CDDD9E423737B4300C6EF37 /* Catalog.swift */,
+				7C25A48423836000009F26F9 /* TimeCatalog.swift */,
 				7C25A4772375291C009F26F9 /* ColorsCatalog.swift */,
 				7C25A47B237529E6009F26F9 /* FontCatalog.swift */,
 				7C25A4792375297F009F26F9 /* DimensionsCatalog.swift */,
@@ -85,8 +106,37 @@
 			isa = PBXGroup;
 			children = (
 				7C25A47D2375F9AC009F26F9 /* MenuViewController.swift */,
+				7C25A4982383B728009F26F9 /* MenuHeaderView */,
+				7C25A48B23837056009F26F9 /* MenuView */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		7C25A48B23837056009F26F9 /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
+				7C25A486238369E5009F26F9 /* MenuView.swift */,
+				7C25A48E238372D0009F26F9 /* CategoryHeader.swift */,
+				7C25A4902383738E009F26F9 /* DishCell.swift */,
+				7C25A49623838EB3009F26F9 /* DefaultCell.swift */,
+			);
+			path = MenuView;
+			sourceTree = "<group>";
+		};
+		7C25A4982383B728009F26F9 /* MenuHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				7C25A48223835FA8009F26F9 /* MenuHeaderView.swift */,
+				7C25A4992383B752009F26F9 /* CategoryCell.swift */,
+			);
+			path = MenuHeaderView;
+			sourceTree = "<group>";
+		};
+		7C25A49B23847128009F26F9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		7CDDD9C2237374C000C6EF37 = {
@@ -128,6 +178,7 @@
 			children = (
 				7CDDD9E723737BCE00C6EF37 /* Intro */,
 				7C25A47F2375F9B0009F26F9 /* Menu */,
+				7C25A49B23847128009F26F9 /* Search */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -156,6 +207,7 @@
 			children = (
 				7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */,
 				7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */,
+				7C25A49423838130009F26F9 /* FirestoreAPICallsDishes.swift */,
 			);
 			path = FirestoreAPICalls;
 			sourceTree = "<group>";
@@ -163,8 +215,10 @@
 		7CDDD9F42373A49400C6EF37 /* RestaurantObjects */ = {
 			isa = PBXGroup;
 			children = (
-				7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */,
 				7C25A46C2373A50C009F26F9 /* Table.swift */,
+				7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */,
+				7C25A4802383534E009F26F9 /* MenuCategory.swift */,
+				7C25A49223837926009F26F9 /* Dish.swift */,
 			);
 			path = RestaurantObjects;
 			sourceTree = "<group>";
@@ -302,21 +356,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */,
+				7C25A4912383738E009F26F9 /* DishCell.swift in Sources */,
 				7C25A476237525C4009F26F9 /* ExtensionCatalog.swift in Sources */,
 				7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */,
+				7C25A49523838130009F26F9 /* FirestoreAPICallsDishes.swift in Sources */,
 				7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */,
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
+				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
+				7C25A48523836000009F26F9 /* TimeCatalog.swift in Sources */,
+				7C25A48F238372D0009F26F9 /* CategoryHeader.swift in Sources */,
+				7C25A49323837926009F26F9 /* Dish.swift in Sources */,
 				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
 				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
+				7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */,
 				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
+				7C25A48323835FA8009F26F9 /* MenuHeaderView.swift in Sources */,
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */,
 				7C25A47E2375F9AC009F26F9 /* MenuViewController.swift in Sources */,
 				7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */,
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
+				7C25A49723838EB3009F26F9 /* DefaultCell.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
 				7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */,
+				7C25A4812383534E009F26F9 /* MenuCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

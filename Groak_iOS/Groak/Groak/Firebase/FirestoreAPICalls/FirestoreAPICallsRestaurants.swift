@@ -15,6 +15,7 @@ internal class FirestoreAPICallsRestaurants {
     private let db = Firebase.db;
     
     var dataReceivedForFetchRestaurant: ((_ restaurant: Restaurant?) -> ())?
+    var dataReceivedForFetchRestaurantCategories: ((_ categories: [MenuCategory]) -> ())?
     
     // Fetch all restaurant info from restaurantId
     func fetchRestaurantFirestoreAPI(restaurantId: String) {
@@ -69,6 +70,39 @@ internal class FirestoreAPICallsRestaurants {
                     let restaurant = Restaurant.init(restaurant: snapshot.documents[0].data())
                     self.dataReceivedForFetchRestaurant?(restaurant)
                 }
+            }
+        }
+    }
+    
+    func fetchRestaurantCategoriesFirestoreAPI(restaurantReference: DocumentReference) {
+        let day = TimeCatalog.getDay()
+        let minutes = TimeCatalog.getTimeInMinutes()
+        
+        let categoryReferences = restaurantReference.collection("/categories")
+            .whereField("days", arrayContains: day)
+            .whereField("startTime", isLessThanOrEqualTo: minutes)
+        
+        categoryReferences.order(by: "startTime").order(by: "order").getDocuments() { (querySnapshot, err) in
+            guard let snapshot = querySnapshot else {
+                self.dataReceivedForFetchRestaurantCategories?([])
+                return;
+            }
+            
+            if let _ = err {
+                self.dataReceivedForFetchRestaurantCategories?([])
+                return
+            }
+            
+            var categories: [MenuCategory] = []
+            for document in snapshot.documents {
+                let category = MenuCategory.init(menuCategory: document.data())
+                if category.checkIfCategoryIsAvailable(day: day, minutes: minutes) {
+                    categories.append(category)
+                }
+            }
+            
+            categories.last?.categoryLoaded = { () -> () in
+                self.dataReceivedForFetchRestaurantCategories?(categories)
             }
         }
     }

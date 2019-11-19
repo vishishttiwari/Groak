@@ -18,6 +18,7 @@ var window: UIWindow?
         
         FirebaseApp.configure()
         
+
         let baseViewController = IntroViewController()
         
         window = window ?? UIWindow(frame: UIScreen.main.bounds)

@@ -107,7 +107,12 @@ extension UIImageView {
                 self.image = cachedImage
             } else {
                 let originalImage = cachedImage
-                self.image = grayScale(originalImage: originalImage)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let tempImage = self.grayScale(originalImage: originalImage)
+                    DispatchQueue.main.async {
+                        self.image = tempImage
+                    }
+                }
             }
             return
         }
@@ -125,7 +130,12 @@ extension UIImageView {
                             self.image = downloadedImage
                         } else {
                             let originalImage = downloadedImage
-                            self.image = self.grayScale(originalImage: originalImage)
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                let tempImage = self.grayScale(originalImage: originalImage)
+                                DispatchQueue.main.async {
+                                    self.image = tempImage
+                                }
+                            }
                         }
                     }
                 }
@@ -135,12 +145,12 @@ extension UIImageView {
     
     // To make an image grayscale
     func grayScale(originalImage: UIImage) -> UIImage {
-        
         let context = CIContext(options: nil)
-        let currentFilter = CIFilter(name: "CIPhotoEffectNoir")
+        let currentFilter = CIFilter(name: "CIPhotoEffectMono")
         currentFilter!.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
         let output = currentFilter!.outputImage
         let cgimg = context.createCGImage(output!,from: output!.extent)
+        
         return UIImage(cgImage: cgimg!)
     }
 }

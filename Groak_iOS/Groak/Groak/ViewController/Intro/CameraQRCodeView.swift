@@ -114,6 +114,8 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
                         
                         // Once a valid restaurant is found then return that restaurant
                         if let restaurant = restaurant, restaurant.success() {
+                            let generator = UIImpactFeedbackGenerator(style: .heavy)
+                            generator.impactOccurred()
                             self.restaurantFound?(restaurant)
                         }
                         self.qrCodeProcessing = false;

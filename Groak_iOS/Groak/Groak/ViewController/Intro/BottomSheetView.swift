@@ -132,11 +132,11 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
             self.loadingIndicator.stopAnimating()
             if let restaurant = restaurant, restaurant.success() {
                 self.welcomeTitle.isHidden = false
-                if (restaurant.restaurantLogo.count == 0) {
-                    self.restaurantTitle.text = restaurant.restaurantName
+                if (restaurant.logo.count == 0) {
+                    self.restaurantTitle.text = restaurant.name
                     self.restaurantTitle.isHidden = false
                 } else {
-                    self.restaurantLogo.loadImageUsingCache(url: restaurant.restaurantLogo)
+                    self.restaurantLogo.loadImageUsingCache(url: restaurant.logo)
                     self.restaurantLogo.isHidden = false
                 }
                 self.restaurantFound?(restaurant)

@@ -11,50 +11,61 @@ import UIKit
 import Firebase
 
 internal class Restaurant {
-    var restaurantReference: DocumentReference?
-    var restaurantName: String
-    var restaurantType: [String]
-    var restaurantLogo: String
-    var restaurantLatitude: Double
-    var restaurantLongitude: Double
+    var reference: DocumentReference?
+    var name: String
+    var type: [String]
+    var logo: String
+    var latitude: Double
+    var longitude: Double
     
     init() {
-        restaurantReference = nil
-        restaurantName = ""
-        restaurantType = []
-        restaurantLogo = ""
-        restaurantLatitude = 0
-        restaurantLongitude = 0
+        reference = nil
+        name = ""
+        type = []
+        logo = ""
+        latitude = 0
+        longitude = 0
+    }
+    
+    init(_ temp: String) {
+        let db = Firebase.db;
+        
+        reference = db.collection("/restaurants").document("nlPL7XcUGbgIAVCQZhpZ")
+        name = "The Yellow Chilli"
+        type = []
+        logo = ""
+        latitude = 0
+        longitude = 0
     }
     
     init(restaurant: [String: Any]) {
-        restaurantReference = restaurant["reference"] as? DocumentReference
-        restaurantName = restaurant["name"] as? String ?? ""
-        restaurantType = restaurant["type"] as? [String] ?? []
-        restaurantLogo = restaurant["logo"] as? String ?? ""
-        restaurantLatitude = (restaurant["address"] as? [String: Any] ?? [:])["latitude"] as? Double ?? -1000
-        restaurantLongitude = (restaurant["address"] as? [String: Any] ?? [:])["longitude"] as? Double ?? -1000
+        reference = restaurant["reference"] as? DocumentReference
+        name = restaurant["name"] as? String ?? ""
+        type = restaurant["type"] as? [String] ?? []
+        logo = restaurant["logo"] as? String ?? ""
+        latitude = (restaurant["address"] as? [String: Any] ?? [:])["latitude"] as? Double ?? -1000
+        longitude = (restaurant["address"] as? [String: Any] ?? [:])["longitude"] as? Double ?? -1000
     }
     
     func success() -> Bool {
-        if (restaurantReference == nil) {
+        if (reference == nil) {
             return false;
-        } else if (restaurantName.count == 0) {
+        } else if (name.count == 0) {
             return false;
-        } else if (restaurantLatitude == -1000) {
+        } else if (latitude == -1000) {
             return false;
-        } else if (restaurantLongitude == -1000) {
+        } else if (longitude == -1000) {
             return false;
         }
         return true;
     }
     
     var description : String {
-        var str = "Restaurant Name: \(restaurantName)\n"
-        str += "Restaurant Type: \(restaurantType)\n"
-        str += "Restaurant Logo: \(restaurantLogo)\n"
-        str += "Restaurant Latitude: \(restaurantLatitude)\n"
-        str += "Restaurant Longitude: \(restaurantLongitude)"
+        var str = "Restaurant Name: \(name)\n"
+        str += "Restaurant Type: \(type)\n"
+        str += "Restaurant Logo: \(logo)\n"
+        str += "Restaurant Latitude: \(latitude)\n"
+        str += "Restaurant Longitude: \(longitude)"
         
         return str;
     }

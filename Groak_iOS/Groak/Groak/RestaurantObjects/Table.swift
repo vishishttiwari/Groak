@@ -21,32 +21,32 @@ internal enum TableStatus {
 };
 
 internal class Table {
-    var tableName: String
-    var tableReference: DocumentReference?
+    var name: String
+    var reference: DocumentReference?
     var orderReference: DocumentReference?
     var restaurantReference: DocumentReference?
-    var tableStatus: TableStatus
+    var status: TableStatus
     
     init() {
-        tableName = ""
-        tableReference = nil
+        name = ""
+        reference = nil
         orderReference = nil
         restaurantReference = nil
-        tableStatus = TableStatus.available
+        status = TableStatus.available
     }
     
     init(table: [String: Any]) {
-        tableName = table["name"] as? String ?? ""
-        tableReference = table["originalReference"] as? DocumentReference
+        name = table["name"] as? String ?? ""
+        reference = table["originalReference"] as? DocumentReference
         orderReference = table["orderReference"] as? DocumentReference
         restaurantReference = table["restaurantReference"] as? DocumentReference
-        tableStatus = table["status"] as? TableStatus ?? TableStatus.available
+        status = table["status"] as? TableStatus ?? TableStatus.available
     }
     
     func success() -> Bool {
-        if (tableName.count == 0) {
+        if (name.count == 0) {
             return false;
-        } else if (tableReference == nil) {
+        } else if (reference == nil) {
             return false;
         } else if (orderReference == nil) {
             return false;
@@ -57,11 +57,11 @@ internal class Table {
     }
     
     var description : String {
-        var str = "Table Name: \(tableName)\n"
-        str += "Table Reference: \(tableReference?.documentID ?? "Table reference not present")\n"
+        var str = "Table Name: \(name)\n"
+        str += "Table Reference: \(reference?.documentID ?? "Table reference not present")\n"
         str += "Order Reference: \(orderReference?.documentID ?? "Order reference not present")\n"
         str += "Restaurant Reference: \(restaurantReference?.documentID ?? "Restaurant reference not present")\n"
-        str += "Table Status: \(tableStatus)"
+        str += "Table Status: \(status)"
         
         return str;
     }

@@ -11,9 +11,6 @@ import UIKit
 
 internal class Catalog {
     
-    // Animation time for different things such as time takes for options view to show up
-    static let animateTime: Double! = 0.3
-    
     // Simple alert views. Nothing special
     static func alert(vc: UIViewController?, title: String, message: String) {
         guard let view = vc else { return }
