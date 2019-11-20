@@ -14,6 +14,7 @@ internal class MenuHeaderView: UIView {
     // Optional Closures
     internal var menuSectionChanged: ((_ section: Int) -> ())?
     internal var dismiss: (() -> ())?
+    internal var find: (() -> ())?
     
     private let backButton: UIButton = UIButton()
     private let searchButton: UIButton = UIButton()
@@ -46,6 +47,7 @@ internal class MenuHeaderView: UIView {
         
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
         searchButton.setImage(#imageLiteral(resourceName: "search"), for: .normal)
+        searchButton.isHidden = true
         self.addSubview(searchButton)
         
         restaurantTitle.text = restaurant.name
@@ -119,10 +121,12 @@ internal class MenuHeaderView: UIView {
     }
     
     @objc func search() {
+        find?()
     }
     
     internal func reloadData(categories: [MenuCategory]) {
         self.categories = categories
+        searchButton.isHidden = false
         DispatchQueue.main.async {
             self.foodCategories?.reloadData()
         }

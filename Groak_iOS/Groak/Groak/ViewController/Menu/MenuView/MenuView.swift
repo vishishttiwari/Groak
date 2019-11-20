@@ -24,7 +24,7 @@ internal class MenuView: UITableView {
     
     private var categories: [MenuCategory] = []
     
-    required init(restaurant: Restaurant) {
+    required init() {
         super.init(frame: .zero, style: .grouped)
         
         setupViews()

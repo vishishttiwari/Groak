@@ -13,6 +13,7 @@ internal class DishCell: UITableViewCell {
     private let container: UIView = UIView()
     private let dishPhoto: UIImageView = UIImageView()
     private let dishName: UILabel = UILabel()
+    internal var highlightString: String = ""
     private let dishPrice: UILabel = UILabel()
     private let dishCalorie: UILabel = UILabel()
     private let dishInfo: UILabel = UILabel()
@@ -23,8 +24,16 @@ internal class DishCell: UITableViewCell {
     
     internal var dish: Dish = Dish.init() {
         didSet {
+            let s = dish.name as NSString
+            let att = NSMutableAttributedString(string: s as String)
+            let r = s.range(of: highlightString, options: .caseInsensitive, range: .init(location: 0, length: s.length))
+            if r.length > 0 {
+                att.addAttribute(.backgroundColor, value: ColorsCatalog.themeColor!, range: r)
+                att.addAttribute(.foregroundColor, value: UIColor.white, range: r)
+            }
+            
             dishPhoto.loadImageUsingCache(url: dish.imageLink, available: dish.available)
-            dishName.text = dish.name
+            dishName.attributedText = att
             dishPrice.text = "$\(String(dish.price))"
             
             let calories = Int(dish.nutrition["calories"] ?? 0)

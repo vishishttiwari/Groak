@@ -49,10 +49,6 @@ class IntroViewController: UIViewController {
         
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     // Setup the top and bottom safe area when the first view controller loads up
     private func setTopBottomSafeArea() {
         if #available(iOS 11.0, *) {
