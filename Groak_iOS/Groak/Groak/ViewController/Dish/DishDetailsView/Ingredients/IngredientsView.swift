@@ -30,9 +30,10 @@ internal class IngredientsView: UITableView {
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
         
-        self.register(IngredientCell.self, forCellReuseIdentifier: cellId)
+        self.register(UITableViewCellWithArrow.self, forCellReuseIdentifier: cellId)
         self.delegate = self
         self.dataSource = self
+        showsVerticalScrollIndicator = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +59,7 @@ extension IngredientsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! IngredientCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UITableViewCellWithArrow
         
         cell.title.text = dishIngredients[indexPath.row]
         

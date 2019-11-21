@@ -33,7 +33,7 @@ internal class MenuCategory {
     
     init(menuCategory: [String: Any]) {
         reference = menuCategory["reference"] as? DocumentReference
-        name = menuCategory["title"] as? String ?? ""
+        name = menuCategory["name"] as? String ?? ""
         dishes = []
         daysAvailable = menuCategory["days"] as? [String] ?? []
         startTime = menuCategory["startTime"] as? Int ?? -1

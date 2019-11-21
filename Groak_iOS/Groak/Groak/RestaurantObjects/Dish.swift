@@ -20,7 +20,8 @@ internal class Dish {
     var restaurantReference: DocumentReference?
     var available: Bool
     var restrictions: [String: String]
-    var nutrition: [String: Float]
+    var nutrition: [String: Double]
+    var extras: [[String: Any]]
     
     init() {
         reference = nil
@@ -34,6 +35,7 @@ internal class Dish {
         available = false
         restrictions = [:]
         nutrition = [:]
+        extras = []
     }
     
     init(dish: [String: Any]) {
@@ -47,11 +49,14 @@ internal class Dish {
         restaurantReference = dish["restaurantReference"] as? DocumentReference
         available = dish["available"] as? Bool ?? false
         restrictions = dish["restrictions"] as? [String: String] ?? [:]
-        nutrition = dish["nutrition"] as? [String: Float] ?? [:]
+        nutrition = dish["nutrition"] as? [String: Double] ?? [:]
+        extras = dish["extras"] as? [[String: Any]] ?? []
     }
     
     func success() -> Bool {
         if (reference == nil) {
+            return false;
+        } else if (price < 0) {
             return false;
         } else if (name.count == 0) {
             return false;
@@ -80,6 +85,13 @@ internal class Dish {
         str += "Nutrition:\n"
         for (nut, value) in nutrition {
             str += "\t\(nut): \(value)\n"
+        }
+        str += "Extras:\n"
+        for extra in extras {
+            str += "\tExtra:\n"
+            for (key, value) in extra {
+                str += "\t\t\(key): \(value)\n"
+            }
         }
         return str;
     }

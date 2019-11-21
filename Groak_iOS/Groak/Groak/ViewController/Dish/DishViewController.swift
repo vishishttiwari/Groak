@@ -22,6 +22,8 @@ internal class DishViewController: UIViewController {
         setupHeader(dish: dish)
         setupFooter(restaurant: restaurant, dish: dish)
         setupDishDetail(dish: dish)
+        
+        print(dish.description)
     }
     
     private func setupHeader(dish: Dish) {

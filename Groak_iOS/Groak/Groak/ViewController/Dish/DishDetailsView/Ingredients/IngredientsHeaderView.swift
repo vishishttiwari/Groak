@@ -14,12 +14,8 @@ internal class IngredientsHeaderView: UIView {
     internal var dismiss: (() -> ())?
     
     private let backButton: UIButton = UIButton()
-    private let title: UILabel = UILabel()
-    private let dishName: UILabel = UILabel()
-    
-    private let font: UIFont = UIFont(name: FontCatalog.fontLevels[1], size: 25)!
-    private let buttonDimensions: CGFloat = 25
-    private let distanceFromTop: CGFloat = DimensionsCatalog.topSafeArea + 5
+    private let dishTitle: UILabel = UILabel()
+    private let ingredientTitle: UILabel = UILabel()
     
     required init(dishNameString: String) {
         super.init(frame: .zero)
@@ -36,40 +32,33 @@ internal class IngredientsHeaderView: UIView {
         backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
         self.addSubview(backButton)
         
-        title.text = "Main Ingredients"
-        title.font = UIFont(name: FontCatalog.fontLevels[1], size: 20)!
-        title.numberOfLines = 1
-        title.textColor = .black
-        title.textAlignment = .center
-        self.addSubview(title)
+        dishTitle.viewControllerHeaderTitle(title: dishNameString)
+        self.addSubview(dishTitle)
         
-        dishName.text = dishNameString
-        dishName.font = font
-        dishName.numberOfLines = 1
-        dishName.textColor = .black
-        dishName.textAlignment = .center
-        self.addSubview(dishName)
+        ingredientTitle.viewControllerHeaderTitle(title: "Main Ingredients")
+        ingredientTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: 20)!
+        self.addSubview(ingredientTitle)
     }
     
     private func setupInitialLayout() {
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        title.translatesAutoresizingMaskIntoConstraints = false
-        dishName.translatesAutoresizingMaskIntoConstraints = false
+        dishTitle.translatesAutoresizingMaskIntoConstraints = false
+        ingredientTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: buttonDimensions).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
-        
-        dishName.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        dishName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: (2*buttonDimensions + 10)).isActive = true
-        dishName.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(2*buttonDimensions + 10)).isActive = true
-        dishName.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
-        
-        title.topAnchor.constraint(equalTo: dishName.bottomAnchor, constant: 15).isActive = true
-        title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: buttonDimensions).isActive = true
-        title.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -buttonDimensions).isActive = true
-        title.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: dishTitle.centerYAnchor).isActive = true
+        backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+
+        dishTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleDistanceFromTop).isActive = true
+        dishTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        dishTitle.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
+        dishTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 5).isActive = true
+
+        ingredientTitle.topAnchor.constraint(equalTo: dishTitle.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        ingredientTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        ingredientTitle.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
+        ingredientTitle.heightAnchor.constraint(equalToConstant: 20 + 5).isActive = true
     }
     
     @objc func back() {

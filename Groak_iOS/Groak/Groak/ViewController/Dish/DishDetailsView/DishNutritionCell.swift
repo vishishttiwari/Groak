@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 internal class DishNutritionCell: UITableViewCell {
-    internal var dishNutrition: [String: Float] = [:] {
+    internal var dishNutrition: [String: Double] = [:] {
         didSet {
             var str = ""
             if let cal = dishNutrition["calories"], cal > 0 {
                 str += "Calories: \(Int(cal)) kCal   "
             }
             if let fats = dishNutrition["fats"], fats > 0 {
-                str += "Fats: \(Int(fats)) g   "
+                str += "Fats: \(fats) g   "
             }
             if let carbs = dishNutrition["carbs"], carbs > 0 {
-                str += "Carbs: \(Int(carbs)) g   "
+                str += "Carbs: \(carbs) g   "
             }
             if let protein = dishNutrition["protein"], protein > 0 {
-                str += "Protein: \(Int(protein)) g   "
+                str += "Protein: \(protein) g   "
             }
             dishNutritionLabel.text = str
             dishNutritionLabel.boldSubString(originalString: str, substrings: ["calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
@@ -31,8 +31,6 @@ internal class DishNutritionCell: UITableViewCell {
     }
     internal let dishNutritionLabel: UILabel = UILabel()
     private let container: UIView = UIView()
-    
-    private let distanceBetweenElements: CGFloat = 10
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,9 +67,9 @@ internal class DishNutritionCell: UITableViewCell {
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
         dishNutritionLabel.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        dishNutritionLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: distanceBetweenElements).isActive = true
-        dishNutritionLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -distanceBetweenElements).isActive = true
-        dishNutritionLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -distanceBetweenElements).isActive = true
+        dishNutritionLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        dishNutritionLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        dishNutritionLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

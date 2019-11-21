@@ -30,7 +30,7 @@ internal class Restaurant {
     init(_ temp: String) {
         let db = Firebase.db;
         
-        reference = db.collection("/restaurants").document("nlPL7XcUGbgIAVCQZhpZ")
+        reference = db.collection("/restaurants").document("361mKaKkOCW73UYueUs6eSHhOC92")
         name = "The Yellow Chilli"
         type = []
         logo = ""

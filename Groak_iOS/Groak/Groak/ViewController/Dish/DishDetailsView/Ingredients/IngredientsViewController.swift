@@ -34,7 +34,7 @@ internal class IngredientsViewController: UIViewController {
         header?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         header?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         header?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        header?.heightAnchor.constraint(equalToConstant: 80 + DimensionsCatalog.topSafeArea).isActive = true
+        header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended).isActive = true
     }
     
     private func setupIngredients(dishIngredients: [String]) {

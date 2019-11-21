@@ -38,7 +38,6 @@
 		7C7F906F2385E5410012D2BF /* IngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F906E2385E5410012D2BF /* IngredientsViewController.swift */; };
 		7C7F90712385E59D0012D2BF /* IngredientsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90702385E59D0012D2BF /* IngredientsHeaderView.swift */; };
 		7C7F90732385E5BC0012D2BF /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90722385E5BC0012D2BF /* IngredientsView.swift */; };
-		7C7F90752385EAB50012D2BF /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90742385EAB50012D2BF /* IngredientCell.swift */; };
 		7C7F90782385EC000012D2BF /* IngredientWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90772385EC000012D2BF /* IngredientWebViewController.swift */; };
 		7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90792385EC240012D2BF /* IngredientWebHeaderView.swift */; };
 		7C7F907C2385EC300012D2BF /* IngredientWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F907B2385EC300012D2BF /* IngredientWebView.swift */; };
@@ -88,7 +87,6 @@
 		7C7F906E2385E5410012D2BF /* IngredientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsViewController.swift; sourceTree = "<group>"; };
 		7C7F90702385E59D0012D2BF /* IngredientsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsHeaderView.swift; sourceTree = "<group>"; };
 		7C7F90722385E5BC0012D2BF /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
-		7C7F90742385EAB50012D2BF /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		7C7F90772385EC000012D2BF /* IngredientWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientWebViewController.swift; sourceTree = "<group>"; };
 		7C7F90792385EC240012D2BF /* IngredientWebHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientWebHeaderView.swift; sourceTree = "<group>"; };
 		7C7F907B2385EC300012D2BF /* IngredientWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientWebView.swift; sourceTree = "<group>"; };
@@ -218,7 +216,6 @@
 				7C7F906E2385E5410012D2BF /* IngredientsViewController.swift */,
 				7C7F90702385E59D0012D2BF /* IngredientsHeaderView.swift */,
 				7C7F90722385E5BC0012D2BF /* IngredientsView.swift */,
-				7C7F90742385EAB50012D2BF /* IngredientCell.swift */,
 				7C7F90762385EBE70012D2BF /* IngredientWeb */,
 			);
 			path = Ingredients;
@@ -456,7 +453,6 @@
 				7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */,
 				7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */,
 				7C25A4912383738E009F26F9 /* DishCell.swift in Sources */,
-				7C7F90752385EAB50012D2BF /* IngredientCell.swift in Sources */,
 				7C25A476237525C4009F26F9 /* ExtensionCatalog.swift in Sources */,
 				7C25A49D23847232009F26F9 /* SearchViewController.swift in Sources */,
 				7C25A4A52384A376009F26F9 /* MenuHeaderView.swift in Sources */,
