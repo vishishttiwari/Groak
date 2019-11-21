@@ -11,7 +11,9 @@ import UIKit
 
 internal class SearchMenuView: UITableView {
     
+    // Optional Closures
     internal var removeKeyboard: (() -> ())?
+    internal var dishChosen: ((_ dish: Dish) -> ())?
     
     private let cellId: String = "cellId"
     private let headerId: String = "headerId"
@@ -31,7 +33,7 @@ internal class SearchMenuView: UITableView {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.contentInset = insets
         self.register(DishCell.self, forCellReuseIdentifier: cellId)
-        self.register(CategoryHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
+        self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
         self.dataSource = self
         self.delegate = self
         self.isScrollEnabled = true
@@ -60,7 +62,7 @@ extension SearchMenuView: UITableViewDataSource, UITableViewDelegate, UIScrollVi
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerId) as! CategoryHeader
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerId) as! UITableViewHeader
         header.title.text = categories[section].name
         return header
     }
@@ -78,17 +80,10 @@ extension SearchMenuView: UITableViewDataSource, UITableViewDelegate, UIScrollVi
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if (indexPath.section == 0 && indexPath.row == 2) {
-//            reviews?()
-//        } else if (indexPath.section == 0 && indexPath.row == 0) {
-//            locationHours?()
-//        }
-//        else if (indexPath.section != 0) {
-//            dishChosen?(categories[indexPath.section - 1].dishesComplete[indexPath.row])
-//        }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dishChosen?(categories[indexPath.section].dishes[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return DimensionsCatalog.tableHeaderHeight

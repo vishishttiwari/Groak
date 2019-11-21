@@ -1,15 +1,15 @@
 //
-//  DefaultCell.swift
+//  IngredientCell.swift
 //  Groak
 //
-//  Created by Vishisht Tiwari on 11/18/19.
+//  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-internal class DefaultCell: UITableViewCell {
+internal class IngredientCell: UITableViewCell {
     internal let title: UILabel = UILabel()
     private let arrow: UIImageView = UIImageView()
     
@@ -29,6 +29,7 @@ internal class DefaultCell: UITableViewCell {
         self.backgroundColor = .white
         self.selectedColor()
         
+        title.text = "Ingredients"
         title.textColor = .black
         title.font = UIFont(name: FontCatalog.fontLevels[1], size: 18)
         

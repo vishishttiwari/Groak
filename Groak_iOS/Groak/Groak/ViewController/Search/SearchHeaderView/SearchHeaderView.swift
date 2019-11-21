@@ -20,10 +20,7 @@ internal class SearchHeaderView: UIView {
     private let searchBar: UITextField = UITextField()
     private let searchIcon: UIImageView = UIImageView()
     
-    private let titleDimensions: CGFloat = 25
     private let searchDimensions: CGFloat = 20
-    private let distanceBetweenElements: CGFloat = 20
-    private let distanceFromTop: CGFloat = DimensionsCatalog.topSafeArea + 10
     
     required init(restaurant: Restaurant) {
         super.init(frame: .zero)
@@ -43,11 +40,7 @@ internal class SearchHeaderView: UIView {
         backButton.titleLabel?.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)
         self.addSubview(backButton)
         
-        restaurantTitle.text = restaurant.name
-        restaurantTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: titleDimensions)
-        restaurantTitle.numberOfLines = 1
-        restaurantTitle.textColor = .black
-        restaurantTitle.textAlignment = .left
+        restaurantTitle.viewControllerHeaderTitle(title: restaurant.name)
         self.addSubview(restaurantTitle)
         
         searchIcon.image = #imageLiteral(resourceName: "search")
@@ -73,25 +66,25 @@ internal class SearchHeaderView: UIView {
         searchIcon.translatesAutoresizingMaskIntoConstraints = false
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
-        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        restaurantTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
-        restaurantTitle.rightAnchor.constraint(equalTo: backButton.leftAnchor, constant: -distanceBetweenElements).isActive = true
-        restaurantTitle.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleDistanceFromTop).isActive = true
+        restaurantTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        restaurantTitle.rightAnchor.constraint(equalTo: backButton.leftAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        restaurantTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
-        backButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
+        backButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         backButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         backButton.centerYAnchor.constraint(equalTo: restaurantTitle.centerYAnchor).isActive = true
         
-        searchIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
+        searchIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         searchIcon.widthAnchor.constraint(equalToConstant: searchDimensions).isActive = true
         searchIcon.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor).isActive = true
         searchIcon.heightAnchor.constraint(equalToConstant: searchDimensions).isActive = true
         
-        searchBar.topAnchor.constraint(equalTo: restaurantTitle.bottomAnchor, constant: distanceBetweenElements).isActive = true
-        searchBar.leftAnchor.constraint(equalTo: searchIcon.rightAnchor, constant: distanceBetweenElements).isActive = true
-        searchBar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
-        searchBar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -distanceBetweenElements).isActive = true
+        searchBar.topAnchor.constraint(equalTo: restaurantTitle.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: searchIcon.rightAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        searchBar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
     }
     
     @objc func search(_ textField: UITextField) {

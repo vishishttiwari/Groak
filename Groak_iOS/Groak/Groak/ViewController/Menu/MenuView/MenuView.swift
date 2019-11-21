@@ -13,8 +13,9 @@ internal class MenuView: UITableView {
     
     // Optional Closures
     internal var menuSectionChanged: ((_ section: Int) -> ())?
+    internal var dishChosen: ((_ dish: Dish) -> ())?
     
-    private let defaultCellId: String = "defaultCellId"
+    private let specialRequestCellId: String = "specialRequestCellId"
     private let cellId: String = "cellId"
     private let headerId: String = "headerId"
     private var defaulCells: [String] = ["Special Requests"]
@@ -33,19 +34,20 @@ internal class MenuView: UITableView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.contentInset = insets
-        self.register(DishCell.self, forCellReuseIdentifier: cellId)
-        self.register(DefaultCell.self, forCellReuseIdentifier: defaultCellId)
-        self.register(CategoryHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
-        self.dataSource = self
-        self.delegate = self
-        self.isScrollEnabled = true
-        self.showsVerticalScrollIndicator = false
+        self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
-        self.bounces = true
-        self.separatorStyle = .none
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.contentInset = insets
+        
+        self.register(DishCell.self, forCellReuseIdentifier: cellId)
+        self.register(UITableViewCellWithArrow.self, forCellReuseIdentifier: specialRequestCellId)
+        self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
+        
+        self.dataSource = self
+        self.delegate = self
+        
+        self.showsVerticalScrollIndicator = false
     }
     
     internal func sectionChanged(section: Int) {
@@ -72,7 +74,7 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if (section != 0) {
-            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerId) as! CategoryHeader
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerId) as! UITableViewHeader
             header.title.text = categories[section - 1].name
             return header
         } else {
@@ -90,7 +92,7 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: defaultCellId, for: indexPath) as! DefaultCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: specialRequestCellId, for: indexPath) as! UITableViewCellWithArrow
             
             cell.title.text = defaulCells[indexPath.row]
             
@@ -104,17 +106,12 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
         }
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if (indexPath.section == 0 && indexPath.row == 2) {
-//            reviews?()
-//        } else if (indexPath.section == 0 && indexPath.row == 0) {
-//            locationHours?()
-//        }
-//        else if (indexPath.section != 0) {
-//            dishChosen?(categories[indexPath.section - 1].dishesComplete[indexPath.row])
-//        }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if (indexPath.section != 0) {
+            dishChosen?(categories[indexPath.section - 1].dishes[indexPath.row])
+        }
+    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if (section == 0) {

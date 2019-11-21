@@ -16,15 +16,13 @@ internal class MenuViewController: UIViewController {
     
     private var categories: [MenuCategory] = []
     
-    private let headerHeight: CGFloat = 150
-    
     init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
         
         setupHeader(restaurant: restaurant)
-        setupMenu()
+        setupMenu(restaurant: restaurant)
         
         downloadMenu(restaurant: restaurant)
     }
@@ -58,13 +56,21 @@ internal class MenuViewController: UIViewController {
         header?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         header?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         header?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        header?.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+        header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended).isActive = true
     }
     
-    private func setupMenu() {
+    private func setupMenu(restaurant: Restaurant) {
         menu = MenuView.init()
         self.view.addSubview(menu!)
         
+        menu?.dishChosen = { (_ dish: Dish) -> () in
+            let controller = DishViewController.init(restaurant: restaurant, dish: dish)
+            
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            
+            self.present(controller, animated: true, completion: nil)
+        }
         menu?.menuSectionChanged = { (_ section: Int) -> () in
             self.header?.sectionChanged(section: section)
         }

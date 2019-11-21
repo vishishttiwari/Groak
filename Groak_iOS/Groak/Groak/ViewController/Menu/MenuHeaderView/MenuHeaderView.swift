@@ -24,11 +24,7 @@ internal class MenuHeaderView: UIView {
     private let cellId = "cellId"
     
     private var categories: [MenuCategory] = []
-    private var foodCategorySelected: IndexPath = IndexPath.init(row: -2, section: 0)
-    
-    private let titleDimensions: CGFloat = 25
-    private let distanceBetweenElements: CGFloat = 20
-    private let distanceFromTop: CGFloat = DimensionsCatalog.topSafeArea + 10
+    private var foodCategorySelected: IndexPath = IndexPath.init(row: 0, section: 0)
     
     required init(restaurant: Restaurant) {
         super.init(frame: .zero)
@@ -50,11 +46,7 @@ internal class MenuHeaderView: UIView {
         searchButton.isHidden = true
         self.addSubview(searchButton)
         
-        restaurantTitle.text = restaurant.name
-        restaurantTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: titleDimensions)
-        restaurantTitle.numberOfLines = 1
-        restaurantTitle.textColor = .black
-        restaurantTitle.textAlignment = .center
+        restaurantTitle.viewControllerHeaderTitle(title: restaurant.name)
         self.addSubview(restaurantTitle)
         
         let layout = UICollectionViewFlowLayout()
@@ -83,20 +75,20 @@ internal class MenuHeaderView: UIView {
         restaurantTitle.translatesAutoresizingMaskIntoConstraints = false
         foodCategories!.translatesAutoresizingMaskIntoConstraints = false
         
-        backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: titleDimensions).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleDistanceFromTop).isActive = true
+        restaurantTitle.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        restaurantTitle.rightAnchor.constraint(equalTo: searchButton.leftAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        restaurantTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
-        searchButton.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
-        searchButton.widthAnchor.constraint(equalToConstant: titleDimensions).isActive = true
-        searchButton.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: restaurantTitle.centerYAnchor).isActive = true
+        backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
-        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromTop).isActive = true
-        restaurantTitle.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: distanceBetweenElements).isActive = true
-        restaurantTitle.rightAnchor.constraint(equalTo: searchButton.leftAnchor, constant: -distanceBetweenElements).isActive = true
-        restaurantTitle.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        searchButton.centerYAnchor.constraint(equalTo: restaurantTitle.centerYAnchor).isActive = true
+        searchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        searchButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        searchButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
         foodCategories!.topAnchor.constraint(equalTo: restaurantTitle.bottomAnchor).isActive = true
         foodCategories!.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
@@ -111,9 +103,7 @@ internal class MenuHeaderView: UIView {
         
         let indexPath = IndexPath.init(row: section - 1, section: 0)
         foodCategorySelected = indexPath
-//        UIView.animate(withDuration: 0.1, animations: {
-            self.foodCategories?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//        })
+        self.foodCategories?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     @objc func back() {

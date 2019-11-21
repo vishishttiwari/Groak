@@ -15,14 +15,12 @@ internal class SearchViewController: UIViewController {
     private var darkBackground: UIView = UIView()
     private var menu: SearchMenuView?
     
-    private let headerHeight: CGFloat = 150
-    
     init(restaurant: Restaurant, categories: [MenuCategory]) {
         super.init(nibName: nil, bundle: nil)
         
         setupHeader(restaurant: restaurant, categories: categories)
         setupDarkBackground()
-        setupMenu()
+        setupMenu(restaurant: restaurant)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -55,7 +53,7 @@ internal class SearchViewController: UIViewController {
         header?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         header?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         header?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        header?.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+        header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended).isActive = true
     }
     
     private func setupDarkBackground() {
@@ -71,11 +69,19 @@ internal class SearchViewController: UIViewController {
         darkBackground.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
-    private func setupMenu() {
+    private func setupMenu(restaurant: Restaurant) {
         menu = SearchMenuView.init()
         menu?.isHidden = true
         self.view.addSubview(menu!)
         
+        menu?.dishChosen = { (_ dish: Dish) -> () in
+            let controller = DishViewController.init(restaurant: restaurant, dish: dish)
+            
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            
+            self.present(controller, animated: true, completion: nil)
+        }
         menu?.removeKeyboard = { () -> () in
             self.view.endEditing(true)
         }

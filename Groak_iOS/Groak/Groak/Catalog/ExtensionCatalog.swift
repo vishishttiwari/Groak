@@ -64,10 +64,8 @@ extension UIView {
         gradient.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(gradientTransparency).cgColor] //Or any colors
         self.layer.addSublayer(gradient)
     }
-}
-
-// This extension adds round corners to any views
-extension UIView {
+    
+    // This extension adds round corners to any views
     func roundCorners(_ corners: CACornerMask, radius: CGFloat) {
         if #available(iOS 11, *) {
             self.layer.cornerRadius = radius
@@ -167,5 +165,53 @@ extension UITableViewCell {
 extension String {
     var isAlphanumeric: Bool {
         return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
+    }
+}
+
+extension UILabel {
+    func viewControllerHeaderTitle(title: String) {
+        text = title
+        font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize)
+        numberOfLines = 1
+        textColor = .black
+        textAlignment = .center
+    }
+    
+    func colorBackgroundForegroundOfSubString(originalString: String, substrings: [String], backgroundColor: UIColor, foregroundColor: UIColor) {
+        let s = originalString as NSString
+        let att = NSMutableAttributedString(string: s as String)
+        for substring in substrings {
+            let r = s.range(of: substring, options: .caseInsensitive, range: .init(location: 0, length: s.length))
+            if r.length > 0 {
+                att.addAttribute(.backgroundColor, value: backgroundColor, range: r)
+                att.addAttribute(.foregroundColor, value: foregroundColor, range: r)
+            }
+        }
+        
+        attributedText = att
+    }
+    
+    func boldSubString(originalString: String, substrings: [String], font: UIFont) {
+        let s = originalString as NSString
+        let att = NSMutableAttributedString(string: s as String)
+        let boldFontAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+        for substring in substrings {
+            let r = s.range(of: substring, options: .caseInsensitive, range: .init(location: 0, length: s.length))
+            if r.length > 0 {
+                att.addAttributes(boldFontAttribute, range: r)
+            }
+        }
+        
+        attributedText = att
+    }
+}
+
+extension UIButton {
+    func footerButton(title: String) {
+        setTitle(title, for: .normal)
+        titleLabel?.font = FontCatalog.buttonFont
+        backgroundColor = ColorsCatalog.themeColor
+        titleLabel?.textColor = .white
+        layer.cornerRadius = 10
     }
 }
