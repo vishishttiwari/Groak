@@ -12,6 +12,7 @@ import UIKit
 internal class UITableViewHeader: UITableViewHeaderFooterView {
     private let background: UIView = UIView()
     internal let title: UILabel = UILabel()
+    internal let subTitle: UILabel = UILabel()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -28,13 +29,21 @@ internal class UITableViewHeader: UITableViewHeaderFooterView {
         title.font = UIFont(name: FontCatalog.fontLevels[3], size: 25)
         title.backgroundColor = .white
         
+        subTitle.numberOfLines = 1
+        subTitle.textAlignment = .left
+        subTitle.textColor = ColorsCatalog.grayColor
+        subTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: 18)
+        subTitle.backgroundColor = .white
+        
         self.addSubview(background)
         self.addSubview(title)
+        background.addSubview(subTitle)
     }
     
     private func setupInitialLayout() {
         background.translatesAutoresizingMaskIntoConstraints = false
         title.translatesAutoresizingMaskIntoConstraints = false
+        subTitle.translatesAutoresizingMaskIntoConstraints = false
         
         background.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         background.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
@@ -45,6 +54,10 @@ internal class UITableViewHeader: UITableViewHeaderFooterView {
         title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         title.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
         title.heightAnchor.constraint(equalToConstant: DimensionsCatalog.tableHeaderHeight).isActive = true
+        
+        subTitle.topAnchor.constraint(equalTo: title.bottomAnchor).isActive = true
+        subTitle.leftAnchor.constraint(equalTo: background.leftAnchor, constant: 10).isActive = true
+        subTitle.rightAnchor.constraint(equalTo: background.rightAnchor, constant: -10).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

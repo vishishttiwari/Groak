@@ -29,7 +29,8 @@ internal class DimensionsCatalog {
     }
     
     struct viewControllerFooterDimensions {
-        static let height: CGFloat = 80 + DimensionsCatalog.topSafeArea
+        static let heightExtended: CGFloat = 140 + DimensionsCatalog.topSafeArea
+        static let heightNormal: CGFloat = 80 + DimensionsCatalog.topSafeArea
         static let distanceBetweenElements: CGFloat = 20
     }
     

@@ -22,8 +22,6 @@ internal class DishViewController: UIViewController {
         setupHeader(dish: dish)
         setupFooter(restaurant: restaurant, dish: dish)
         setupDishDetail(dish: dish)
-        
-        print(dish.description)
     }
     
     private func setupHeader(dish: Dish) {
@@ -44,21 +42,21 @@ internal class DishViewController: UIViewController {
     private func setupFooter(restaurant: Restaurant, dish: Dish) {
         self.view.addSubview(footer)
         
-//        footer.order = { () -> () in
-//            let controller = AddToCartViewController.init(restaurant: restaurant, dish: dish)
-//
-//            controller.modalTransitionStyle = .coverVertical
-//            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//
-//            DispatchQueue.main.async {
-//                self.present(controller, animated: true, completion: nil)
-//            }
-//        }
+        footer.order = { () -> () in
+            let controller = AddToCartViewController.init(restaurant: restaurant, dish: dish)
+
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+
+            DispatchQueue.main.async {
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
         
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.height).isActive = true
+        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormal).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     

@@ -52,6 +52,13 @@
 		7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */; };
 		7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */; };
 		7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9F22373837E00C6EF37 /* Firebase.swift */; };
+		7CEC21EC23863AC700F96390 /* AddToCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21EB23863AC700F96390 /* AddToCartViewController.swift */; };
+		7CEC21EE23863BC100F96390 /* AddToCartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21ED23863BC100F96390 /* AddToCartHeaderView.swift */; };
+		7CEC21F023863C4200F96390 /* AddToCartFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21EF23863C4200F96390 /* AddToCartFooterView.swift */; };
+		7CEC21F223863F7000F96390 /* AddToCartOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21F123863F7000F96390 /* AddToCartOptionsView.swift */; };
+		7CEC21F423863FB700F96390 /* AddToCartOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21F323863FB700F96390 /* AddToCartOptionsCell.swift */; };
+		7CEC21F623863FFA00F96390 /* SpecialInstructionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21F523863FFA00F96390 /* SpecialInstructionsCell.swift */; };
+		7CEC21F823877C4B00F96390 /* DishCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC21F723877C4A00F96390 /* DishCategory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +110,13 @@
 		7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		7CDDD9F0237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsRestaurants.swift; sourceTree = "<group>"; };
 		7CDDD9F22373837E00C6EF37 /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		7CEC21EB23863AC700F96390 /* AddToCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartViewController.swift; sourceTree = "<group>"; };
+		7CEC21ED23863BC100F96390 /* AddToCartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartHeaderView.swift; sourceTree = "<group>"; };
+		7CEC21EF23863C4200F96390 /* AddToCartFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartFooterView.swift; sourceTree = "<group>"; };
+		7CEC21F123863F7000F96390 /* AddToCartOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartOptionsView.swift; sourceTree = "<group>"; };
+		7CEC21F323863FB700F96390 /* AddToCartOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartOptionsCell.swift; sourceTree = "<group>"; };
+		7CEC21F523863FFA00F96390 /* SpecialInstructionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialInstructionsCell.swift; sourceTree = "<group>"; };
+		7CEC21F723877C4A00F96390 /* DishCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishCategory.swift; sourceTree = "<group>"; };
 		8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Groak.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -272,6 +286,7 @@
 				7C25A47F2375F9B0009F26F9 /* Menu */,
 				7C25A49B23847128009F26F9 /* Search */,
 				7C25A4A62384C44C009F26F9 /* Dish */,
+				7CEC21EA2386397700F96390 /* AddToCart */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -312,8 +327,22 @@
 				7CDDD9EC2373802B00C6EF37 /* Restaurant.swift */,
 				7C25A4802383534E009F26F9 /* MenuCategory.swift */,
 				7C25A49223837926009F26F9 /* Dish.swift */,
+				7CEC21F723877C4A00F96390 /* DishCategory.swift */,
 			);
 			path = RestaurantObjects;
+			sourceTree = "<group>";
+		};
+		7CEC21EA2386397700F96390 /* AddToCart */ = {
+			isa = PBXGroup;
+			children = (
+				7CEC21EB23863AC700F96390 /* AddToCartViewController.swift */,
+				7CEC21ED23863BC100F96390 /* AddToCartHeaderView.swift */,
+				7CEC21EF23863C4200F96390 /* AddToCartFooterView.swift */,
+				7CEC21F123863F7000F96390 /* AddToCartOptionsView.swift */,
+				7CEC21F323863FB700F96390 /* AddToCartOptionsCell.swift */,
+				7CEC21F523863FFA00F96390 /* SpecialInstructionsCell.swift */,
+			);
+			path = AddToCart;
 			sourceTree = "<group>";
 		};
 		C892FF093140860B55151A5F /* Frameworks */ = {
@@ -452,6 +481,7 @@
 				7C7F90712385E59D0012D2BF /* IngredientsHeaderView.swift in Sources */,
 				7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */,
 				7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */,
+				7CEC21EE23863BC100F96390 /* AddToCartHeaderView.swift in Sources */,
 				7C25A4912383738E009F26F9 /* DishCell.swift in Sources */,
 				7C25A476237525C4009F26F9 /* ExtensionCatalog.swift in Sources */,
 				7C25A49D23847232009F26F9 /* SearchViewController.swift in Sources */,
@@ -466,16 +496,21 @@
 				7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */,
 				7C7F90782385EC000012D2BF /* IngredientWebViewController.swift in Sources */,
 				7C25A49323837926009F26F9 /* Dish.swift in Sources */,
+				7CEC21F823877C4B00F96390 /* DishCategory.swift in Sources */,
+				7CEC21F423863FB700F96390 /* AddToCartOptionsCell.swift in Sources */,
 				7C25A4AD2384C586009F26F9 /* DishViewController.swift in Sources */,
 				7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */,
+				7CEC21F223863F7000F96390 /* AddToCartOptionsView.swift in Sources */,
 				7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */,
 				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
 				7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */,
+				7CEC21F023863C4200F96390 /* AddToCartFooterView.swift in Sources */,
 				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
 				7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */,
 				7C7F906F2385E5410012D2BF /* IngredientsViewController.swift in Sources */,
 				7C25A4AF2384C597009F26F9 /* DishHeaderView.swift in Sources */,
 				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
+				7CEC21F623863FFA00F96390 /* SpecialInstructionsCell.swift in Sources */,
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				7C7F907E2385FEDC0012D2BF /* ClassCatalog.swift in Sources */,
 				7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */,
@@ -487,6 +522,7 @@
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
+				7CEC21EC23863AC700F96390 /* AddToCartViewController.swift in Sources */,
 				7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */,
 				7C25A4812383534E009F26F9 /* MenuCategory.swift in Sources */,
 			);

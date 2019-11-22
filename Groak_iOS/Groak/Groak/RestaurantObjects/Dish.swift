@@ -13,7 +13,7 @@ internal class Dish {
     var reference: DocumentReference?
     var name: String
     var imageLink: String
-    var price: Float
+    var price: Double
     var shortInfo: String
     var dishDescription: String
     var ingredients: [String]
@@ -21,7 +21,7 @@ internal class Dish {
     var available: Bool
     var restrictions: [String: String]
     var nutrition: [String: Double]
-    var extras: [[String: Any]]
+    var extras: [DishCategory]
     
     init() {
         reference = nil
@@ -42,7 +42,7 @@ internal class Dish {
         reference = dish["reference"] as? DocumentReference
         name = dish["name"] as? String ?? ""
         imageLink = dish["image"] as? String ?? ""
-        price = dish["price"] as? Float ?? -1
+        price = dish["price"] as? Double ?? -1
         shortInfo = dish["shortInfo"] as? String ?? ""
         dishDescription = dish["description"] as? String ?? ""
         ingredients = dish["ingredients"] as? [String] ?? []
@@ -50,7 +50,11 @@ internal class Dish {
         available = dish["available"] as? Bool ?? false
         restrictions = dish["restrictions"] as? [String: String] ?? [:]
         nutrition = dish["nutrition"] as? [String: Double] ?? [:]
-        extras = dish["extras"] as? [[String: Any]] ?? []
+        let tempExtras = dish["extras"] as? [[String:Any]] ?? []
+        extras = []
+        for extra in tempExtras {
+            extras.append(DishCategory.init(dishCategory: extra))
+        }
     }
     
     func success() -> Bool {
@@ -88,10 +92,7 @@ internal class Dish {
         }
         str += "Extras:\n"
         for extra in extras {
-            str += "\tExtra:\n"
-            for (key, value) in extra {
-                str += "\t\t\(key): \(value)\n"
-            }
+            str += "\t\(extra.description):\n"
         }
         return str;
     }

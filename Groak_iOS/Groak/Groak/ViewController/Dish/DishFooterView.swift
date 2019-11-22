@@ -24,7 +24,7 @@ internal class DishFooterView: UIView {
     }
     
     private func setupViews() {
-        self.backgroundColor = .white
+        self.backgroundColor = ColorsCatalog.headerGrayShade
         
         button.footerButton(title: "Ready to Order?")
         button.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
