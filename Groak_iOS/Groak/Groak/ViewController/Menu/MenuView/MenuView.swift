@@ -14,6 +14,7 @@ internal class MenuView: UITableView {
     // Optional Closures
     internal var menuSectionChanged: ((_ section: Int) -> ())?
     internal var dishChosen: ((_ dish: Dish) -> ())?
+    internal var specialRequests: (() -> ())?
     
     private let specialRequestCellId: String = "specialRequestCellId"
     private let cellId: String = "cellId"
@@ -110,6 +111,8 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.section != 0) {
             dishChosen?(categories[indexPath.section - 1].dishes[indexPath.row])
+        } else {
+            specialRequests?()
         }
     }
 

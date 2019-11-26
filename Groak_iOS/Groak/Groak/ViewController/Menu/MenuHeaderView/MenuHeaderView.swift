@@ -75,7 +75,7 @@ internal class MenuHeaderView: UIView {
         restaurantTitle.translatesAutoresizingMaskIntoConstraints = false
         foodCategories!.translatesAutoresizingMaskIntoConstraints = false
         
-        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleDistanceFromTop).isActive = true
+        restaurantTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop).isActive = true
         restaurantTitle.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         restaurantTitle.rightAnchor.constraint(equalTo: searchButton.leftAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         restaurantTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 5).isActive = true

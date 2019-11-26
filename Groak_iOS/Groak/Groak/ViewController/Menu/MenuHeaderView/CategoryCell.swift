@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 internal class CategoryCell: UICollectionViewCell {
-    internal let category = UILabel()
+    internal let category: UILabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

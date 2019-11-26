@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 internal class TimeCatalog {
     
@@ -45,5 +46,16 @@ internal class TimeCatalog {
         let minutes = calendar.component(.minute, from: date)
         
         return hour*60 + minutes
+    }
+    
+    static func getTimeFromTimestamp(timestamp: Timestamp) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+
+        let timeString = formatter.string(from: timestamp.dateValue())
+        return timeString
     }
 }

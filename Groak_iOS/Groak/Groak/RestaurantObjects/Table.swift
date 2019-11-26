@@ -9,7 +9,7 @@
 
 import Firebase
 
-internal enum TableStatus {
+internal enum TableStatus: String {
     case available
     case seated
     case ordered

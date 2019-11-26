@@ -65,23 +65,23 @@ internal class AddToCartFooterView: UIView {
         addDishButton.translatesAutoresizingMaskIntoConstraints = false
         reduceDishButton.translatesAutoresizingMaskIntoConstraints = false
         
-        price.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
-        price.leftAnchor.constraint(equalTo: reduceDishButton.rightAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
-        price.rightAnchor.constraint(equalTo: addDishButton.leftAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
+        price.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        price.leftAnchor.constraint(equalTo: reduceDishButton.rightAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        price.rightAnchor.constraint(equalTo: addDishButton.leftAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         price.heightAnchor.constraint(equalToConstant: priceSize).isActive = true
         
-        addToCartButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
-        addToCartButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
-        addToCartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
-        addToCartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.bottomSafeArea).isActive = true
+        addToCartButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        addToCartButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        addToCartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        addToCartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceFromBottom).isActive = true
         
         addDishButton.centerYAnchor.constraint(equalTo: price.centerYAnchor).isActive = true
-        addDishButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(2*DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)).isActive = true
+        addDishButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(2*DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
         addDishButton.widthAnchor.constraint(equalToConstant: priceSize).isActive = true
         addDishButton.heightAnchor.constraint(equalToConstant: priceSize).isActive = true
         
         reduceDishButton.centerYAnchor.constraint(equalTo: price.centerYAnchor).isActive = true
-        reduceDishButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 2*DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
+        reduceDishButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 2*DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         reduceDishButton.widthAnchor.constraint(equalToConstant: priceSize).isActive = true
         reduceDishButton.heightAnchor.constraint(equalToConstant: priceSize).isActive = true
     }

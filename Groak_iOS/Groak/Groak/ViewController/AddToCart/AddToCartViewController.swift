@@ -46,17 +46,17 @@ internal class AddToCartViewController: UIViewController {
         self.view.addSubview(footer!)
         
         footer?.order = { (_ count: Int, _ dishCost: Double) -> () in
-            if let options = self.addToCartOptions!.getSelections() {
-                let quantity = count
-                let costPerItem = dishCost
-                let totalCost = round(Double(count) * dishCost * 100)/100
-                let dishName = dish.name
-                let customViewController1 = self.presentingViewController as? DishViewController
-                
-                self.dismiss(animated: false, completion: {
-                    customViewController1?.dismiss(animated: true, completion: nil)
-                })
-            }
+//            if let options = self.addToCartOptions!.getSelections() {
+//                let quantity = count
+//                let costPerItem = dishCost
+//                let totalCost = round(Double(count) * dishCost * 100)/100
+//                let dishName = dish.name
+//                let customViewController1 = self.presentingViewController as? DishViewController
+//                
+//                self.dismiss(animated: false, completion: {
+//                    customViewController1?.dismiss(animated: true, completion: nil)
+//                })
+//            }
         }
         
         footer?.translatesAutoresizingMaskIntoConstraints = false

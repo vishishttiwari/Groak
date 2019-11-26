@@ -19,11 +19,12 @@ internal class DimensionsCatalog {
     static let imageHeights = 50 + screenSize.width/2
     static let optionsViewWidth = 3 * screenSize.width/4
     static let distanceBetweenElements: CGFloat = 10
+    static let cornerRadius: CGFloat = 10
     
     struct viewControllerHeaderDimensions {
         static let heightExtended: CGFloat = 100 + DimensionsCatalog.topSafeArea
         static let heightNormal: CGFloat = 50 + DimensionsCatalog.topSafeArea
-        static let titleDistanceFromTop: CGFloat = topSafeArea + 10
+        static let distanceFromTop: CGFloat = topSafeArea + 10
         static let distanceBetweenElements: CGFloat = 20
         static let titleSize: CGFloat = 25
     }
@@ -31,6 +32,7 @@ internal class DimensionsCatalog {
     struct viewControllerFooterDimensions {
         static let heightExtended: CGFloat = 140 + DimensionsCatalog.topSafeArea
         static let heightNormal: CGFloat = 80 + DimensionsCatalog.topSafeArea
+        static let distanceFromBottom: CGFloat = bottomSafeArea
         static let distanceBetweenElements: CGFloat = 20
     }
     
