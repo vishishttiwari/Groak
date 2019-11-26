@@ -50,6 +50,7 @@ internal class SpecialRequestsCell: UITableViewCell {
         self.isUserInteractionEnabled = false
         
         requestString.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)
+        requestString.numberOfLines = 0
         requestString.backgroundColor = .clear
         requestString.textAlignment = .left
         requestString.clipsToBounds = true
