@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 internal class AddToCartViewController: UIViewController {
     private var header: AddToCartHeaderView?
@@ -46,17 +47,20 @@ internal class AddToCartViewController: UIViewController {
         self.view.addSubview(footer!)
         
         footer?.order = { (_ count: Int, _ dishCost: Double) -> () in
-//            if let options = self.addToCartOptions!.getSelections() {
-//                let quantity = count
-//                let costPerItem = dishCost
-//                let totalCost = round(Double(count) * dishCost * 100)/100
-//                let dishName = dish.name
-//                let customViewController1 = self.presentingViewController as? DishViewController
-//                
-//                self.dismiss(animated: false, completion: {
-//                    customViewController1?.dismiss(animated: true, completion: nil)
-//                })
-//            }
+            if let options = self.addToCartOptions!.getSelections() {
+                let cartItem: CartItem = CartItem.init(dishName: dish.name, costPerItem: dishCost, quantity: count, options:options)
+                LocalStorage.cartItems.append(cartItem)
+                
+                let customViewController1 = self.presentingViewController as? DishViewController
+                let customViewController2 = customViewController1?.presentingViewController as? MenuViewController
+                
+                self.dismiss(animated: false, completion: {
+                    customViewController2?.checkIfCartOrOrderExists()
+                    customViewController1?.dismiss(animated: true, completion: nil)
+                })
+            } else {
+                Catalog.alert(vc: self, title: "Error adding to cart", message: "There was an error while adding \(dish.name) to cart. Please try again.")
+            }
         }
         
         footer?.translatesAutoresizingMaskIntoConstraints = false

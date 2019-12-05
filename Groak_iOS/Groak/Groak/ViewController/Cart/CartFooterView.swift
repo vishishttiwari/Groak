@@ -1,15 +1,15 @@
 //
-//  DishFooterView.swift
+//  CartFooterView.swift
 //  Groak
 //
-//  Created by Vishisht Tiwari on 11/19/19.
+//  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-internal class DishFooterView: UIView {
+internal class CartFooterView: UIView {
     // Optional Closures
     internal var order: (() -> ())?
     
@@ -26,7 +26,7 @@ internal class DishFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        orderButton.footerButton(title: "Ready to Order?")
+        orderButton.footerButton(title: "Order")
         orderButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
         self.addSubview(orderButton)
     }

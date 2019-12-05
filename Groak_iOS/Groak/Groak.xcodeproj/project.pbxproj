@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
+		7C0B8A932397742D0005F093 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A922397742D0005F093 /* LocalStorage.swift */; };
+		7C0B8A95239774BE0005F093 /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* CartItem.swift */; };
+		7C0B8A9823977A9A0005F093 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9723977A9A0005F093 /* CartViewController.swift */; };
+		7C0B8A9A23977ABA0005F093 /* CartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9923977ABA0005F093 /* CartHeaderView.swift */; };
+		7C0B8A9C23977BE10005F093 /* CartFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9B23977BE10005F093 /* CartFooterView.swift */; };
+		7C0B8A9E23977CEA0005F093 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9D23977CEA0005F093 /* CartView.swift */; };
+		7C0B8AA123977F120005F093 /* CartOrderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8AA023977F120005F093 /* CartOrderFooterView.swift */; };
+		7C0B8AA5239783280005F093 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8AA4239783280005F093 /* CartCell.swift */; };
+		7C0B8AA7239783410005F093 /* SpecialInstructionsCartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8AA6239783410005F093 /* SpecialInstructionsCartCell.swift */; };
 		7C25A46D2373A50C009F26F9 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A46C2373A50C009F26F9 /* Table.swift */; };
 		7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */; };
 		7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */; };
@@ -32,6 +41,10 @@
 		7C25A4AF2384C597009F26F9 /* DishHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4AE2384C597009F26F9 /* DishHeaderView.swift */; };
 		7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4B02384C5A4009F26F9 /* DishFooterView.swift */; };
 		7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4B32384C60D009F26F9 /* DishDetailsView.swift */; };
+		7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */; };
+		7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */; };
+		7C59E400239789CC005CFED5 /* CartDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */; };
+		7C59E4022398A8E1005CFED5 /* CartDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4012398A8E1005CFED5 /* CartDetailsView.swift */; };
 		7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90652385CE180012D2BF /* DishImageCell.swift */; };
 		7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */; };
 		7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */; };
@@ -72,6 +85,15 @@
 /* Begin PBXFileReference section */
 		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
 		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
+		7C0B8A922397742D0005F093 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		7C0B8A94239774BE0005F093 /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
+		7C0B8A9723977A9A0005F093 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		7C0B8A9923977ABA0005F093 /* CartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartHeaderView.swift; sourceTree = "<group>"; };
+		7C0B8A9B23977BE10005F093 /* CartFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartFooterView.swift; sourceTree = "<group>"; };
+		7C0B8A9D23977CEA0005F093 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		7C0B8AA023977F120005F093 /* CartOrderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartOrderFooterView.swift; sourceTree = "<group>"; };
+		7C0B8AA4239783280005F093 /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
+		7C0B8AA6239783410005F093 /* SpecialInstructionsCartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialInstructionsCartCell.swift; sourceTree = "<group>"; };
 		7C25A46C2373A50C009F26F9 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsTables.swift; sourceTree = "<group>"; };
 		7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
@@ -96,6 +118,10 @@
 		7C25A4AE2384C597009F26F9 /* DishHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishHeaderView.swift; sourceTree = "<group>"; };
 		7C25A4B02384C5A4009F26F9 /* DishFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishFooterView.swift; sourceTree = "<group>"; };
 		7C25A4B32384C60D009F26F9 /* DishDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDetailsView.swift; sourceTree = "<group>"; };
+		7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsViewController.swift; sourceTree = "<group>"; };
+		7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsHeaderView.swift; sourceTree = "<group>"; };
+		7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsFooterView.swift; sourceTree = "<group>"; };
+		7C59E4012398A8E1005CFED5 /* CartDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsView.swift; sourceTree = "<group>"; };
 		7C7F90652385CE180012D2BF /* DishImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishImageCell.swift; sourceTree = "<group>"; };
 		7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishNutritionCell.swift; sourceTree = "<group>"; };
 		7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDescriptionCell.swift; sourceTree = "<group>"; };
@@ -148,6 +174,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C0B8A91239774130005F093 /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				7C0B8A922397742D0005F093 /* LocalStorage.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		7C0B8A962397784F0005F093 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				7C0B8A9723977A9A0005F093 /* CartViewController.swift */,
+				7C0B8A9923977ABA0005F093 /* CartHeaderView.swift */,
+				7C0B8A9B23977BE10005F093 /* CartFooterView.swift */,
+				7C0B8AA3239783070005F093 /* CartView */,
+				7C59E3FA23978928005CFED5 /* CartDetailsView */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		7C0B8A9F23977ED80005F093 /* MenuFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				7C0B8AA023977F120005F093 /* CartOrderFooterView.swift */,
+			);
+			path = MenuFooterView;
+			sourceTree = "<group>";
+		};
+		7C0B8AA3239783070005F093 /* CartView */ = {
+			isa = PBXGroup;
+			children = (
+				7C0B8A9D23977CEA0005F093 /* CartView.swift */,
+				7C0B8AA4239783280005F093 /* CartCell.swift */,
+				7C0B8AA6239783410005F093 /* SpecialInstructionsCartCell.swift */,
+			);
+			path = CartView;
+			sourceTree = "<group>";
+		};
 		7C25A4722374FE24009F26F9 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +233,7 @@
 				7C25A47D2375F9AC009F26F9 /* MenuViewController.swift */,
 				7C25A4982383B728009F26F9 /* MenuHeaderView */,
 				7C25A48B23837056009F26F9 /* MenuView */,
+				7C0B8A9F23977ED80005F093 /* MenuFooterView */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -240,6 +305,17 @@
 			path = DishDetailsView;
 			sourceTree = "<group>";
 		};
+		7C59E3FA23978928005CFED5 /* CartDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */,
+				7C59E4012398A8E1005CFED5 /* CartDetailsView.swift */,
+				7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */,
+				7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */,
+			);
+			path = CartDetailsView;
+			sourceTree = "<group>";
+		};
 		7C7F906B2385E2FE0012D2BF /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				7CDDD9CD237374C000C6EF37 /* Groak */,
-				7CDDD9CC237374C000C6EF37 /* Products */,
 				CE16F9FEE08D6C1E232D2D9C /* Pods */,
 				C892FF093140860B55151A5F /* Frameworks */,
 			);
@@ -286,6 +361,7 @@
 				7CDDD9CB237374C000C6EF37 /* Groak.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		7CDDD9CD237374C000C6EF37 /* Groak */ = {
@@ -293,6 +369,7 @@
 			children = (
 				7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */,
 				7C25A4722374FE24009F26F9 /* Catalog */,
+				7C0B8A91239774130005F093 /* LocalStorage */,
 				7CDDD9EE2373823C00C6EF37 /* Firebase */,
 				7CDDD9E623737BC200C6EF37 /* ViewController */,
 				7CDDD9F42373A49400C6EF37 /* RestaurantObjects */,
@@ -300,6 +377,7 @@
 				7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */,
 				7CDDD9DC237374C100C6EF37 /* Info.plist */,
 				7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */,
+				7CDDD9CC237374C000C6EF37 /* Products */,
 			);
 			path = Groak;
 			sourceTree = "<group>";
@@ -313,6 +391,7 @@
 				7C25A49B23847128009F26F9 /* Search */,
 				7C25A4A62384C44C009F26F9 /* Dish */,
 				7CEC21EA2386397700F96390 /* AddToCart */,
+				7C0B8A962397784F0005F093 /* Cart */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -356,6 +435,7 @@
 				7C25A49223837926009F26F9 /* Dish.swift */,
 				7CEC21F723877C4A00F96390 /* DishCategory.swift */,
 				7C9854F8238BCDB000241A62 /* Requests.swift */,
+				7C0B8A94239774BE0005F093 /* CartItem.swift */,
 			);
 			path = RestaurantObjects;
 			sourceTree = "<group>";
@@ -525,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C59E400239789CC005CFED5 /* CartDetailsFooterView.swift in Sources */,
 				7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */,
 				7C7F90712385E59D0012D2BF /* IngredientsHeaderView.swift in Sources */,
 				7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */,
@@ -538,16 +619,21 @@
 				7C25A4A52384A376009F26F9 /* MenuHeaderView.swift in Sources */,
 				7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */,
 				7C25A49523838130009F26F9 /* FirestoreAPICallsDishes.swift in Sources */,
+				7C0B8A9A23977ABA0005F093 /* CartHeaderView.swift in Sources */,
 				7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */,
 				7CEC2204238B723500F96390 /* SuggestionsCell.swift in Sources */,
 				7C25A4A023847A10009F26F9 /* SearchHeaderView.swift in Sources */,
+				7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */,
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
 				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
+				7C0B8A932397742D0005F093 /* LocalStorage.swift in Sources */,
 				7C25A48523836000009F26F9 /* TimeCatalog.swift in Sources */,
 				7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */,
 				7C7F90782385EC000012D2BF /* IngredientWebViewController.swift in Sources */,
 				7C25A49323837926009F26F9 /* Dish.swift in Sources */,
+				7C59E4022398A8E1005CFED5 /* CartDetailsView.swift in Sources */,
 				7CEC21F823877C4B00F96390 /* DishCategory.swift in Sources */,
+				7C0B8A95239774BE0005F093 /* CartItem.swift in Sources */,
 				7CEC21F423863FB700F96390 /* AddToCartOptionsCell.swift in Sources */,
 				7C25A4AD2384C586009F26F9 /* DishViewController.swift in Sources */,
 				7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */,
@@ -560,21 +646,28 @@
 				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
 				7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */,
 				7CEC21FF238B688C00F96390 /* SpecialRequestsView.swift in Sources */,
+				7C0B8A9E23977CEA0005F093 /* CartView.swift in Sources */,
 				7C7F906F2385E5410012D2BF /* IngredientsViewController.swift in Sources */,
 				7C25A4AF2384C597009F26F9 /* DishHeaderView.swift in Sources */,
 				7CEC21FB238B602400F96390 /* SpecialRequestsViewController.swift in Sources */,
+				7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */,
 				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
 				7CEC21F623863FFA00F96390 /* SpecialInstructionsCell.swift in Sources */,
 				7CEC21FD238B604E00F96390 /* SpecialRequestsHeaderView.swift in Sources */,
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				7C7F907E2385FEDC0012D2BF /* ClassCatalog.swift in Sources */,
 				7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */,
+				7C0B8A9C23977BE10005F093 /* CartFooterView.swift in Sources */,
 				7C25A47E2375F9AC009F26F9 /* MenuViewController.swift in Sources */,
 				7CEC2201238B68E900F96390 /* SpecialRequestsFooterView.swift in Sources */,
+				7C0B8AA5239783280005F093 /* CartCell.swift in Sources */,
 				7C25A4A323848E4D009F26F9 /* SearchMenuView.swift in Sources */,
 				7C7F90732385E5BC0012D2BF /* IngredientsView.swift in Sources */,
 				7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */,
+				7C0B8AA7239783410005F093 /* SpecialInstructionsCartCell.swift in Sources */,
 				7C7F907C2385EC300012D2BF /* IngredientWebView.swift in Sources */,
+				7C0B8A9823977A9A0005F093 /* CartViewController.swift in Sources */,
+				7C0B8AA123977F120005F093 /* CartOrderFooterView.swift in Sources */,
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,

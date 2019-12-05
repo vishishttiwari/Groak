@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CartItem" representedClassName="CartItem" syncable="YES">
+        <attribute name="costPerItem" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dishName" optional="YES" attributeType="String"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalCost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="cartItemOptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CartItemOption" inverseName="cartItem" inverseEntity="CartItemOption"/>
+    </entity>
+    <entity name="CartItemOption" representedClassName="CartItemOption" syncable="YES">
+        <attribute name="option" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cartItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CartItem" inverseName="cartItemOptions" inverseEntity="CartItem"/>
+        <relationship name="cartItemOptionItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CartItemOptionItem" inverseName="cartItemOption" inverseEntity="CartItemOptionItem"/>
+    </entity>
+    <entity name="CartItemOptionItem" representedClassName="CartItemOptionItem" syncable="YES">
+        <attribute name="item" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cartItemOption" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CartItemOption" inverseName="cartItemOptionItems" inverseEntity="CartItemOption"/>
+    </entity>
+    <elements>
+        <element name="CartItem" positionX="25.06640625" positionY="-100.4609375" width="127.93359375" height="133"/>
+        <element name="CartItemOption" positionX="18.22265625" positionY="124.015625" width="128" height="103"/>
+        <element name="CartItemOptionItem" positionX="27.40625" positionY="288.19140625" width="128" height="88"/>
+    </elements>
+</model>

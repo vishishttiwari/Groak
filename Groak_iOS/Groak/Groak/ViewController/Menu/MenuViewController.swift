@@ -13,6 +13,7 @@ internal class MenuViewController: UIViewController {
     
     private var header: MenuHeaderView?
     private var menu: MenuView?
+    private var footer: CartOrderFooterView = CartOrderFooterView.init()
     
     private var categories: [MenuCategory] = []
     
@@ -23,6 +24,7 @@ internal class MenuViewController: UIViewController {
         
         setupHeader(restaurant: restaurant)
         setupMenu(restaurant: restaurant)
+        setupFooter()
         
         downloadMenu(restaurant: restaurant)
     }
@@ -90,6 +92,44 @@ internal class MenuViewController: UIViewController {
         menu?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         menu?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         menu?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
+    private func setupFooter() {
+        self.view.addSubview(footer)
+        
+        footer.buttonTapped = { (_ state: OrderOrCartState) -> () in
+            let controller: UIViewController?
+            if (state == OrderOrCartState.None) {
+                return
+            } else if (state == OrderOrCartState.Cart) {
+                controller = CartViewController.init()
+            } else {
+                controller = CartViewController.init()
+//                controller = OrderViewController.init()
+            }
+            
+            controller?.modalTransitionStyle = .coverVertical
+            controller?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            
+            DispatchQueue.main.async {
+                self.present(controller!, animated: true, completion: nil)
+            }
+        }
+        
+        footer.frame.origin.x = 0
+        footer.frame.origin.y = DimensionsCatalog.screenSize.height
+        footer.frame.size.width = DimensionsCatalog.screenSize.width
+        footer.frame.size.height = DimensionsCatalog.viewControllerFooterDimensions.heightNormal
+        
+        checkIfCartOrOrderExists()
+    }
+    
+    internal func checkIfCartOrOrderExists() {
+        if LocalStorage.cartItems.count != 0 {
+            self.footer.present(state: OrderOrCartState.Cart)
+        } else {
+            self.footer.dismiss()
+        }
     }
     
     private func downloadMenu(restaurant: Restaurant) {

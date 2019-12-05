@@ -20,6 +20,7 @@ internal class AddToCartOptionsView: UITableView {
     
     private var viewController: UIViewController?
     private var dishCategories: [DishCategory] = []
+    // Make an object for this and put all of these in an object including price, row number and comments
     private var categoryIndex: [String: Int] = [:]
     private var categorySelected: [String: [Int]] = [:]
     private var categoryString: [String: [String]] = [:]
@@ -90,6 +91,8 @@ internal class AddToCartOptionsView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - UITableView functions
 
 extension AddToCartOptionsView: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {

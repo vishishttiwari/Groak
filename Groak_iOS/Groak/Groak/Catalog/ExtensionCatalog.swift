@@ -171,7 +171,7 @@ extension String {
 extension UILabel {
     func viewControllerHeaderTitle(title: String) {
         text = title
-        font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize)
+        font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize - 5)
         numberOfLines = 1
         textColor = .black
         textAlignment = .center

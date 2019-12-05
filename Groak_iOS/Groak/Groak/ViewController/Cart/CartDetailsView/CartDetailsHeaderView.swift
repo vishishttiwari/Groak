@@ -1,50 +1,50 @@
 //
-//  AddToCartHeaderView.swift
+//  CartDetailHeaderView.swift
 //  Groak
 //
-//  Created by Vishisht Tiwari on 11/20/19.
+//  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-internal class AddToCartHeaderView: UIView {
+internal class CartDetailsHeaderView: UIView {
     // Optional Closures
     internal var dismiss: (() -> ())?
     
     private let backButton: UIButton = UIButton()
-    private let dishTitle: UILabel = UILabel()
+    private let title: UILabel = UILabel()
     
-    required init(dish: Dish) {
+    required init(dishString: String) {
         super.init(frame: .zero)
         
-        setupViews(dish: dish)
+        setupViews(dishString: dishString)
         
         setupInitialLayout()
     }
     
-    private func setupViews(dish: Dish) {
+    private func setupViews(dishString: String) {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
         self.addSubview(backButton)
         
-        dishTitle.viewControllerHeaderTitle(title: dish.name)
-        self.addSubview(dishTitle)
+        title.viewControllerHeaderTitle(title: dishString)
+        self.addSubview(title)
     }
     
     private func setupInitialLayout() {
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        dishTitle.translatesAutoresizingMaskIntoConstraints = false
+        title.translatesAutoresizingMaskIntoConstraints = false
         
-        dishTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop).isActive = true
-        dishTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        dishTitle.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
-        dishTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        title.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop).isActive = true
+        title.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        title.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
+        title.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
-        backButton.centerYAnchor.constraint(equalTo: dishTitle.centerYAnchor).isActive = true
+        backButton.centerYAnchor.constraint(equalTo: title.centerYAnchor).isActive = true
         backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
