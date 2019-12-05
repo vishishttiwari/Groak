@@ -13,6 +13,7 @@ internal class CartFooterView: UIView {
     // Optional Closures
     internal var order: (() -> ())?
     
+    private let price: UILabel = UILabel()
     private let orderButton: UIButton = UIButton()
     
     required init() {
@@ -26,15 +27,24 @@ internal class CartFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
+        price.text = "$\(calculateTotalPrice())"
+        price.isPrice()
+        self.addSubview(price)
+        
         orderButton.footerButton(title: "Order")
         orderButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
         self.addSubview(orderButton)
     }
     
     private func setupInitialLayout() {
+        price.translatesAutoresizingMaskIntoConstraints = false
         orderButton.translatesAutoresizingMaskIntoConstraints = false
         
-        orderButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        price.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        price.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        price.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
+        
+        orderButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         orderButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         orderButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         orderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceFromBottom).isActive = true
@@ -42,6 +52,19 @@ internal class CartFooterView: UIView {
     
     @objc func orderTapped() {
         order?()
+    }
+    
+    private func calculateTotalPrice() -> Double {
+        var totalPrice: Double = 0
+        for cartItem in LocalStorage.cartItems {
+            totalPrice += cartItem.totalPrice
+        }
+        
+        return totalPrice
+    }
+    
+    func reload() {
+        price.text = "$\(calculateTotalPrice())"
     }
     
     required init?(coder aDecoder: NSCoder) {

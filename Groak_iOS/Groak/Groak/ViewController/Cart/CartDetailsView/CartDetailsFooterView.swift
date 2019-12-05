@@ -32,12 +32,7 @@ internal class CartDetailsFooterView: UIView {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         price.text = "$\(cartItem.totalPrice)"
-        price.font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
-        price.numberOfLines = 0
-        price.textColor = .black
-        price.backgroundColor = .clear
-        price.lineBreakMode = .byTruncatingTail
-        price.textAlignment = .center
+        price.isPrice()
         self.addSubview(price)
         
         updateCartButton.footerButton(title: "Update Cart")

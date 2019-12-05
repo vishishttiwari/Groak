@@ -36,12 +36,7 @@ internal class AddToCartFooterView: UIView {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         price.text = "$\(Double(quantity) * dishPrice)"
-        price.font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
-        price.numberOfLines = 0
-        price.textColor = .black
-        price.backgroundColor = .clear
-        price.lineBreakMode = .byTruncatingTail
-        price.textAlignment = .center
+        price.isPrice()
         self.addSubview(price)
         
         addToCartButton.footerButton(title: "Add \(quantity) to Cart")

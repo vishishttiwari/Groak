@@ -45,7 +45,7 @@ internal class CartDetailsViewController: UIViewController {
             let customViewController1 = self.presentingViewController as? CartViewController
             
             self.dismiss(animated: true, completion: {
-                customViewController1?.cartView.reloadData()
+                customViewController1?.reload()
             })
         }
         

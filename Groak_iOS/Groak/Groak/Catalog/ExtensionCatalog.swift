@@ -177,6 +177,15 @@ extension UILabel {
         textAlignment = .center
     }
     
+    func isPrice() {
+        font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
+        numberOfLines = 0
+        textColor = .black
+        backgroundColor = .clear
+        lineBreakMode = .byTruncatingTail
+        textAlignment = .center
+    }
+    
     func colorBackgroundForegroundOfSubString(originalString: String, substrings: [String], backgroundColor: UIColor, foregroundColor: UIColor) {
         let s = originalString as NSString
         let att = NSMutableAttributedString(string: s as String)

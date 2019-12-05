@@ -11,7 +11,7 @@ import UIKit
 
 internal class CartViewController: UIViewController {
     private let header: CartHeaderView = CartHeaderView.init()
-    internal let cartView: CartView = CartView.init()
+    private let cartView: CartView = CartView.init()
     private let footer: CartFooterView = CartFooterView.init()
     
     required init() {
@@ -70,24 +70,6 @@ internal class CartViewController: UIViewController {
                 self.present(controller, animated: true, completion: nil)
             }
         }
-//        cartView.orderCompleted = { (_ successfully: Bool) -> () in
-//            let customViewController = self.presentingViewController as? MenuViewController
-//            self.dismiss(animated: true, completion: {
-//                if (successfully) {
-//                    Catalog.alert(vc: customViewController, title: "Order Placed", message: "Your Order has been placed")
-//                } else {
-//                    Catalog.alert(vc: customViewController, title: "Error while placing order", message: "An error occurred while placing order. Please try again.")
-//                }
-//                customViewController?.checkIfCartOrOrderExists()
-//            })
-//        }
-//        cartView.deleted = { () -> () in
-//            let customViewController = self.presentingViewController as? MenuViewController
-//
-//            self.dismiss(animated: true, completion: {
-//                customViewController?.checkIfCartOrOrderExists()
-//            })
-//        }
         
         cartView.translatesAutoresizingMaskIntoConstraints = false
         cartView.topAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
@@ -106,7 +88,7 @@ internal class CartViewController: UIViewController {
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormal).isActive = true
+        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightExtended).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
@@ -117,6 +99,11 @@ internal class CartViewController: UIViewController {
         self.dismiss(animated: true, completion: {
             customViewController1?.checkIfCartOrOrderExists()
         })
+    }
+    
+    func reload() {
+        cartView.reloadData()
+        footer.reload()
     }
     
     required init?(coder aDecoder: NSCoder) {
