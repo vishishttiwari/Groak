@@ -22,4 +22,8 @@ internal class Catalog {
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         view.present(alert, animated: true, completion: nil)
     }
+    
+    static func calculateTotalPriceOfDish(pricePerItem: Double, quantity: Int) -> Double {
+        return round(Double(quantity) * pricePerItem * 100)/100
+    }
 }

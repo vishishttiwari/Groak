@@ -10,6 +10,10 @@ import UIKit
 import Firebase
 import CoreData
 
+// See why any of the textview is not working. Make a different common extension for textview
+// Save the cart and show the order view controller
+// Any new stuff will be added to order view controller
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

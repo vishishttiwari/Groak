@@ -12,7 +12,7 @@ import CoreData
 
 internal class AddToCartViewController: UIViewController {
     private var header: AddToCartHeaderView?
-    private var addToCartOptions: AddToCartOptionsView?
+    private var addToCartExtras: AddToCartExtrasView?
     private var footer: AddToCartFooterView?
     
     required init(restaurant: Restaurant, dish: Dish) {
@@ -22,7 +22,7 @@ internal class AddToCartViewController: UIViewController {
         
         header = AddToCartHeaderView.init(dish: dish)
         footer = AddToCartFooterView.init(dish: dish)
-        addToCartOptions = AddToCartOptionsView.init(dish: dish, viewController: self)
+        addToCartExtras = AddToCartExtrasView.init(dish: dish, viewController: self)
         
         setupHeader()
         setupFooter(dish: dish)
@@ -46,9 +46,9 @@ internal class AddToCartViewController: UIViewController {
     private func setupFooter(dish: Dish) {
         self.view.addSubview(footer!)
         
-        footer?.order = { (_ count: Int, _ dishCost: Double) -> () in
-            if let options = self.addToCartOptions!.getSelections() {
-                let cartItem: CartItem = CartItem.init(dishName: dish.name, costPerItem: dishCost, quantity: count, options:options)
+        footer?.order = { (_ quantity: Int, _ dishPrice: Double) -> () in
+            if let extras = self.addToCartExtras!.getSelections() {
+                let cartItem: CartItem = CartItem.init(dishName: dish.name, pricePerItem: dishPrice, quantity: quantity, extras: extras)
                 LocalStorage.cartItems.append(cartItem)
                 
                 let customViewController1 = self.presentingViewController as? DishViewController
@@ -71,17 +71,17 @@ internal class AddToCartViewController: UIViewController {
     }
     
     private func setupDishDescription(restaurant: Restaurant) {
-        self.view.addSubview(addToCartOptions!)
+        self.view.addSubview(addToCartExtras!)
 
-        addToCartOptions?.cartAltered = { (_ price: Double) -> () in
+        addToCartExtras?.cartAltered = { (_ price: Double) -> () in
             self.footer?.orderAltered(alteredPrice: price)
         }
         
-        addToCartOptions?.translatesAutoresizingMaskIntoConstraints = false
-        addToCartOptions?.topAnchor.constraint(equalTo: header!.bottomAnchor).isActive = true
-        addToCartOptions?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        addToCartOptions?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        addToCartOptions?.bottomAnchor.constraint(equalTo: footer!.topAnchor).isActive = true
+        addToCartExtras?.translatesAutoresizingMaskIntoConstraints = false
+        addToCartExtras?.topAnchor.constraint(equalTo: header!.bottomAnchor).isActive = true
+        addToCartExtras?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        addToCartExtras?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        addToCartExtras?.bottomAnchor.constraint(equalTo: footer!.topAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

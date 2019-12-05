@@ -73,20 +73,20 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
             
             cell.name.text = cart[indexPath.row].dishName
             cell.quantity.text = "\(cart[indexPath.row].quantity)"
-            cell.cost.text = "$\(cart[indexPath.row].totalCost)"
+            cell.price.text = "$\(cart[indexPath.row].totalPrice)"
 
             var str = ""
-            for (option, comments) in cart[indexPath.row].options {
-                if (option != Catalog.specialInstructionsId) {
-                    str += "\(option):\n"
-                    for comment in comments {
-                        str += "\t-\(comment)\n"
+            for extra in cart[indexPath.row].extras {
+                if (extra.title != Catalog.specialInstructionsId) {
+                    str += "\(extra.title):\n"
+                    for option in extra.options {
+                        str += "\t- \(option.title): $\(option.price)\n"
                     }
                 } else {
-                    if (comments.count != 0) {
+                    if (extra.options.count > 0) {
                         str += "Special Instructions:\n"
-                        for comment in comments {
-                            str += "\t-\(comment)\n"
+                        for option in extra.options {
+                            str += "\t-\(option)\n"
                         }
                     }
                 }

@@ -10,25 +10,25 @@ import Foundation
 
 internal class CartItem {
     var dishName: String
-    var totalCost: Double
+    var totalPrice: Double
     var quantity: Int
-    var costPerItem: Double
-    var options: [String: [String]]
+    var pricePerItem: Double
+    var extras: [CartItemExtra]
     
     init() {
         dishName = ""
-        totalCost = 0
+        totalPrice = 0
         quantity = 0
-        costPerItem = 0
-        options = [:]
+        pricePerItem = 0
+        extras = []
     }
     
-    init(dishName: String, costPerItem: Double, quantity: Int, options: [String: [String]]) {
+    init(dishName: String, pricePerItem: Double, quantity: Int, extras: [CartItemExtra]) {
         self.dishName = dishName
-        self.totalCost =  round(Double(quantity) * costPerItem * 100)/100
+        self.totalPrice =  Catalog.calculateTotalPriceOfDish(pricePerItem: pricePerItem, quantity: quantity)
         self.quantity = quantity
-        self.costPerItem = costPerItem
-        self.options = options
+        self.pricePerItem = pricePerItem
+        self.extras = extras
     }
     
     func success() -> Bool {
@@ -41,16 +41,92 @@ internal class CartItem {
     
     var description: String {
         var str = "Dish Name: \(dishName)\n"
-        str += "Cost: \(totalCost)\n"
+        str += "Price: \(totalPrice)\n"
         str += "Quantity: \(quantity)\n"
-        str += "Cost Per Item: \(costPerItem)\n"
-        str += "Options: \n"
-        for (option, rows) in options {
-            str += "\tOption: \(option)"
-            for row in rows {
-                str += "\t\t\(row)"
+        str += "Price Per Item: \(pricePerItem)\n"
+        str += "Extras: \n"
+        for extra in extras {
+            str += "\tExtra: \(extra.description)"
+        }
+        
+        return str;
+    }
+}
+
+internal class CartItemExtra {
+    var title: String
+    var options: [CartItemsExtraOption]
+    
+    init() {
+        title = ""
+        options = []
+    }
+    
+    init(title: String) {
+        self.title = title
+        options = []
+    }
+    
+    func success() -> Bool {
+        if (title.count == 0) {
+            return false;
+        }
+        for option in options {
+            if !option.success() {
+                return false
             }
         }
+        
+        return true;
+    }
+    
+    var description: String {
+        var str = "Title: \(title)\n"
+        for option in options {
+            str += "\tExtra: \(option.description)"
+        }
+        
+        return str;
+    }
+}
+
+internal class CartItemsExtraOption {
+    var title: String
+    var price: Double
+    var optionIndex: Int
+    
+    init() {
+        title = ""
+        price = 0
+        optionIndex = -1
+    }
+    
+    init(title: String, price: Double, optionIndex: Int) {
+        self.title = title
+        self.price = price
+        self.optionIndex = optionIndex
+    }
+    
+    init(dishExtraOption: DishExtraOption, optionIndex: Int) {
+        self.title = dishExtraOption.title
+        self.price = dishExtraOption.price
+        self.optionIndex = optionIndex
+    }
+    
+    func success() -> Bool {
+        if (title.count == 0) {
+            return false
+        }
+        if (optionIndex < 0) {
+            return false
+        }
+        
+        return true;
+    }
+    
+    var description: String {
+        var str = "Title: \(title)\n"
+        str += "Price: \(price)\n"
         
         return str;
     }

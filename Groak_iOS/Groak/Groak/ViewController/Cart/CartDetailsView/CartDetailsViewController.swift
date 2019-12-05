@@ -16,9 +16,7 @@ internal class CartDetailsViewController: UIViewController {
     
     init(cartItem: CartItem, indexInCart: Int) {
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    func setCartItem(cartItem: CartItem, indexInCart: Int) {
+        
         setupHeader(dish: cartItem.dishName)
         setupFooter(cartItem: cartItem)
         setupCartDetails(cartItem: cartItem, indexInCart: indexInCart)

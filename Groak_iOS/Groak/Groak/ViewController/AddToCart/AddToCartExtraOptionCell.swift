@@ -1,5 +1,5 @@
 //
-//  AddToCartOptionsCell.swift
+//  AddToCartExtraOptionCell.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/20/19.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class AddToCartOptionsCell: UITableViewCell {
+internal class AddToCartExtraOptionCell: UITableViewCell {
     private let container: UIView = UIView()
     internal let label: UILabel = UILabel()
     internal let price: UILabel = UILabel()

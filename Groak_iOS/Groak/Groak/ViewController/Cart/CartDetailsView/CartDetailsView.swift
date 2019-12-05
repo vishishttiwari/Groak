@@ -41,11 +41,11 @@ internal class CartDetailsView: UIScrollView {
     
     private func setupCartItem() {
         var str = ""
-        for (category, comments) in cartItem.options {
-            if (category != Catalog.specialInstructionsId) {
-                str += "\(category):\n"
-                for comment in comments {
-                    str += "\t-\(comment)\n"
+        for extra in cartItem.extras {
+            if (extra.title != Catalog.specialInstructionsId) {
+                str += "\(extra.title):\n"
+                for option in extra.options {
+                    str += "\t- \(option.title): $\(option.price)\n"
                 }
             }
         }
@@ -88,11 +88,11 @@ internal class CartDetailsView: UIScrollView {
         specialInstructionsTitle.textColor = .black
         self.addSubview(specialInstructionsTitle)
         
-        if (cartItem.options[Catalog.specialInstructionsId]?.count == 0) {
+        if let lastExtra = cartItem.extras.last, lastExtra.options.count <= 0 {
             specialInstructions.text = placeholder
             specialInstructions.textColor = .lightGray
         } else {
-            specialInstructions.text = cartItem.options[Catalog.specialInstructionsId]?[0] ?? placeholder
+            specialInstructions.text = cartItem.extras.last?.options[0].title
             specialInstructions.textColor = .black
         }
         specialInstructions.delegate = self
@@ -159,7 +159,7 @@ internal class CartDetailsView: UIScrollView {
     
     @objc func add() {
         self.cartItem.quantity += 1
-        self.cartItem.totalCost = self.cartItem.costPerItem*Double(self.cartItem.quantity)
+        self.cartItem.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartItem.pricePerItem, quantity: self.cartItem.quantity)
         quantity.text = "\(self.cartItem.quantity)"
         orderAltered?(cartItem)
     }
@@ -167,7 +167,7 @@ internal class CartDetailsView: UIScrollView {
     @objc func reduce() {
         if (self.cartItem.quantity > 1) {
             self.cartItem.quantity -= 1
-            self.cartItem.totalCost = self.cartItem.costPerItem*Double(self.cartItem.quantity)
+            self.cartItem.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartItem.pricePerItem, quantity: self.cartItem.quantity)
             quantity.text = "\(self.cartItem.quantity)"
             orderAltered?(cartItem)
         }
@@ -200,10 +200,10 @@ extension CartDetailsView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if (textView.text != "") {
-                cartItem.options[Catalog.specialInstructionsId] = [textView.text]
+                cartItem.extras.last?.options.append(CartItemsExtraOption.init(title: textView.text, price: 0, optionIndex: 0))
                 orderAltered?(cartItem)
             } else {
-                cartItem.options[Catalog.specialInstructionsId] = []
+                cartItem.extras.last?.options.removeAll()
                 orderAltered?(cartItem)
             }
             textView.resignFirstResponder()

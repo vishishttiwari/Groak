@@ -13,7 +13,7 @@ internal class CartCell: UITableViewCell {
     private let container: UIView = UIView()
     internal let quantity: UILabel = UILabel()
     internal let name: UILabel = UILabel()
-    internal let cost: UILabel = UILabel()
+    internal let price: UILabel = UILabel()
     internal let details: UILabel = UILabel()
     
     private let dishHeight: CGFloat = 20
@@ -54,14 +54,14 @@ internal class CartCell: UITableViewCell {
         name.sizeToFit()
         container.addSubview(name)
         
-        cost.text = ""
-        cost.font = UIFont(name: FontCatalog.fontLevels[1], size: dishHeight)
-        cost.numberOfLines = 0
-        cost.textColor = .black
-        cost.lineBreakMode = .byTruncatingTail
-        cost.textAlignment = .right
-        cost.sizeToFit()
-        container.addSubview(cost)
+        price.text = ""
+        price.font = UIFont(name: FontCatalog.fontLevels[1], size: dishHeight)
+        price.numberOfLines = 0
+        price.textColor = .black
+        price.lineBreakMode = .byTruncatingTail
+        price.textAlignment = .right
+        price.sizeToFit()
+        container.addSubview(price)
         
         details.text = ""
         details.font = UIFont(name: FontCatalog.fontLevels[1], size: commentsHeight)
@@ -80,7 +80,7 @@ internal class CartCell: UITableViewCell {
         container.translatesAutoresizingMaskIntoConstraints = false
         quantity.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
-        cost.translatesAutoresizingMaskIntoConstraints = false
+        price.translatesAutoresizingMaskIntoConstraints = false
         details.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -99,10 +99,10 @@ internal class CartCell: UITableViewCell {
         name.widthAnchor.constraint(equalToConstant: 2*DimensionsCatalog.screenSize.width/3).isActive = true
         name.bottomAnchor.constraint(equalTo: details.topAnchor, constant: -2*DimensionsCatalog.distanceBetweenElements).isActive = true
         
-        cost.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
-        cost.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        cost.heightAnchor.constraint(equalToConstant: dishHeight).isActive = true
-        cost.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
+        price.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
+        price.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        price.heightAnchor.constraint(equalToConstant: dishHeight).isActive = true
+        price.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
         
         details.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         details.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true

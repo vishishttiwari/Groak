@@ -21,7 +21,7 @@ internal class Dish {
     var available: Bool
     var restrictions: [String: String]
     var nutrition: [String: Double]
-    var extras: [DishCategory]
+    var extras: [DishExtra]
     
     init() {
         reference = nil
@@ -53,7 +53,7 @@ internal class Dish {
         let tempExtras = dish["extras"] as? [[String:Any]] ?? []
         extras = []
         for extra in tempExtras {
-            extras.append(DishCategory.init(dishCategory: extra))
+            extras.append(DishExtra.init(dishExtra: extra))
         }
     }
     

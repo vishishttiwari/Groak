@@ -13,7 +13,7 @@ internal class CartDetailsFooterView: UIView {
     // Optional Closures
     internal var update: (() -> ())?
     
-    private let cost: UILabel = UILabel()
+    private let price: UILabel = UILabel()
     private let updateCartButton: UIButton = UIButton()
     
     private var cartItem: CartItem = CartItem.init()
@@ -31,14 +31,14 @@ internal class CartDetailsFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        cost.text = "$\(cartItem.totalCost)"
-        cost.font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.costSize)
-        cost.numberOfLines = 0
-        cost.textColor = .black
-        cost.backgroundColor = .clear
-        cost.lineBreakMode = .byTruncatingTail
-        cost.textAlignment = .center
-        self.addSubview(cost)
+        price.text = "$\(cartItem.totalPrice)"
+        price.font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
+        price.numberOfLines = 0
+        price.textColor = .black
+        price.backgroundColor = .clear
+        price.lineBreakMode = .byTruncatingTail
+        price.textAlignment = .center
+        self.addSubview(price)
         
         updateCartButton.footerButton(title: "Update Cart")
         updateCartButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
@@ -46,14 +46,14 @@ internal class CartDetailsFooterView: UIView {
     }
     
     private func setupInitialLayout() {
-        cost.translatesAutoresizingMaskIntoConstraints = false
+        price.translatesAutoresizingMaskIntoConstraints = false
         updateCartButton.translatesAutoresizingMaskIntoConstraints = false
         
-        cost.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        cost.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        cost.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.costSize).isActive = true
+        price.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        price.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        price.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
         
-        updateCartButton.topAnchor.constraint(equalTo: cost.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        updateCartButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         updateCartButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         updateCartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
         updateCartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceFromBottom).isActive = true
@@ -65,7 +65,7 @@ internal class CartDetailsFooterView: UIView {
     
     internal func orderAltered(cartItem: CartItem) {
         self.cartItem = cartItem
-        cost.text = "$\(cartItem.totalCost)"
+        price.text = "$\(cartItem.totalPrice)"
     }
     
     required init?(coder aDecoder: NSCoder) {
