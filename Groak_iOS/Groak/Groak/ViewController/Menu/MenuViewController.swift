@@ -27,6 +27,7 @@ internal class MenuViewController: UIViewController {
         setupFooter()
         
         downloadMenu(restaurant: restaurant)
+        downloadOrder()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -103,9 +104,10 @@ internal class MenuViewController: UIViewController {
                 return
             } else if (state == OrderOrCartState.Cart) {
                 controller = CartViewController.init()
+            } else if (state == OrderOrCartState.Order) {
+                controller = OrderViewController.init()
             } else {
                 controller = CartViewController.init()
-//                controller = OrderViewController.init()
             }
             
             controller?.modalTransitionStyle = .coverVertical
@@ -125,8 +127,12 @@ internal class MenuViewController: UIViewController {
     }
     
     internal func checkIfCartOrOrderExists() {
-        if LocalStorage.cartItems.count != 0 {
+        if LocalStorage.cart.exists && LocalStorage.tableOrder.exists {
+            self.footer.present(state: OrderOrCartState.OrderCart)
+        } else if LocalStorage.cart.exists {
             self.footer.present(state: OrderOrCartState.Cart)
+        } else if LocalStorage.tableOrder.exists {
+            self.footer.present(state: OrderOrCartState.Order)
         } else {
             self.footer.dismiss()
         }
@@ -141,6 +147,17 @@ internal class MenuViewController: UIViewController {
             self.categories = categories
             self.header?.reloadData(categories: categories)
             self.menu?.reloadData(categories: categories)
+        }
+    }
+    
+    private func downloadOrder() {
+        let fsOrder = FirestoreAPICallsOrders.init();
+        
+        fsOrder.fetchOrderFirestoreAPI()
+        
+        fsOrder.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
+            LocalStorage.tableOrder = order ?? Order.init()
+            self.checkIfCartOrOrderExists()
         }
     }
     

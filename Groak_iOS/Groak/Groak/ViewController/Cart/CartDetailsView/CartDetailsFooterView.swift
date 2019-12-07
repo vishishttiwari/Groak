@@ -16,12 +16,12 @@ internal class CartDetailsFooterView: UIView {
     private let price: UILabel = UILabel()
     private let updateCartButton: UIButton = UIButton()
     
-    private var cartItem: CartItem = CartItem.init()
+    private var cartDish: CartDish = CartDish.init()
     
-    required init(cartItem: CartItem) {
+    required init(cartDish: CartDish) {
         super.init(frame: .zero)
         
-        self.cartItem = cartItem
+        self.cartDish = cartDish
         
         setupViews()
         
@@ -31,7 +31,7 @@ internal class CartDetailsFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        price.text = "$\(cartItem.totalPrice)"
+        price.text = "$\(cartDish.totalPrice)"
         price.isPrice()
         self.addSubview(price)
         
@@ -58,9 +58,9 @@ internal class CartDetailsFooterView: UIView {
         update?()
     }
     
-    internal func orderAltered(cartItem: CartItem) {
-        self.cartItem = cartItem
-        price.text = "$\(cartItem.totalPrice)"
+    internal func orderAltered(cartDish: CartDish) {
+        self.cartDish = cartDish
+        price.text = "$\(cartDish.totalPrice)"
     }
     
     required init?(coder aDecoder: NSCoder) {

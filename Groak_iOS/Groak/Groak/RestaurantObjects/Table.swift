@@ -40,7 +40,7 @@ internal class Table {
         reference = table["originalReference"] as? DocumentReference
         orderReference = table["orderReference"] as? DocumentReference
         restaurantReference = table["restaurantReference"] as? DocumentReference
-        status = table["status"] as? TableStatus ?? TableStatus.available
+        status = (table["status"] as? String).map { (TableStatus(rawValue: $0) ?? TableStatus.available) } ?? TableStatus.available
     }
     
     func success() -> Bool {

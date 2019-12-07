@@ -20,7 +20,7 @@ internal class AddToCartExtrasView: UITableView {
     
     private var viewController: UIViewController?
     private var dishExtras: [DishExtra] = []
-    private var extras: [CartItemExtra] = []
+    private var extras: [CartDishExtra] = []
 
     private var price: Double = 0
     
@@ -48,12 +48,12 @@ internal class AddToCartExtrasView: UITableView {
     
     private func initializeSelectedMaps() {
         for extra in dishExtras {
-            extras.append(CartItemExtra.init(title: extra.title))
+            extras.append(CartDishExtra.init(title: extra.title))
         }
-        extras.append(CartItemExtra.init(title: Catalog.specialInstructionsId))
+        extras.append(CartDishExtra.init(title: Catalog.specialInstructionsId))
     }
     
-    internal func getSelections() -> [CartItemExtra]? {
+    internal func getSelections() -> [CartDishExtra]? {
         for (index, dishExtra) in dishExtras.enumerated() {
             let extraSelected = extras[index]
             if !dishExtra.multipleSelections {
@@ -153,7 +153,7 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: Catalog.specialInstructionsId, for: indexPath) as! SpecialInstructionsCell
             
             cell.commentAdded = { (_ comment: String) -> () in
-                self.extras.last?.options.append(CartItemsExtraOption.init(title: comment, price: 0, optionIndex: 0))
+                self.extras.last?.options.append(CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0))
             }
             
             return cell
@@ -172,7 +172,7 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
                     price -= lastOption.price
                     extras[sec].options = []
                 }
-                extras[sec].options.append(CartItemsExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
+                extras[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
                 price += dishExtra.options[row].price
                 cartAltered?(price)
             } else {
@@ -180,7 +180,7 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
                     deselectRow(at: IndexPath.init(row: row, section: sec), animated: true)
                     Catalog.alert(vc: viewController, title: "Maximum options selected", message: "Up to \(dishExtra.maxOptionsSelect) option(s) required for \(dishExtra.title)")
                 } else {
-                    extras[sec].options.append(CartItemsExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
+                    extras[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
                     price += dishExtra.options[row].price
                     cartAltered?(price)
                 }

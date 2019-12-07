@@ -13,64 +13,68 @@ internal enum OrderOrCartState {
     case None
     case Order
     case Cart
+    case OrderCart
 }
 
 internal class CartOrderFooterView: UIView {
     // Optional Closures
     internal var buttonTapped: ((_ state: OrderOrCartState) -> ())?
     
-    private let button: UIButton = UIButton()
-    
-    private var state: OrderOrCartState = OrderOrCartState.None
-    private let cornerRadius: CGFloat = 10
-    private let distanceFromEdge: CGFloat = 20
+    private let cartButton: UIButton = UIButton()
+    private let orderButton: UIButton = UIButton()
     
     required init() {
         super.init(frame: .zero)
         
         setupViews()
-        
-        setupInitialLayout()
     }
     
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        button.setTitle("", for: .normal)
-        button.titleLabel?.font = FontCatalog.buttonFont
-        button.backgroundColor = ColorsCatalog.greenColor
-        button.titleLabel?.textColor = .white
-        button.layer.cornerRadius = cornerRadius
-        button.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
-        self.addSubview(button)
-    }
-    
-    internal func setupInitialLayout() {
-        button.translatesAutoresizingMaskIntoConstraints = false
+        cartButton.footerButton(title: "Your Cart")
+        cartButton.backgroundColor = ColorsCatalog.greenColor
+        cartButton.addTarget(self, action: #selector(cartTapped), for: .touchUpInside)
+        self.addSubview(cartButton)
         
-        button.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceFromEdge).isActive = true
-        button.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceFromEdge).isActive = true
-        button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceFromEdge).isActive = true
-        button.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.bottomSafeArea).isActive = true
+        orderButton.footerButton(title: "Table Order")
+        orderButton.backgroundColor = ColorsCatalog.greenColor
+        orderButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
+        self.addSubview(orderButton)
     }
     
     internal func present(state: OrderOrCartState) {
-        self.state = state
         if (state == OrderOrCartState.Cart) {
-            self.button.setTitle("Show Cart", for: .normal)
-        } else {
-            self.button.setTitle("Show Order", for: .normal)
+            self.cartButton.frame.origin.x = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.cartButton.frame.origin.y = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.cartButton.frame.size.width = DimensionsCatalog.screenSize.width - 2*(DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)
+            self.cartButton.frame.size.height = self.frame.height - (DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements + DimensionsCatalog.bottomSafeArea)
+        } else if (state == OrderOrCartState.Order) {
+            self.orderButton.frame.origin.x = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.orderButton.frame.origin.y = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.orderButton.frame.size.width = DimensionsCatalog.screenSize.width - 2*(DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)
+            self.orderButton.frame.size.height = self.frame.height - (DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements + DimensionsCatalog.bottomSafeArea)
+        } else if (state == OrderOrCartState.OrderCart) {
+            cartButton.setTitle("Cart", for: .normal)
+            self.cartButton.frame.origin.x = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.cartButton.frame.origin.y = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.cartButton.frame.size.width = DimensionsCatalog.screenSize.width/2 - 1.5*(DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)
+            self.cartButton.frame.size.height = self.frame.height - (DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements + DimensionsCatalog.bottomSafeArea)
+            
+            orderButton.setTitle("Order", for: .normal)
+            self.orderButton.frame.origin.x = DimensionsCatalog.screenSize.width/2 + 0.5*(DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)
+            self.orderButton.frame.origin.y = DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            self.orderButton.frame.size.width = DimensionsCatalog.screenSize.width/2 - 1.5*(DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements)
+            self.orderButton.frame.size.height = self.frame.height - (DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements + DimensionsCatalog.bottomSafeArea)
         }
         DispatchQueue.main.async {
             UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
-                self.frame.origin.y = DimensionsCatalog.screenSize.height - (80 + DimensionsCatalog.bottomSafeArea)
+                self.frame.origin.y = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerFooterDimensions.heightNormal
             })
         }
     }
     
     internal func dismiss() {
-        self.state = OrderOrCartState.None
-        self.button.setTitle("", for: .normal)
         DispatchQueue.main.async {
             UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
                 self.frame.origin.y = DimensionsCatalog.screenSize.height
@@ -78,8 +82,12 @@ internal class CartOrderFooterView: UIView {
         }
     }
     
+    @objc func cartTapped() {
+        buttonTapped?(OrderOrCartState.Cart)
+    }
+    
     @objc func orderTapped() {
-        buttonTapped?(self.state)
+        buttonTapped?(OrderOrCartState.Order)
     }
     
     required init?(coder aDecoder: NSCoder) {

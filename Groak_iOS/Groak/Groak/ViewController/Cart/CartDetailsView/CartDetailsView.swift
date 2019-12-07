@@ -11,7 +11,7 @@ import UIKit
 
 internal class CartDetailsView: UIScrollView {
     // Optional Closures
-    internal var orderAltered: ((_ cartItem: CartItem) -> ())?
+    internal var orderAltered: ((_ cartDish: CartDish) -> ())?
     
     private let detailsTitle: UILabel = UILabel()
     private let details: UILabel = UILabel()
@@ -21,27 +21,27 @@ internal class CartDetailsView: UIScrollView {
     private let quantity: UILabel = UILabel()
     private let reduceDishButton: UIButton = UIButton()
     
-    private var cartItem: CartItem = CartItem.init()
+    private var cartDish: CartDish = CartDish.init()
     
     private let placeholder: String! = "Leave a note for the kitchen"
     private let buttonDimensions: CGFloat = 60
     
-    required init(cartItem: CartItem) {
+    required init(cartDish: CartDish) {
         super.init(frame: .zero)
         
-        self.cartItem = cartItem
+        self.cartDish = cartDish
         
         self.backgroundColor = .white
         self.showsVerticalScrollIndicator = true
         
-        setupCartItem()
+        setupCartDish()
         setupAdditionalComments()
         setupQuantity()
     }
     
-    private func setupCartItem() {
+    private func setupCartDish() {
         var str = ""
-        for extra in cartItem.extras {
+        for extra in cartDish.extras {
             if (extra.title != Catalog.specialInstructionsId) {
                 str += "\(extra.title):\n"
                 for option in extra.options {
@@ -88,11 +88,11 @@ internal class CartDetailsView: UIScrollView {
         specialInstructionsTitle.textColor = .black
         self.addSubview(specialInstructionsTitle)
         
-        if let lastExtra = cartItem.extras.last, lastExtra.options.count <= 0 {
+        if let lastExtra = cartDish.extras.last, lastExtra.options.count <= 0 {
             specialInstructions.text = placeholder
             specialInstructions.textColor = .lightGray
         } else {
-            specialInstructions.text = cartItem.extras.last?.options[0].title
+            specialInstructions.text = cartDish.extras.last?.options[0].title
             specialInstructions.textColor = .black
         }
         specialInstructions.delegate = self
@@ -128,7 +128,7 @@ internal class CartDetailsView: UIScrollView {
         reduceDishButton.addTarget(self, action: #selector(reduce), for: .touchUpInside)
         self.addSubview(reduceDishButton)
         
-        quantity.text = "\(cartItem.quantity)"
+        quantity.text = "\(cartDish.quantity)"
         quantity.font = UIFont(name: FontCatalog.fontLevels[0], size: buttonDimensions)
         quantity.numberOfLines = 0
         quantity.textColor = .black
@@ -158,18 +158,18 @@ internal class CartDetailsView: UIScrollView {
     }
     
     @objc func add() {
-        self.cartItem.quantity += 1
-        self.cartItem.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartItem.pricePerItem, quantity: self.cartItem.quantity)
-        quantity.text = "\(self.cartItem.quantity)"
-        orderAltered?(cartItem)
+        self.cartDish.quantity += 1
+        self.cartDish.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
+        quantity.text = "\(self.cartDish.quantity)"
+        orderAltered?(cartDish)
     }
     
     @objc func reduce() {
-        if (self.cartItem.quantity > 1) {
-            self.cartItem.quantity -= 1
-            self.cartItem.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartItem.pricePerItem, quantity: self.cartItem.quantity)
-            quantity.text = "\(self.cartItem.quantity)"
-            orderAltered?(cartItem)
+        if (self.cartDish.quantity > 1) {
+            self.cartDish.quantity -= 1
+            self.cartDish.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
+            quantity.text = "\(self.cartDish.quantity)"
+            orderAltered?(cartDish)
         }
     }
     
@@ -200,11 +200,11 @@ extension CartDetailsView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if (textView.text != "") {
-                cartItem.extras.last?.options.append(CartItemsExtraOption.init(title: textView.text, price: 0, optionIndex: 0))
-                orderAltered?(cartItem)
+                cartDish.extras.last?.options.append(CartDishExtraOption.init(title: textView.text, price: 0, optionIndex: 0))
+                orderAltered?(cartDish)
             } else {
-                cartItem.extras.last?.options.removeAll()
-                orderAltered?(cartItem)
+                cartDish.extras.last?.options.removeAll()
+                orderAltered?(cartDish)
             }
             textView.resignFirstResponder()
             return false

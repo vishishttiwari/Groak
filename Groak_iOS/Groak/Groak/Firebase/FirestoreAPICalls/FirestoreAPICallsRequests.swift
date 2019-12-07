@@ -13,9 +13,14 @@ internal class FirestoreAPICallsRequests {
     private let db = Firebase.db;
     
     var dataReceivedForFetchRequests: ((_ requests: Requests?) -> ())?
-    var dataAddedForAddRequests: ((_ success: Bool) -> ())?
+    var dataReceivedForAddRequests: ((_ success: Bool) -> ())?
     
     func fetchRequestsFirestoreAPI(restaurant: Restaurant, requestsId: String) {
+        if (!requestsId.isAlphanumeric) {
+            self.dataReceivedForFetchRequests?(nil)
+            return;
+        }
+        
         restaurant.reference?.collection("requests").document(requestsId)
         .addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
@@ -29,11 +34,11 @@ internal class FirestoreAPICallsRequests {
     
     func addRequestsFirestoreAPI(restaurant: Restaurant, requestsId: String, request: Request) {
         guard let requestsReference = restaurant.reference?.collection("requests").document(requestsId) else {
-            dataAddedForAddRequests?(false)
+            dataReceivedForAddRequests?(false)
             return
         }
         guard let orderReference = restaurant.reference?.collection("orders").document(requestsId) else {
-            dataAddedForAddRequests?(false)
+            dataReceivedForAddRequests?(false)
             return
         }
         
@@ -59,9 +64,9 @@ internal class FirestoreAPICallsRequests {
             return nil
         }) { (object, error) in
             if error != nil {
-                self.dataAddedForAddRequests?(false)
+                self.dataReceivedForAddRequests?(false)
             } else {
-                self.dataAddedForAddRequests?(true)
+                self.dataReceivedForAddRequests?(true)
             }
         }
     }

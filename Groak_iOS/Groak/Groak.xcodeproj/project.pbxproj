@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
 		7C0B8A932397742D0005F093 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A922397742D0005F093 /* LocalStorage.swift */; };
-		7C0B8A95239774BE0005F093 /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* CartItem.swift */; };
+		7C0B8A95239774BE0005F093 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* Cart.swift */; };
 		7C0B8A9823977A9A0005F093 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9723977A9A0005F093 /* CartViewController.swift */; };
 		7C0B8A9A23977ABA0005F093 /* CartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9923977ABA0005F093 /* CartHeaderView.swift */; };
 		7C0B8A9C23977BE10005F093 /* CartFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A9B23977BE10005F093 /* CartFooterView.swift */; };
@@ -45,6 +45,16 @@
 		7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */; };
 		7C59E400239789CC005CFED5 /* CartDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */; };
 		7C59E4022398A8E1005CFED5 /* CartDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4012398A8E1005CFED5 /* CartDetailsView.swift */; };
+		7C59E4052399FA66005CFED5 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4042399FA66005CFED5 /* OrderViewController.swift */; };
+		7C59E4072399FAF6005CFED5 /* OrderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4062399FAF6005CFED5 /* OrderHeaderView.swift */; };
+		7C59E4092399FB07005CFED5 /* OrderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4082399FB07005CFED5 /* OrderFooterView.swift */; };
+		7C59E40C2399FC0D005CFED5 /* OrderStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E40B2399FC0D005CFED5 /* OrderStatusCell.swift */; };
+		7C59E40E2399FC1F005CFED5 /* OrderDishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E40D2399FC1F005CFED5 /* OrderDishCell.swift */; };
+		7C59E4102399FC39005CFED5 /* SpecialInstructionsOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E40F2399FC39005CFED5 /* SpecialInstructionsOrderCell.swift */; };
+		7C59E4122399FE0C005CFED5 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E4112399FE0C005CFED5 /* OrderView.swift */; };
+		7C59E414239A0693005CFED5 /* FirestoreAPICallsOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E413239A0693005CFED5 /* FirestoreAPICallsOrders.swift */; };
+		7C59E416239AE317005CFED5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E415239AE317005CFED5 /* Order.swift */; };
+		7C59E418239B2CE7005CFED5 /* OrderCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E417239B2CE7005CFED5 /* OrderCommentCell.swift */; };
 		7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90652385CE180012D2BF /* DishImageCell.swift */; };
 		7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */; };
 		7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */; };
@@ -86,7 +96,7 @@
 		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
 		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
 		7C0B8A922397742D0005F093 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
-		7C0B8A94239774BE0005F093 /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
+		7C0B8A94239774BE0005F093 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		7C0B8A9723977A9A0005F093 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		7C0B8A9923977ABA0005F093 /* CartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartHeaderView.swift; sourceTree = "<group>"; };
 		7C0B8A9B23977BE10005F093 /* CartFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartFooterView.swift; sourceTree = "<group>"; };
@@ -122,6 +132,16 @@
 		7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsHeaderView.swift; sourceTree = "<group>"; };
 		7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsFooterView.swift; sourceTree = "<group>"; };
 		7C59E4012398A8E1005CFED5 /* CartDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsView.swift; sourceTree = "<group>"; };
+		7C59E4042399FA66005CFED5 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		7C59E4062399FAF6005CFED5 /* OrderHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHeaderView.swift; sourceTree = "<group>"; };
+		7C59E4082399FB07005CFED5 /* OrderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFooterView.swift; sourceTree = "<group>"; };
+		7C59E40B2399FC0D005CFED5 /* OrderStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusCell.swift; sourceTree = "<group>"; };
+		7C59E40D2399FC1F005CFED5 /* OrderDishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDishCell.swift; sourceTree = "<group>"; };
+		7C59E40F2399FC39005CFED5 /* SpecialInstructionsOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialInstructionsOrderCell.swift; sourceTree = "<group>"; };
+		7C59E4112399FE0C005CFED5 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		7C59E413239A0693005CFED5 /* FirestoreAPICallsOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsOrders.swift; sourceTree = "<group>"; };
+		7C59E415239AE317005CFED5 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		7C59E417239B2CE7005CFED5 /* OrderCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCommentCell.swift; sourceTree = "<group>"; };
 		7C7F90652385CE180012D2BF /* DishImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishImageCell.swift; sourceTree = "<group>"; };
 		7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishNutritionCell.swift; sourceTree = "<group>"; };
 		7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDescriptionCell.swift; sourceTree = "<group>"; };
@@ -316,6 +336,29 @@
 			path = CartDetailsView;
 			sourceTree = "<group>";
 		};
+		7C59E4032399FA48005CFED5 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				7C59E4042399FA66005CFED5 /* OrderViewController.swift */,
+				7C59E4062399FAF6005CFED5 /* OrderHeaderView.swift */,
+				7C59E4082399FB07005CFED5 /* OrderFooterView.swift */,
+				7C59E40A2399FBF8005CFED5 /* OrderView */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		7C59E40A2399FBF8005CFED5 /* OrderView */ = {
+			isa = PBXGroup;
+			children = (
+				7C59E4112399FE0C005CFED5 /* OrderView.swift */,
+				7C59E40B2399FC0D005CFED5 /* OrderStatusCell.swift */,
+				7C59E40D2399FC1F005CFED5 /* OrderDishCell.swift */,
+				7C59E417239B2CE7005CFED5 /* OrderCommentCell.swift */,
+				7C59E40F2399FC39005CFED5 /* SpecialInstructionsOrderCell.swift */,
+			);
+			path = OrderView;
+			sourceTree = "<group>";
+		};
 		7C7F906B2385E2FE0012D2BF /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,6 +435,7 @@
 				7C25A4A62384C44C009F26F9 /* Dish */,
 				7CEC21EA2386397700F96390 /* AddToCart */,
 				7C0B8A962397784F0005F093 /* Cart */,
+				7C59E4032399FA48005CFED5 /* Order */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -422,6 +466,7 @@
 				7C25A46E2373B19B009F26F9 /* FirestoreAPICallsTables.swift */,
 				7C25A49423838130009F26F9 /* FirestoreAPICallsDishes.swift */,
 				7C9854F6238BC85300241A62 /* FirestoreAPICallsRequests.swift */,
+				7C59E413239A0693005CFED5 /* FirestoreAPICallsOrders.swift */,
 			);
 			path = FirestoreAPICalls;
 			sourceTree = "<group>";
@@ -435,7 +480,8 @@
 				7C25A49223837926009F26F9 /* Dish.swift */,
 				7CEC21F723877C4A00F96390 /* DishExtra.swift */,
 				7C9854F8238BCDB000241A62 /* Requests.swift */,
-				7C0B8A94239774BE0005F093 /* CartItem.swift */,
+				7C0B8A94239774BE0005F093 /* Cart.swift */,
+				7C59E415239AE317005CFED5 /* Order.swift */,
 			);
 			path = RestaurantObjects;
 			sourceTree = "<group>";
@@ -609,6 +655,7 @@
 				7CDDD9F32373837E00C6EF37 /* Firebase.swift in Sources */,
 				7C7F90712385E59D0012D2BF /* IngredientsHeaderView.swift in Sources */,
 				7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */,
+				7C59E418239B2CE7005CFED5 /* OrderCommentCell.swift in Sources */,
 				7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */,
 				7CEC21EE23863BC100F96390 /* AddToCartHeaderView.swift in Sources */,
 				7C9854F9238BCDB000241A62 /* Requests.swift in Sources */,
@@ -618,11 +665,14 @@
 				7C25A49D23847232009F26F9 /* SearchViewController.swift in Sources */,
 				7C25A4A52384A376009F26F9 /* MenuHeaderView.swift in Sources */,
 				7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */,
+				7C59E4072399FAF6005CFED5 /* OrderHeaderView.swift in Sources */,
+				7C59E40C2399FC0D005CFED5 /* OrderStatusCell.swift in Sources */,
 				7C25A49523838130009F26F9 /* FirestoreAPICallsDishes.swift in Sources */,
 				7C0B8A9A23977ABA0005F093 /* CartHeaderView.swift in Sources */,
 				7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */,
 				7CEC2204238B723500F96390 /* SuggestionsCell.swift in Sources */,
 				7C25A4A023847A10009F26F9 /* SearchHeaderView.swift in Sources */,
+				7C59E40E2399FC1F005CFED5 /* OrderDishCell.swift in Sources */,
 				7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */,
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
 				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
@@ -633,10 +683,12 @@
 				7C25A49323837926009F26F9 /* Dish.swift in Sources */,
 				7C59E4022398A8E1005CFED5 /* CartDetailsView.swift in Sources */,
 				7CEC21F823877C4B00F96390 /* DishExtra.swift in Sources */,
-				7C0B8A95239774BE0005F093 /* CartItem.swift in Sources */,
+				7C0B8A95239774BE0005F093 /* Cart.swift in Sources */,
 				7CEC21F423863FB700F96390 /* AddToCartExtraOptionCell.swift in Sources */,
 				7C25A4AD2384C586009F26F9 /* DishViewController.swift in Sources */,
+				7C59E4052399FA66005CFED5 /* OrderViewController.swift in Sources */,
 				7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */,
+				7C59E416239AE317005CFED5 /* Order.swift in Sources */,
 				7CEC21F223863F7000F96390 /* AddToCartExtrasView.swift in Sources */,
 				7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */,
 				7C9854F7238BC85300241A62 /* FirestoreAPICallsRequests.swift in Sources */,
@@ -657,11 +709,14 @@
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				7C7F907E2385FEDC0012D2BF /* ClassCatalog.swift in Sources */,
 				7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */,
+				7C59E4092399FB07005CFED5 /* OrderFooterView.swift in Sources */,
 				7C0B8A9C23977BE10005F093 /* CartFooterView.swift in Sources */,
 				7C25A47E2375F9AC009F26F9 /* MenuViewController.swift in Sources */,
 				7CEC2201238B68E900F96390 /* SpecialRequestsFooterView.swift in Sources */,
 				7C0B8AA5239783280005F093 /* CartCell.swift in Sources */,
+				7C59E4122399FE0C005CFED5 /* OrderView.swift in Sources */,
 				7C25A4A323848E4D009F26F9 /* SearchMenuView.swift in Sources */,
+				7C59E414239A0693005CFED5 /* FirestoreAPICallsOrders.swift in Sources */,
 				7C7F90732385E5BC0012D2BF /* IngredientsView.swift in Sources */,
 				7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */,
 				7C0B8AA7239783410005F093 /* SpecialInstructionsCartCell.swift in Sources */,
@@ -671,6 +726,7 @@
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
+				7C59E4102399FC39005CFED5 /* SpecialInstructionsOrderCell.swift in Sources */,
 				7CEC21EC23863AC700F96390 /* AddToCartViewController.swift in Sources */,
 				7CDDD9F1237382CA00C6EF37 /* FirestoreAPICallsRestaurants.swift in Sources */,
 				7C25A4812383534E009F26F9 /* MenuCategory.swift in Sources */,

@@ -11,13 +11,13 @@ import UIKit
 
 internal class CartView: UITableView {
     internal var dismiss: (() -> ())?
-    internal var cartItemSelected: ((_ cartItem: CartItem, _ indexInCart: Int) -> ())?
+    internal var cartDishSelected: ((_ cartDish: CartDish, _ indexInCart: Int) -> ())?
     
     private let headerCellId = "headerCellId"
     private let cartCellId = "cartCellId"
     private let specialInstructionsCellId = "specialInstructionsCellId"
     
-    private var cart: [CartItem] = LocalStorage.cartItems
+    private var cart = LocalStorage.cart
     
     required init() {
         super.init(frame: .zero, style: .grouped)
@@ -62,7 +62,7 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) { return cart.count}
+        if (section == 0) { return cart.dishes.count}
         else if (section == 1) { return 1 }
         return 0
     }
@@ -71,12 +71,12 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
         if (indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: cartCellId, for: indexPath) as! CartCell
             
-            cell.name.text = cart[indexPath.row].dishName
-            cell.quantity.text = "\(cart[indexPath.row].quantity)"
-            cell.price.text = "$\(cart[indexPath.row].totalPrice)"
+            cell.name.text = cart.dishes[indexPath.row].dishName
+            cell.quantity.text = "\(cart.dishes[indexPath.row].quantity)"
+            cell.price.text = "$\(cart.dishes[indexPath.row].totalPrice)"
 
             var str = ""
-            for extra in cart[indexPath.row].extras {
+            for extra in cart.dishes[indexPath.row].extras {
                 if (extra.title != Catalog.specialInstructionsId) {
                     str += "\(extra.title):\n"
                     for option in extra.options {
@@ -105,7 +105,7 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.section == 0) {
-            cartItemSelected?(cart[indexPath.row], indexPath.row)
+            cartDishSelected?(cart.dishes[indexPath.row], indexPath.row)
         }
     }
     
@@ -115,9 +115,9 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            cart.remove(at: indexPath.row)
-            LocalStorage.cartItems.remove(at: indexPath.row)
-            if (LocalStorage.cartItems.count > 0) {
+            cart.dishes.remove(at: indexPath.row)
+            LocalStorage.cart.dishes.remove(at: indexPath.row)
+            if (LocalStorage.cart.dishes.count > 0) {
                 self.reloadData()
             } else {
                 dismiss?()

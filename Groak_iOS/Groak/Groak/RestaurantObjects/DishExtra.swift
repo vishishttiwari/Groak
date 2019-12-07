@@ -67,7 +67,7 @@ internal class DishExtraOption {
     func success() -> Bool {
         if (title.count == 0) {
             return false;
-        } else if (price == -1) {
+        } else if (price < 0) {
             return false;
         }
         

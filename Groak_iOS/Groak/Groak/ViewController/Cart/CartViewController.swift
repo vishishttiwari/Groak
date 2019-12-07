@@ -14,6 +14,8 @@ internal class CartViewController: UIViewController {
     private let cartView: CartView = CartView.init()
     private let footer: CartFooterView = CartFooterView.init()
     
+    private let fsOrders = FirestoreAPICallsOrders.init();
+    
     required init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -60,8 +62,8 @@ internal class CartViewController: UIViewController {
                 customViewController1?.checkIfCartOrOrderExists()
             })
         }
-        cartView.cartItemSelected = { (_ cartItem: CartItem, _ indexInCart: Int) -> () in
-            let controller = CartDetailsViewController(cartItem: cartItem, indexInCart: indexInCart)
+        cartView.cartDishSelected = { (_ cartDish: CartDish, _ indexInCart: Int) -> () in
+            let controller = CartDetailsViewController(cartDish: cartDish, indexInCart: indexInCart)
 
             controller.modalTransitionStyle = .coverVertical
             controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -82,7 +84,18 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(footer)
         
         footer.order = { () -> () in
-//            self.cartView.order()
+            self.fsOrders.addOrdersFirestoreAPI()
+            self.fsOrders.dataReceivedForAddOrder = { (_ success: Bool) -> () in
+                if success {
+                    LocalStorage.cart.delete()
+                    let customViewController1 = self.presentingViewController as? MenuViewController
+                    self.dismiss(animated: true, completion: {
+                        customViewController1?.checkIfCartOrOrderExists()
+                    })
+                } else {
+                    Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
+                }
+            }
         }
         
         footer.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +106,7 @@ internal class CartViewController: UIViewController {
     }
     
     private func deleteCart() {
-        LocalStorage.cartItems = []
+        LocalStorage.cart.delete()
         let customViewController1 = self.presentingViewController as? MenuViewController
         
         self.dismiss(animated: true, completion: {

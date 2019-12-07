@@ -14,12 +14,12 @@ internal class CartDetailsViewController: UIViewController {
     private var cartDetailsView: CartDetailsView?
     private var footer: CartDetailsFooterView?
     
-    init(cartItem: CartItem, indexInCart: Int) {
+    init(cartDish: CartDish, indexInCart: Int) {
         super.init(nibName: nil, bundle: nil)
         
-        setupHeader(dish: cartItem.dishName)
-        setupFooter(cartItem: cartItem)
-        setupCartDetails(cartItem: cartItem, indexInCart: indexInCart)
+        setupHeader(dish: cartDish.dishName)
+        setupFooter(cartDish: cartDish)
+        setupCartDetails(cartDish: cartDish, indexInCart: indexInCart)
     }
     
     private func setupHeader(dish: String) {
@@ -37,8 +37,8 @@ internal class CartDetailsViewController: UIViewController {
         header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightNormal).isActive = true
     }
     
-    private func setupFooter(cartItem: CartItem) {
-        footer = CartDetailsFooterView.init(cartItem: cartItem)
+    private func setupFooter(cartDish: CartDish) {
+        footer = CartDetailsFooterView.init(cartDish: cartDish)
         self.view.addSubview(footer!)
         
         footer?.update = { () -> () in
@@ -56,13 +56,13 @@ internal class CartDetailsViewController: UIViewController {
         footer?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
-    private func setupCartDetails(cartItem: CartItem, indexInCart: Int) {
-        cartDetailsView = CartDetailsView.init(cartItem: cartItem)
+    private func setupCartDetails(cartDish: CartDish, indexInCart: Int) {
+        cartDetailsView = CartDetailsView.init(cartDish: cartDish)
         self.view.addSubview(cartDetailsView!)
         
-        cartDetailsView?.orderAltered = { (_ cartItem: CartItem) -> () in
-            self.footer?.orderAltered(cartItem: cartItem)
-            LocalStorage.cartItems[indexInCart] = cartItem
+        cartDetailsView?.orderAltered = { (_ cartDish: CartDish) -> () in
+            self.footer?.orderAltered(cartDish: cartDish)
+            LocalStorage.cart.dishes[indexInCart] = cartDish
         }
         
         cartDetailsView?.translatesAutoresizingMaskIntoConstraints = false

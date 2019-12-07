@@ -48,8 +48,8 @@ internal class AddToCartViewController: UIViewController {
         
         footer?.order = { (_ quantity: Int, _ dishPrice: Double) -> () in
             if let extras = self.addToCartExtras!.getSelections() {
-                let cartItem: CartItem = CartItem.init(dishName: dish.name, pricePerItem: dishPrice, quantity: quantity, extras: extras)
-                LocalStorage.cartItems.append(cartItem)
+                let cartDish: CartDish = CartDish.init(dishName: dish.name, pricePerItem: dishPrice, quantity: quantity, extras: extras)
+                LocalStorage.cart.dishes.append(cartDish)
                 
                 let customViewController1 = self.presentingViewController as? DishViewController
                 let customViewController2 = customViewController1?.presentingViewController as? MenuViewController

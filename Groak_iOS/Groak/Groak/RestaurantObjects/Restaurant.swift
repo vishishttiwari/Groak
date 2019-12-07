@@ -23,8 +23,8 @@ internal class Restaurant {
         name = ""
         type = []
         logo = ""
-        latitude = 0
-        longitude = 0
+        latitude = -1000
+        longitude = -1000
     }
     
     init(_ temp: String) {
@@ -34,8 +34,8 @@ internal class Restaurant {
         name = "The Yellow Chilli"
         type = []
         logo = ""
-        latitude = 0
-        longitude = 0
+        latitude = -1000
+        longitude = -1000
     }
     
     init(restaurant: [String: Any]) {

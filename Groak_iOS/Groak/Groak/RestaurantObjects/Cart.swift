@@ -1,5 +1,5 @@
 //
-//  CartItem.swift
+//  Cart.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 12/3/19.
@@ -8,22 +8,87 @@
 
 import Foundation
 
-internal class CartItem {
+internal class Cart {
+    var dishes: [CartDish] = []
+    var comment: String = ""
+    
+    init() {
+    }
+    
+    init(dishes: [CartDish], comment: String) {
+        self.dishes = dishes
+        self.comment = comment
+    }
+    
+    init(newDishes: [CartDish], newComment: String) {
+        self.dishes.append(contentsOf: newDishes)
+        self.comment = newComment
+    }
+    
+    init(newDishes: [CartDish]) {
+        self.dishes.append(contentsOf: newDishes)
+    }
+    
+    init(newComment: String) {
+        self.comment = newComment
+    }
+    
+    init(dish: CartDish) {
+        dishes.append(dish)
+    }
+    
+    func delete() {
+        dishes = []
+        comment = ""
+    }
+    
+    func success() -> Bool {
+        for dish in dishes {
+            if !dish.success() {
+                return false
+            }
+        }
+        if comment.count == 0 {
+            return false
+        }
+        
+        return true
+    }
+    
+    var description: String {
+        var str = "Dishes: \n"
+        for dish in dishes {
+            str += "\t\(dish.description)\n"
+        }
+        str += "Comment: \(comment)\n"
+        
+        return str
+    }
+    
+    var exists: Bool {
+        if dishes.count > 0 {
+            return true
+        }
+        return false
+    }
+}
+
+internal class CartDish {
     var dishName: String
     var totalPrice: Double
     var quantity: Int
     var pricePerItem: Double
-    var extras: [CartItemExtra]
+    var extras: [CartDishExtra]
     
     init() {
         dishName = ""
-        totalPrice = 0
-        quantity = 0
-        pricePerItem = 0
+        totalPrice = -1
+        quantity = -1
+        pricePerItem = -1
         extras = []
     }
     
-    init(dishName: String, pricePerItem: Double, quantity: Int, extras: [CartItemExtra]) {
+    init(dishName: String, pricePerItem: Double, quantity: Int, extras: [CartDishExtra]) {
         self.dishName = dishName
         self.totalPrice =  Catalog.calculateTotalPriceOfDish(pricePerItem: pricePerItem, quantity: quantity)
         self.quantity = quantity
@@ -33,6 +98,15 @@ internal class CartItem {
     
     func success() -> Bool {
         if (dishName.count == 0) {
+            return false;
+        }
+        if (totalPrice < 0) {
+            return false;
+        }
+        if (quantity < 0) {
+            return false;
+        }
+        if (pricePerItem < 0) {
             return false;
         }
         
@@ -53,9 +127,9 @@ internal class CartItem {
     }
 }
 
-internal class CartItemExtra {
+internal class CartDishExtra {
     var title: String
-    var options: [CartItemsExtraOption]
+    var options: [CartDishExtraOption]
     
     init() {
         title = ""
@@ -90,14 +164,14 @@ internal class CartItemExtra {
     }
 }
 
-internal class CartItemsExtraOption {
+internal class CartDishExtraOption {
     var title: String
     var price: Double
     var optionIndex: Int
     
     init() {
         title = ""
-        price = 0
+        price = -1
         optionIndex = -1
     }
     
@@ -115,6 +189,9 @@ internal class CartItemsExtraOption {
     
     func success() -> Bool {
         if (title.count == 0) {
+            return false
+        }
+        if (price < 0) {
             return false
         }
         if (optionIndex < 0) {
