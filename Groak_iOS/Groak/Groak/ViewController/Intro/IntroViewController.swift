@@ -7,21 +7,21 @@
 //
 //  This sets up the intro view controller. Thi first view controller the user will see
 
-
+import Foundation
 import UIKit
 
 class IntroViewController: UIViewController {
     
-//    private var cameraView: CameraQRCodeView = CameraQRCodeView()
+    private var cameraView: CameraQRCodeView = CameraQRCodeView()
     private var bottomSheetView: BottomSheetView?
     
-    private var closestRestaurant: Restaurant? = nil
+    private var selectedRestaurant: Restaurant? = nil
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         
         setTopBottomSafeArea()
-//        setupCameraQRCodeView()
+        setupCameraQRCodeView()
         setupBottomSheetView()
         
         
@@ -30,15 +30,15 @@ class IntroViewController: UIViewController {
         
         
         
-        let restaurant = Restaurant.init("jk")
-        let controller = MenuViewController(restaurant: restaurant)
-
-        controller.modalTransitionStyle = .coverVertical
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-
-        DispatchQueue.main.async {
-            self.present(controller, animated: true, completion: nil)
-        }
+//        let restaurant = Restaurant.init("jk")
+//        let controller = MenuViewController(restaurant: restaurant)
+//
+//        controller.modalTransitionStyle = .coverVertical
+//        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//
+//        DispatchQueue.main.async {
+//            self.present(controller, animated: true, completion: nil)
+//        }
         
         
         
@@ -65,25 +65,25 @@ class IntroViewController: UIViewController {
     
     // This sets up the camera view with qr code scanner
     private func setupCameraQRCodeView() {
-//        self.view.addSubview(cameraView)
+        self.view.addSubview(cameraView)
         
-        // When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
-        // user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
-        // the camera stops scanning for qr codes
-//        cameraView.restaurantFound = { (_ restaurant: Restaurant) -> () in
-//            if restaurant.reference?.documentID == self.closestRestaurant?.reference?.documentID {
-//                self.cameraView.stopScanningForQR()
-//
-//                let controller = MenuViewController(restaurant: restaurant)
-//
-//                controller.modalTransitionStyle = .coverVertical
-//                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//
-//                DispatchQueue.main.async {
-//                    self.present(controller, animated: true, completion: nil)
-//                }
-//            }
-//        }
+//      When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
+//      user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
+//      the camera stops scanning for qr codes
+        cameraView.restaurantFound = { (_ restaurant: Restaurant) -> () in
+            if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID {
+                self.cameraView.stopScanningForQR()
+
+                let controller = MenuViewController(restaurant: restaurant)
+
+                controller.modalTransitionStyle = .coverVertical
+                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+
+                DispatchQueue.main.async {
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     // This sets up the view at the bottom
@@ -98,17 +98,25 @@ class IntroViewController: UIViewController {
         bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height
         
         // When a restaurant is found near you then start scanning for barcodes because you are at a restaurant that uses groak
-        bottomSheetView!.restaurantFound = { (_ restaurant: Restaurant) -> () in
-//            self.cameraView.startScanningForQR()
+        bottomSheetView!.restaurantFound = { (_ state: BottomSheetState, _ restaurant: Restaurant) -> () in
+            self.cameraView.startScanningForQR()
             
-            self.closestRestaurant = restaurant
+            self.selectedRestaurant = restaurant
             
             DispatchQueue.main.async {
                 UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
                     self.bottomSheetView!.frame.origin.y = DimensionsCatalog.bottomSheetHeight
                     self.bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.bottomSheetHeight
+                    self.bottomSheetView!.roundCorners([.layerMaxXMinYCorner, .layerMinXMinYCorner ], radius: 2*DimensionsCatalog.cornerRadius)
                 })
             }
         }
+    }
+    
+    func setBackToRestaurantNotFound() {
+        bottomSheetView!.frame.origin.y = 0
+        bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height
+        bottomSheetView!.layer.cornerRadius = 0
+        bottomSheetView!.setBackToRestaurantNotFound()
     }
 }

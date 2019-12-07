@@ -34,4 +34,18 @@ internal class DistanceCatalog {
         let distance = getDistance(location1: location1, location2: location2)
         return distance > distanceChangeBufferInMeters
     }
+    
+    static func getRestaurantsNearCurrentLocation(restaurants: [Restaurant], minGeoPoint: GeoPoint, maxGeoPoint: GeoPoint) -> [Restaurant] {
+        var selectedRestaurants: [Restaurant] = []
+        for restaurant in restaurants {
+            if restaurant.latitude > minGeoPoint.latitude &&
+                restaurant.latitude < maxGeoPoint.latitude &&
+                restaurant.longitude > minGeoPoint.longitude &&
+                restaurant.longitude < maxGeoPoint.longitude {
+                selectedRestaurants.append(restaurant)
+            }
+        }
+        
+        return selectedRestaurants
+    }
 }

@@ -42,7 +42,11 @@ internal class MenuViewController: UIViewController {
             self.menu?.sectionChanged(section: section)
         }
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            let customViewController1 = self.presentingViewController as? IntroViewController
+            
+            self.dismiss(animated: true, completion: {
+                customViewController1?.setBackToRestaurantNotFound()
+            })
         }
         header?.find = { () -> () in
             let controller = SearchViewController(restaurant: restaurant, categories: self.categories)
@@ -66,7 +70,7 @@ internal class MenuViewController: UIViewController {
         menu = MenuView.init()
         self.view.addSubview(menu!)
         
-        menu?.dishChosen = { (_ dish: Dish) -> () in
+        menu?.dishSelected = { (_ dish: Dish) -> () in
             let controller = DishViewController.init(restaurant: restaurant, dish: dish)
             
             controller.modalTransitionStyle = .coverVertical

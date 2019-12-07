@@ -11,8 +11,9 @@ import Firebase
 import CoreData
 
 // See why any of the textview is not working. Make a different common extension for textview
-// Save the cart and show the order view controller
 // Any new stuff will be added to order view controller
+// Add a back button to BottomSheetView
+// See when you come back from MenuViewController, how to make the list appear again
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

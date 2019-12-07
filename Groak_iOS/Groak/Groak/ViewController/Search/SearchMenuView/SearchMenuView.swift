@@ -13,7 +13,7 @@ internal class SearchMenuView: UITableView {
     
     // Optional Closures
     internal var removeKeyboard: (() -> ())?
-    internal var dishChosen: ((_ dish: Dish) -> ())?
+    internal var dishSelected: ((_ dish: Dish) -> ())?
     
     private let cellId: String = "cellId"
     private let headerId: String = "headerId"
@@ -81,7 +81,7 @@ extension SearchMenuView: UITableViewDataSource, UITableViewDelegate, UIScrollVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dishChosen?(categories[indexPath.section].dishes[indexPath.row])
+        dishSelected?(categories[indexPath.section].dishes[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

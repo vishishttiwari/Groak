@@ -55,6 +55,10 @@
 		7C59E414239A0693005CFED5 /* FirestoreAPICallsOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E413239A0693005CFED5 /* FirestoreAPICallsOrders.swift */; };
 		7C59E416239AE317005CFED5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E415239AE317005CFED5 /* Order.swift */; };
 		7C59E418239B2CE7005CFED5 /* OrderCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E417239B2CE7005CFED5 /* OrderCommentCell.swift */; };
+		7C59E43E239B4A89005CFED5 /* BottomSheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E43D239B4A89005CFED5 /* BottomSheetHeaderView.swift */; };
+		7C59E440239B4DA5005CFED5 /* RestaurantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E43F239B4DA4005CFED5 /* RestaurantsListView.swift */; };
+		7C59E442239B4EBE005CFED5 /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E441239B4EBE005CFED5 /* RestaurantCell.swift */; };
+		7C59E444239B5126005CFED5 /* RestaurantFullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E443239B5126005CFED5 /* RestaurantFullView.swift */; };
 		7C7F90662385CE180012D2BF /* DishImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90652385CE180012D2BF /* DishImageCell.swift */; };
 		7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */; };
 		7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */; };
@@ -142,6 +146,10 @@
 		7C59E413239A0693005CFED5 /* FirestoreAPICallsOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreAPICallsOrders.swift; sourceTree = "<group>"; };
 		7C59E415239AE317005CFED5 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		7C59E417239B2CE7005CFED5 /* OrderCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCommentCell.swift; sourceTree = "<group>"; };
+		7C59E43D239B4A89005CFED5 /* BottomSheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetHeaderView.swift; sourceTree = "<group>"; };
+		7C59E43F239B4DA4005CFED5 /* RestaurantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsListView.swift; sourceTree = "<group>"; };
+		7C59E441239B4EBE005CFED5 /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		7C59E443239B5126005CFED5 /* RestaurantFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFullView.swift; sourceTree = "<group>"; };
 		7C7F90652385CE180012D2BF /* DishImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishImageCell.swift; sourceTree = "<group>"; };
 		7C7F90672385CEDA0012D2BF /* DishNutritionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishNutritionCell.swift; sourceTree = "<group>"; };
 		7C7F90692385CEF10012D2BF /* DishDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDescriptionCell.swift; sourceTree = "<group>"; };
@@ -359,6 +367,18 @@
 			path = OrderView;
 			sourceTree = "<group>";
 		};
+		7C59E43C239B49CE005CFED5 /* SheetView */ = {
+			isa = PBXGroup;
+			children = (
+				7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */,
+				7C59E43D239B4A89005CFED5 /* BottomSheetHeaderView.swift */,
+				7C59E43F239B4DA4005CFED5 /* RestaurantsListView.swift */,
+				7C59E441239B4EBE005CFED5 /* RestaurantCell.swift */,
+				7C59E443239B5126005CFED5 /* RestaurantFullView.swift */,
+			);
+			path = SheetView;
+			sourceTree = "<group>";
+		};
 		7C7F906B2385E2FE0012D2BF /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,7 +465,7 @@
 			children = (
 				7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */,
 				7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */,
-				7C25A4702373BEDE009F26F9 /* BottomSheetView.swift */,
+				7C59E43C239B49CE005CFED5 /* SheetView */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -659,6 +679,7 @@
 				7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */,
 				7CEC21EE23863BC100F96390 /* AddToCartHeaderView.swift in Sources */,
 				7C9854F9238BCDB000241A62 /* Requests.swift in Sources */,
+				7C59E43E239B4A89005CFED5 /* BottomSheetHeaderView.swift in Sources */,
 				7C25A4912383738E009F26F9 /* DishCell.swift in Sources */,
 				7C25A476237525C4009F26F9 /* ExtensionCatalog.swift in Sources */,
 				7C9854F5238BC42300241A62 /* SpecialRequestsCell.swift in Sources */,
@@ -676,6 +697,7 @@
 				7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */,
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
 				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
+				7C59E442239B4EBE005CFED5 /* RestaurantCell.swift in Sources */,
 				7C0B8A932397742D0005F093 /* LocalStorage.swift in Sources */,
 				7C25A48523836000009F26F9 /* TimeCatalog.swift in Sources */,
 				7C7F90682385CEDA0012D2BF /* DishNutritionCell.swift in Sources */,
@@ -694,6 +716,7 @@
 				7C9854F7238BC85300241A62 /* FirestoreAPICallsRequests.swift in Sources */,
 				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
 				7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */,
+				7C59E444239B5126005CFED5 /* RestaurantFullView.swift in Sources */,
 				7CEC21F023863C4200F96390 /* AddToCartFooterView.swift in Sources */,
 				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
 				7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */,
@@ -702,6 +725,7 @@
 				7C7F906F2385E5410012D2BF /* IngredientsViewController.swift in Sources */,
 				7C25A4AF2384C597009F26F9 /* DishHeaderView.swift in Sources */,
 				7CEC21FB238B602400F96390 /* SpecialRequestsViewController.swift in Sources */,
+				7C59E440239B4DA5005CFED5 /* RestaurantsListView.swift in Sources */,
 				7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */,
 				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
 				7CEC21F623863FFA00F96390 /* SpecialInstructionsCell.swift in Sources */,

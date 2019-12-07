@@ -74,7 +74,7 @@ internal class SearchViewController: UIViewController {
         menu?.isHidden = true
         self.view.addSubview(menu!)
         
-        menu?.dishChosen = { (_ dish: Dish) -> () in
+        menu?.dishSelected = { (_ dish: Dish) -> () in
             let controller = DishViewController.init(restaurant: restaurant, dish: dish)
             
             controller.modalTransitionStyle = .coverVertical

@@ -15,6 +15,7 @@ internal class FirestoreAPICallsRestaurants {
     private let db = Firebase.db;
     
     var dataReceivedForFetchRestaurant: ((_ restaurant: Restaurant?) -> ())?
+    var dataReceivedForFetchRestaurants: ((_ restaurants: [Restaurant]?) -> ())?
     var dataReceivedForFetchRestaurantCategories: ((_ categories: [MenuCategory]) -> ())?
     
     // Fetch all restaurant info from restaurantId
@@ -46,7 +47,6 @@ internal class FirestoreAPICallsRestaurants {
     }
     
     // Fetch the closest restaurant to the user coordinate
-    // TODO: This is not taking into consideration the longitude. Make sure you implement this later
     func fetchClosestRestaurantFirestoreAPI(currentLocation: CLLocationCoordinate2D) {
         let minGeoPoint = DistanceCatalog.getMinGeoPoint(currentLocation: currentLocation)
         let maxGeoPoint = DistanceCatalog.getMaxGeoPoint(currentLocation: currentLocation)
@@ -57,18 +57,25 @@ internal class FirestoreAPICallsRestaurants {
         
         restaurantReferences.getDocuments() { (querySnapshot, err) in
             guard let snapshot = querySnapshot else {
-                self.dataReceivedForFetchRestaurant?(nil)
+                self.dataReceivedForFetchRestaurants?(nil)
                 return;
             }
             
             if let _ = err {
-                self.dataReceivedForFetchRestaurant?(nil)
+                self.dataReceivedForFetchRestaurants?(nil)
             } else {
                 if (snapshot.documents.count <= 0) {
-                    self.dataReceivedForFetchRestaurant?(nil)
+                    self.dataReceivedForFetchRestaurants?(nil)
                 } else {
-                    let restaurant = Restaurant.init(restaurant: snapshot.documents[0].data())
-                    self.dataReceivedForFetchRestaurant?(restaurant)
+                    var restaurants: [Restaurant] = []
+                    for document in snapshot.documents {
+                        let restaurant = Restaurant.init(restaurant: document.data())
+                        restaurants.append(restaurant)
+                    }
+                    
+                    let closeRestaurants = DistanceCatalog.getRestaurantsNearCurrentLocation(restaurants: restaurants, minGeoPoint: minGeoPoint, maxGeoPoint: maxGeoPoint)
+                    
+                    self.dataReceivedForFetchRestaurants?(closeRestaurants)
                 }
             }
         }
