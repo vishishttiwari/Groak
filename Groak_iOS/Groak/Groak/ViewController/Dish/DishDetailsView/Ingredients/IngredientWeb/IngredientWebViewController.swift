@@ -45,7 +45,7 @@ internal class IngredientWebViewController: UIViewController {
         ingredientWebView?.topAnchor.constraint(equalTo: header!.bottomAnchor).isActive = true
         ingredientWebView?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         ingredientWebView?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        ingredientWebView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        ingredientWebView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: DimensionsCatalog.bottomSafeArea).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

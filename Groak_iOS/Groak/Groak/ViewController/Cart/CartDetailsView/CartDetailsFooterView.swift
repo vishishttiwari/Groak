@@ -31,8 +31,7 @@ internal class CartDetailsFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        price.text = "$\(cartDish.totalPrice)"
-        price.isPrice()
+        price.isPrice(price: cartDish.totalPrice)
         self.addSubview(price)
         
         updateCartButton.footerButton(title: "Update Cart")
@@ -60,7 +59,7 @@ internal class CartDetailsFooterView: UIView {
     
     internal func orderAltered(cartDish: CartDish) {
         self.cartDish = cartDish
-        price.text = "$\(cartDish.totalPrice)"
+        price.text = cartDish.totalPrice.priceInString
     }
     
     required init?(coder aDecoder: NSCoder) {

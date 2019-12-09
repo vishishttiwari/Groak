@@ -36,8 +36,14 @@ internal class AddToCartExtrasView: UITableView {
     }
     
     private func setupViews() {
+        self.backgroundColor = ColorsCatalog.headerGrayShade
+        
+        self.keyboardDismissMode = .onDrag
+        
         self.separatorStyle = .singleLine
         self.allowsMultipleSelection = true
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        self.contentInset = insets
         
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(AddToCartExtraOptionCell.self, forCellReuseIdentifier: optionsCellId)
@@ -80,8 +86,6 @@ internal class AddToCartExtrasView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-// MARK: - UITableView functions
 
 extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -143,7 +147,7 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
             if (dishExtras[indexPath.section].options[indexPath.row].price == 0) {
                 cell.price.text = ""
             } else {
-                cell.price.text = "+$\(dishExtras[indexPath.section].options[indexPath.row].price)"
+                cell.price.text = "+\(dishExtras[indexPath.section].options[indexPath.row].price.priceInString)"
             }
             
             cell.singleSelectSectinon = !dishExtras[indexPath.section].multipleSelections
@@ -203,5 +207,10 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+    }
+    
+    func scrollToBottom(){
+        let indexPath = IndexPath(row: 0, section: self.dishExtras.count)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
 }

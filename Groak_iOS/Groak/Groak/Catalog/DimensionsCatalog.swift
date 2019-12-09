@@ -16,10 +16,12 @@ internal class DimensionsCatalog {
     // Sizes for different things used in project
     static let screenSize = UIScreen.main.bounds.size
     static let tableHeaderHeight: CGFloat = 50
-    static let imageHeights = 50 + screenSize.width/2
+    static let imageHeights = 50 + round(screenSize.width/200)*100
     static let optionsViewWidth = 3 * screenSize.width/4
     static let distanceBetweenElements: CGFloat = 10
     static let cornerRadius: CGFloat = 10
+    static let tableViewInsetDistance: CGFloat = -36
+    static let UITableViewCellWithArrowHeight: CGFloat = 70
     
     struct viewControllerHeaderDimensions {
         static let heightExtended: CGFloat = 100 + DimensionsCatalog.topSafeArea

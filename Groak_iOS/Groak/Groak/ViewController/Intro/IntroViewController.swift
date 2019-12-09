@@ -32,7 +32,8 @@ class IntroViewController: UIViewController {
         
 //        let restaurant = Restaurant.init("jk")
 //        let controller = MenuViewController(restaurant: restaurant)
-//
+//        controller.setNeedsStatusBarAppearanceUpdate()
+//        
 //        controller.modalTransitionStyle = .coverVertical
 //        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 //
@@ -47,6 +48,10 @@ class IntroViewController: UIViewController {
         
         
         
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
     
     // Setup the top and bottom safe area when the first view controller loads up

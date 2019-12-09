@@ -26,9 +26,15 @@ internal class CartView: UITableView {
     }
     
     private func setupViews() {
+        self.backgroundColor = ColorsCatalog.headerGrayShade
+        
+        self.keyboardDismissMode = .onDrag
+        
         self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        self.contentInset = insets
         
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(SpecialInstructionsCartCell.self, forCellReuseIdentifier: specialInstructionsCellId)
@@ -73,14 +79,14 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
             
             cell.name.text = cart.dishes[indexPath.row].dishName
             cell.quantity.text = "\(cart.dishes[indexPath.row].quantity)"
-            cell.price.text = "$\(cart.dishes[indexPath.row].totalPrice)"
+            cell.price.text = cart.dishes[indexPath.row].totalPrice.priceInString
 
             var str = ""
             for extra in cart.dishes[indexPath.row].extras {
                 if (extra.title != Catalog.specialInstructionsId) {
                     str += "\(extra.title):\n"
                     for option in extra.options {
-                        str += "\t- \(option.title): $\(option.price)\n"
+                        str += "\t- \(option.title): \(option.price.priceInString)\n"
                     }
                 } else {
                     if (extra.options.count > 0) {
@@ -123,5 +129,10 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
                 dismiss?()
             }
         }
+    }
+    
+    func scrollToBottom() {
+        let indexPath = IndexPath(row: 0, section: 1)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
 }

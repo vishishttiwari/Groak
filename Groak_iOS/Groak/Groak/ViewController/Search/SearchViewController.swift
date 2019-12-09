@@ -23,10 +23,6 @@ internal class SearchViewController: UIViewController {
         setupMenu(restaurant: restaurant)
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     private func setupHeader(restaurant: Restaurant, categories: [MenuCategory]) {
         header = SearchHeaderView.init(restaurant: restaurant)
         header?.isHidden = false

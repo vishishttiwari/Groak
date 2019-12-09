@@ -35,8 +35,8 @@ internal class DishHeaderView: UIView {
         dishTitle.viewControllerHeaderTitle(title: dish.name)
         self.addSubview(dishTitle)
         
-        dishPrice.viewControllerHeaderTitle(title: "Price: $\(dish.price)")
-        dishPrice.font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize - 4)
+        dishPrice.viewControllerHeaderTitle(title: "Price: \(dish.price.priceInString)")
+        dishPrice.font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize - 8)
         dishPrice.textColor = ColorsCatalog.themeColor
         self.addSubview(dishPrice)
     }

@@ -47,6 +47,7 @@ internal class SpecialRequestsCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.backgroundColor = .white
         self.isUserInteractionEnabled = false
         
         requestString.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)

@@ -35,8 +35,7 @@ internal class AddToCartFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        price.text = "$\(Double(quantity) * dishPrice)"
-        price.isPrice()
+        price.isPrice(price: Double(quantity) * dishPrice)
         self.addSubview(price)
         
         addToCartButton.footerButton(title: "Add \(quantity) to Cart")
@@ -81,7 +80,7 @@ internal class AddToCartFooterView: UIView {
     
     internal func orderAltered(alteredPrice: Double) {
         dishPrice = alteredPrice
-        price.text = "$\(Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity))"
+        price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
     }
     
     @objc func orderTapped() {
@@ -91,14 +90,14 @@ internal class AddToCartFooterView: UIView {
     @objc func add() {
         quantity += 1
         addToCartButton.setTitle("Add \(quantity) to Order", for: .normal)
-        price.text = "$\(Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity))"
+        price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
     }
     
     @objc func reduce() {
         if (quantity > 1) {
             quantity -= 1
             addToCartButton.setTitle("Add \(quantity) to Order", for: .normal)
-            price.text = "$\(Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity))"
+            price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
         }
     }
     

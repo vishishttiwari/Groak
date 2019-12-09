@@ -67,12 +67,12 @@ internal class UITableViewHeader: UITableViewHeaderFooterView {
 
 
 internal class UITableViewCellWithArrow: UITableViewCell {
+    private var container: UIView = UIView()
     internal let title: UILabel = UILabel()
     private let arrow: UIImageView = UIImageView()
     
     private let distanceBetweenElements: CGFloat = 40
     private let buttonDimensions: CGFloat = 20
-    private let rowHeight: CGFloat = 70
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -91,22 +91,29 @@ internal class UITableViewCellWithArrow: UITableViewCell {
         
         arrow.image = #imageLiteral(resourceName: "go")
         
-        self.addSubview(title)
-        self.addSubview(arrow)
+        container.addSubview(title)
+        container.addSubview(arrow)
+        self.addSubview(container)
     }
     
     private func setupInitialLayout() {
+        container.translatesAutoresizingMaskIntoConstraints = false
         title.translatesAutoresizingMaskIntoConstraints = false
         arrow.translatesAutoresizingMaskIntoConstraints = false
         
-        title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
-        title.rightAnchor.constraint(equalTo: arrow.leftAnchor, constant: -10).isActive = true
-        title.heightAnchor.constraint(equalToConstant: rowHeight).isActive = true
-        title.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        container.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
+        container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
+        container.heightAnchor.constraint(equalToConstant: DimensionsCatalog.UITableViewCellWithArrowHeight).isActive = true
+        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
-        arrow.topAnchor.constraint(equalTo: self.topAnchor, constant: (rowHeight - buttonDimensions)/2).isActive = true
-        arrow.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
+        title.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        title.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        title.rightAnchor.constraint(equalTo: arrow.leftAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        title.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+        
+        arrow.centerYAnchor.constraint(equalTo: title.centerYAnchor).isActive = true
+        arrow.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         arrow.widthAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
         arrow.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
     }

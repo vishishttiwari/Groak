@@ -16,10 +16,34 @@ internal class CartViewController: UIViewController {
     
     private let fsOrders = FirestoreAPICallsOrders.init();
     
+    private var tapGestureRecognizer: UITapGestureRecognizer?
+    
     required init() {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidHide),
+            name: UIResponder.keyboardDidHideNotification,
+            object: nil
+        )
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        tapGestureRecognizer!.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         setupHeader()
         setupFooter()
@@ -73,11 +97,10 @@ internal class CartViewController: UIViewController {
             }
         }
         
-        cartView.translatesAutoresizingMaskIntoConstraints = false
-        cartView.topAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
-        cartView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        cartView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        cartView.bottomAnchor.constraint(equalTo: footer.topAnchor).isActive = true
+        cartView.frame.size.width = DimensionsCatalog.screenSize.width
+        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+        cartView.frame.origin.x = 0
+        cartView.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
     }
     
     private func setupFooter() {
@@ -103,6 +126,30 @@ internal class CartViewController: UIViewController {
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightExtended).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
+    // Function called when background is tapped
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        cartView.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            tapGestureRecognizer!.cancelsTouchesInView = true
+            
+            print(keyboardFrame.cgRectValue.height)
+            
+            cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
+            cartView.scrollToBottom()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+    }
+    
+    @objc func keyboardDidHide(_ notification: Notification) {
+        tapGestureRecognizer!.cancelsTouchesInView = false
     }
     
     private func deleteCart() {

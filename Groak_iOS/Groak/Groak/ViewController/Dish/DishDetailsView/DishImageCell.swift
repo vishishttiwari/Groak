@@ -51,10 +51,10 @@ internal class DishImageCell: UITableViewCell {
         container.heightAnchor.constraint(equalToConstant: DimensionsCatalog.imageHeights).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
-        dishImage.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        dishImage.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        dishImage.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        dishImage.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        dishImage.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        dishImage.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        dishImage.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
+        dishImage.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

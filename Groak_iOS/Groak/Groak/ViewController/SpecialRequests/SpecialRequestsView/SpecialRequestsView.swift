@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 
 internal class SpecialRequestsView: UITableView {
-    // Optional Closures
-    internal var dismissKeyboard: (() -> ())?
     
     internal var requests: Requests = Requests.init()
     
@@ -20,17 +18,16 @@ internal class SpecialRequestsView: UITableView {
     required init() {
         super.init(frame: .zero, style: .grouped)
         
-        self.backgroundColor = .white
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
-        
         setupViews()
     }
     
     private func setupViews() {
+        self.backgroundColor = .white
+        
         self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
         self.contentInset = insets
         
         self.register(SpecialRequestsCell.self, forCellReuseIdentifier: specialRequestCellId)
@@ -47,20 +44,12 @@ internal class SpecialRequestsView: UITableView {
         reloadData()
     }
     
-    // Function called when background is tapped
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        dismissKeyboard?()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension SpecialRequestsView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return requests.requests.count
@@ -72,5 +61,12 @@ extension SpecialRequestsView: UITableViewDataSource, UITableViewDelegate, UIScr
         cell.request = requests.requests[indexPath.row]
         
         return cell
+    }
+    
+    func scrollToBottom(){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.requests.requests.count-1, section: 0)
+            self.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
 }

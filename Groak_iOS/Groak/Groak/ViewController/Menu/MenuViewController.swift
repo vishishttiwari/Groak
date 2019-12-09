@@ -28,10 +28,16 @@ internal class MenuViewController: UIViewController {
         
         downloadMenu(restaurant: restaurant)
         downloadOrder()
+        
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewDidLoad() {
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     private func setupHeader(restaurant: Restaurant) {

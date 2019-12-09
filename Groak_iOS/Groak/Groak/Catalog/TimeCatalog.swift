@@ -12,7 +12,7 @@ import Firebase
 internal class TimeCatalog {
     
     // Animation time for different things such as time takes for options view to show up
-    static let animateTime: Double! = 0.3
+    static let animateTime: Double! = 0.25
     
     // Get which day it is
     static func getDay() -> String {

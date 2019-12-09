@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 internal class IngredientsView: UITableView {
-    
     // Optional Closures
     internal var ingredientWebView: ((_ ingredientName: String) -> ())?
     
@@ -27,8 +26,11 @@ internal class IngredientsView: UITableView {
     }
     
     private func setupViews() {
-        self.estimatedRowHeight = self.rowHeight
-        self.rowHeight = UITableView.automaticDimension
+        self.backgroundColor = ColorsCatalog.headerGrayShade
+        
+        self.rowHeight = DimensionsCatalog.UITableViewCellWithArrowHeight
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        self.contentInset = insets
         
         self.register(UITableViewCellWithArrow.self, forCellReuseIdentifier: cellId)
         self.delegate = self

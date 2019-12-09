@@ -30,11 +30,11 @@ internal class DishDetailsView: UITableView {
     }
     
     private func setupViews() {
+        self.backgroundColor = ColorsCatalog.headerGrayShade
+        
         self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        self.contentInset = insets
         
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(DishImageCell.self, forCellReuseIdentifier: imageCellId)

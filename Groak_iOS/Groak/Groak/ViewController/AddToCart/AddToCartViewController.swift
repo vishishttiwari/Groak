@@ -15,10 +15,34 @@ internal class AddToCartViewController: UIViewController {
     private var addToCartExtras: AddToCartExtrasView?
     private var footer: AddToCartFooterView?
     
+    private var tapGestureRecognizer: UITapGestureRecognizer?
+    
     required init(restaurant: Restaurant, dish: Dish) {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidHide),
+            name: UIResponder.keyboardDidHideNotification,
+            object: nil
+        )
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        tapGestureRecognizer!.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         header = AddToCartHeaderView.init(dish: dish)
         footer = AddToCartFooterView.init(dish: dish)
@@ -72,20 +96,40 @@ internal class AddToCartViewController: UIViewController {
     
     private func setupDishDescription(restaurant: Restaurant) {
         self.view.addSubview(addToCartExtras!)
-
+        
         addToCartExtras?.cartAltered = { (_ price: Double) -> () in
             self.footer?.orderAltered(alteredPrice: price)
         }
         
-        addToCartExtras?.translatesAutoresizingMaskIntoConstraints = false
-        addToCartExtras?.topAnchor.constraint(equalTo: header!.bottomAnchor).isActive = true
-        addToCartExtras?.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        addToCartExtras?.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        addToCartExtras?.bottomAnchor.constraint(equalTo: footer!.topAnchor).isActive = true
+        addToCartExtras?.frame.size.width = DimensionsCatalog.screenSize.width
+        addToCartExtras?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+        addToCartExtras?.frame.origin.x = 0
+        addToCartExtras?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
+    }
+    
+    // Function called when background is tapped
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        addToCartExtras?.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            tapGestureRecognizer!.cancelsTouchesInView = true
+
+            self.addToCartExtras?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
+            self.addToCartExtras?.scrollToBottom()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        addToCartExtras?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+    }
+    
+    @objc func keyboardDidHide(_ notification: Notification) {
+        tapGestureRecognizer!.cancelsTouchesInView = false
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

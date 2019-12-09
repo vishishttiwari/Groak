@@ -16,16 +16,27 @@ internal class SpecialRequestsViewController: UIViewController {
     
     private let fsRequests = FirestoreAPICallsRequests.init();
     
+    private var tapGestureRecognizer: UITapGestureRecognizer?
+    
     required init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         header = SpecialRequestsHeaderView.init(restaurant: restaurant)
         specialRequestsView = SpecialRequestsView.init()
@@ -68,24 +79,10 @@ internal class SpecialRequestsViewController: UIViewController {
     private func setupSpecialRequests(restaurant: Restaurant) {
         self.view.addSubview(specialRequestsView!)
         
-        specialRequestsView?.dismissKeyboard = { () -> () in
-            self.footer.resignKeyboard()
-            self.footer.frame.origin.y = DimensionsCatalog.screenSize.height - self.footer.frame.size.height
-            self.specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - self.footer.layer.frame.height
-        }
-        
         specialRequestsView?.frame.size.width = DimensionsCatalog.screenSize.width
         specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - footer.layer.frame.height
         specialRequestsView?.frame.origin.x = 0
         specialRequestsView?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
-    }
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            footer.frame.origin.y = DimensionsCatalog.screenSize.height - footer.frame.size.height + DimensionsCatalog.bottomSafeArea - keyboardRectangle.height - DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
-            specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - footer.layer.frame.height + DimensionsCatalog.bottomSafeArea - keyboardRectangle.height - DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
-        }
     }
     
     private func downloadRequests(restaurant: Restaurant) {
@@ -98,6 +95,24 @@ internal class SpecialRequestsViewController: UIViewController {
                 self.specialRequestsView?.reloadData(requests: requests)
             }
         }
+    }
+    
+    // Function called when background is tapped
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        footer.resignKeyboard()
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            footer.frame.origin.y = DimensionsCatalog.screenSize.height - footer.frame.size.height + DimensionsCatalog.bottomSafeArea - keyboardFrame.cgRectValue.height - DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - footer.layer.frame.height + DimensionsCatalog.bottomSafeArea - keyboardFrame.cgRectValue.height - DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
+            specialRequestsView?.scrollToBottom()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        self.footer.frame.origin.y = DimensionsCatalog.screenSize.height - self.footer.frame.size.height
+        self.specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - self.footer.layer.frame.height
     }
     
     required init?(coder aDecoder: NSCoder) {

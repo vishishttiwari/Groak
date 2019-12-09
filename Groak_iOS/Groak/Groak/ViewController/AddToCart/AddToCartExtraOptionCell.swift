@@ -47,6 +47,8 @@ internal class AddToCartExtraOptionCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.selectedColor()
+        self.backgroundColor = .white
         container.addSubview(selectBox)
         
         label.text = ""

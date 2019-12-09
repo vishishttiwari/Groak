@@ -47,6 +47,7 @@ internal class DishDescriptionCell: UITableViewCell {
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         container.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         container.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
         dishDescription.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         dishDescription.leftAnchor.constraint(equalTo: container.leftAnchor, constant: distanceBetweenElements).isActive = true

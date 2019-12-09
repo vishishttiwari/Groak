@@ -24,7 +24,6 @@ internal class CartDetailsView: UIScrollView {
     private var cartDish: CartDish = CartDish.init()
     
     private let placeholder: String! = "Leave a note for the kitchen"
-    private let buttonDimensions: CGFloat = 60
     
     required init(cartDish: CartDish) {
         super.init(frame: .zero)
@@ -33,6 +32,8 @@ internal class CartDetailsView: UIScrollView {
         
         self.backgroundColor = .white
         self.showsVerticalScrollIndicator = true
+        self.isUserInteractionEnabled = true
+        self.keyboardDismissMode = .onDrag
         
         setupCartDish()
         setupAdditionalComments()
@@ -45,7 +46,7 @@ internal class CartDetailsView: UIScrollView {
             if (extra.title != Catalog.specialInstructionsId) {
                 str += "\(extra.title):\n"
                 for option in extra.options {
-                    str += "\t- \(option.title): $\(option.price)\n"
+                    str += "\t- \(option.title): \(option.price.priceInString)\n"
                 }
             }
         }
@@ -129,7 +130,7 @@ internal class CartDetailsView: UIScrollView {
         self.addSubview(reduceDishButton)
         
         quantity.text = "\(cartDish.quantity)"
-        quantity.font = UIFont(name: FontCatalog.fontLevels[0], size: buttonDimensions)
+        quantity.font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
         quantity.numberOfLines = 0
         quantity.textColor = .black
         quantity.backgroundColor = .clear
@@ -144,17 +145,18 @@ internal class CartDetailsView: UIScrollView {
         quantity.topAnchor.constraint(equalTo: specialInstructions.bottomAnchor, constant: 3*DimensionsCatalog.distanceBetweenElements).isActive = true
         quantity.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         quantity.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
-        quantity.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
+        quantity.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
+        quantity.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
-        addDishButton.topAnchor.constraint(equalTo: specialInstructions.bottomAnchor, constant: 3*DimensionsCatalog.distanceBetweenElements).isActive = true
+        addDishButton.centerYAnchor.constraint(equalTo: quantity.centerYAnchor).isActive = true
         addDishButton.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        addDishButton.widthAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
-        addDishButton.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
+        addDishButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
+        addDishButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
         
-        reduceDishButton.topAnchor.constraint(equalTo: specialInstructions.bottomAnchor, constant: 3*DimensionsCatalog.distanceBetweenElements).isActive = true
+        reduceDishButton.centerYAnchor.constraint(equalTo: quantity.centerYAnchor).isActive = true
         reduceDishButton.rightAnchor.constraint(equalTo: quantity.leftAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        reduceDishButton.widthAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
-        reduceDishButton.heightAnchor.constraint(equalToConstant: buttonDimensions).isActive = true
+        reduceDishButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
+        reduceDishButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
     }
     
     @objc func add() {
@@ -210,5 +212,10 @@ extension CartDetailsView: UITextViewDelegate {
             return false
         }
         return true
+    }
+    
+    func scrollToBottom(){
+        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
+        setContentOffset(bottomOffset, animated: false)
     }
 }

@@ -30,7 +30,7 @@ internal class RestaurantsListView: UITableView {
         self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let insets = UIEdgeInsets(top: -36, left: 0, bottom: -36, right: 0)
         self.contentInset = insets
         
         self.register(RestaurantCell.self, forCellReuseIdentifier: cellId)

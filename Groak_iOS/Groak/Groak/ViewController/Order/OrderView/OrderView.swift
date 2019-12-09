@@ -28,9 +28,15 @@ internal class OrderView: UITableView {
     }
 
     private func setupViews() {
+        self.backgroundColor = ColorsCatalog.headerGrayShade
+        
+        self.keyboardDismissMode = .onDrag
+        
         self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        self.contentInset = insets
 
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(OrderDishCell.self, forCellReuseIdentifier: orderDishCellId)
@@ -90,14 +96,14 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
 
             cell.name.text = order.dishes[indexPath.row].name
             cell.quantity.text = "\(order.dishes[indexPath.row].quantity)"
-            cell.price.text = "$\(order.dishes[indexPath.row].price)"
+            cell.price.text = order.dishes[indexPath.row].price.priceInString
 
             var str = ""
             for extra in order.dishes[indexPath.row].extras {
                 if (extra.title != Catalog.specialInstructionsId) {
                     str += "\(extra.title):\n"
                     for option in extra.options {
-                        str += "\t- \(option.title): $\(option.price)\n"
+                        str += "\t- \(option.title): \(option.price.priceInString)\n"
                     }
                 } else {
                     if (extra.options.count > 0) {
@@ -125,5 +131,10 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
         } else {
             return UITableViewCell.init()
         }
+    }
+    
+    func scrollToBottom(){
+        let indexPath = IndexPath(row: 0, section: 2)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
 }

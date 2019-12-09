@@ -25,7 +25,7 @@ internal class DishCell: UITableViewCell {
         didSet {            
             dishImage.loadImageUsingCache(url: dish.imageLink, available: dish.available)
             dishName.colorBackgroundForegroundOfSubString(originalString: dish.name, substrings: [highlightString], backgroundColor: ColorsCatalog.themeColor, foregroundColor: .white)
-            dishPrice.text = "$\(String(dish.price))"
+            dishPrice.text = dish.price.priceInString
             
             let calories = Int(dish.nutrition["calories"] ?? 0)
             if (calories > 0) {

@@ -168,6 +168,12 @@ extension String {
     }
 }
 
+extension Double {
+    var priceInString: String {
+        return "$\(String(format: "%.2f", self))"
+    }
+}
+
 extension UILabel {
     func viewControllerHeaderTitle(title: String) {
         text = title
@@ -177,7 +183,8 @@ extension UILabel {
         textAlignment = .center
     }
     
-    func isPrice() {
+    func isPrice(price: Double) {
+        text = price.priceInString
         font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
         numberOfLines = 0
         textColor = .black
