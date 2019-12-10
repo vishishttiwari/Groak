@@ -31,7 +31,7 @@ internal class OrderHeaderView: UIView {
         backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
         self.addSubview(backButton)
         
-        title.viewControllerHeaderTitle(title: "Your Order")
+        title.viewControllerHeaderTitle(title: "Orders at your Table")
         self.addSubview(title)
     }
     

@@ -19,7 +19,7 @@ internal class OrderView: UITableView {
     private let specialInstructionsCellId = "specialInstructionsCellId"
     private let statusCellId = "statusCellId"
     
-    private let order: Order = LocalStorage.tableOrder
+    internal var order = LocalStorage.tableOrder
 
     required init() {
         super.init(frame: .zero, style: .grouped)

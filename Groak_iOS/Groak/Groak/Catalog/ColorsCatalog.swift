@@ -22,6 +22,8 @@ internal class ColorsCatalog {
     // This color is used for gray color for secondry test like food info
     static let grayColor: UIColor! = shadesOfGray[17]
     
+    static let loadingBackground: UIColor! = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.5)
+    
     // Different shades of gray. Mostly for fun and trial.
     static let shadesOfGray: [UIColor] = [UIColor.init(red: 250/255, green: 250/255, blue: 250/255, alpha: 1),
     UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1),

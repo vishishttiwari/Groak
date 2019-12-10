@@ -26,7 +26,7 @@ internal class OrderFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        paymentButton.footerButton(title: "Ready to Payment?")
+        paymentButton.footerButton(title: "Ready to Pay?")
         paymentButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
         self.addSubview(paymentButton)
     }
@@ -34,10 +34,10 @@ internal class OrderFooterView: UIView {
     private func setupInitialLayout() {
         paymentButton.translatesAutoresizingMaskIntoConstraints = false
         
-        paymentButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        paymentButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        paymentButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        paymentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceFromBottom).isActive = true
+        paymentButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
+        paymentButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
+        paymentButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
+        paymentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
     }
     
     @objc func orderTapped() {

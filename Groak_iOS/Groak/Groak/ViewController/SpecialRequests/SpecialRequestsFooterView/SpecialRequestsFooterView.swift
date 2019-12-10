@@ -74,7 +74,7 @@ internal class SpecialReqiestsFooterView: UIView {
         requestTextInput.textColor = .lightGray
         requestTextInput.clipsToBounds = true
         requestTextInput.keyboardAppearance = .dark
-        requestTextInput.becomeFirstResponder()
+//        requestTextInput.becomeFirstResponder()
         requestTextInputContainer.addSubview(requestTextInput)
         
         requestSendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
@@ -123,8 +123,7 @@ internal class SpecialReqiestsFooterView: UIView {
     
     @objc func send() {
         sendRequest?(requestTextInput.text)
-        requestTextInput.text = placeholder
-        requestTextInput.textColor = UIColor.lightGray
+        requestTextInput.text = nil
     }
     
     required init?(coder aDecoder: NSCoder) {

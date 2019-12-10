@@ -90,6 +90,50 @@ extension UIView {
             self.layer.mask = mask
         }
     }
+    
+    func customActivityIndicator() -> UIView{
+        let dimensions = DimensionsCatalog.screenSize.width/3
+
+        self.backgroundColor = ColorsCatalog.loadingBackground
+        self.layer.cornerRadius = DimensionsCatalog.cornerRadius
+
+        self.frame = CGRect(x: DimensionsCatalog.screenSize.width/2 - dimensions/2, y: DimensionsCatalog.screenSize.height/2 - dimensions/2, width: dimensions , height: dimensions)
+        
+        let loopImages = UIImageView()
+        self.addSubview(loopImages)
+
+        let imageListArray = [UIImage.init(imageLiteralResourceName: "loading1"),
+                              UIImage.init(imageLiteralResourceName: "loading2"),
+                              UIImage.init(imageLiteralResourceName: "loading3"),
+                              UIImage.init(imageLiteralResourceName: "loading4"),
+                              UIImage.init(imageLiteralResourceName: "loading5"),
+                              UIImage.init(imageLiteralResourceName: "loading6"),
+                              UIImage.init(imageLiteralResourceName: "loading7"),
+                              UIImage.init(imageLiteralResourceName: "loading8"),
+                              UIImage.init(imageLiteralResourceName: "loading9"),
+                              UIImage.init(imageLiteralResourceName: "loading10"),
+                              UIImage.init(imageLiteralResourceName: "loading11"),
+                              UIImage.init(imageLiteralResourceName: "loading12"),
+                              UIImage.init(imageLiteralResourceName: "loading13"),
+                              UIImage.init(imageLiteralResourceName: "loading14"),
+                              UIImage.init(imageLiteralResourceName: "loading15")]
+
+        loopImages.animationImages = imageListArray
+        loopImages.animationDuration = TimeInterval(0.8)
+        loopImages.startAnimating()
+
+        loopImages.translatesAutoresizingMaskIntoConstraints = false
+        loopImages.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        loopImages.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        loopImages.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        loopImages.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+
+        return self
+    }
+    
+    func hideLoader(hideFrom : UIView){
+        hideFrom.subviews.last?.removeFromSuperview()
+    }
 }
 
 // This is used for caching images

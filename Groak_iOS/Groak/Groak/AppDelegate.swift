@@ -14,6 +14,16 @@ import CoreData
 // Any new stuff will be added to order view controller
 // Add a back button to BottomSheetView
 // See when you come back from MenuViewController, how to make the list appear again
+// Add times to orderviewcontroller'
+// The special instructions is not working so look into that
+// Use dimensions rather than contraints in Special Requests
+// See if cell dynamically change size if image etc. is not present
+// Loading indicator for view controllers
+// Loading indicator for images
+// Get the user out either after distance or after time 3 hours maybe
+// Notifications
+// Start with camera and also have, not your restaurant and then show table
+// Detach firestore listeners
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

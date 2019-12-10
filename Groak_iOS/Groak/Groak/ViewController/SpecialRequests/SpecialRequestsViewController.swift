@@ -36,7 +36,6 @@ internal class SpecialRequestsViewController: UIViewController {
             object: nil
         )
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         header = SpecialRequestsHeaderView.init(restaurant: restaurant)
         specialRequestsView = SpecialRequestsView.init()
@@ -79,6 +78,10 @@ internal class SpecialRequestsViewController: UIViewController {
     private func setupSpecialRequests(restaurant: Restaurant) {
         self.view.addSubview(specialRequestsView!)
         
+        specialRequestsView?.addGestureRecognizer(tapGestureRecognizer!)
+        
+        specialRequestsView?.scrollToBottom()
+        
         specialRequestsView?.frame.size.width = DimensionsCatalog.screenSize.width
         specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - footer.layer.frame.height
         specialRequestsView?.frame.origin.x = 0
@@ -113,6 +116,7 @@ internal class SpecialRequestsViewController: UIViewController {
     @objc func keyboardWillHide(_ notification: Notification) {
         self.footer.frame.origin.y = DimensionsCatalog.screenSize.height - self.footer.frame.size.height
         self.specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - self.footer.layer.frame.height
+        specialRequestsView?.scrollToBottom()
     }
     
     required init?(coder aDecoder: NSCoder) {

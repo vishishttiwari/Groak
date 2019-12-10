@@ -25,7 +25,7 @@ internal class OrderViewController: UIViewController {
     required init() {
         super.init(nibName: nil, bundle: nil)
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = ColorsCatalog.headerGrayShade
         
         NotificationCenter.default.addObserver(
             self,
@@ -52,6 +52,19 @@ internal class OrderViewController: UIViewController {
         setupHeader()
         setupFooter()
         setupOrderView()
+        downloadOrder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if LocalStorage.tableOrder.dishes.count <= 0 {
+            orderView.isHidden = true
+            footer.isHidden = true
+        } else {
+            orderView.isHidden = false
+            footer.isHidden = false
+            orderView.order = LocalStorage.tableOrder
+            orderView.reloadData()
+        }
     }
     
     private func setupHeader() {
@@ -76,7 +89,7 @@ internal class OrderViewController: UIViewController {
         }
         
         orderView.frame.size.width = DimensionsCatalog.screenSize.width
-        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormal
+        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
         orderView.frame.origin.x = 0
         orderView.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
     }
@@ -87,7 +100,7 @@ internal class OrderViewController: UIViewController {
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormal).isActive = true
+        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
@@ -106,11 +119,23 @@ internal class OrderViewController: UIViewController {
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormal
+        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
     @objc func keyboardDidHide(_ notification: Notification) {
         tapGestureRecognizer!.cancelsTouchesInView = false
+    }
+    
+    private func downloadOrder() {
+        let fsOrder = FirestoreAPICallsOrders.init();
+        
+        fsOrder.fetchOrderFirestoreAPI()
+        
+        fsOrder.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
+            LocalStorage.tableOrder = order ?? Order.init()
+            self.orderView.order = LocalStorage.tableOrder
+            self.orderView.reloadData()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

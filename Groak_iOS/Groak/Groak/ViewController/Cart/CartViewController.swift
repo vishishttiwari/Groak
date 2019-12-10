@@ -21,7 +21,7 @@ internal class CartViewController: UIViewController {
     required init() {
         super.init(nibName: nil, bundle: nil)
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = ColorsCatalog.headerGrayShade
         
         NotificationCenter.default.addObserver(
             self,
@@ -48,6 +48,18 @@ internal class CartViewController: UIViewController {
         setupHeader()
         setupFooter()
         setupCartView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if LocalStorage.cart.dishes.count <= 0 {
+            cartView.isHidden = true
+            footer.isHidden = true
+        } else {
+            cartView.isHidden = false
+            footer.isHidden = false
+            cartView.cart = LocalStorage.cart
+            cartView.reloadData()
+        }
     }
     
     private func setupHeader() {
@@ -98,7 +110,7 @@ internal class CartViewController: UIViewController {
         }
         
         cartView.frame.size.width = DimensionsCatalog.screenSize.width
-        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
         cartView.frame.origin.x = 0
         cartView.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
     }
@@ -107,10 +119,12 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(footer)
         
         footer.order = { () -> () in
+            self.view.addSubview(UIView().customActivityIndicator())
             self.fsOrders.addOrdersFirestoreAPI()
             self.fsOrders.dataReceivedForAddOrder = { (_ success: Bool) -> () in
                 if success {
                     LocalStorage.cart.delete()
+                    self.view.hideLoader(hideFrom: self.view)
                     let customViewController1 = self.presentingViewController as? MenuViewController
                     self.dismiss(animated: true, completion: {
                         customViewController1?.checkIfCartOrOrderExists()
@@ -122,10 +136,10 @@ internal class CartViewController: UIViewController {
         }
         
         footer.translatesAutoresizingMaskIntoConstraints = false
-        footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightExtended).isActive = true
-        footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        footer.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        footer.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem).isActive = true
+        footer.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     // Function called when background is tapped
@@ -137,15 +151,13 @@ internal class CartViewController: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer!.cancelsTouchesInView = true
             
-            print(keyboardFrame.cgRectValue.height)
-            
             cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
             cartView.scrollToBottom()
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
+        cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
     @objc func keyboardDidHide(_ notification: Notification) {

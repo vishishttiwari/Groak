@@ -21,7 +21,7 @@ class IntroViewController: UIViewController {
         super.viewDidAppear(animated);
         
         setTopBottomSafeArea()
-        setupCameraQRCodeView()
+//        setupCameraQRCodeView()
         setupBottomSheetView()
         
         
@@ -30,16 +30,16 @@ class IntroViewController: UIViewController {
         
         
         
-//        let restaurant = Restaurant.init("jk")
-//        let controller = MenuViewController(restaurant: restaurant)
-//        controller.setNeedsStatusBarAppearanceUpdate()
-//        
-//        controller.modalTransitionStyle = .coverVertical
-//        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//
-//        DispatchQueue.main.async {
-//            self.present(controller, animated: true, completion: nil)
-//        }
+        let restaurant = Restaurant.init("jk")
+        let controller = TabbarViewController(restaurant: restaurant)
+        controller.setNeedsStatusBarAppearanceUpdate()
+        
+        controller.modalTransitionStyle = .coverVertical
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+
+        DispatchQueue.main.async {
+            self.present(controller, animated: true, completion: nil)
+        }
         
         
         

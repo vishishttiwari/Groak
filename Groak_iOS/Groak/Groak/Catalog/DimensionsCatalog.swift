@@ -12,6 +12,7 @@ internal class DimensionsCatalog {
     // Top and bottom safe area
     static var topSafeArea: CGFloat! = 0
     static var bottomSafeArea: CGFloat! = 0
+    static var tabBarHeight: CGFloat! = 0
     
     // Sizes for different things used in project
     static let screenSize = UIScreen.main.bounds.size
@@ -24,16 +25,18 @@ internal class DimensionsCatalog {
     static let UITableViewCellWithArrowHeight: CGFloat = 70
     
     struct viewControllerHeaderDimensions {
-        static let heightExtended: CGFloat = 100 + DimensionsCatalog.topSafeArea
-        static let heightNormal: CGFloat = 50 + DimensionsCatalog.topSafeArea
+        static let heightExtended: CGFloat = 100 + topSafeArea
+        static let heightNormal: CGFloat = 50 + topSafeArea
         static let distanceFromTop: CGFloat = topSafeArea + 10
         static let distanceBetweenElements: CGFloat = 20
         static let titleSize: CGFloat = 30
     }
     
     struct viewControllerFooterDimensions {
-        static let heightExtended: CGFloat = 140 + DimensionsCatalog.bottomSafeArea
-        static let heightNormal: CGFloat = 80 + DimensionsCatalog.bottomSafeArea
+        static let heightExtended: CGFloat = 140 + bottomSafeArea
+        static let heightNormal: CGFloat = 80 + bottomSafeArea
+        static let heightExtendedWithBarItem: CGFloat = 140 + viewControllerFooterDimensions.distanceBetweenElements
+        static let heightNormalWithBarItem: CGFloat = 80 + viewControllerFooterDimensions.distanceBetweenElements
         static let priceSize: CGFloat = 40
         static let distanceFromBottom: CGFloat = bottomSafeArea
         static let distanceBetweenElements: CGFloat = 20

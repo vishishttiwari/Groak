@@ -41,6 +41,7 @@
 		7C25A4AF2384C597009F26F9 /* DishHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4AE2384C597009F26F9 /* DishHeaderView.swift */; };
 		7C25A4B12384C5A4009F26F9 /* DishFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4B02384C5A4009F26F9 /* DishFooterView.swift */; };
 		7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25A4B32384C60D009F26F9 /* DishDetailsView.swift */; };
+		7C334176239F2218004300E1 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C334175239F2218004300E1 /* TabbarViewController.swift */; };
 		7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */; };
 		7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */; };
 		7C59E400239789CC005CFED5 /* CartDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */; };
@@ -132,6 +133,7 @@
 		7C25A4AE2384C597009F26F9 /* DishHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishHeaderView.swift; sourceTree = "<group>"; };
 		7C25A4B02384C5A4009F26F9 /* DishFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishFooterView.swift; sourceTree = "<group>"; };
 		7C25A4B32384C60D009F26F9 /* DishDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishDetailsView.swift; sourceTree = "<group>"; };
+		7C334175239F2218004300E1 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsViewController.swift; sourceTree = "<group>"; };
 		7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsHeaderView.swift; sourceTree = "<group>"; };
 		7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsFooterView.swift; sourceTree = "<group>"; };
@@ -333,6 +335,14 @@
 			path = DishDetailsView;
 			sourceTree = "<group>";
 		};
+		7C334174239F2201004300E1 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				7C334175239F2218004300E1 /* TabbarViewController.swift */,
+			);
+			path = Tabbar;
+			sourceTree = "<group>";
+		};
 		7C59E3FA23978928005CFED5 /* CartDetailsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +476,7 @@
 				7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */,
 				7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */,
 				7C59E43C239B49CE005CFED5 /* SheetView */,
+				7C334174239F2201004300E1 /* Tabbar */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -715,6 +726,7 @@
 				7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */,
 				7C9854F7238BC85300241A62 /* FirestoreAPICallsRequests.swift in Sources */,
 				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
+				7C334176239F2218004300E1 /* TabbarViewController.swift in Sources */,
 				7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */,
 				7C59E444239B5126005CFED5 /* RestaurantFullView.swift in Sources */,
 				7CEC21F023863C4200F96390 /* AddToCartFooterView.swift in Sources */,

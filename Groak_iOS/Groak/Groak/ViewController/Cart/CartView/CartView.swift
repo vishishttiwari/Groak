@@ -17,7 +17,7 @@ internal class CartView: UITableView {
     private let cartCellId = "cartCellId"
     private let specialInstructionsCellId = "specialInstructionsCellId"
     
-    private var cart = LocalStorage.cart
+    internal var cart = LocalStorage.cart
     
     required init() {
         super.init(frame: .zero, style: .grouped)

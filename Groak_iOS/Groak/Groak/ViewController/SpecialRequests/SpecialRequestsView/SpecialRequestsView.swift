@@ -15,6 +15,8 @@ internal class SpecialRequestsView: UITableView {
     
     private let specialRequestCellId: String = "cellId"
     
+    private var firstAppearance = true
+    
     required init() {
         super.init(frame: .zero, style: .grouped)
         
@@ -27,7 +29,7 @@ internal class SpecialRequestsView: UITableView {
         self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
-        let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: 0, right: 0)
         self.contentInset = insets
         
         self.register(SpecialRequestsCell.self, forCellReuseIdentifier: specialRequestCellId)
@@ -42,6 +44,15 @@ internal class SpecialRequestsView: UITableView {
         self.requests = requests
 
         reloadData()
+        
+        layoutIfNeeded()
+        
+        if !firstAppearance {
+            scrollToBottom()
+        } else {
+            scrollToLastRow()
+            firstAppearance = false
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,8 +76,15 @@ extension SpecialRequestsView: UITableViewDataSource, UITableViewDelegate, UIScr
     
     func scrollToBottom(){
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.requests.requests.count-1, section: 0)
-            self.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            let bottomOffset = CGPoint(x: 0, y: self.contentSize.height - self.bounds.size.height + DimensionsCatalog.tableViewInsetDistance)
+            self.setContentOffset(bottomOffset, animated: true)
+        }
+    }
+    
+    func scrollToLastRow() {
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.requests.requests.count - 1, section: 0)
+            self.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
     }
 }

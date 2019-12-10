@@ -24,20 +24,11 @@ internal class MenuViewController: UIViewController {
         
         setupHeader(restaurant: restaurant)
         setupMenu(restaurant: restaurant)
-        setupFooter()
+//        setupFooter()
         
         downloadMenu(restaurant: restaurant)
-        downloadOrder()
         
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    override func viewDidLoad() {
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        self.view.addSubview(UIView().customActivityIndicator())
     }
     
     private func setupHeader(restaurant: Restaurant) {
@@ -107,7 +98,7 @@ internal class MenuViewController: UIViewController {
     
     private func setupFooter() {
         self.view.addSubview(footer)
-        
+
         footer.buttonTapped = { (_ state: OrderOrCartState) -> () in
             let controller: UIViewController?
             if (state == OrderOrCartState.None) {
@@ -119,20 +110,20 @@ internal class MenuViewController: UIViewController {
             } else {
                 controller = CartViewController.init()
             }
-            
+
             controller?.modalTransitionStyle = .coverVertical
             controller?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            
+
             DispatchQueue.main.async {
                 self.present(controller!, animated: true, completion: nil)
             }
         }
-        
+
         footer.frame.origin.x = 0
         footer.frame.origin.y = DimensionsCatalog.screenSize.height
         footer.frame.size.width = DimensionsCatalog.screenSize.width
         footer.frame.size.height = DimensionsCatalog.viewControllerFooterDimensions.heightNormal
-        
+
         checkIfCartOrOrderExists()
     }
     
@@ -154,20 +145,10 @@ internal class MenuViewController: UIViewController {
         fsRestaurant.fetchRestaurantCategoriesFirestoreAPI(restaurantReference: restaurant.reference!)
         
         fsRestaurant.dataReceivedForFetchRestaurantCategories = { (_ categories: [MenuCategory]) -> () in
+            self.view.hideLoader(hideFrom: self.view)
             self.categories = categories
             self.header?.reloadData(categories: categories)
             self.menu?.reloadData(categories: categories)
-        }
-    }
-    
-    private func downloadOrder() {
-        let fsOrder = FirestoreAPICallsOrders.init();
-        
-        fsOrder.fetchOrderFirestoreAPI()
-        
-        fsOrder.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
-            LocalStorage.tableOrder = order ?? Order.init()
-            self.checkIfCartOrOrderExists()
         }
     }
     
