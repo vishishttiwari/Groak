@@ -15,7 +15,7 @@ internal class CartHeaderView: UIView {
     internal var delete: (() -> ())?
     
     private let backButton: UIButton = UIButton()
-    private let deleteButton: UIButton = UIButton()
+    internal let deleteButton: UIButton = UIButton()
     private let title: UILabel = UILabel()
     
     required init() {

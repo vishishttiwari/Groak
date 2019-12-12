@@ -11,9 +11,14 @@ import UIKit
 
 internal class OrderCommentCell: UITableViewCell {
     private let container: UIView = UIView()
-    internal let comment: UILabel = UILabel()
-    
-    private let textHeight: CGFloat = 20
+    private let comment: UILabel = UILabel()
+    private let created: UILabel = UILabel()
+    internal var commentFull: OrderComment = OrderComment.init() {
+        didSet {
+            comment.text = commentFull.comment
+            created.text = TimeCatalog.getTimeFromTimestamp(timestamp: commentFull.created)
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,13 +37,17 @@ internal class OrderCommentCell: UITableViewCell {
         self.isUserInteractionEnabled = false
         
         comment.text = ""
-        comment.font = UIFont(name: FontCatalog.fontLevels[1], size: textHeight)
+        comment.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)
         comment.numberOfLines = 0
         comment.textColor = .black
         comment.lineBreakMode = .byTruncatingTail
         comment.textAlignment = .left
         comment.sizeToFit()
         container.addSubview(comment)
+        
+        created.isTime()
+        created.textColor = .black
+        container.addSubview(created)
         
         container.backgroundColor = .white
         self.addSubview(container)
@@ -47,6 +56,7 @@ internal class OrderCommentCell: UITableViewCell {
     private func setupInitialLayout() {
         container.translatesAutoresizingMaskIntoConstraints = false
         comment.translatesAutoresizingMaskIntoConstraints = false
+        created.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         container.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
@@ -56,6 +66,10 @@ internal class OrderCommentCell: UITableViewCell {
         comment.topAnchor.constraint(equalTo: container.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         comment.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         comment.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        comment.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        
+        created.topAnchor.constraint(equalTo: comment.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
     }
 }

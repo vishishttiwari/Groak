@@ -18,22 +18,6 @@ internal class FirestoreAPICallsRestaurants {
     var dataReceivedForFetchRestaurants: ((_ restaurants: [Restaurant]?) -> ())?
     var dataReceivedForFetchRestaurantCategories: ((_ categories: [MenuCategory]) -> ())?
     
-    // Fetch all restaurant info from restaurantId
-    func fetchRestaurantFirestoreAPI(restaurantId: String) {
-        if (!restaurantId.isAlphanumeric) {
-            self.dataReceivedForFetchRestaurant?(nil)
-            return;
-        }
-        db.collection("restaurants").document(restaurantId).getDocument{(document, error) in
-            if let document = document, document.exists {
-                let restaurant = Restaurant.init(restaurant: document.data() ?? [:])
-                self.dataReceivedForFetchRestaurant?(restaurant)
-            } else {
-                self.dataReceivedForFetchRestaurant?(nil)
-            }
-        }
-    }
-    
     // Fetch all restaurant info from restaurant reference
     func fetchRestaurantFirestoreAPI(restaurantReference: DocumentReference) {
         restaurantReference.getDocument{(document, error) in
@@ -81,15 +65,15 @@ internal class FirestoreAPICallsRestaurants {
         }
     }
     
-    func fetchRestaurantCategoriesFirestoreAPI(restaurantReference: DocumentReference) {
+    func fetchRestaurantCategoriesFirestoreAPI() {
         let day = TimeCatalog.getDay()
         let minutes = TimeCatalog.getTimeInMinutes()
         
-        let categoryReferences = restaurantReference.collection("/categories")
+        let categoryReferences = LocalRestaurant.restaurant.restaurant?.reference?.collection("/categories")
             .whereField("days", arrayContains: day)
             .whereField("startTime", isLessThanOrEqualTo: minutes)
         
-        categoryReferences.order(by: "startTime").order(by: "order").getDocuments() { (querySnapshot, err) in
+        categoryReferences?.order(by: "startTime").order(by: "order").getDocuments() { (querySnapshot, err) in
             guard let snapshot = querySnapshot else {
                 self.dataReceivedForFetchRestaurantCategories?([])
                 return;

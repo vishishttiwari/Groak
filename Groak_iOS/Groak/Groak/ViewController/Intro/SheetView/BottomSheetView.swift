@@ -20,7 +20,7 @@ internal enum BottomSheetState {
 internal class BottomSheetView: UIView, CLLocationManagerDelegate {
     
     // Optional Closures
-    internal var restaurantFound: ((_ state: BottomSheetState, _ restaurant: Restaurant) -> ())?
+    internal var stateChanged: ((_ state: BottomSheetState, _ restaurant: Restaurant?) -> ())?
     
     private var state: BottomSheetState = BottomSheetState.RestaurantNotFound
     
@@ -31,6 +31,7 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
     // Variables used for location
     private let locationManager = CLLocationManager()
     private var previousLocation: CLLocation? = nil
+    private var timer: Timer?
     
     // Initialize variable for finding the closest restaurant
     private let fsRestaurant = FirestoreAPICallsRestaurants.init();
@@ -50,7 +51,6 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
     
     private func setupHeader() {
         self.addSubview(header)
-        header.clipsToBounds = true
         
         header.frame.origin.x = 0
         header.frame.origin.y = 0
@@ -68,18 +68,7 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         restaurantsList.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
         restaurantsList.restaurantSelected = { (_ restaurant: Restaurant) -> () in
-            self.state = BottomSheetState.RestaurantFound
-            self.restaurantsList.isHidden = true
-            self.restaurantFullView.restaurant = restaurant
-            self.restaurantFullView.isHidden = false
-            self.header.stateChanged(state: self.state)
-            self.restaurantFound?(self.state, restaurant)
-            
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
-                    self.header.frame.size.height = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - (DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop - DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)
-                })
-            }
+            self.setRestaurantFound(restaurant: restaurant)
         }
     }
     
@@ -92,6 +81,10 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         restaurantFullView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         restaurantFullView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         restaurantFullView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+        restaurantFullView.notCorrectRestaurantClosure = { () -> () in
+            self.setRestaurantNotFound()
+        }
     }
     
     // This sets up the location manager for getting the current position of user
@@ -100,6 +93,14 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    func startUpdatingLocation() {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func stopUpdatingLocation() {
+        locationManager.stopUpdatingLocation()
     }
     
     // This function is called everytime the user changes position
@@ -115,25 +116,57 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
 
         // Find the closest restaurant to the current coordinate. if a restaurant is found then return back with the
         // restaurant. Otherwise show that restaurant is not close to this position.
+        self.addSubview(UIView().customActivityIndicator())
         fsRestaurant.fetchClosestRestaurantFirestoreAPI(currentLocation: location.coordinate)
         fsRestaurant.dataReceivedForFetchRestaurants = { (_ restaurants: [Restaurant]?) -> () in
+            self.hideLoader(hideFrom: self)
             if let restaurants = restaurants {
                 self.restaurantsList.reloadData(restaurants: restaurants)
+                if restaurants.count > 0 {
+                    self.setRestaurantFound(restaurant: restaurants[0])
+                } else {
+                    self.setRestaurantNotFound()
+                }
+            } else {
+                self.restaurantsList.reloadData(restaurants: [])
+                self.setRestaurantNotFound()
             }
         }
 
         previousLocation = locations[0]
     }
     
-    func setBackToRestaurantNotFound() {
+    @objc func setRestaurantNotFound() {
         self.state = BottomSheetState.RestaurantNotFound
-        self.restaurantsList.isHidden = true
+        self.locationManager.startUpdatingLocation()
         self.restaurantFullView.restaurant = Restaurant.init()
-        self.restaurantFullView.isHidden = false
         self.header.stateChanged(state: self.state)
+        self.stateChanged?(self.state, nil)
+        timer = nil
         
         DispatchQueue.main.async {
-            self.header.frame.size.height = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
+            UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
+                self.restaurantsList.isHidden = false
+                self.restaurantFullView.isHidden = true
+                self.header.frame.size.height = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
+            })
+        }
+    }
+    
+    func setRestaurantFound(restaurant: Restaurant) {
+        self.state = BottomSheetState.RestaurantFound
+        self.locationManager.stopUpdatingLocation()
+        self.restaurantFullView.restaurant = restaurant
+        self.header.stateChanged(state: self.state)
+        self.stateChanged?(self.state, restaurant)
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(TimeCatalog.bottomSheetGoUpAgainTimeInSeconds), target: self, selector: #selector(setRestaurantNotFound), userInfo: nil, repeats: false)
+        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
+                self.restaurantsList.isHidden = true
+                self.restaurantFullView.isHidden = false
+                self.header.frame.size.height = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - (DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop - DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)
+            })
         }
     }
     

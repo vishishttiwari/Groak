@@ -1,5 +1,5 @@
 //
-//  DishNutritionCell.swift
+//  DishContentCell.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/20/19.
@@ -9,24 +9,37 @@
 import Foundation
 import UIKit
 
-internal class DishNutritionCell: UITableViewCell {
+internal class DishContentCell: UITableViewCell {
+    internal var dishRestrictions: [String: String] = [:]
     internal var dishNutrition: [String: Double] = [:] {
         didSet {
             var str = ""
+            if let vegan = dishRestrictions["vegan"], vegan == "Yes" {
+                str += "Vegan:Yes   "
+            } else if let vegetarian = dishRestrictions["vegetarian"], vegetarian == "Yes" {
+                str += "Veg:Yes   "
+            } else if let vegetarian = dishRestrictions["vegetarian"], vegetarian == "No" {
+                str += "Non-veg:Yes   "
+            }
+            if let glutenFree = dishRestrictions["glutenFree"], glutenFree == "Yes" {
+                str += "Gluten-Free:Yes   "
+            } else if let glutenFree = dishRestrictions["glutenFree"], glutenFree == "No" {
+                str += "Gluten-Free:No   "
+            }
             if let cal = dishNutrition["calories"], cal > 0 {
-                str += "Calories: \(Int(cal)) kCal   "
+                str += "Calories:\(Int(cal))kCal   "
             }
             if let fats = dishNutrition["fats"], fats > 0 {
-                str += "Fats: \(fats) g   "
+                str += "Fats:\(fats)g   "
             }
             if let carbs = dishNutrition["carbs"], carbs > 0 {
-                str += "Carbs: \(carbs) g   "
+                str += "Carbs:\(carbs)g   "
             }
             if let protein = dishNutrition["protein"], protein > 0 {
-                str += "Protein: \(protein) g   "
+                str += "Protein:\(protein)g   "
             }
             dishNutritionLabel.text = str
-            dishNutritionLabel.boldSubString(originalString: str, substrings: ["calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
+            dishNutritionLabel.boldSubString(originalString: str, substrings: ["vegan", "veg", "non-veg", "gluten-free", "calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
         }
     }
     internal let dishNutritionLabel: UILabel = UILabel()
@@ -50,7 +63,7 @@ internal class DishNutritionCell: UITableViewCell {
         dishNutritionLabel.textColor = .black
         dishNutritionLabel.backgroundColor = .clear
         dishNutritionLabel.lineBreakMode = .byTruncatingTail
-        dishNutritionLabel.textAlignment = .left
+        dishNutritionLabel.textAlignment = .center
         container.addSubview(dishNutritionLabel)
         
         container.backgroundColor = .white

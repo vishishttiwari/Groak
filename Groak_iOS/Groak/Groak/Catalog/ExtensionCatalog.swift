@@ -237,6 +237,13 @@ extension UILabel {
         textAlignment = .center
     }
     
+    func isTime() {
+        font = UIFont(name: FontCatalog.fontLevels[1], size: 12)
+        backgroundColor = .clear
+        textAlignment = .right
+        clipsToBounds = true
+    }
+    
     func colorBackgroundForegroundOfSubString(originalString: String, substrings: [String], backgroundColor: UIColor, foregroundColor: UIColor) {
         let s = originalString as NSString
         let att = NSMutableAttributedString(string: s as String)
@@ -269,7 +276,7 @@ extension UILabel {
 extension UIButton {
     func footerButton(title: String) {
         setTitle(title, for: .normal)
-        titleLabel?.font = FontCatalog.buttonFont
+        titleLabel?.font = UIFont(name: FontCatalog.fontLevels[3], size: 25)!
         backgroundColor = ColorsCatalog.themeColor
         titleLabel?.textColor = .white
         layer.cornerRadius = 10

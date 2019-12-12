@@ -19,10 +19,16 @@ internal class OrderView: UITableView {
     private let specialInstructionsCellId = "specialInstructionsCellId"
     private let statusCellId = "statusCellId"
     
-    internal var order = LocalStorage.tableOrder
+    internal var order = LocalRestaurant.tableOrder
+    
+    private let fsOrders = LocalRestaurant.fsOrders
+    
+    private var viewController: UIViewController?
 
-    required init() {
+    required init(viewController: UIViewController) {
         super.init(frame: .zero, style: .grouped)
+        
+        self.viewController = viewController
         
         setupViews()
     }
@@ -94,37 +100,29 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: orderDishCellId, for: indexPath) as! OrderDishCell
 
-            cell.name.text = order.dishes[indexPath.row].name
-            cell.quantity.text = "\(order.dishes[indexPath.row].quantity)"
-            cell.price.text = order.dishes[indexPath.row].price.priceInString
-
-            var str = ""
-            for extra in order.dishes[indexPath.row].extras {
-                if (extra.title != Catalog.specialInstructionsId) {
-                    str += "\(extra.title):\n"
-                    for option in extra.options {
-                        str += "\t- \(option.title): \(option.price.priceInString)\n"
-                    }
-                } else {
-                    if (extra.options.count > 0) {
-                        str += "Special Instructions:\n"
-                        for option in extra.options {
-                            str += "\t-\(option)\n"
-                        }
-                    }
-                }
-            }
-            cell.details.text = str
+            cell.dish = order.dishes[indexPath.row]
 
             return cell
         } else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: specialInstructionsCellId, for: indexPath) as! SpecialInstructionsOrderCell
+                
+                cell.commentAdded = { (_ comment: String) -> () in
+                    self.fsOrders?.addCommentFirestoreAPI(comment: comment)
+                    self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
+                        if success {
+                            self.reloadData()
+                        } else {
+                            Catalog.alert(vc: self.viewController, title: "Error placing instructions", message: "Please try again.")
+                        }
+                    }
+                }
+                
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: orderCommentCellId, for: indexPath) as! OrderCommentCell
                 
-                cell.comment.text = order.comments[indexPath.row - 1].comment
+                cell.commentFull = order.comments[indexPath.row - 1]
                 
                 return cell
             }
@@ -134,6 +132,11 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func scrollToBottom(){
+        let indexPath = IndexPath(row: order.comments.count, section: 2)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: false)
+    }
+    
+    func scrollToSpecialInstructions(){
         let indexPath = IndexPath(row: 0, section: 2)
         self.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }

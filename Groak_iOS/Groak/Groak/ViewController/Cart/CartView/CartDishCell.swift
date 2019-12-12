@@ -1,5 +1,5 @@
 //
-//  CartCell.swift
+//  CartDishCell.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 12/3/19.
@@ -9,12 +9,25 @@
 import Foundation
 import UIKit
 
-internal class CartCell: UITableViewCell {
+internal class CartDishCell: UITableViewCell {
     private let container: UIView = UIView()
-    internal let quantity: UILabel = UILabel()
-    internal let name: UILabel = UILabel()
-    internal let price: UILabel = UILabel()
-    internal let details: UILabel = UILabel()
+    private let quantity: UILabel = UILabel()
+    private let name: UILabel = UILabel()
+    private let price: UILabel = UILabel()
+    private let details: UILabel = UILabel()
+    internal var dish: CartDish = CartDish.init() {
+        didSet {
+            name.text = dish.name
+            quantity.text = "\(dish.quantity)"
+            price.text = dish.price.priceInString
+
+            var extras: [DishExtra] = []
+            for extra in dish.extras {
+                extras.append(DishExtra.init(cartDishExtra: extra))
+            }
+            details.text = Catalog.showExtras(dishExtras: extras, showSpecialInstructions: true)
+        }
+    }
     
     private let dishHeight: CGFloat = 20
     private let commentsHeight: CGFloat = 15
@@ -106,6 +119,6 @@ internal class CartCell: UITableViewCell {
         
         details.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         details.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        details.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+        details.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
     }
 }

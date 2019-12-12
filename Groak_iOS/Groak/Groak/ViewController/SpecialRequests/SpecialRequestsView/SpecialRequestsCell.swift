@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 internal class SpecialRequestsCell: UITableViewCell {
-    private var container: UIView = UIView()
-    private var requestString: UILabel = UILabel()
-    private var time: UILabel = UILabel()
+    private let container: UIView = UIView()
+    private let requestString: UILabel = UILabel()
+    private let created: UILabel = UILabel()
     private var isUserRequest: Bool?
     
     private var leadingConstraint: NSLayoutConstraint?
@@ -21,19 +21,19 @@ internal class SpecialRequestsCell: UITableViewCell {
     internal var request: Request = Request.init() {
         didSet {
             requestString.text = request.request
-            time.text = TimeCatalog.getTimeFromTimestamp(timestamp: request.created)
+            created.text = TimeCatalog.getTimeFromTimestamp(timestamp: request.created)
             
             if !request.createdByUser {
                 container.backgroundColor = ColorsCatalog.shadesOfGray[2]
                 requestString.textColor = .black
-                time.textColor = .black
+                created.textColor = .black
                 
                 leadingConstraint?.isActive = true
                 trailingConstraint?.isActive = false
             } else {
                 container.backgroundColor = ColorsCatalog.themeColor
                 requestString.textColor = .white
-                time.textColor = .white
+                created.textColor = .white
                 
                 leadingConstraint?.isActive = false
                 trailingConstraint?.isActive = true
@@ -60,11 +60,8 @@ internal class SpecialRequestsCell: UITableViewCell {
         requestString.clipsToBounds = true
         container.addSubview(requestString)
         
-        time.font = UIFont(name: FontCatalog.fontLevels[1], size: 12)
-        time.backgroundColor = .clear
-        time.textAlignment = .right
-        time.clipsToBounds = true
-        container.addSubview(time)
+        created.isTime()
+        container.addSubview(created)
         
         container.backgroundColor = .clear
         container.layer.cornerRadius = DimensionsCatalog.cornerRadius
@@ -73,7 +70,7 @@ internal class SpecialRequestsCell: UITableViewCell {
     
     private func setupInitialLayout() {
         requestString.translatesAutoresizingMaskIntoConstraints = false
-        time.translatesAutoresizingMaskIntoConstraints = false
+        created.translatesAutoresizingMaskIntoConstraints = false
         container.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
@@ -89,10 +86,10 @@ internal class SpecialRequestsCell: UITableViewCell {
         requestString.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         requestString.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
-        time.topAnchor.constraint(equalTo: requestString.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        time.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        time.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        time.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements/2).isActive = true
+        created.topAnchor.constraint(equalTo: requestString.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements/2).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

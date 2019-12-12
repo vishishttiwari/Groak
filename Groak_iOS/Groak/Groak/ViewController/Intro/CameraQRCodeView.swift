@@ -13,7 +13,7 @@ import UIKit
 internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate {
     
     // Optional Closures
-    internal var restaurantFound: ((_ restaurant: Restaurant) -> ())?
+    internal var restaurantFound: ((_ table: Table, _ restaurant: Restaurant) -> ())?
     
     // Initialization of variables for camera
     private var captureSession = AVCaptureSession()
@@ -36,8 +36,8 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
         setupDevice()
         setupInput()
         setupOutput()
-        setupQRCodeCapture()
         setupPreviewLayer()
+        setupQRCodeCapture()
         startRunningCaptureSession()
     }
     
@@ -49,16 +49,11 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
     // This method sets up the input format and device
     private func setupInput() {
         do {
-            let captureDeviceInput = try AVCaptureDeviceInput(device: defaultCamera!)               // This
+            let captureDeviceInput = try AVCaptureDeviceInput(device: defaultCamera!)               
             captureSession.addInput(captureDeviceInput)                                             // If the camera be added as an input then it is added as input
-        } catch {
+        } catch let error as NSError {
             print(error)
         }
-    }
-    
-    // This method sets up the output format and device
-    private func setupOutput() {
-        captureSession.addOutput(videoOutput)
     }
     
     // This method makes sure that only those frames are captured that have the type QR Code in them
@@ -75,6 +70,11 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
         cameraPreviewLayer?.frame = self.frame                                                  // Set the size of the video display
         
         self.layer.addSublayer(cameraPreviewLayer!)                                             // Show video on the viewController
+    }
+    
+    // This method sets up the output format and device
+    private func setupOutput() {
+        captureSession.addOutput(videoOutput)
     }
     
     private func startRunningCaptureSession() {
@@ -116,7 +116,7 @@ internal class CameraQRCodeView: UIView, AVCaptureMetadataOutputObjectsDelegate 
                         if let restaurant = restaurant, restaurant.success() {
                             let generator = UIImpactFeedbackGenerator(style: .heavy)
                             generator.impactOccurred()
-                            self.restaurantFound?(restaurant)
+                            self.restaurantFound?(table, restaurant)
                         }
                         self.qrCodeProcessing = false;
                     }

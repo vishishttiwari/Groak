@@ -55,8 +55,8 @@ internal class CartFooterView: UIView {
     
     private func calculateTotalPrice() -> Double {
         var totalPrice: Double = 0
-        for dish in LocalStorage.cart.dishes {
-            totalPrice += dish.totalPrice
+        for dish in LocalRestaurant.cart.dishes {
+            totalPrice += dish.price
         }
         
         return totalPrice

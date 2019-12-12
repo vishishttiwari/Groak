@@ -12,35 +12,35 @@ import UIKit
 
 class IntroViewController: UIViewController {
     
-    private var cameraView: CameraQRCodeView = CameraQRCodeView()
+    private var cameraView: CameraQRCodeView?
     private var bottomSheetView: BottomSheetView?
     
     private var selectedRestaurant: Restaurant? = nil
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated);
+    private var permissions = PermissionsCatalog.init()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("IntroViewController")
         
         setTopBottomSafeArea()
-//        setupCameraQRCodeView()
-        setupBottomSheetView()
         
-        
-        
-        
-        
-        
-        
-        let restaurant = Restaurant.init("jk")
-        let controller = TabbarViewController(restaurant: restaurant)
-        controller.setNeedsStatusBarAppearanceUpdate()
-        
-        controller.modalTransitionStyle = .coverVertical
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-
-        DispatchQueue.main.async {
-            self.present(controller, animated: true, completion: nil)
+        if permissions.askCameraPermission(viewController: self) {
+            setupCameraQRCodeView()
+            setupBottomSheetView()
+        } else {
+            permissions.cameraPermissionGranted = { (_ granted: Bool) -> () in
+                if granted {
+                    DispatchQueue.main.async {
+                        self.setupCameraQRCodeView()
+                        self.setupBottomSheetView()
+                    }
+                }
+            }
         }
         
+        PermissionsCatalog.askLocationPermission(viewController: self)
         
         
         
@@ -48,10 +48,25 @@ class IntroViewController: UIViewController {
         
         
         
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        
+//        let restaurant = Restaurant.init("jk")
+//        let controller = TabbarViewController(restaurant: restaurant)
+//        controller.setNeedsStatusBarAppearanceUpdate()
+//
+//        controller.modalTransitionStyle = .coverVertical
+//        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//
+//        DispatchQueue.main.async {
+//            self.present(controller, animated: true, completion: nil)
+//        }
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     // Setup the top and bottom safe area when the first view controller loads up
@@ -70,22 +85,34 @@ class IntroViewController: UIViewController {
     
     // This sets up the camera view with qr code scanner
     private func setupCameraQRCodeView() {
-        self.view.addSubview(cameraView)
+        cameraView = CameraQRCodeView()
+        self.view.addSubview(cameraView!)
         
 //      When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
 //      user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
 //      the camera stops scanning for qr codes
-        cameraView.restaurantFound = { (_ restaurant: Restaurant) -> () in
+        cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
             if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID {
-                self.cameraView.stopScanningForQR()
+                LocalRestaurant.restaurant.restaurant = restaurant
+                LocalRestaurant.table.setTable(table: table)
+                if LocalRestaurant.restaurantFoundSuccessful() {
+                
+                    self.cameraView?.stopScanningForQR()
+                    self.bottomSheetView?.stopUpdatingLocation()
+                    
+                    AppDelegate.resetTimer()
 
-                let controller = MenuViewController(restaurant: restaurant)
+                    let controller = TabbarViewController.init(restaurant: restaurant)
 
-                controller.modalTransitionStyle = .coverVertical
-                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                    controller.modalTransitionStyle = .coverVertical
+                    controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 
-                DispatchQueue.main.async {
-                    self.present(controller, animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                } else {
+                    self.bottomSheetView?.setRestaurantNotFound()
+                    Catalog.alert(vc: self, title: "Error finding table", message: "Error finding table. Please contact the restaurant and we will get this sorted")
                 }
             }
         }
@@ -103,25 +130,38 @@ class IntroViewController: UIViewController {
         bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height
         
         // When a restaurant is found near you then start scanning for barcodes because you are at a restaurant that uses groak
-        bottomSheetView!.restaurantFound = { (_ state: BottomSheetState, _ restaurant: Restaurant) -> () in
-            self.cameraView.startScanningForQR()
+        bottomSheetView!.stateChanged = { (_ state: BottomSheetState, _ restaurant: Restaurant?) -> () in
             
-            self.selectedRestaurant = restaurant
-            
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
-                    self.bottomSheetView!.frame.origin.y = DimensionsCatalog.bottomSheetHeight
-                    self.bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.bottomSheetHeight
-                    self.bottomSheetView!.roundCorners([.layerMaxXMinYCorner, .layerMinXMinYCorner ], radius: 2*DimensionsCatalog.cornerRadius)
-                })
+            if state == BottomSheetState.RestaurantFound, let restaurant = restaurant {
+                self.cameraView?.startScanningForQR()
+                
+                self.selectedRestaurant = restaurant
+                
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
+                        self.bottomSheetView!.frame.origin.x = 0
+                        self.bottomSheetView!.frame.origin.y = DimensionsCatalog.bottomSheetHeight
+                        self.bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.bottomSheetHeight
+                        self.bottomSheetView!.roundCorners([.layerMaxXMinYCorner, .layerMinXMinYCorner ], radius: 2*DimensionsCatalog.cornerRadius)
+                    })
+                }
+            } else {
+                self.cameraView?.stopScanningForQR()
+
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
+                        self.bottomSheetView!.frame.origin.x = 0
+                        self.bottomSheetView!.frame.origin.y = 0
+                        self.bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height
+                        self.bottomSheetView!.layer.cornerRadius = 0
+                    })
+                }
             }
         }
     }
     
-    func setBackToRestaurantNotFound() {
-        bottomSheetView!.frame.origin.y = 0
-        bottomSheetView!.frame.size.height = DimensionsCatalog.screenSize.height
-        bottomSheetView!.layer.cornerRadius = 0
-        bottomSheetView!.setBackToRestaurantNotFound()
+    func returningToIntro() {
+        bottomSheetView?.setRestaurantNotFound()
+        AppDelegate.stopTimer()
     }
 }

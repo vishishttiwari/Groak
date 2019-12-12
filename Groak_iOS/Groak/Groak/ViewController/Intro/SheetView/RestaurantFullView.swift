@@ -10,8 +10,12 @@ import Foundation
 import UIKit
 
 internal class RestaurantFullView: UIView {
+    // Optional Closures
+    internal var notCorrectRestaurantClosure: (() -> ())?
+    
     private let restaurantName: UILabel = UILabel()
     private let restaurantLogo: UIImageView = UIImageView()
+    private let notCorrectRestaurant: UIButton = UIButton()
     internal var restaurant: Restaurant = Restaurant.init() {
         didSet {
             restaurantLogo.loadImageUsingCache(url: restaurant.logo)
@@ -41,11 +45,17 @@ internal class RestaurantFullView: UIView {
         restaurantLogo.backgroundColor = .clear
         restaurantLogo.contentMode = .scaleAspectFit
         self.addSubview(restaurantLogo)
+        
+        notCorrectRestaurant.footerButton(title: "Different Restaurant?")
+        notCorrectRestaurant.titleLabel?.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)!
+        notCorrectRestaurant.addTarget(self, action: #selector(notCorrectRestaurantTapped), for: .touchUpInside)
+        self.addSubview(notCorrectRestaurant)
     }
     
     private func setupInitialLayout() {
         restaurantName.translatesAutoresizingMaskIntoConstraints = false
         restaurantLogo.translatesAutoresizingMaskIntoConstraints = false
+        notCorrectRestaurant.translatesAutoresizingMaskIntoConstraints = false
         
         restaurantName.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
@@ -55,7 +65,16 @@ internal class RestaurantFullView: UIView {
         restaurantLogo.topAnchor.constraint(equalTo: restaurantName.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantLogo.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantLogo.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        restaurantLogo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        restaurantLogo.bottomAnchor.constraint(equalTo: notCorrectRestaurant.topAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        
+        notCorrectRestaurant.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        notCorrectRestaurant.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        notCorrectRestaurant.heightAnchor.constraint(equalToConstant: restaurantTitleHeight).isActive = true
+        notCorrectRestaurant.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.bottomSafeArea).isActive = true
+    }
+    
+    @objc func notCorrectRestaurantTapped() {
+        notCorrectRestaurantClosure?()
     }
     
     required init?(coder: NSCoder) {

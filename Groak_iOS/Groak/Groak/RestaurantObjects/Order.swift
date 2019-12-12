@@ -196,8 +196,9 @@ internal class OrderDish {
     }
     
     init(cartDish: CartDish) {
-        self.name = cartDish.dishName
-        self.price = cartDish.totalPrice
+        self.name = cartDish.name
+        self.dishReference = cartDish.dishReference
+        self.price = cartDish.price
         self.quantity = cartDish.quantity
         self.extras = []
         for extra in cartDish.extras {
@@ -227,6 +228,7 @@ internal class OrderDish {
         str += "Dish Reference: \(dishReference?.documentID ?? "Dish reference not present")\n"
         str += "Price: \(price)\n"
         str += "Quantity: \(quantity)\n"
+        str += "Created: \(created)\n"
         str += "Extras:\n"
         for extra in extras {
             str += "\t\(extra.description)\n"
@@ -247,6 +249,7 @@ internal class OrderDish {
             extrasDict.append(extra.dictionary)
         }
         dict["extras"] = extrasDict
+        dict["created"] = created
         
         return dict
     }

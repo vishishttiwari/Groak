@@ -17,7 +17,7 @@ internal class CartView: UITableView {
     private let cartCellId = "cartCellId"
     private let specialInstructionsCellId = "specialInstructionsCellId"
     
-    internal var cart = LocalStorage.cart
+    internal var cart = LocalRestaurant.cart
     
     required init() {
         super.init(frame: .zero, style: .grouped)
@@ -38,7 +38,7 @@ internal class CartView: UITableView {
         
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(SpecialInstructionsCartCell.self, forCellReuseIdentifier: specialInstructionsCellId)
-        self.register(CartCell.self, forCellReuseIdentifier: cartCellId)
+        self.register(CartDishCell.self, forCellReuseIdentifier: cartCellId)
         self.delegate = self
         self.dataSource = self
     }
@@ -75,29 +75,9 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cartCellId, for: indexPath) as! CartCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cartCellId, for: indexPath) as! CartDishCell
             
-            cell.name.text = cart.dishes[indexPath.row].dishName
-            cell.quantity.text = "\(cart.dishes[indexPath.row].quantity)"
-            cell.price.text = cart.dishes[indexPath.row].totalPrice.priceInString
-
-            var str = ""
-            for extra in cart.dishes[indexPath.row].extras {
-                if (extra.title != Catalog.specialInstructionsId) {
-                    str += "\(extra.title):\n"
-                    for option in extra.options {
-                        str += "\t- \(option.title): \(option.price.priceInString)\n"
-                    }
-                } else {
-                    if (extra.options.count > 0) {
-                        str += "Special Instructions:\n"
-                        for option in extra.options {
-                            str += "\t-\(option)\n"
-                        }
-                    }
-                }
-            }
-            cell.details.text = str
+            cell.dish = cart.dishes[indexPath.row]
             
             return cell
         } else if (indexPath.section == 1) {
@@ -122,8 +102,8 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             cart.dishes.remove(at: indexPath.row)
-            LocalStorage.cart.dishes.remove(at: indexPath.row)
-            if (LocalStorage.cart.dishes.count > 0) {
+            LocalRestaurant.cart.dishes.remove(at: indexPath.row)
+            if (LocalRestaurant.cart.dishes.count > 0) {
                 self.reloadData()
             } else {
                 dismiss?()

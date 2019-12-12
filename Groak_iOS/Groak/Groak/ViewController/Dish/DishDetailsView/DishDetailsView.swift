@@ -12,21 +12,58 @@ import UIKit
 internal class DishDetailsView: UITableView {
     // Optional Closures
     internal var ingredients: (() -> ())?
+    internal var order: (() -> ())?
     
     private let headerCellId = "headerCellId"
     private let imageCellId = "imageCellId"
     private let ingredientCellId = "ingredientCellId"
-    private let nutritionCellId = "nutritionCellId"
+    private let contentCellId = "contentCellId"
     private let descriptionCellId = "descriptionCellId"
     
     private var dish: Dish = Dish()
+    
+    private var totalSections = 4
+    private var imageSectionNumber = 0
+    private var ingredientsSectionNumber = 1
+    private var contentsSectionNumber = 2
+    private var descriptionSectionNumber = 3
     
     required init(dish: Dish) {
         super.init(frame: .zero, style: .grouped)
         
         self.dish = dish
         
+        findSectionNumbers(dish: dish)
+        
         setupViews()
+    }
+    
+    private func findSectionNumbers(dish: Dish) {        
+        if dish.imageLink.count == 0 {
+            totalSections -= 1
+            imageSectionNumber = -1
+            ingredientsSectionNumber -= 1
+            contentsSectionNumber -= 1
+            descriptionSectionNumber -= 1
+        }
+        
+        if dish.ingredients.count == 0 {
+            totalSections -= 1
+            ingredientsSectionNumber = -1
+            contentsSectionNumber -= 1
+            descriptionSectionNumber -= 1
+        }
+        
+        if dish.nutrition.count == 0 {
+            totalSections -= 1
+            contentsSectionNumber = -1
+            descriptionSectionNumber -= 1
+        }
+        
+        if dish.dishDescription.count == 0 {
+            totalSections -= 1
+            descriptionSectionNumber = -1
+        }
     }
     
     private func setupViews() {
@@ -35,11 +72,13 @@ internal class DishDetailsView: UITableView {
         self.separatorStyle = .none
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
+        self.contentInset = insets
         
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(DishImageCell.self, forCellReuseIdentifier: imageCellId)
         self.register(UITableViewCellWithArrow.self, forCellReuseIdentifier: ingredientCellId)
-        self.register(DishNutritionCell.self, forCellReuseIdentifier: nutritionCellId)
+        self.register(DishContentCell.self, forCellReuseIdentifier: contentCellId)
         self.register(DishDescriptionCell.self, forCellReuseIdentifier: descriptionCellId)
         
         self.delegate = self
@@ -55,18 +94,17 @@ internal class DishDetailsView: UITableView {
 
 extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return totalSections
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if (section != 0 || section != 1) {
+        if section == contentsSectionNumber {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellId) as! UITableViewHeader
-            if (section == 2) {
-                header.title.text = "Nutritional Content"
-            }
-            else if (section == 3) {
-                header.title.text = "Description"
-            }
+            header.title.text = "Content"
+            return header
+        } else if section == descriptionSectionNumber {
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellId) as! UITableViewHeader
+            header.title.text = "Description"
             return header
         } else {
             return nil
@@ -74,11 +112,13 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0 || section == 1) {
-            return 0
-        } else {
-            return DimensionsCatalog.tableHeaderHeight
-        }
+        if section == contentsSectionNumber {
+           return DimensionsCatalog.tableHeaderHeight
+       } else if section == descriptionSectionNumber {
+           return DimensionsCatalog.tableHeaderHeight
+       } else {
+           return 0
+       }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,26 +126,27 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.section == 0) {
+        if (indexPath.section == imageSectionNumber) {
             let cell = tableView.dequeueReusableCell(withIdentifier: imageCellId, for: indexPath) as! DishImageCell
             
             cell.dishAvailable = dish.available
             cell.dishImageLink = dish.imageLink
             
             return cell
-        } else if (indexPath.section == 1) {
+        } else if (indexPath.section == ingredientsSectionNumber) {
             let cell = tableView.dequeueReusableCell(withIdentifier: ingredientCellId, for: indexPath) as! UITableViewCellWithArrow
             
             cell.title.text = "Ingredients"
             
             return cell
-        } else if (indexPath.section == 2) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: nutritionCellId, for: indexPath) as! DishNutritionCell
+        } else if (indexPath.section == contentsSectionNumber) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: contentCellId, for: indexPath) as! DishContentCell
             
+            cell.dishRestrictions = dish.restrictions
             cell.dishNutrition = dish.nutrition
             
             return cell
-        } else if (indexPath.section == 3) {
+        } else if (indexPath.section == descriptionSectionNumber) {
             let cell = tableView.dequeueReusableCell(withIdentifier: descriptionCellId, for: indexPath) as! DishDescriptionCell
             
             cell.dishDescription.text = dish.dishDescription
@@ -118,7 +159,7 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if (indexPath.section == 1) {
+        if (indexPath.section == ingredientsSectionNumber) {
             ingredients?()
         }
     }

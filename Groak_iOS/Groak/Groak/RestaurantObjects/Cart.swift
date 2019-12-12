@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 internal class Cart {
     var dishes: [CartDish] = []
@@ -74,33 +75,36 @@ internal class Cart {
 }
 
 internal class CartDish {
-    var dishName: String
-    var totalPrice: Double
+    var name: String
+    var dishReference: DocumentReference?
+    var price: Double
     var quantity: Int
     var pricePerItem: Double
     var extras: [CartDishExtra]
     
     init() {
-        dishName = ""
-        totalPrice = -1
+        name = ""
+        dishReference = nil
+        price = -1
         quantity = -1
         pricePerItem = -1
         extras = []
     }
     
-    init(dishName: String, pricePerItem: Double, quantity: Int, extras: [CartDishExtra]) {
-        self.dishName = dishName
-        self.totalPrice =  Catalog.calculateTotalPriceOfDish(pricePerItem: pricePerItem, quantity: quantity)
+    init(dishName: String, dishReference: DocumentReference?, pricePerItem: Double, quantity: Int, extras: [CartDishExtra]) {
+        self.name = dishName
+        self.dishReference = dishReference
+        self.price =  Catalog.calculateTotalPriceOfDish(pricePerItem: pricePerItem, quantity: quantity)
         self.quantity = quantity
         self.pricePerItem = pricePerItem
         self.extras = extras
     }
     
     func success() -> Bool {
-        if (dishName.count == 0) {
+        if (name.count == 0) {
             return false;
         }
-        if (totalPrice < 0) {
+        if (price < 0) {
             return false;
         }
         if (quantity < 0) {
@@ -114,8 +118,8 @@ internal class CartDish {
     }
     
     var description: String {
-        var str = "Dish Name: \(dishName)\n"
-        str += "Price: \(totalPrice)\n"
+        var str = "Dish Name: \(name)\n"
+        str += "Price: \(price)\n"
         str += "Quantity: \(quantity)\n"
         str += "Price Per Item: \(pricePerItem)\n"
         str += "Extras: \n"

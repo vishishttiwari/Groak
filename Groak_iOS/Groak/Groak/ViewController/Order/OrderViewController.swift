@@ -17,7 +17,7 @@ internal enum OrderStatus: String {
 
 internal class OrderViewController: UIViewController {
     private let header: OrderHeaderView = OrderHeaderView.init()
-    internal let orderView: OrderView = OrderView.init()
+    internal var orderView: OrderView?
     private let footer: OrderFooterView = OrderFooterView.init()
     
     private var tapGestureRecognizer: UITapGestureRecognizer?
@@ -46,7 +46,7 @@ internal class OrderViewController: UIViewController {
             object: nil
         )
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        tapGestureRecognizer!.cancelsTouchesInView = false
+        tapGestureRecognizer?.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         setupHeader()
@@ -56,14 +56,14 @@ internal class OrderViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if LocalStorage.tableOrder.dishes.count <= 0 {
-            orderView.isHidden = true
-            footer.isHidden = true
-        } else {
-            orderView.isHidden = false
+        if LocalRestaurant.tableOrder.exists {
+            orderView?.isHidden = false
             footer.isHidden = false
-            orderView.order = LocalStorage.tableOrder
-            orderView.reloadData()
+            orderView?.order = LocalRestaurant.tableOrder
+            orderView?.reloadData()
+        } else {
+            orderView?.isHidden = true
+            footer.isHidden = true
         }
     }
     
@@ -71,7 +71,7 @@ internal class OrderViewController: UIViewController {
         self.view.addSubview(header)
         
         header.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
         }
         
         header.translatesAutoresizingMaskIntoConstraints = false
@@ -82,16 +82,17 @@ internal class OrderViewController: UIViewController {
     }
     
     private func setupOrderView() {
-        self.view.addSubview(orderView)
+        orderView = OrderView.init(viewController: self)
+        self.view.addSubview(orderView!)
         
-        orderView.instructionSent = { () -> () in
+        orderView?.instructionSent = { () -> () in
             Catalog.alert(vc: self, title: "Instruction Sent", message: "Restaurant has been notified")
         }
         
-        orderView.frame.size.width = DimensionsCatalog.screenSize.width
-        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
-        orderView.frame.origin.x = 0
-        orderView.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
+        orderView?.frame.size.width = DimensionsCatalog.screenSize.width
+        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
+        orderView?.frame.origin.x = 0
+        orderView?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
     }
     
     private func setupFooter() {
@@ -106,35 +107,35 @@ internal class OrderViewController: UIViewController {
     
     // Function called when background is tapped
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        orderView.endEditing(true)
+        orderView?.endEditing(true)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            tapGestureRecognizer!.cancelsTouchesInView = true
+            tapGestureRecognizer?.cancelsTouchesInView = true
             
-            orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
-            orderView.scrollToBottom()
+            orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
+            orderView?.scrollToSpecialInstructions()
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        orderView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
+        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
     @objc func keyboardDidHide(_ notification: Notification) {
-        tapGestureRecognizer!.cancelsTouchesInView = false
+        tapGestureRecognizer?.cancelsTouchesInView = false
     }
     
     private func downloadOrder() {
-        let fsOrder = FirestoreAPICallsOrders.init();
+        let fsOrder = LocalRestaurant.fsOrders
         
-        fsOrder.fetchOrderFirestoreAPI()
+        fsOrder?.fetchOrderFirestoreAPI()
         
-        fsOrder.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
-            LocalStorage.tableOrder = order ?? Order.init()
-            self.orderView.order = LocalStorage.tableOrder
-            self.orderView.reloadData()
+        fsOrder?.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
+            LocalRestaurant.tableOrder = order ?? Order.init()
+            self.orderView?.order = LocalRestaurant.tableOrder
+            self.orderView?.reloadData()
         }
     }
     

@@ -28,6 +28,28 @@ internal class DishExtra {
         }
     }
     
+    init(cartDishExtra: CartDishExtra) {
+        self.title = cartDishExtra.title
+        self.options = []
+        for option in cartDishExtra.options {
+            self.options.append(DishExtraOption.init(title: option.title, price: option.price))
+        }
+        multipleSelections = true
+        minOptionsSelect = -1
+        maxOptionsSelect = -1
+    }
+    
+    init(orderDishExtra: OrderDishExtra) {
+        self.title = orderDishExtra.title
+        self.options = []
+        for option in orderDishExtra.options {
+            self.options.append(DishExtraOption.init(title: option.title, price: option.price))
+        }
+        multipleSelections = true
+        minOptionsSelect = -1
+        maxOptionsSelect = -1
+    }
+    
     func success() -> Bool {
         if (title.count == 0) {
             return false;
@@ -62,6 +84,11 @@ internal class DishExtraOption {
     init(dishExtraOption: [String: Any]) {
         title = dishExtraOption["title"] as? String ?? ""
         price = dishExtraOption["price"] as? Double ?? -1
+    }
+    
+    init(title: String, price: Double) {
+        self.title = title
+        self.price = price
     }
     
     func success() -> Bool {

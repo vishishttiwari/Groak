@@ -13,7 +13,6 @@ internal class MenuViewController: UIViewController {
     
     private var header: MenuHeaderView?
     private var menu: MenuView?
-    private var footer: CartOrderFooterView = CartOrderFooterView.init()
     
     private var categories: [MenuCategory] = []
     
@@ -24,11 +23,16 @@ internal class MenuViewController: UIViewController {
         
         setupHeader(restaurant: restaurant)
         setupMenu(restaurant: restaurant)
-//        setupFooter()
         
-        downloadMenu(restaurant: restaurant)
+        downloadMenu()
         
         self.view.addSubview(UIView().customActivityIndicator())
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        
+        PermissionsCatalog.askLocationPermission(viewController: self)
     }
     
     private func setupHeader(restaurant: Restaurant) {
@@ -39,11 +43,7 @@ internal class MenuViewController: UIViewController {
             self.menu?.sectionChanged(section: section)
         }
         header?.dismiss = { () -> () in
-            let customViewController1 = self.presentingViewController as? IntroViewController
-            
-            self.dismiss(animated: true, completion: {
-                customViewController1?.setBackToRestaurantNotFound()
-            })
+            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
         }
         header?.find = { () -> () in
             let controller = SearchViewController(restaurant: restaurant, categories: self.categories)
@@ -96,53 +96,10 @@ internal class MenuViewController: UIViewController {
         menu?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
-    private func setupFooter() {
-        self.view.addSubview(footer)
-
-        footer.buttonTapped = { (_ state: OrderOrCartState) -> () in
-            let controller: UIViewController?
-            if (state == OrderOrCartState.None) {
-                return
-            } else if (state == OrderOrCartState.Cart) {
-                controller = CartViewController.init()
-            } else if (state == OrderOrCartState.Order) {
-                controller = OrderViewController.init()
-            } else {
-                controller = CartViewController.init()
-            }
-
-            controller?.modalTransitionStyle = .coverVertical
-            controller?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-
-            DispatchQueue.main.async {
-                self.present(controller!, animated: true, completion: nil)
-            }
-        }
-
-        footer.frame.origin.x = 0
-        footer.frame.origin.y = DimensionsCatalog.screenSize.height
-        footer.frame.size.width = DimensionsCatalog.screenSize.width
-        footer.frame.size.height = DimensionsCatalog.viewControllerFooterDimensions.heightNormal
-
-        checkIfCartOrOrderExists()
-    }
-    
-    internal func checkIfCartOrOrderExists() {
-        if LocalStorage.cart.exists && LocalStorage.tableOrder.exists {
-            self.footer.present(state: OrderOrCartState.OrderCart)
-        } else if LocalStorage.cart.exists {
-            self.footer.present(state: OrderOrCartState.Cart)
-        } else if LocalStorage.tableOrder.exists {
-            self.footer.present(state: OrderOrCartState.Order)
-        } else {
-            self.footer.dismiss()
-        }
-    }
-    
-    private func downloadMenu(restaurant: Restaurant) {
+    private func downloadMenu() {
         let fsRestaurant = FirestoreAPICallsRestaurants.init();
         
-        fsRestaurant.fetchRestaurantCategoriesFirestoreAPI(restaurantReference: restaurant.reference!)
+        fsRestaurant.fetchRestaurantCategoriesFirestoreAPI()
         
         fsRestaurant.dataReceivedForFetchRestaurantCategories = { (_ categories: [MenuCategory]) -> () in
             self.view.hideLoader(hideFrom: self.view)

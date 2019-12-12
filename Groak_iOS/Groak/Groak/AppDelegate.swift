@@ -6,9 +6,10 @@
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import Firebase
-import CoreData
+import CoreLocation
 
 // See why any of the textview is not working. Make a different common extension for textview
 // Any new stuff will be added to order view controller
@@ -24,16 +25,38 @@ import CoreData
 // Notifications
 // Start with camera and also have, not your restaurant and then show table
 // Detach firestore listeners
+// Add screens for when location or camera is not activated
+// Save your order locally in cache (permanent)
+// When ready to pay add it to the server
+
+
+// Screen for when location or camera not added
+// Times in order
+// Instructions in order
+// Notifications
+
+// Loading indicator for cell
+// See if cells change size dynamically
+// get the user out of restaurant when location changes and after 3 hours
+// Detach listeners
+// Vegetarian icons etc.
+
+// Have temporary graphics
+// Different graphics for different loading
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
-var window: UIWindow?
+    var window: UIWindow?
 
+    private let locationManager = CLLocationManager()
+    static var timer: Timer?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FirebaseApp.configure()
+        setupLocation()
         
+        FirebaseApp.configure()
 
         let baseViewController = IntroViewController()
         
@@ -42,6 +65,45 @@ var window: UIWindow?
         window?.rootViewController = baseViewController
         
         return true
+    }
+    
+    // This sets up the location manager for getting the current position of user
+    private func setupLocation() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    // This function is called everytime the user changes position
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation = locations[0]
+        print(userLocation)
+        if let restaurant = LocalRestaurant.restaurant.restaurant {
+            let restaurantLocation = DistanceCatalog.createCLLocation(latitude: restaurant.latitude, longitude: restaurant.longitude)
+            if DistanceCatalog.shouldLocationBeUpdated(location1: userLocation, location2: restaurantLocation) {
+                print("Yes")
+                LocalRestaurant.leaveRestaurant()
+            }
+        }
+    }
+    
+    static func resetTimer() {
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(TimeCatalog.leaveRestaurantTimeInHours), target: self, selector: #selector(leaveRestaurant), userInfo: nil, repeats: false)
+    }
+    
+    static func stopTimer() {
+        timer = nil
+    }
+    
+    @objc static func leaveRestaurant() {
+        if let _ = LocalRestaurant.restaurant.restaurant {
+            LocalRestaurant.leaveRestaurant()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print(status)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

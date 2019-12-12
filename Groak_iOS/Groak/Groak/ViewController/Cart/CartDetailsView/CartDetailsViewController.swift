@@ -43,9 +43,9 @@ internal class CartDetailsViewController: UIViewController {
         tapGestureRecognizer!.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGestureRecognizer!)
         
-        setupHeader(dish: cartDish.dishName)
-        setupFooter(cartDish: cartDish)
-        setupCartDetails(cartDish: cartDish, indexInCart: indexInCart)
+        setupHeader(dish: cartDish.name)
+        setupFooter(cartDish: cartDish, indexInCart: indexInCart)
+        setupCartDetails(cartDish: cartDish)
     }
     
     private func setupHeader(dish: String) {
@@ -63,15 +63,20 @@ internal class CartDetailsViewController: UIViewController {
         header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightNormal).isActive = true
     }
     
-    private func setupFooter(cartDish: CartDish) {
+    private func setupFooter(cartDish: CartDish, indexInCart: Int) {
         footer = CartDetailsFooterView.init(cartDish: cartDish)
         self.view.addSubview(footer!)
         
-        footer?.update = { () -> () in
-            let customViewController1 = self.presentingViewController as? CartViewController
+        footer?.update = { (_ cartDish: CartDish) -> () in
+            LocalRestaurant.cart.dishes[indexInCart] = cartDish
             
-            self.dismiss(animated: true, completion: {
-                customViewController1?.reload()
+            let customViewController1 = self.presentingViewController as? TabbarViewController
+            let customViewController2 = customViewController1?.viewControllers?[0] as? CartViewController
+            
+            self.dismiss(animated: false, completion: {
+                if let a = customViewController2 {
+                    a.reload()
+                }
             })
         }
         
@@ -82,13 +87,12 @@ internal class CartDetailsViewController: UIViewController {
         footer?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
-    private func setupCartDetails(cartDish: CartDish, indexInCart: Int) {
+    private func setupCartDetails(cartDish: CartDish) {
         cartDetailsView = CartDetailsView.init(cartDish: cartDish)
         self.view.addSubview(cartDetailsView!)
         
         cartDetailsView?.orderAltered = { (_ cartDish: CartDish) -> () in
             self.footer?.orderAltered(cartDish: cartDish)
-            LocalStorage.cart.dishes[indexInCart] = cartDish
         }
         
         cartDetailsView?.frame.size.width = DimensionsCatalog.screenSize.width

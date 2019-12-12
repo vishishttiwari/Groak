@@ -14,8 +14,6 @@ internal class SpecialRequestsViewController: UIViewController {
     private var specialRequestsView: SpecialRequestsView?
     private var footer: SpecialReqiestsFooterView = SpecialReqiestsFooterView()
     
-    private let fsRequests = FirestoreAPICallsRequests.init();
-    
     private var tapGestureRecognizer: UITapGestureRecognizer?
     
     required init(restaurant: Restaurant) {
@@ -64,9 +62,11 @@ internal class SpecialRequestsViewController: UIViewController {
     private func setupFooter(restaurant: Restaurant) {
         self.view.addSubview(footer)
         
+        let fsRequests = LocalRestaurant.fsRequests;
+        
         footer.sendRequest = { (_ request: String) -> () in
             let requestObject = Request.init(request: request)
-            self.fsRequests.addRequestsFirestoreAPI(restaurant: restaurant, requestsId: "lxaevz2o8t9pxv4x5r8p7", request: requestObject)
+            fsRequests?.addRequestsFirestoreAPI(request: requestObject)
         }
         
         footer.frame.size.width = DimensionsCatalog.screenSize.width
@@ -89,11 +89,11 @@ internal class SpecialRequestsViewController: UIViewController {
     }
     
     private func downloadRequests(restaurant: Restaurant) {
-        let fsRequests = FirestoreAPICallsRequests.init()
+        let fsRequests = LocalRestaurant.fsRequests
         
-        fsRequests.fetchRequestsFirestoreAPI(restaurant: restaurant, requestsId: "lxaevz2o8t9pxv4x5r8p7")
+        fsRequests?.fetchRequestsFirestoreAPI()
         
-        fsRequests.dataReceivedForFetchRequests = { (_ requests: Requests?) -> () in
+        fsRequests?.dataReceivedForFetchRequests = { (_ requests: Requests?) -> () in
             if let requests = requests, requests.success() {
                 self.specialRequestsView?.reloadData(requests: requests)
             }

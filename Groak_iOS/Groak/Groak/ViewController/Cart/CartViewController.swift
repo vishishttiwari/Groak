@@ -14,7 +14,7 @@ internal class CartViewController: UIViewController {
     private let cartView: CartView = CartView.init()
     private let footer: CartFooterView = CartFooterView.init()
     
-    private let fsOrders = FirestoreAPICallsOrders.init();
+    private let fsOrders = LocalRestaurant.fsOrders
     
     private var tapGestureRecognizer: UITapGestureRecognizer?
     
@@ -51,26 +51,26 @@ internal class CartViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if LocalStorage.cart.dishes.count <= 0 {
-            cartView.isHidden = true
-            footer.isHidden = true
-        } else {
+        
+        PermissionsCatalog.askLocationPermission(viewController: self)
+        
+        if LocalRestaurant.cart.exists {
             cartView.isHidden = false
             footer.isHidden = false
-            cartView.cart = LocalStorage.cart
-            cartView.reloadData()
+            header.deleteButton.isHidden = false
+            reload()
+        } else {
+            cartView.isHidden = true
+            footer.isHidden = true
+            header.deleteButton.isHidden = true
         }
     }
     
     private func setupHeader() {
         self.view.addSubview(header)
         
-        header.dismiss = { () -> () in
-            let customViewController1 = self.presentingViewController as? MenuViewController
-            
-            self.dismiss(animated: true, completion: {
-                customViewController1?.checkIfCartOrOrderExists()
-            })
+        header.dismiss = { () -> () in            
+            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
         }
         header.delete = { () -> () in
             let alert = UIAlertController(title: "Clean the Cart", message: "Would you like to empty the cart?", preferredStyle: .alert)
@@ -92,11 +92,7 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(cartView)
         
         cartView.dismiss = { () -> () in
-            let customViewController1 = self.presentingViewController as? MenuViewController
-            
-            self.dismiss(animated: true, completion: {
-                customViewController1?.checkIfCartOrOrderExists()
-            })
+            self.dismiss(animated: true, completion: nil)
         }
         cartView.cartDishSelected = { (_ cartDish: CartDish, _ indexInCart: Int) -> () in
             let controller = CartDetailsViewController(cartDish: cartDish, indexInCart: indexInCart)
@@ -119,19 +115,22 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(footer)
         
         footer.order = { () -> () in
-            self.view.addSubview(UIView().customActivityIndicator())
-            self.fsOrders.addOrdersFirestoreAPI()
-            self.fsOrders.dataReceivedForAddOrder = { (_ success: Bool) -> () in
-                if success {
-                    LocalStorage.cart.delete()
-                    self.view.hideLoader(hideFrom: self.view)
-                    let customViewController1 = self.presentingViewController as? MenuViewController
-                    self.dismiss(animated: true, completion: {
-                        customViewController1?.checkIfCartOrOrderExists()
-                    })
-                } else {
-                    Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
+            if LocalRestaurant.cart.exists {
+                self.view.addSubview(UIView().customActivityIndicator())
+                self.fsOrders?.addOrdersFirestoreAPI()
+                self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
+                    if success {
+                        LocalRestaurant.cart.delete()
+                        self.view.hideLoader(hideFrom: self.view)
+                        self.reload()
+                        self.tabBarController?.selectedIndex = 1
+                    } else {
+                        Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
+                    }
                 }
+            }
+            else {
+                Catalog.alert(vc: self, title: "No dishes in cart", message: "Please add dishes to cart before ordering")
             }
         }
         
@@ -165,15 +164,14 @@ internal class CartViewController: UIViewController {
     }
     
     private func deleteCart() {
-        LocalStorage.cart.delete()
-        let customViewController1 = self.presentingViewController as? MenuViewController
-        
-        self.dismiss(animated: true, completion: {
-            customViewController1?.checkIfCartOrOrderExists()
-        })
+        LocalRestaurant.cart.delete()
+        reload()
+
+        self.tabBarController?.selectedIndex = 1
     }
     
     func reload() {
+        cartView.cart = LocalRestaurant.cart
         cartView.reloadData()
         footer.reload()
     }

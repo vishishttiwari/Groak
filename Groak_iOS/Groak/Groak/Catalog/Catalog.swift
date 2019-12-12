@@ -6,7 +6,7 @@
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
-import Foundation
+import AVFoundation
 import UIKit
 
 internal class Catalog {
@@ -23,7 +23,49 @@ internal class Catalog {
         view.present(alert, animated: true, completion: nil)
     }
     
+    static func alertSpecificallyForLeavingRestaurant(vc: UIViewController?) {
+        let alert = UIAlertController(title: "Leaving restaurant?", message: "Are you sure you would like to leave the restaurant?. Your cart will be lost.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            let customViewController1 = vc?.presentingViewController as? IntroViewController
+            
+            vc?.dismiss(animated: true, completion: {
+                customViewController1?.returningToIntro()
+            })
+        }))
+        vc?.present(alert, animated: true, completion: nil)
+    }
+    
     static func calculateTotalPriceOfDish(pricePerItem: Double, quantity: Int) -> Double {
         return round(Double(quantity) * pricePerItem * 100)/100
+    }
+    
+    static func showExtras(dishExtras: [DishExtra], showSpecialInstructions: Bool) -> String {
+        var str = ""
+        for extra in dishExtras {
+            if (extra.options.count > 0) {
+                if (extra.title != Catalog.specialInstructionsId) {
+                    str += "\(extra.title):\n"
+                    for option in extra.options {
+                        str += "\t- \(option.title): \(option.price.priceInString)\n"
+                    }
+                } else {
+                    if showSpecialInstructions {
+                        str += "Special Instructions:\n"
+                        for option in extra.options {
+                            str += "\t- \(option.title)\n"
+                        }
+                    }
+                }
+            }
+        }
+        
+        let index = str.index(str.endIndex, offsetBy: -1)
+        
+        if str.count > 2 && str.suffix(from: index) == "\n" {
+            return String(str.dropLast(1))
+        } else {
+            return str
+        }
     }
 }

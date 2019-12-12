@@ -15,26 +15,45 @@ internal class DishCell: UITableViewCell {
     private let dishName: UILabel = UILabel()
     internal var highlightString: String = ""
     private let dishPrice: UILabel = UILabel()
+    private let vegImage: UIImageView = UIImageView()
     private let dishCalorie: UILabel = UILabel()
     private let dishInfo: UILabel = UILabel()
     
-    private let titleDimensions: CGFloat = 18
-    private let otherDimensions: CGFloat = 15
+    private let titleDimensions: CGFloat = 20
+    private let otherDimensions: CGFloat = 18
+    private let infoDimensions: CGFloat = 15
+    
+    private var dishImageFullHeightConstraint: NSLayoutConstraint?
+    private var dishImageNoHeightConstraint: NSLayoutConstraint?
     
     internal var dish: Dish = Dish.init() {
-        didSet {            
-            dishImage.loadImageUsingCache(url: dish.imageLink, available: dish.available)
+        didSet {
+            if dish.imageLink.count > 0 {
+                dishImage.loadImageUsingCache(url: dish.imageLink, available: dish.available)
+                dishImageFullHeightConstraint?.isActive = true
+                dishImageNoHeightConstraint?.isActive = false
+            } else {
+                dishImageFullHeightConstraint?.isActive = false
+                dishImageNoHeightConstraint?.isActive = true
+            }
             dishName.colorBackgroundForegroundOfSubString(originalString: dish.name, substrings: [highlightString], backgroundColor: ColorsCatalog.themeColor, foregroundColor: .white)
             dishPrice.text = dish.price.priceInString
             
             let calories = Int(dish.nutrition["calories"] ?? 0)
-            if (calories > 0) {
+            if calories > 0 {
                 dishCalorie.text = "\(calories) kCal"
             } else {
                 dishCalorie.text = ""
             }
+            if dish.restrictions["vegan"] == "Yes" {
+                vegImage.image = #imageLiteral(resourceName: "vegan")
+            } else if dish.restrictions["vegetarian"] == "Yes" {
+                vegImage.image = #imageLiteral(resourceName: "veg")
+            } else if dish.restrictions["vegetarian"] == "No" {
+                vegImage.image = #imageLiteral(resourceName: "nonveg")
+            }
             
-            dishInfo.text = self.dish.shortInfo
+            dishInfo.text = dish.shortInfo
         }
     }
     
@@ -50,7 +69,7 @@ internal class DishCell: UITableViewCell {
         self.backgroundColor = .white
         self.selectedColor()
         
-        dishImage.backgroundColor = .clear
+        dishImage.backgroundColor = .gray
         dishImage.contentMode = .scaleToFill
         container.addSubview(dishImage)
 
@@ -66,6 +85,8 @@ internal class DishCell: UITableViewCell {
         dishPrice.font = UIFont(name: FontCatalog.fontLevels[3], size: titleDimensions)
         container.addSubview(dishPrice)
         
+        container.addSubview(vegImage)
+        
         dishCalorie.numberOfLines = 0
         dishCalorie.textAlignment = .right
         dishCalorie.textColor = ColorsCatalog.grayColor
@@ -75,7 +96,7 @@ internal class DishCell: UITableViewCell {
         dishInfo.numberOfLines = 0
         dishInfo.textAlignment = .left
         dishInfo.textColor = ColorsCatalog.grayColor
-        dishInfo.font = UIFont(name: FontCatalog.fontLevels[1], size: otherDimensions)
+        dishInfo.font = UIFont(name: FontCatalog.fontLevels[1], size: infoDimensions)
         dishInfo.lineBreakMode = .byTruncatingTail
         dishInfo.sizeToFit()
         container.addSubview(dishInfo)
@@ -88,6 +109,7 @@ internal class DishCell: UITableViewCell {
         dishImage.translatesAutoresizingMaskIntoConstraints = false
         dishName.translatesAutoresizingMaskIntoConstraints = false
         dishPrice.translatesAutoresizingMaskIntoConstraints = false
+        vegImage.translatesAutoresizingMaskIntoConstraints = false
         dishCalorie.translatesAutoresizingMaskIntoConstraints = false
         dishInfo.translatesAutoresizingMaskIntoConstraints = false
         
@@ -99,7 +121,11 @@ internal class DishCell: UITableViewCell {
         dishImage.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         dishImage.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         dishImage.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        dishImage.heightAnchor.constraint(equalToConstant: DimensionsCatalog.imageHeights).isActive = true
+        
+        dishImageFullHeightConstraint = dishImage.heightAnchor.constraint(equalToConstant: DimensionsCatalog.imageHeights)
+        dishImageFullHeightConstraint?.priority = UILayoutPriority.init(999)
+        dishImageNoHeightConstraint = dishImage.heightAnchor.constraint(equalToConstant: 0)
+        dishImageNoHeightConstraint?.priority = UILayoutPriority.init(999)
         
         dishName.topAnchor.constraint(equalTo: dishImage.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishName.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
@@ -110,6 +136,11 @@ internal class DishCell: UITableViewCell {
         dishPrice.widthAnchor.constraint(equalToConstant: self.frame.width/3).isActive = true
         dishPrice.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         dishPrice.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
+        
+        vegImage.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        vegImage.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        vegImage.widthAnchor.constraint(equalToConstant: otherDimensions).isActive = true
+        vegImage.heightAnchor.constraint(equalToConstant: otherDimensions).isActive = true
         
         dishCalorie.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishCalorie.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true

@@ -101,11 +101,7 @@ extension SpecialInstructionsCartCell: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            if (textView.text != "") {
-                commentAdded?(textView.text)
-                textView.text = placeholder
-                textView.textColor = UIColor.lightGray
-            }
+            LocalRestaurant.cart.comment = textView.text
             textView.resignFirstResponder()
             return false
         }

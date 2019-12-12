@@ -11,10 +11,25 @@ import UIKit
 
 internal class OrderDishCell: UITableViewCell {
     private let container: UIView = UIView()
-    internal let quantity: UILabel = UILabel()
-    internal let name: UILabel = UILabel()
-    internal let price: UILabel = UILabel()
-    internal let details: UILabel = UILabel()
+    private let quantity: UILabel = UILabel()
+    private let name: UILabel = UILabel()
+    private let price: UILabel = UILabel()
+    private let details: UILabel = UILabel()
+    private let created: UILabel = UILabel()
+    internal var dish: OrderDish = OrderDish.init() {
+        didSet {
+            name.text = dish.name
+            quantity.text = "\(dish.quantity)"
+            price.text = dish.price.priceInString
+            created.text = TimeCatalog.getTimeFromTimestamp(timestamp: dish.created)
+            
+            var extras: [DishExtra] = []
+            for extra in dish.extras {
+                extras.append(DishExtra.init(orderDishExtra: extra))
+            }
+            details.text = Catalog.showExtras(dishExtras: extras, showSpecialInstructions: true)
+        }
+    }
     
     private let textHeight: CGFloat = 20
     
@@ -70,6 +85,10 @@ internal class OrderDishCell: UITableViewCell {
         details.sizeToFit()
         container.addSubview(details)
         
+        created.isTime()
+        created.textColor = .black
+        container.addSubview(created)
+        
         container.backgroundColor = .white
         self.addSubview(container)
     }
@@ -80,6 +99,7 @@ internal class OrderDishCell: UITableViewCell {
         name.translatesAutoresizingMaskIntoConstraints = false
         price.translatesAutoresizingMaskIntoConstraints = false
         details.translatesAutoresizingMaskIntoConstraints = false
+        created.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         container.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
@@ -104,6 +124,10 @@ internal class OrderDishCell: UITableViewCell {
         
         details.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         details.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        details.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+        
+        created.topAnchor.constraint(equalTo: details.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        created.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
     }
 }

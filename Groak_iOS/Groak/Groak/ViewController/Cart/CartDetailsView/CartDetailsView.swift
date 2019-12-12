@@ -41,14 +41,9 @@ internal class CartDetailsView: UIScrollView {
     }
     
     private func setupCartDish() {
-        var str = ""
+        var extras: [DishExtra] = []
         for extra in cartDish.extras {
-            if (extra.title != Catalog.specialInstructionsId) {
-                str += "\(extra.title):\n"
-                for option in extra.options {
-                    str += "\t- \(option.title): \(option.price.priceInString)\n"
-                }
-            }
+            extras.append(DishExtra.init(cartDishExtra: extra))
         }
         
         detailsTitle.text = "Order Details"
@@ -59,7 +54,7 @@ internal class CartDetailsView: UIScrollView {
         detailsTitle.textColor = .black
         self.addSubview(detailsTitle)
         
-        details.text = str
+        details.text = Catalog.showExtras(dishExtras: extras, showSpecialInstructions: false)
         details.numberOfLines = 0
         details.lineBreakMode = .byTruncatingTail
         details.textAlignment = .left
@@ -161,7 +156,7 @@ internal class CartDetailsView: UIScrollView {
     
     @objc func add() {
         self.cartDish.quantity += 1
-        self.cartDish.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
+        self.cartDish.price = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
         quantity.text = "\(self.cartDish.quantity)"
         orderAltered?(cartDish)
     }
@@ -169,7 +164,7 @@ internal class CartDetailsView: UIScrollView {
     @objc func reduce() {
         if (self.cartDish.quantity > 1) {
             self.cartDish.quantity -= 1
-            self.cartDish.totalPrice = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
+            self.cartDish.price = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
             quantity.text = "\(self.cartDish.quantity)"
             orderAltered?(cartDish)
         }

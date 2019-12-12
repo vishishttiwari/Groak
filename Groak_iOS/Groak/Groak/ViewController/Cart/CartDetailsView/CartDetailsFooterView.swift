@@ -11,7 +11,7 @@ import UIKit
 
 internal class CartDetailsFooterView: UIView {
     // Optional Closures
-    internal var update: (() -> ())?
+    internal var update: ((_ cartDish: CartDish) -> ())?
     
     private let price: UILabel = UILabel()
     private let updateCartButton: UIButton = UIButton()
@@ -31,7 +31,7 @@ internal class CartDetailsFooterView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        price.isPrice(price: cartDish.totalPrice)
+        price.isPrice(price: cartDish.price)
         self.addSubview(price)
         
         updateCartButton.footerButton(title: "Update Cart")
@@ -54,12 +54,12 @@ internal class CartDetailsFooterView: UIView {
     }
     
     @objc func orderTapped() {
-        update?()
+        update?(cartDish)
     }
     
     internal func orderAltered(cartDish: CartDish) {
         self.cartDish = cartDish
-        price.text = cartDish.totalPrice.priceInString
+        price.text = cartDish.price.priceInString
     }
     
     required init?(coder aDecoder: NSCoder) {

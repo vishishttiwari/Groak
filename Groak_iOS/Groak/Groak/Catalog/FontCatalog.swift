@@ -14,7 +14,4 @@ internal class FontCatalog {
     
     // Different fonts used. As you go up in array, same font starts becoming bolder.
     static let fontLevels: [String] = ["AvenirNext-UltraLight", "Avenir-Light", "Avenir-Medium", "Avenir-Heavy", "Avenir-Black"]
-    
-    // Font used for buttons such as order etc.
-    static let buttonFont: UIFont = UIFont(name: fontLevels[3], size: 25)!
 }
