@@ -43,7 +43,7 @@ internal class MenuViewController: UIViewController {
             self.menu?.sectionChanged(section: section)
         }
         header?.dismiss = { () -> () in
-            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
+            LocalRestaurant.askToLeaveRestaurant()
         }
         header?.find = { () -> () in
             let controller = SearchViewController(restaurant: restaurant, categories: self.categories)

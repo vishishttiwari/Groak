@@ -11,8 +11,8 @@ import Firebase
 
 internal class DistanceCatalog {
     
-    private static let distanceBufferInFeet: Double = 200
-    private static let distanceChangeBufferInMeters: Double = 50
+    private static let distanceBufferInFeet: Double = 2000000
+    private static let distanceChangeBufferInMeters: Double = feetToMeter(meter: distanceBufferInFeet)
     private static let feetLatitude: Double = 0.000002747252747
     private static let feetLongitude: Double = 0.00000346981263
     
@@ -45,6 +45,10 @@ internal class DistanceCatalog {
     
     static func meterToFeet(meter: Double) -> Double {
         return meter * 3.28084
+    }
+    
+    static func feetToMeter(meter: Double) -> Double {
+        return meter/3.28084
     }
     
     // TODO: Sort them in ascending order

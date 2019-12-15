@@ -122,3 +122,50 @@ internal class UITableViewCellWithArrow: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+internal class LocalBadgeView: UIView {
+    private let local: UILabel = UILabel()
+    
+    private var text: String = "YOUR ORDER"
+    private let distanceBetweenElements: CGFloat = 5
+    
+    required init(isOrder: Bool) {
+        super.init(frame: .zero)
+        
+        if !isOrder {
+            text = "YOUR INSTRUCTION"
+        }
+        
+        setupViews()
+        
+        setupInitialLayout()
+    }
+    
+    private func setupViews() {
+        self.backgroundColor = .clear
+        self.layer.borderColor = ColorsCatalog.greenColor.cgColor
+        self.layer.borderWidth = 2
+        self.layer.cornerRadius = 5
+        
+        local.text = text
+        local.font = UIFont(name: FontCatalog.fontLevels[1], size: 12)
+        local.backgroundColor = .clear
+        local.textColor = ColorsCatalog.greenColor
+        local.textAlignment = .left
+        local.clipsToBounds = true
+        self.addSubview(local)
+    }
+    
+    private func setupInitialLayout() {
+        local.translatesAutoresizingMaskIntoConstraints = false
+        
+        local.topAnchor.constraint(equalTo: self.topAnchor, constant: distanceBetweenElements).isActive = true
+        local.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
+        local.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
+        local.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -distanceBetweenElements).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

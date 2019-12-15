@@ -23,19 +23,6 @@ internal class Catalog {
         view.present(alert, animated: true, completion: nil)
     }
     
-    static func alertSpecificallyForLeavingRestaurant(vc: UIViewController?) {
-        let alert = UIAlertController(title: "Leaving restaurant?", message: "Are you sure you would like to leave the restaurant?. Your cart will be lost.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-            let customViewController1 = vc?.presentingViewController as? IntroViewController
-            
-            vc?.dismiss(animated: true, completion: {
-                customViewController1?.returningToIntro()
-            })
-        }))
-        vc?.present(alert, animated: true, completion: nil)
-    }
-    
     static func calculateTotalPriceOfDish(pricePerItem: Double, quantity: Int) -> Double {
         return round(Double(quantity) * pricePerItem * 100)/100
     }

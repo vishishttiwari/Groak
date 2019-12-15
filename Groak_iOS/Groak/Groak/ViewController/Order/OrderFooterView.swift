@@ -11,7 +11,7 @@ import UIKit
 
 internal class OrderFooterView: UIView {
     // Optional Closures
-    internal var order: (() -> ())?
+    internal var pay: (() -> ())?
     
     private let paymentButton: UIButton = UIButton()
     
@@ -27,7 +27,7 @@ internal class OrderFooterView: UIView {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         paymentButton.footerButton(title: "Ready to Pay?")
-        paymentButton.addTarget(self, action: #selector(orderTapped), for: .touchUpInside)
+        paymentButton.addTarget(self, action: #selector(payTapped), for: .touchUpInside)
         self.addSubview(paymentButton)
     }
     
@@ -40,8 +40,8 @@ internal class OrderFooterView: UIView {
         paymentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements).isActive = true
     }
     
-    @objc func orderTapped() {
-        order?()
+    @objc func payTapped() {
+        pay?()
     }
     
     required init?(coder aDecoder: NSCoder) {

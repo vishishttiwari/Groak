@@ -108,7 +108,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: specialInstructionsCellId, for: indexPath) as! SpecialInstructionsOrderCell
                 
                 cell.commentAdded = { (_ comment: String) -> () in
-                    self.fsOrders?.addCommentFirestoreAPI(comment: comment)
+                    self.fsOrders?.addCommentFirestoreAPI(viewController: self.viewController, comment: comment)
                     self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
                         if success {
                             self.reloadData()

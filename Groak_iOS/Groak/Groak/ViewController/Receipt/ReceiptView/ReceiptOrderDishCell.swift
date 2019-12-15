@@ -1,20 +1,19 @@
 //
-//  OrderDishCell.swift
+//  ReceiptOrderDishCell.swift
 //  Groak
 //
-//  Created by Vishisht Tiwari on 12/5/19.
+//  Created by Vishisht Tiwari on 12/13/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-internal class OrderDishCell: UITableViewCell {
+internal class ReceiptOrderDishCell: UITableViewCell {
     private let container: UIView = UIView()
     private let quantity: UILabel = UILabel()
     private let name: UILabel = UILabel()
     private let price: UILabel = UILabel()
-    private let details: UILabel = UILabel()
     private let created: UILabel = UILabel()
     private let localBadgeView: LocalBadgeView = LocalBadgeView.init(isOrder: true)
     internal var dish: OrderDish = OrderDish.init() {
@@ -30,7 +29,6 @@ internal class OrderDishCell: UITableViewCell {
             for extra in dish.extras {
                 extras.append(DishExtra.init(orderDishExtra: extra))
             }
-            details.text = Catalog.showExtras(dishExtras: extras, showSpecialInstructions: true)
         }
     }
     
@@ -79,15 +77,6 @@ internal class OrderDishCell: UITableViewCell {
         price.sizeToFit()
         container.addSubview(price)
         
-        details.text = ""
-        details.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)
-        details.numberOfLines = 0
-        details.textColor = ColorsCatalog.grayColor
-        details.lineBreakMode = .byTruncatingTail
-        details.textAlignment = .left
-        details.sizeToFit()
-        container.addSubview(details)
-        
         container.addSubview(localBadgeView)
         
         created.isTime()
@@ -103,7 +92,6 @@ internal class OrderDishCell: UITableViewCell {
         quantity.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         price.translatesAutoresizingMaskIntoConstraints = false
-        details.translatesAutoresizingMaskIntoConstraints = false
         localBadgeView.translatesAutoresizingMaskIntoConstraints = false
         created.translatesAutoresizingMaskIntoConstraints = false
         
@@ -121,17 +109,13 @@ internal class OrderDishCell: UITableViewCell {
         name.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         name.heightAnchor.constraint(equalToConstant: textHeight).isActive = true
         name.widthAnchor.constraint(equalToConstant: 2*DimensionsCatalog.screenSize.width/3).isActive = true
-        name.bottomAnchor.constraint(equalTo: details.topAnchor, constant: -2*DimensionsCatalog.distanceBetweenElements).isActive = true
         
         price.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         price.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         price.heightAnchor.constraint(equalToConstant: textHeight).isActive = true
         price.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
         
-        details.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        details.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        
-        localBadgeView.topAnchor.constraint(equalTo: details.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        localBadgeView.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         localBadgeView.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         localBadgeView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         

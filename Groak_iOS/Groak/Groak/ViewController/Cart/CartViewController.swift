@@ -70,7 +70,7 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(header)
         
         header.dismiss = { () -> () in            
-            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
+            LocalRestaurant.askToLeaveRestaurant()
         }
         header.delete = { () -> () in
             let alert = UIAlertController(title: "Clean the Cart", message: "Would you like to empty the cart?", preferredStyle: .alert)
@@ -117,7 +117,7 @@ internal class CartViewController: UIViewController {
         footer.order = { () -> () in
             if LocalRestaurant.cart.exists {
                 self.view.addSubview(UIView().customActivityIndicator())
-                self.fsOrders?.addOrdersFirestoreAPI()
+                self.fsOrders?.addOrdersFirestoreAPI(viewController: self)
                 self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
                     if success {
                         LocalRestaurant.cart.delete()

@@ -71,7 +71,7 @@ internal class OrderViewController: UIViewController {
         self.view.addSubview(header)
         
         header.dismiss = { () -> () in
-            Catalog.alertSpecificallyForLeavingRestaurant(vc: self)
+            LocalRestaurant.askToLeaveRestaurant()
         }
         
         header.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +97,17 @@ internal class OrderViewController: UIViewController {
     
     private func setupFooter() {
         self.view.addSubview(footer)
+        
+        footer.pay = { () -> () in
+            let controller = ReceiptViewController.init()
+
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+
+            DispatchQueue.main.async {
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
         
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
@@ -133,7 +144,7 @@ internal class OrderViewController: UIViewController {
         fsOrder?.fetchOrderFirestoreAPI()
         
         fsOrder?.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
-            LocalRestaurant.tableOrder = order ?? Order.init()
+            LocalRestaurant.setTableOrder(viewController: self, order: order ?? Order.init())
             self.orderView?.order = LocalRestaurant.tableOrder
             self.orderView?.reloadData()
         }

@@ -134,6 +134,23 @@ extension UIView {
     func hideLoader(hideFrom : UIView){
         hideFrom.subviews.last?.removeFromSuperview()
     }
+    
+    // Using a function since `var image` might conflict with an existing variable
+    // (like on `UIImageView`)
+    func asImage() -> UIImage {
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+                layer.render(in: rendererContext.cgContext)
+            }
+        } else {
+            UIGraphicsBeginImageContext(self.frame.size)
+            self.layer.render(in:UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return UIImage(cgImage: image!.cgImage!)
+        }
+    }
 }
 
 // This is used for caching images
@@ -280,5 +297,11 @@ extension UIButton {
         backgroundColor = ColorsCatalog.themeColor
         titleLabel?.textColor = .white
         layer.cornerRadius = 10
+    }
+}
+
+extension Date {
+    var millisecondsSince1970:Int64 {
+        return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
     }
 }

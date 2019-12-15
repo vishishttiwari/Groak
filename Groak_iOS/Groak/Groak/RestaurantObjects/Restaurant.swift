@@ -15,6 +15,8 @@ internal class Restaurant {
     var name: String
     var type: [String]
     var logo: String
+    var salesTax: Double
+    var address: [String: Any]
     var latitude: Double
     var longitude: Double
     
@@ -23,6 +25,8 @@ internal class Restaurant {
         name = ""
         type = []
         logo = ""
+        salesTax = -1
+        address = [:]
         latitude = -1000
         longitude = -1000
     }
@@ -34,6 +38,8 @@ internal class Restaurant {
         name = "The Yellow Chilli"
         type = []
         logo = ""
+        salesTax = -1
+        address = [:]
         latitude = -1000
         longitude = -1000
     }
@@ -43,6 +49,8 @@ internal class Restaurant {
         name = restaurant["name"] as? String ?? ""
         type = restaurant["type"] as? [String] ?? []
         logo = restaurant["logo"] as? String ?? ""
+        salesTax = restaurant["salesTax"] as? Double ?? -1
+        address = restaurant["address"] as? [String: Any] ?? [:]
         latitude = (restaurant["address"] as? [String: Any] ?? [:])["latitude"] as? Double ?? -1000
         longitude = (restaurant["address"] as? [String: Any] ?? [:])["longitude"] as? Double ?? -1000
     }
@@ -52,7 +60,9 @@ internal class Restaurant {
             return false;
         } else if (name.count == 0) {
             return false;
-        } else if (latitude == -1000) {
+        }  else if (salesTax < 0) {
+           return false;
+       } else if (latitude == -1000) {
             return false;
         } else if (longitude == -1000) {
             return false;

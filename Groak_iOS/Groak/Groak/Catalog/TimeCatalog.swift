@@ -61,4 +61,19 @@ internal class TimeCatalog {
         let timeString = formatter.string(from: timestamp.dateValue())
         return timeString
     }
+    
+    static func getDateTimeFromTimestamp(timestamp: Timestamp) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "HH:mm a\tMMMM dd, yyyy"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+
+        let timeString = formatter.string(from: timestamp.dateValue())
+        return timeString
+    }
+    
+    static func getDateFromTimestamp(timestamp: Timestamp) -> Date {
+        return timestamp.dateValue()
+    }
 }
