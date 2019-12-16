@@ -30,7 +30,7 @@ internal class AllowCameraViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
-            self.dismiss(animated: false, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
