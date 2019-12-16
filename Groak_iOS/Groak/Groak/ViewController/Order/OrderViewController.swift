@@ -144,7 +144,7 @@ internal class OrderViewController: UIViewController {
         fsOrder?.fetchOrderFirestoreAPI()
         
         fsOrder?.dataReceivedForFetchOrder = { (_ order: Order?) -> () in
-            LocalRestaurant.setTableOrder(viewController: self, order: order ?? Order.init())
+            LocalRestaurant.setLocalTableOrder(viewController: self, order: order ?? Order.init())
             self.orderView?.order = LocalRestaurant.tableOrder
             self.orderView?.reloadData()
         }

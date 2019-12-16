@@ -15,21 +15,17 @@ internal class LocalRestaurant {
     static var fsOrders: FirestoreAPICallsOrders?
     static var fsRequests: FirestoreAPICallsRequests?
     
+    static func createRestaurant(restaurant: Restaurant, table: Table) {
+        self.restaurant.restaurant = restaurant
+        
+        fsOrders = FirestoreAPICallsOrders.init();
+        fsRequests = FirestoreAPICallsRequests.init();
+        self.table.table = table
+        order.orderReference = table.orderReference
+        requests.requestsReference = table.requestsReference
+    }
+    
     static func leaveRestaurant(title: String = "Scan QR code again", message: String = "Please scan your QR code again to order") {
-        restaurant.restaurant = nil
-        table.table = nil
-        order.orderReference = nil
-        requests.requestsReference = nil
-        
-        cart = Cart.init()
-        tableOrder = Order.init()
-        
-        fsOrders?.unsubscribe()
-        fsRequests?.unsubscribe()
-        
-        fsOrders = nil
-        fsRequests = nil
-        
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
         var topViewController = UIApplication.shared.keyWindow?.rootViewController
         while let presentedViewController = topViewController?.presentedViewController {
@@ -39,6 +35,7 @@ internal class LocalRestaurant {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
             rootViewController?.dismiss(animated: false) {
+                deleteRestaurant()
                 rootViewController?.returningToIntro()
             }
         }))
@@ -46,20 +43,6 @@ internal class LocalRestaurant {
     }
     
     static func askToLeaveRestaurant(title: String = "Leaving restaurant?", message: String = "Are you sure you would like to leave the restaurant?. Your cart will be lost.") {
-        restaurant.restaurant = nil
-        table.table = nil
-        order.orderReference = nil
-        requests.requestsReference = nil
-        
-        cart = Cart.init()
-        tableOrder = Order.init()
-        
-        fsOrders?.unsubscribe()
-        fsRequests?.unsubscribe()
-        
-        fsOrders = nil
-        fsRequests = nil
-        
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
         var topViewController = UIApplication.shared.keyWindow?.rootViewController
         while let presentedViewController = topViewController?.presentedViewController {
@@ -68,19 +51,26 @@ internal class LocalRestaurant {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction.init(title: "Yes", style: .default, handler: { (UIAlertAction) in
             rootViewController?.dismiss(animated: false) {
+                deleteRestaurant()
                 rootViewController?.returningToIntro()
             }
         }))
         topViewController?.present(alert, animated: true, completion: nil)
     }
     
-    static func restaurantFoundSuccessful() -> Bool {
+    static func isRestaurantCreationSuccessful() -> Bool {
         if let _ = restaurant.restaurant, let _ = table.table, let _ = order.orderReference, let _ =  requests.requestsReference {
             return true
         }
         
+        deleteRestaurant()
+        
+        return false
+    }
+    
+    private static func deleteRestaurant() {
         restaurant.restaurant = nil
         table.table = nil
         order.orderReference = nil
@@ -94,8 +84,6 @@ internal class LocalRestaurant {
         
         fsOrders = nil
         fsRequests = nil
-        
-        return false
     }
     
     struct restaurant {
@@ -104,13 +92,6 @@ internal class LocalRestaurant {
     
     struct table {
         static var table: Table? = nil
-        static func setTable(table: Table) {
-            fsOrders = FirestoreAPICallsOrders.init();
-            fsRequests = FirestoreAPICallsRequests.init();
-            self.table = table
-            order.orderReference = table.orderReference
-            requests.requestsReference = table.requestsReference
-        }
     }
     
     struct order {
@@ -125,7 +106,7 @@ internal class LocalRestaurant {
     
     static var tableOrder: Order = Order.init()
     
-    static func setTableOrder(viewController: UIViewController, order: Order) {
+    static func setLocalTableOrder(viewController: UIViewController, order: Order) {
         LocalRestaurant.tableOrder = order
         let localDishes = self.downloadDishesFromCoreData(viewController: viewController)
         let localComments = self.downloadCommentsFromCoreData(viewController: viewController)
@@ -146,6 +127,7 @@ internal class LocalRestaurant {
         }
     }
     
+    // TODO: Not deleting pevious dishes
     private static func downloadDishesFromCoreData(viewController: UIViewController) -> [CoreDataDish] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -171,6 +153,7 @@ internal class LocalRestaurant {
         return []
     }
     
+    // TODO: Not deleting pevious comments
     private static func downloadCommentsFromCoreData(viewController: UIViewController) -> [CoreDataComment] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         

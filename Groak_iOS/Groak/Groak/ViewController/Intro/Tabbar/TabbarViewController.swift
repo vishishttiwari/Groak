@@ -23,11 +23,13 @@ internal class TabbarViewController: UITabBarController {
         tabBar.isTranslucent = false
         
         let cart = CartViewController()
-        let cartIcon = UITabBarItem(title: "Cart", image: #imageLiteral(resourceName: "cart"), selectedImage: #imageLiteral(resourceName: "cart"))
+        let cartIcon = UITabBarItem(title: "Cart", image: #imageLiteral(resourceName: "cart4"), selectedImage: #imageLiteral(resourceName: "cart4"))
         cart.tabBarItem = cartIcon
+        cart.tabBarItem.badgeColor = ColorsCatalog.themeColor
+        cart.tabBarItem.badgeValue = "0"
         
         let menu = MenuViewController.init(restaurant: restaurant)
-        let menuIcon = UITabBarItem(title: "Menu", image: #imageLiteral(resourceName: "menu"), selectedImage: #imageLiteral(resourceName: "menu"))
+        let menuIcon = UITabBarItem(title: "Menu", image: #imageLiteral(resourceName: "menu2"), selectedImage: #imageLiteral(resourceName: "menu2"))
         menu.tabBarItem = menuIcon
         
         let order = OrderViewController.init()
@@ -38,6 +40,46 @@ internal class TabbarViewController: UITabBarController {
         self.viewControllers = controllers
         
         selectedIndex = 1
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+
+        let index = self.tabBar.items?.firstIndex(of: item)
+        let subView = tabBar.subviews[index!+1].subviews.first as! UIImageView
+        self.performSpringAnimation(tabImageView: subView)
+    }
+    
+    //func to perform spring animation on imageview
+    private func performSpringAnimation(tabImageView: UIImageView) {
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+
+            tabImageView.transform = CGAffineTransform.init(scaleX: 1.4, y: 1.4)
+
+            //reducing the size
+            UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+                tabImageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            })
+        })
+    }
+    
+    func addToCart() {
+        let tabBarItem = tabBar.items?[0]
+        tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
+        let subView = tabBar.subviews[1].subviews.first as! UIImageView
+        self.addToCartAnimation(tabImageView: subView)
+    }
+    
+    private func addToCartAnimation(tabImageView: UIImageView) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+
+            tabImageView.transform = CGAffineTransform.init(scaleX: 2, y: 2)
+
+            //reducing the size
+            UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+                tabImageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            })
+        })
     }
     
     required init?(coder: NSCoder) {

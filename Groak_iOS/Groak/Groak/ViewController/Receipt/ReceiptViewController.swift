@@ -82,6 +82,7 @@ internal class ReceiptViewController: UIViewController {
                 DispatchQueue.main.async {
                     PHPhotoLibrary.requestAuthorization({status in
                         if status == .authorized {
+                            Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
                             UIImageWriteToSavedPhotosAlbum(self.receiptView.asImage(), nil, nil, nil)
                         } else {
                             Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")

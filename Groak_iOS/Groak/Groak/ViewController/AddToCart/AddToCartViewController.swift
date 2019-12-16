@@ -76,9 +76,12 @@ internal class AddToCartViewController: UIViewController {
                 LocalRestaurant.cart.dishes.append(cartDish)
                 
                 let customViewController1 = self.presentingViewController as? DishViewController
+                let tabBarController = customViewController1?.presentingViewController as? TabbarViewController
                 
                 self.dismiss(animated: false, completion: {
-                    customViewController1?.dismiss(animated: true, completion: nil)
+                    customViewController1?.dismiss(animated: true, completion: {
+                        tabBarController?.addToCart()
+                    })
                 })
             } else {
                 Catalog.alert(vc: self, title: "Error adding to cart", message: "There was an error while adding \(dish.name) to cart. Please try again.")

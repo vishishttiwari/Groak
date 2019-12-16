@@ -93,9 +93,8 @@ class IntroViewController: UIViewController {
 //      the camera stops scanning for qr codes
         cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
             if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID {
-                LocalRestaurant.restaurant.restaurant = restaurant
-                LocalRestaurant.table.setTable(table: table)
-                if LocalRestaurant.restaurantFoundSuccessful() {
+                LocalRestaurant.createRestaurant(restaurant: restaurant, table: table)
+                if LocalRestaurant.isRestaurantCreationSuccessful() {
                 
                     self.cameraView?.stopScanningForQR()
                     self.bottomSheetView?.stopUpdatingLocation()
