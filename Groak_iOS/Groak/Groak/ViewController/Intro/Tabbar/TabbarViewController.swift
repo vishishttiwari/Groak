@@ -26,7 +26,7 @@ internal class TabbarViewController: UITabBarController {
         let cartIcon = UITabBarItem(title: "Cart", image: #imageLiteral(resourceName: "cart4"), selectedImage: #imageLiteral(resourceName: "cart4"))
         cart.tabBarItem = cartIcon
         cart.tabBarItem.badgeColor = ColorsCatalog.themeColor
-        cart.tabBarItem.badgeValue = "0"
+        cart.tabBarItem.badgeValue = String(LocalRestaurant.cart.dishes.count)
         
         let menu = MenuViewController.init(restaurant: restaurant)
         let menuIcon = UITabBarItem(title: "Menu", image: #imageLiteral(resourceName: "menu2"), selectedImage: #imageLiteral(resourceName: "menu2"))
