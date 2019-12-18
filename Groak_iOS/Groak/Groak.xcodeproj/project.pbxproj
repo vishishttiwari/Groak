@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6978388323A9FF2200C06EEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6978388223A9FF2200C06EEB /* GoogleService-Info.plist */; };
 		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
 		7C0B8A932397742D0005F093 /* LocalRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A922397742D0005F093 /* LocalRestaurant.swift */; };
 		7C0B8A95239774BE0005F093 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* Cart.swift */; };
@@ -91,7 +92,6 @@
 		7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */; };
 		7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D7237374C100C6EF37 /* Assets.xcassets */; };
 		7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */; };
-		7CDDD9E3237378AE00C6EF37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */; };
 		7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E423737B4300C6EF37 /* Catalog.swift */; };
 		7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */; };
 		7CDDD9EB23737DD000C6EF37 /* CameraQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */; };
@@ -117,6 +117,8 @@
 /* Begin PBXFileReference section */
 		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
 		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
+		6978388223A9FF2200C06EEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69A5879F23A9DF2E003C9D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C0B8A922397742D0005F093 /* LocalRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRestaurant.swift; sourceTree = "<group>"; };
 		7C0B8A94239774BE0005F093 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		7C0B8A9723977A9A0005F093 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -201,8 +203,6 @@
 		7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDDD9D7237374C100C6EF37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CDDD9DA237374C100C6EF37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		7CDDD9DC237374C100C6EF37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7CDDD9E423737B4300C6EF37 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		7CDDD9E823737C6A00C6EF37 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		7CDDD9EA23737DD000C6EF37 /* CameraQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraQRCodeView.swift; sourceTree = "<group>"; };
@@ -500,8 +500,8 @@
 				7CDDD9F42373A49400C6EF37 /* RestaurantObjects */,
 				7CDDD9D7237374C100C6EF37 /* Assets.xcassets */,
 				7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */,
-				7CDDD9DC237374C100C6EF37 /* Info.plist */,
-				7CDDD9E2237378AE00C6EF37 /* GoogleService-Info.plist */,
+				69A5879F23A9DF2E003C9D16 /* Info.plist */,
+				6978388223A9FF2200C06EEB /* GoogleService-Info.plist */,
 				7CDDD9CC237374C000C6EF37 /* Products */,
 			);
 			path = Groak;
@@ -704,7 +704,7 @@
 			files = (
 				7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */,
 				7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */,
-				7CDDD9E3237378AE00C6EF37 /* GoogleService-Info.plist in Resources */,
+				6978388323A9FF2200C06EEB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,8 +994,9 @@
 			baseConfigurationReference = 3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BJE8EA5CE5;
+				DEVELOPMENT_TEAM = V48W32Q848;
 				INFOPLIST_FILE = Groak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1005,6 +1006,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.groak.Groak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1015,8 +1017,9 @@
 			baseConfigurationReference = 5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BJE8EA5CE5;
+				DEVELOPMENT_TEAM = V48W32Q848;
 				INFOPLIST_FILE = Groak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1026,6 +1029,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.groak.Groak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

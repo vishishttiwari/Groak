@@ -41,7 +41,6 @@ internal class PermissionsCatalog {
     }
     
     static func askLocationPermission(viewController: UIViewController) {
-        CLLocationManager.requestLocation(<#T##self: CLLocationManager##CLLocationManager#>)
         
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
