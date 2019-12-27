@@ -73,47 +73,60 @@ internal class OrderViewController: UIViewController {
         header.dismiss = { () -> () in
             LocalRestaurant.askToLeaveRestaurant()
         }
+        header.orderChanged = { (_ index: Int) -> () in
+            self.orderChanged(index: index)
+        }
         
         header.translatesAutoresizingMaskIntoConstraints = false
         header.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         header.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         header.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        header.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightNormal).isActive = true
+        header.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended).isActive = true
     }
     
     private func setupOrderView() {
         orderView = OrderView.init(viewController: self)
         self.view.addSubview(orderView!)
+        orderView?.refreshControl?.addTarget(self, action: #selector(downloadOrder), for: .valueChanged)
         
         orderView?.instructionSent = { () -> () in
             Catalog.alert(vc: self, title: "Instruction Sent", message: "Restaurant has been notified")
         }
         
         orderView?.frame.size.width = DimensionsCatalog.screenSize.width
-        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
+        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightExtended - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
         orderView?.frame.origin.x = 0
-        orderView?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightNormal
+        orderView?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightExtended
     }
     
     private func setupFooter() {
         self.view.addSubview(footer)
         
         footer.pay = { () -> () in
-            let controller = ReceiptViewController.init()
+            if LocalRestaurant.tableOrder.dishes.count == 0 {
+                Catalog.alert(vc: self, title: "No orders", message: "Please order dishes before paying")
+            } else {
+                let controller = ReceiptViewController.init()
 
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                controller.modalTransitionStyle = .coverVertical
+                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 
-            DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.present(controller, animated: true, completion: nil)
+                }
             }
         }
         
         footer.translatesAutoresizingMaskIntoConstraints = false
         footer.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem).isActive = true
+        footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
+    private func orderChanged(index: Int) {
+        orderView?.orderChanged(index: index)
+        footer.orderChanged(index: index)
     }
     
     // Function called when background is tapped
@@ -125,20 +138,20 @@ internal class OrderViewController: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer?.cancelsTouchesInView = true
             
-            orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - keyboardFrame.cgRectValue.height
+            orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightExtended - keyboardFrame.cgRectValue.height
             orderView?.scrollToSpecialInstructions()
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem - DimensionsCatalog.tabBarHeight
+        orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightExtended - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
     @objc func keyboardDidHide(_ notification: Notification) {
         tapGestureRecognizer?.cancelsTouchesInView = false
     }
     
-    private func downloadOrder() {
+    @objc private func downloadOrder() {
         let fsOrder = LocalRestaurant.fsOrders
         
         fsOrder?.fetchOrderFirestoreAPI()
@@ -147,6 +160,12 @@ internal class OrderViewController: UIViewController {
             LocalRestaurant.setLocalTableOrder(viewController: self, order: order ?? Order.init())
             self.orderView?.order = LocalRestaurant.tableOrder
             self.orderView?.reloadData()
+            self.footer.reload()
+            self.header.showWhichOrder?.isUserInteractionEnabled = true
+        }
+        if self.orderView?.refreshControl?.isRefreshing ?? false
+        {
+            self.orderView?.refreshControl?.endRefreshing()
         }
     }
     

@@ -35,7 +35,7 @@ internal class ReceiptHeaderView: UIView {
         backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
         self.addSubview(backButton)
         
-        title.viewControllerHeaderTitle(title: "Your Receipt")
+        title.viewControllerHeaderTitle(title: "Receipt")
         self.addSubview(title)
         
         leaveRestaurantButton.addTarget(self, action: #selector(leaveRestaurant), for: .touchUpInside)

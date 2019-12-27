@@ -38,6 +38,8 @@ internal class OrderView: UITableView {
         
         self.keyboardDismissMode = .onDrag
         
+        self.refreshControl?.attributedTitle = NSAttributedString.init(string: "Pull to refresh")
+        
         self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
@@ -51,6 +53,20 @@ internal class OrderView: UITableView {
         self.register(OrderStatusCell.self, forCellReuseIdentifier: statusCellId)
         self.delegate = self
         self.dataSource = self
+    }
+    
+    func orderChanged(index: Int) {
+        if index == 0 {
+            order = LocalRestaurant.tableOrder
+        } else if index == 1 {
+            order = Order.init()
+            for dish in LocalRestaurant.tableOrder.dishes {
+                if dish.local {
+                    order.dishes.append(dish)
+                }
+            }
+        }
+        reloadData()
     }
 
     required init?(coder aDecoder: NSCoder) {
