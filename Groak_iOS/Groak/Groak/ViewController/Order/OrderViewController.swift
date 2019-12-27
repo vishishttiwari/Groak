@@ -87,7 +87,7 @@ internal class OrderViewController: UIViewController {
     private func setupOrderView() {
         orderView = OrderView.init(viewController: self)
         self.view.addSubview(orderView!)
-        orderView?.refreshControl?.addTarget(self, action: #selector(downloadOrder), for: .valueChanged)
+        orderView?.newRefreshControl.addTarget(self, action: #selector(downloadOrder), for: .valueChanged)
         
         orderView?.instructionSent = { () -> () in
             Catalog.alert(vc: self, title: "Instruction Sent", message: "Restaurant has been notified")
