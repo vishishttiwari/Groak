@@ -15,12 +15,15 @@ internal class DishCell: UITableViewCell {
     private let dishName: UILabel = UILabel()
     internal var highlightString: String = ""
     private let dishPrice: UILabel = UILabel()
-    private let vegImage: UIImageView = UIImageView()
+    private let restrictions: UIView = UIView()
+    private var vegRestriction: UILabel = UILabel()
+    private var glutenFreeRestriction: UILabel = UILabel()
+    private var kosherRestriction: UILabel = UILabel()
     private let dishCalorie: UILabel = UILabel()
     private let dishInfo: UILabel = UILabel()
     
     private let titleDimensions: CGFloat = 20
-    private let otherDimensions: CGFloat = 18
+    private let otherDimensions: CGFloat = 20
     private let infoDimensions: CGFloat = 15
     
     private var dishImageFullHeightConstraint: NSLayoutConstraint?
@@ -45,12 +48,54 @@ internal class DishCell: UITableViewCell {
             } else {
                 dishCalorie.text = ""
             }
+            
+            var x: CGFloat = 0
+            
+            vegRestriction.frame.origin.y = 0
+            vegRestriction.frame.size.height = otherDimensions
             if dish.restrictions["vegan"] == "Yes" {
-                vegImage.image = #imageLiteral(resourceName: "vegan")
+                vegRestriction.isRestrictions(symbol: .VV, height: otherDimensions)
+                vegRestriction.frame.origin.x = x
+                vegRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
             } else if dish.restrictions["vegetarian"] == "Yes" {
-                vegImage.image = #imageLiteral(resourceName: "veg")
+                vegRestriction.isRestrictions(symbol: .V, height: otherDimensions)
+                vegRestriction.frame.origin.x = x
+                vegRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
             } else if dish.restrictions["vegetarian"] == "No" {
-                vegImage.image = #imageLiteral(resourceName: "nonveg")
+                vegRestriction.isRestrictions(symbol: .NV, height: otherDimensions)
+                vegRestriction.frame.origin.x = x
+                vegRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
+            }
+            
+            glutenFreeRestriction.frame.origin.y = 0
+            glutenFreeRestriction.frame.size.height = otherDimensions
+            if dish.restrictions["glutenFree"] == "Yes" {
+                glutenFreeRestriction.isRestrictions(symbol: .GF, height: otherDimensions)
+                glutenFreeRestriction.frame.origin.x = x
+                glutenFreeRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
+            } else if dish.restrictions["glutenFree"] == "No" {
+                glutenFreeRestriction.isRestrictions(symbol: .G, height: otherDimensions)
+                glutenFreeRestriction.frame.origin.x = x
+                glutenFreeRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
+            }
+
+            kosherRestriction.frame.origin.y = 0
+            kosherRestriction.frame.size.height = otherDimensions
+            if dish.restrictions["kosher"] == "Yes" {
+                kosherRestriction.isRestrictions(symbol: .K, height: otherDimensions)
+                kosherRestriction.frame.origin.x = x
+                kosherRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
+            } else if dish.restrictions["kosher"] == "No" {
+                kosherRestriction.isRestrictions(symbol: .NK, height: otherDimensions)
+                kosherRestriction.frame.origin.x = x
+                kosherRestriction.frame.size.width = otherDimensions
+                x += otherDimensions*1.5
             }
             
             dishInfo.text = dish.shortInfo
@@ -85,7 +130,10 @@ internal class DishCell: UITableViewCell {
         dishPrice.font = UIFont(name: FontCatalog.fontLevels[3], size: titleDimensions)
         container.addSubview(dishPrice)
         
-        container.addSubview(vegImage)
+        container.addSubview(restrictions)
+        restrictions.addSubview(vegRestriction)
+        restrictions.addSubview(glutenFreeRestriction)
+        restrictions.addSubview(kosherRestriction)
         
         dishCalorie.numberOfLines = 0
         dishCalorie.textAlignment = .right
@@ -109,7 +157,7 @@ internal class DishCell: UITableViewCell {
         dishImage.translatesAutoresizingMaskIntoConstraints = false
         dishName.translatesAutoresizingMaskIntoConstraints = false
         dishPrice.translatesAutoresizingMaskIntoConstraints = false
-        vegImage.translatesAutoresizingMaskIntoConstraints = false
+        restrictions.translatesAutoresizingMaskIntoConstraints = false
         dishCalorie.translatesAutoresizingMaskIntoConstraints = false
         dishInfo.translatesAutoresizingMaskIntoConstraints = false
         
@@ -137,10 +185,10 @@ internal class DishCell: UITableViewCell {
         dishPrice.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         dishPrice.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
         
-        vegImage.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        vegImage.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
-        vegImage.widthAnchor.constraint(equalToConstant: otherDimensions).isActive = true
-        vegImage.heightAnchor.constraint(equalToConstant: otherDimensions).isActive = true
+        restrictions.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        restrictions.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        restrictions.rightAnchor.constraint(equalTo: dishCalorie.leftAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        restrictions.heightAnchor.constraint(equalToConstant: otherDimensions).isActive = true
         
         dishCalorie.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishCalorie.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true

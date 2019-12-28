@@ -51,7 +51,6 @@ class IntroViewController: UIViewController {
         
 //        let restaurant = Restaurant.init("jk")
 //        let controller = TabbarViewController(restaurant: restaurant)
-//        controller.setNeedsStatusBarAppearanceUpdate()
 //
 //        controller.modalTransitionStyle = .coverVertical
 //        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

@@ -67,13 +67,26 @@ internal class MenuViewController: UIViewController {
         menu = MenuView.init()
         self.view.addSubview(menu!)
         
-        menu?.dishSelected = { (_ dish: Dish) -> () in
-            let controller = DishViewController.init(restaurant: restaurant, dish: dish)
-            
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            
-            self.present(controller, animated: true, completion: nil)
+        menu?.dishSelected = { (_ dish: Dish) -> () in            
+            let controller: UIViewController?
+            if dish.ingredients.count == 0 &&
+                dish.dishDescription.count == 0 &&
+                dish.restrictions.count == 0 &&
+                dish.nutrition.count == 0 &&
+                dish.imageLink.count == 0
+            {
+                controller = AddToCartViewController.init(restaurant: restaurant, dish: dish)
+            } else {
+                controller = DishViewController.init(restaurant: restaurant, dish: dish)
+            }
+            if let controller = controller {
+                controller.modalTransitionStyle = .coverVertical
+                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+
+                DispatchQueue.main.async {
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
         }
         menu?.menuSectionChanged = { (_ section: Int) -> () in
             self.header?.sectionChanged(section: section)

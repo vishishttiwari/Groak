@@ -17,16 +17,18 @@ internal class DishDetailsView: UITableView {
     private let headerCellId = "headerCellId"
     private let imageCellId = "imageCellId"
     private let ingredientCellId = "ingredientCellId"
+    private let infoCellId = "infoCellId"
     private let contentCellId = "contentCellId"
     private let descriptionCellId = "descriptionCellId"
     
     private var dish: Dish = Dish()
     
-    private var totalSections = 4
+    private var totalSections = 5
     private var imageSectionNumber = 0
     private var ingredientsSectionNumber = 1
-    private var contentsSectionNumber = 2
-    private var descriptionSectionNumber = 3
+    private var infoSectionNumber = 2
+    private var contentsSectionNumber = 3
+    private var descriptionSectionNumber = 4
     
     required init(dish: Dish) {
         super.init(frame: .zero, style: .grouped)
@@ -43,6 +45,7 @@ internal class DishDetailsView: UITableView {
             totalSections -= 1
             imageSectionNumber = -1
             ingredientsSectionNumber -= 1
+            infoSectionNumber -= 1
             contentsSectionNumber -= 1
             descriptionSectionNumber -= 1
         }
@@ -50,6 +53,14 @@ internal class DishDetailsView: UITableView {
         if dish.ingredients.count == 0 {
             totalSections -= 1
             ingredientsSectionNumber = -1
+            infoSectionNumber -= 1
+            contentsSectionNumber -= 1
+            descriptionSectionNumber -= 1
+        }
+        
+        if dish.restrictions.count == 0 {
+            totalSections -= 1
+            infoSectionNumber = -1
             contentsSectionNumber -= 1
             descriptionSectionNumber -= 1
         }
@@ -78,6 +89,7 @@ internal class DishDetailsView: UITableView {
         self.register(UITableViewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellId)
         self.register(DishImageCell.self, forCellReuseIdentifier: imageCellId)
         self.register(UITableViewCellWithArrow.self, forCellReuseIdentifier: ingredientCellId)
+        self.register(DishInfoCell.self, forCellReuseIdentifier: infoCellId)
         self.register(DishContentCell.self, forCellReuseIdentifier: contentCellId)
         self.register(DishDescriptionCell.self, forCellReuseIdentifier: descriptionCellId)
         
@@ -98,7 +110,11 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == contentsSectionNumber {
+        if section == infoSectionNumber {
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellId) as! UITableViewHeader
+            header.title.text = "Info"
+            return header
+        } else if section == contentsSectionNumber {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellId) as! UITableViewHeader
             header.title.text = "Content"
             return header
@@ -112,13 +128,15 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == contentsSectionNumber {
+        if section == infoSectionNumber {
            return DimensionsCatalog.tableHeaderHeight
-       } else if section == descriptionSectionNumber {
+        } else if section == contentsSectionNumber {
            return DimensionsCatalog.tableHeaderHeight
-       } else {
+        } else if section == descriptionSectionNumber {
+           return DimensionsCatalog.tableHeaderHeight
+        } else {
            return 0
-       }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -139,10 +157,15 @@ extension DishDetailsView: UITableViewDataSource, UITableViewDelegate {
             cell.title.text = "Ingredients"
             
             return cell
+        } else if (indexPath.section == infoSectionNumber) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: infoCellId, for: indexPath) as! DishInfoCell
+            
+            cell.dishRestrictions = dish.restrictions
+            
+            return cell
         } else if (indexPath.section == contentsSectionNumber) {
             let cell = tableView.dequeueReusableCell(withIdentifier: contentCellId, for: indexPath) as! DishContentCell
             
-            cell.dishRestrictions = dish.restrictions
             cell.dishNutrition = dish.nutrition
             
             return cell

@@ -10,22 +10,9 @@ import Foundation
 import UIKit
 
 internal class DishContentCell: UITableViewCell {
-    internal var dishRestrictions: [String: String] = [:]
     internal var dishNutrition: [String: Double] = [:] {
         didSet {
             var str = ""
-            if let vegan = dishRestrictions["vegan"], vegan == "Yes" {
-                str += "Vegan:Yes   "
-            } else if let vegetarian = dishRestrictions["vegetarian"], vegetarian == "Yes" {
-                str += "Veg:Yes   "
-            } else if let vegetarian = dishRestrictions["vegetarian"], vegetarian == "No" {
-                str += "Non-veg:Yes   "
-            }
-            if let glutenFree = dishRestrictions["glutenFree"], glutenFree == "Yes" {
-                str += "Gluten-Free:Yes   "
-            } else if let glutenFree = dishRestrictions["glutenFree"], glutenFree == "No" {
-                str += "Gluten-Free:No   "
-            }
             if let cal = dishNutrition["calories"], cal > 0 {
                 str += "Calories:\(Int(cal))kCal   "
             }
@@ -39,7 +26,7 @@ internal class DishContentCell: UITableViewCell {
                 str += "Protein:\(protein)g   "
             }
             dishNutritionLabel.text = str
-            dishNutritionLabel.boldSubString(originalString: str, substrings: ["vegan", "veg", "non-veg", "gluten-free", "calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
+            dishNutritionLabel.boldSubString(originalString: str, substrings: ["calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
         }
     }
     internal let dishNutritionLabel: UILabel = UILabel()
@@ -63,7 +50,7 @@ internal class DishContentCell: UITableViewCell {
         dishNutritionLabel.textColor = .black
         dishNutritionLabel.backgroundColor = .clear
         dishNutritionLabel.lineBreakMode = .byTruncatingTail
-        dishNutritionLabel.textAlignment = .center
+        dishNutritionLabel.textAlignment = .left
         container.addSubview(dishNutritionLabel)
         
         container.backgroundColor = .white
@@ -75,14 +62,14 @@ internal class DishContentCell: UITableViewCell {
         dishNutritionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        container.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        container.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        container.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
         dishNutritionLabel.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        dishNutritionLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        dishNutritionLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        dishNutritionLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        dishNutritionLabel.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        dishNutritionLabel.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
+        dishNutritionLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

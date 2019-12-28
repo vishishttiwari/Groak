@@ -13,8 +13,6 @@ internal class DishDescriptionCell: UITableViewCell {
     internal let dishDescription: UILabel = UILabel()
     private let container: UIView = UIView()
     
-    private let distanceBetweenElements: CGFloat = 10
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -24,6 +22,7 @@ internal class DishDescriptionCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.backgroundColor = .white
         self.selectionStyle = .none
         self.isUserInteractionEnabled = false
         
@@ -45,14 +44,14 @@ internal class DishDescriptionCell: UITableViewCell {
         dishDescription.translatesAutoresizingMaskIntoConstraints = false
         
         container.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        container.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        container.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        container.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
         dishDescription.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        dishDescription.leftAnchor.constraint(equalTo: container.leftAnchor, constant: distanceBetweenElements).isActive = true
-        dishDescription.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -distanceBetweenElements).isActive = true
-        dishDescription.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -distanceBetweenElements).isActive = true
+        dishDescription.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+        dishDescription.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
+        dishDescription.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
     }
         
     required init?(coder aDecoder: NSCoder) {

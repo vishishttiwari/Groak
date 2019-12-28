@@ -288,6 +288,26 @@ extension UILabel {
         
         attributedText = att
     }
+    
+    func isRestrictions(symbol: Catalog.RestrictionsSymbol, height: CGFloat) {
+        backgroundColor = .green
+        switch symbol {
+            case Catalog.RestrictionsSymbol.V:
+                backgroundColor = ColorsCatalog.greenColor
+            case Catalog.RestrictionsSymbol.VV:
+                backgroundColor = ColorsCatalog.greenColor
+            default:
+                backgroundColor = ColorsCatalog.themeColor
+        }
+        text = symbol.rawValue
+        
+        layer.cornerRadius = height/2
+        
+        font = UIFont(name: FontCatalog.fontLevels[1], size: height/2)
+        textColor = .white
+        textAlignment = .center
+        clipsToBounds = true
+    }
 }
 
 extension UIButton {

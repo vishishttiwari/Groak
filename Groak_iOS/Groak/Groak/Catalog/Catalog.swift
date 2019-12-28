@@ -14,6 +14,17 @@ internal class Catalog {
     // This cell is used as a special id for special instructions cell in the whole project
     static let specialInstructionsId = "specialInstructionsCellIdABCD1234"
     
+    enum RestrictionsSymbol: String {
+        case Unknown
+        case V
+        case VV
+        case NV
+        case G
+        case GF
+        case K
+        case NK
+    };
+    
     // Simple alert views. Nothing special
     static func alert(vc: UIViewController?, title: String, message: String) {
         guard let view = vc else { return }
