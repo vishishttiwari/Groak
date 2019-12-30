@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class IngredientsViewController: UIViewController {
+internal class IngredientsViewController: ViewControllerWithPan {
     private var header: IngredientsHeaderView?
     private var ingredients: IngredientsView?
     
@@ -27,7 +27,8 @@ internal class IngredientsViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +46,7 @@ internal class IngredientsViewController: UIViewController {
             let controller = IngredientWebViewController.init(ingredientName: ingredientName)
 
             controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
                 self.present(controller, animated: true, completion: nil)

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class SpecialRequestsViewController: UIViewController {
+internal class SpecialRequestsViewController: ViewControllerWithPan {
     private var header: SpecialRequestsHeaderView?
     private var specialRequestsView: SpecialRequestsView?
     private var footer: SpecialReqiestsFooterView = SpecialReqiestsFooterView()
@@ -49,7 +49,8 @@ internal class SpecialRequestsViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false

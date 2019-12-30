@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class IngredientWebViewController: UIViewController {
+internal class IngredientWebViewController: ViewControllerWithPan {
     private var header: IngredientWebHeaderView?
     private var ingredientWebView: IngredientWebView?
     
@@ -27,7 +27,8 @@ internal class IngredientWebViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false

@@ -43,7 +43,7 @@ internal class MenuViewController: UIViewController {
             let controller = SearchViewController(restaurant: restaurant, categories: self.categories)
 
             controller.modalTransitionStyle = .crossDissolve
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
                 self.present(controller, animated: true, completion: nil)
@@ -74,11 +74,11 @@ internal class MenuViewController: UIViewController {
                 controller = DishViewController.init(restaurant: restaurant, dish: dish)
             }
             if let controller = controller {
-                controller.modalTransitionStyle = .coverVertical
-                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                self.view.coverHorizontalPresent()
+                controller.modalPresentationStyle = .overCurrentContext
 
                 DispatchQueue.main.async {
-                    self.present(controller, animated: true, completion: nil)
+                    self.present(controller, animated: false, completion: nil)
                 }
             }
         }
@@ -88,11 +88,11 @@ internal class MenuViewController: UIViewController {
         menu?.specialRequests = { () -> () in
             let controller = SpecialRequestsViewController(restaurant: restaurant)
 
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.view.coverHorizontalPresent()
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                self.present(controller, animated: false, completion: nil)
             }
         }
         

@@ -73,10 +73,10 @@ internal class SearchViewController: UIViewController {
         menu?.dishSelected = { (_ dish: Dish) -> () in
             let controller = DishViewController.init(restaurant: restaurant, dish: dish)
             
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.view.coverHorizontalPresent()
+            controller.modalPresentationStyle = .overCurrentContext
             
-            self.present(controller, animated: true, completion: nil)
+            self.present(controller, animated: false, completion: nil)
         }
         menu?.removeKeyboard = { () -> () in
             self.view.endEditing(true)

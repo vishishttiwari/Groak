@@ -49,7 +49,7 @@ class IntroViewController: UIViewController {
 //        let controller = TabbarViewController(restaurant: restaurant)
 //
 //        controller.modalTransitionStyle = .coverVertical
-//        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        controller.modalPresentationStyle = .overCurrentContext
 //
 //        DispatchQueue.main.async {
 //            self.present(controller, animated: true, completion: nil)
@@ -99,7 +99,7 @@ class IntroViewController: UIViewController {
                     let controller = TabbarViewController.init(restaurant: restaurant)
 
                     controller.modalTransitionStyle = .coverVertical
-                    controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                    controller.modalPresentationStyle = .overCurrentContext
 
                     DispatchQueue.main.async {
                         self.present(controller, animated: true, completion: nil)

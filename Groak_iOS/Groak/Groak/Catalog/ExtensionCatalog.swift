@@ -151,6 +151,24 @@ extension UIView {
             return UIImage(cgImage: image!.cgImage!)
         }
     }
+    
+    func coverHorizontalPresent() {
+        let transition = CATransition()
+        transition.duration = TimeCatalog.animateTime
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        window!.layer.add(transition, forKey: kCATransition)
+    }
+    
+    func coverHorizontalDismiss() {
+        let transition = CATransition()
+        transition.duration = TimeCatalog.animateTime
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        window!.layer.add(transition, forKey: kCATransition)
+    }
 }
 
 // This is used for caching images

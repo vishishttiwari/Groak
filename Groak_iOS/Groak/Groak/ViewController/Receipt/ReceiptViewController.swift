@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Photos
 
-internal class ReceiptViewController: UIViewController {
+internal class ReceiptViewController: ViewControllerWithPan {
     private let header: ReceiptHeaderView = ReceiptHeaderView.init()
     internal var receiptView: ReceiptView = ReceiptView.init()
     private var text: UILabel = UILabel.init()
@@ -31,7 +31,8 @@ internal class ReceiptViewController: UIViewController {
         self.view.addSubview(header)
         
         header.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         header.leave = { () -> () in
             LocalRestaurant.askToLeaveRestaurant()

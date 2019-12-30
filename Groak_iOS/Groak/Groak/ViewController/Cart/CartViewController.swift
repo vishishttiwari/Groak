@@ -89,13 +89,14 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(cartView)
         
         cartView.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         cartView.cartDishSelected = { (_ cartDish: CartDish, _ indexInCart: Int) -> () in
             let controller = CartDetailsViewController(cartDish: cartDish, indexInCart: indexInCart)
 
             controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
                 self.present(controller, animated: true, completion: nil)

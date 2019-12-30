@@ -109,7 +109,7 @@ internal class OrderViewController: UIViewController {
                 let controller = ReceiptViewController.init()
 
                 controller.modalTransitionStyle = .coverVertical
-                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                controller.modalPresentationStyle = .overCurrentContext
 
                 DispatchQueue.main.async {
                     self.present(controller, animated: true, completion: nil)

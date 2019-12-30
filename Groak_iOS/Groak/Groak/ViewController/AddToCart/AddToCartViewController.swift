@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-internal class AddToCartViewController: UIViewController {
+internal class AddToCartViewController: ViewControllerWithPan {
     private var header: AddToCartHeaderView?
     private var addToCartExtras: AddToCartExtrasView?
     private var footer: AddToCartFooterView?
@@ -57,7 +57,8 @@ internal class AddToCartViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false

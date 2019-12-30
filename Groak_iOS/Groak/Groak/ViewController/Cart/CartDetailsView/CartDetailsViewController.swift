@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class CartDetailsViewController: UIViewController {
+internal class CartDetailsViewController: ViewControllerWithPan {
     private var header: CartDetailsHeaderView?
     private var cartDetailsView: CartDetailsView?
     private var footer: CartDetailsFooterView?
@@ -53,7 +53,8 @@ internal class CartDetailsViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false

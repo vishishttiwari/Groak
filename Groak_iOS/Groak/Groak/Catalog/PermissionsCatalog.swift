@@ -30,7 +30,7 @@ internal class PermissionsCatalog {
                         let controller = AllowCameraViewController()
                         
                         controller.modalTransitionStyle = .coverVertical
-                        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                        controller.modalPresentationStyle = .overCurrentContext
                         
                         viewController.present(controller, animated: true, completion: nil)
                     }
@@ -54,7 +54,6 @@ internal class PermissionsCatalog {
     }
     
     static func askLocationPermission() {
-        print("Ask Location Permission")
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
                 case .restricted, .denied:
@@ -68,7 +67,6 @@ internal class PermissionsCatalog {
     }
     
     private static func askLocation() {
-        print("Ask Location")
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Location is turned off", message: "Groak would like to access the location to find the restaurants around you. Please go to settings to allow location use.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Go To Settings", style: .cancel, handler: { (UIAlertAction) in

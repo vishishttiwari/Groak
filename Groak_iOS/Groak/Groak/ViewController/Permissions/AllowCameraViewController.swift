@@ -10,7 +10,7 @@
 import AVFoundation
 import UIKit
 
-internal class AllowCameraViewController: UIViewController {
+internal class AllowCameraViewController: ViewControllerWithPan {
     
     // UI Elements declared
     private let noCamera: UIImageView! = UIImageView()
@@ -30,7 +30,8 @@ internal class AllowCameraViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
     }
     

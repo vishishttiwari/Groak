@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-internal class AllowLocationViewController: UIViewController, CLLocationManagerDelegate {
+internal class AllowLocationViewController: ViewControllerWithPan, CLLocationManagerDelegate {
     
     // UI Elements declared
     private let noLocation: UIImageView! = UIImageView()
@@ -36,7 +36,8 @@ internal class AllowLocationViewController: UIViewController, CLLocationManagerD
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
                 case .authorizedAlways, .authorizedWhenInUse:
-                    self.dismiss(animated: true, completion: nil)
+                    self.view.coverHorizontalDismiss()
+                    self.dismiss(animated: false, completion: nil)
                 default:
                     break
             }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-internal class DishViewController: UIViewController {
+internal class DishViewController: ViewControllerWithPan {
     private var header: DishHeaderView?
     private var dishDetail: DishDetailsView?
     private var footer: DishFooterView = DishFooterView.init()
@@ -29,7 +29,8 @@ internal class DishViewController: UIViewController {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.dismiss(animated: true, completion: nil)
+            self.view.coverHorizontalDismiss()
+            self.dismiss(animated: false, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false
@@ -45,11 +46,11 @@ internal class DishViewController: UIViewController {
         footer.order = { () -> () in
             let controller = AddToCartViewController.init(restaurant: restaurant, dish: dish)
 
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.view.coverHorizontalPresent()
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                self.present(controller, animated: false, completion: nil)
             }
         }
         
@@ -67,11 +68,11 @@ internal class DishViewController: UIViewController {
         dishDetail?.ingredients = { () -> () in
             let controller = IngredientsViewController.init(dish: dish)
 
-            controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.view.coverHorizontalPresent()
+            controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                self.present(controller, animated: false, completion: nil)
             }
         }
         
