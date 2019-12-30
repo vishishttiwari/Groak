@@ -136,6 +136,17 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         previousLocation = locations[0]
     }
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted {
+            self.restaurantsList.reloadData(restaurants: [])
+            self.setRestaurantNotFound()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+         print("error:: \(error.localizedDescription)")
+    }
+    
     @objc func setRestaurantNotFound() {
         self.state = BottomSheetState.RestaurantNotFound
         self.locationManager.startUpdatingLocation()

@@ -29,12 +29,6 @@ internal class MenuViewController: UIViewController {
         self.view.addSubview(UIView().customActivityIndicator())
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated);
-        
-        PermissionsCatalog.askLocationPermission(viewController: self)
-    }
-    
     private func setupHeader(restaurant: Restaurant) {
         header = MenuHeaderView.init(restaurant: restaurant)
         self.view.addSubview(header!)

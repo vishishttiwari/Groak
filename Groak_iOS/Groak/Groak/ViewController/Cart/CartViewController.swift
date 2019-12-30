@@ -51,9 +51,6 @@ internal class CartViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        PermissionsCatalog.askLocationPermission(viewController: self)
-        
         if LocalRestaurant.cart.exists {
             cartView.isHidden = false
             footer.isHidden = false

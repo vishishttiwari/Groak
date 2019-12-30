@@ -40,30 +40,48 @@ internal class PermissionsCatalog {
         return false
     }
     
-    static func askLocationPermission(viewController: UIViewController) {
-        
+    static func askLocationPermission1(locationManager: CLLocationManager) {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
-                case .notDetermined, .restricted, .denied:
-                    DispatchQueue.main.async {
-                        let controller = AllowLocationViewController()
-                        
-                        controller.modalTransitionStyle = .coverVertical
-                        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                        
-                        viewController.present(controller, animated: true, completion: nil)
-                    }
+                case .restricted, .denied:
+                    locationManager.requestWhenInUseAuthorization()
                 default:
                     break
             }
         } else {
-            DispatchQueue.main.async {
-                let controller = AllowLocationViewController()
-                
-                controller.modalTransitionStyle = .coverVertical
-                controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                
-                viewController.present(controller, animated: true, completion: nil)
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    static func askLocationPermission() {
+        print("Ask Location Permission")
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+                case .restricted, .denied:
+                    askLocation()
+                default:
+                    break
+            }
+        } else {
+            askLocation()
+        }
+    }
+    
+    private static func askLocation() {
+        print("Ask Location")
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Location is turned off", message: "Groak would like to access the location to find the restaurants around you. Please go to settings to allow location use.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Go To Settings", style: .cancel, handler: { (UIAlertAction) in
+                if let bundleId = Bundle.main.bundleIdentifier,
+                  let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
+                  UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }))
+            if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                topController.present(alert, animated: true, completion: nil)
             }
         }
     }

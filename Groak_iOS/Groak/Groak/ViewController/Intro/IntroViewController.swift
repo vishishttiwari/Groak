@@ -22,8 +22,6 @@ class IntroViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("IntroViewController")
-        
         setTopBottomSafeArea()
         
         if permissions.askCameraPermission(viewController: self) {
@@ -39,8 +37,6 @@ class IntroViewController: UIViewController {
                 }
             }
         }
-        
-        PermissionsCatalog.askLocationPermission(viewController: self)
         
         
         
