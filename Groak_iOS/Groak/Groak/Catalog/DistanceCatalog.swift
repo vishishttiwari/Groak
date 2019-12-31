@@ -11,7 +11,7 @@ import Firebase
 
 internal class DistanceCatalog {
     
-    private static let distanceBufferInFeet: Double = 2000
+    private static let distanceBufferInFeet: Double = 20000
     private static let distanceChangeBufferInMeters: Double = feetToMeter(meter: distanceBufferInFeet)
     private static let feetLatitude: Double = 0.000002747252747
     private static let feetLongitude: Double = 0.00000346981263
