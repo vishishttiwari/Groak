@@ -57,6 +57,30 @@ internal class Dish {
         }
     }
     
+    func restrictionsExist() -> Bool {
+        if restrictions.count == 0 {
+            return false
+        }
+        for (_, isit) in restrictions {
+            if isit != "Not Sure" {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func nutritionExist() -> Bool {
+        if nutrition.count == 0 {
+            return false
+        }
+        for (_, value) in nutrition {
+            if value > 0 {
+                return true
+            }
+        }
+        return false
+    }
+    
     func success() -> Bool {
         if (reference == nil) {
             return false;

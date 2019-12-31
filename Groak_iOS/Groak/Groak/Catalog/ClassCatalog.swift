@@ -105,7 +105,9 @@ internal class UITableViewCellWithArrow: UITableViewCell {
         container.leftAnchor.constraint(equalTo: self.leftAnchor, constant: distanceBetweenElements).isActive = true
         container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -distanceBetweenElements).isActive = true
         container.heightAnchor.constraint(equalToConstant: DimensionsCatalog.UITableViewCellWithArrowHeight).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        let containerBottomConstraint = container.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        containerBottomConstraint.priority = UILayoutPriority.init(999)
+        containerBottomConstraint.isActive = true
         
         title.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         title.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true

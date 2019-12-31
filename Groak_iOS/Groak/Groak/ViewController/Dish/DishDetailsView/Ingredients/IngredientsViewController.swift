@@ -45,11 +45,11 @@ internal class IngredientsViewController: ViewControllerWithPan {
         ingredients?.ingredientWebView = { (_ ingredientName: String) -> () in
             let controller = IngredientWebViewController.init(ingredientName: ingredientName)
 
-            controller.modalTransitionStyle = .coverVertical
+            self.view.coverHorizontalPresent()
             controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                self.present(controller, animated: false, completion: nil)
             }
         }
         

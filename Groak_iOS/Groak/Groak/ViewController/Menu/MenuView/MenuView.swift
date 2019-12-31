@@ -35,7 +35,7 @@ internal class MenuView: UITableView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        self.separatorStyle = .none
+        self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

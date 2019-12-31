@@ -52,11 +52,9 @@ internal class MenuHeaderView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: 150, height: 40)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         foodCategories = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
-        let insetX = (DimensionsCatalog.screenSize.width - 150)/2
-        let insetY: CGFloat = 0
-        foodCategories!.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+        foodCategories!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         foodCategories!.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
         foodCategories!.dataSource = self
         foodCategories!.delegate = self
@@ -144,7 +142,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
         cell.category.text = categories[indexPath.row].name
         
         if indexPath.row == 0 {
-            cell.category.backgroundColor = ColorsCatalog.themeColor
+            cell.container.backgroundColor = ColorsCatalog.themeColor
             cell.category.textColor = .white
         }
         
@@ -167,7 +165,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell
 
-        cell?.category.backgroundColor = ColorsCatalog.themeColor
+        cell?.container.backgroundColor = ColorsCatalog.themeColor
         cell?.category.textColor = .white
         menuSectionChanged?(indexPath.row)
 
@@ -180,7 +178,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
         let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell
 
-        cell?.category.backgroundColor = ColorsCatalog.headerGrayShade
+        cell?.container.backgroundColor = ColorsCatalog.headerGrayShade
         cell?.category.textColor = .black
     }
 
@@ -189,11 +187,11 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
             let cell = cells as! CategoryCell
             let indexPath = foodCategories!.indexPath(for: cell)
             if (indexPath?.row != foodCategorySelected.row) {
-                cell.category.backgroundColor = ColorsCatalog.headerGrayShade
+                cell.container.backgroundColor = ColorsCatalog.headerGrayShade
                 cell.category.textColor = .black
             }
             else {
-                cell.category.backgroundColor = ColorsCatalog.themeColor
+                cell.container.backgroundColor = ColorsCatalog.themeColor
                 cell.category.textColor = ColorsCatalog.headerGrayShade
             }
         }

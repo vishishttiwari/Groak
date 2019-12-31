@@ -16,6 +16,7 @@ internal class MenuCategory {
     var reference: DocumentReference?
     var name: String
     var dishes: [Dish]
+    var dishesReference: [DocumentReference]
     var daysAvailable: [String]
     var startTime: Int
     var endTime: Int
@@ -25,30 +26,49 @@ internal class MenuCategory {
         reference = nil
         name = ""
         dishes = []
+        dishesReference = []
         daysAvailable = []
         startTime = -1
         endTime = -1
         available = false
     }
     
-    init(menuCategory: [String: Any]) {
+    init(menuCategory: [String: Any], downloadDishes: Bool = true) {
         reference = menuCategory["reference"] as? DocumentReference
         name = menuCategory["name"] as? String ?? ""
         dishes = []
+        dishesReference = menuCategory["dishes"] as? [DocumentReference] ?? []
         daysAvailable = menuCategory["days"] as? [String] ?? []
         startTime = menuCategory["startTime"] as? Int ?? -1
         endTime = menuCategory["endTime"] as? Int ?? -1
         available = menuCategory["available"] as? Bool ?? false
         
+        if downloadDishes {
+            var downloaded = 0
+            for dishReference in dishesReference {
+                dishReference.getDocument{(document, error) in
+                    if let document = document, document.exists {
+                        let dish = Dish.init(dish: document.data() ?? [:])
+                        self.dishes.append(dish)
+                        downloaded += 1
+                        if (downloaded == self.dishesReference.count) {
+                            self.categoryLoaded?()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func downloadDishes() {
         var downloaded = 0
-        let dishReferences = menuCategory["dishes"] as? [DocumentReference] ?? []
-        for dishReference in dishReferences {
+        for dishReference in dishesReference {
             dishReference.getDocument{(document, error) in
                 if let document = document, document.exists {
                     let dish = Dish.init(dish: document.data() ?? [:])
                     self.dishes.append(dish)
                     downloaded += 1
-                    if (downloaded == dishReferences.count) {
+                    if (downloaded == self.dishesReference.count) {
                         self.categoryLoaded?()
                     }
                 }

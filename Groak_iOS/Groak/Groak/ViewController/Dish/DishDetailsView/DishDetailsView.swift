@@ -58,14 +58,14 @@ internal class DishDetailsView: UITableView {
             descriptionSectionNumber -= 1
         }
         
-        if dish.restrictions.count == 0 {
+        if !dish.restrictionsExist() {
             totalSections -= 1
             infoSectionNumber = -1
             contentsSectionNumber -= 1
             descriptionSectionNumber -= 1
         }
         
-        if dish.nutrition.count == 0 {
+        if !dish.nutritionExist() {
             totalSections -= 1
             contentsSectionNumber = -1
             descriptionSectionNumber -= 1

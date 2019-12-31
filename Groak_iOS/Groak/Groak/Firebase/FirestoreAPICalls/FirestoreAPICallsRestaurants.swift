@@ -85,14 +85,20 @@ internal class FirestoreAPICallsRestaurants {
             }
             
             var categories: [MenuCategory] = []
+            let dishesDownloadGroup = DispatchGroup()
             for document in snapshot.documents {
-                let category = MenuCategory.init(menuCategory: document.data())
+                let category = MenuCategory.init(menuCategory: document.data(), downloadDishes: false)
                 if category.checkIfCategoryIsAvailable(day: day, minutes: minutes) {
+                    dishesDownloadGroup.enter()
+                    category.downloadDishes()
                     categories.append(category)
+                    category.categoryLoaded = { () -> () in
+                        dishesDownloadGroup.leave()
+                   }
                 }
             }
             
-            categories.last?.categoryLoaded = { () -> () in
+            dishesDownloadGroup.notify(queue: .main) {
                 self.dataReceivedForFetchRestaurantCategories?(categories)
             }
         }

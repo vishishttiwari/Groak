@@ -15,7 +15,7 @@ internal class Catalog {
     static let specialInstructionsId = "specialInstructionsCellIdABCD1234"
     
     enum RestrictionsSymbol: String {
-        case Unknown
+        case U
         case V
         case VV
         case NV

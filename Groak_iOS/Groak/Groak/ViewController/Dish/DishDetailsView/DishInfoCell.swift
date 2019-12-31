@@ -12,6 +12,7 @@ import UIKit
 internal class DishInfoCell: UITableViewCell {
     
     private let viewHeight: CGFloat = 20
+    private let distanceBetweenRestrictions: CGFloat = 2
     
     internal var dishRestrictions: [String: String] = [:] {
         didSet {
@@ -148,10 +149,9 @@ internal class DishInfoCell: UITableViewCell {
         container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
-        vegView.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        vegView.topAnchor.constraint(equalTo: container.topAnchor, constant: distanceBetweenRestrictions).isActive = true
         vegView.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         vegView.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
-        vegView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
         
         vegViewFullHeightConstraint = vegView.heightAnchor.constraint(equalToConstant: viewHeight)
         vegViewFullHeightConstraint?.priority = UILayoutPriority.init(999)
@@ -160,38 +160,36 @@ internal class DishInfoCell: UITableViewCell {
         
         vegSymbol.topAnchor.constraint(equalTo: vegView.topAnchor).isActive = true
         vegSymbol.leftAnchor.constraint(equalTo: vegView.leftAnchor).isActive = true
+        vegSymbol.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
         vegSymbol.widthAnchor.constraint(equalToConstant: viewHeight).isActive = true
-        vegSymbol.bottomAnchor.constraint(equalTo: vegView.bottomAnchor).isActive = true
         
         vegLabel.topAnchor.constraint(equalTo: vegView.topAnchor).isActive = true
         vegLabel.leftAnchor.constraint(equalTo: vegSymbol.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         vegLabel.rightAnchor.constraint(equalTo: vegView.rightAnchor).isActive = true
         vegLabel.bottomAnchor.constraint(equalTo: vegView.bottomAnchor).isActive = true
         
-        glutenFreeView.topAnchor.constraint(equalTo: vegView.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        glutenFreeView.topAnchor.constraint(equalTo: vegView.bottomAnchor, constant: distanceBetweenRestrictions).isActive = true
         glutenFreeView.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         glutenFreeView.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
-        glutenFreeView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
         
         glutenFreeViewFullHeightConstraint = glutenFreeView.heightAnchor.constraint(equalToConstant: viewHeight)
         glutenFreeViewFullHeightConstraint?.priority = UILayoutPriority.init(999)
         glutenFreeViewNoHeightConstraint = glutenFreeView.heightAnchor.constraint(equalToConstant: 0)
         glutenFreeViewNoHeightConstraint?.priority = UILayoutPriority.init(999)
         
-        glutenFreeSymbol.topAnchor.constraint(equalTo: glutenFreeView.topAnchor).isActive = true
-        glutenFreeSymbol.leftAnchor.constraint(equalTo: glutenFreeView.leftAnchor).isActive = true
-        glutenFreeSymbol.widthAnchor.constraint(equalToConstant: viewHeight).isActive = true
-        glutenFreeSymbol.bottomAnchor.constraint(equalTo: glutenFreeView.bottomAnchor).isActive = true
-        
         glutenFreeLabel.topAnchor.constraint(equalTo: glutenFreeView.topAnchor).isActive = true
         glutenFreeLabel.leftAnchor.constraint(equalTo: glutenFreeSymbol.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         glutenFreeLabel.rightAnchor.constraint(equalTo: glutenFreeView.rightAnchor).isActive = true
         glutenFreeLabel.bottomAnchor.constraint(equalTo: glutenFreeView.bottomAnchor).isActive = true
         
-        kosherView.topAnchor.constraint(equalTo: glutenFreeView.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        glutenFreeSymbol.centerYAnchor.constraint(equalTo: glutenFreeLabel.centerYAnchor).isActive = true
+        glutenFreeSymbol.leftAnchor.constraint(equalTo: glutenFreeView.leftAnchor).isActive = true
+        glutenFreeSymbol.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
+        glutenFreeSymbol.widthAnchor.constraint(equalToConstant: viewHeight).isActive = true
+        
+        kosherView.topAnchor.constraint(equalTo: glutenFreeView.bottomAnchor, constant: distanceBetweenRestrictions).isActive = true
         kosherView.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         kosherView.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
-        kosherView.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
         kosherView.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
         
         kosherViewFullHeightConstraint = glutenFreeView.heightAnchor.constraint(equalToConstant: viewHeight)
@@ -199,15 +197,15 @@ internal class DishInfoCell: UITableViewCell {
         kosherViewNoHeightConstraint = glutenFreeView.heightAnchor.constraint(equalToConstant: 0)
         kosherViewNoHeightConstraint?.priority = UILayoutPriority.init(999)
         
-        kosherSymbol.topAnchor.constraint(equalTo: kosherView.topAnchor).isActive = true
-        kosherSymbol.leftAnchor.constraint(equalTo: kosherView.leftAnchor).isActive = true
-        kosherSymbol.widthAnchor.constraint(equalToConstant: viewHeight).isActive = true
-        kosherSymbol.bottomAnchor.constraint(equalTo: kosherView.bottomAnchor).isActive = true
-        
         kosherLabel.topAnchor.constraint(equalTo: kosherView.topAnchor).isActive = true
         kosherLabel.leftAnchor.constraint(equalTo: kosherSymbol.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         kosherLabel.rightAnchor.constraint(equalTo: kosherView.rightAnchor).isActive = true
         kosherLabel.bottomAnchor.constraint(equalTo: kosherView.bottomAnchor).isActive = true
+        
+        kosherSymbol.centerYAnchor.constraint(equalTo: kosherLabel.centerYAnchor).isActive = true
+        kosherSymbol.leftAnchor.constraint(equalTo: kosherView.leftAnchor).isActive = true
+        kosherSymbol.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
+        kosherSymbol.widthAnchor.constraint(equalToConstant: viewHeight).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
