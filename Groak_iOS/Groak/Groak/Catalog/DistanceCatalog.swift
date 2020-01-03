@@ -60,8 +60,8 @@ internal class DistanceCatalog {
         return meter/3.28084
     }
     
-    // TODO: Sort them in ascending order
-    static func getRestaurantsNearCurrentLocation(restaurants: [Restaurant], minGeoPoint: GeoPoint, maxGeoPoint: GeoPoint) -> [Restaurant] {
+    // TODO: Check if it is actually ordering in ascensing order
+    static func getRestaurantsNearCurrentLocation(restaurants: [Restaurant], minGeoPoint: GeoPoint, maxGeoPoint: GeoPoint, currentUserLocation: CLLocation) -> [Restaurant] {
         var selectedRestaurants: [Restaurant] = []
         for restaurant in restaurants {
             if restaurant.latitude > minGeoPoint.latitude &&
@@ -71,6 +71,7 @@ internal class DistanceCatalog {
                 selectedRestaurants.append(restaurant)
             }
         }
+        selectedRestaurants.sort(by: { getDistance(location1: currentUserLocation, location2: createCLLocation(latitude: $0.latitude, longitude: $0.longitude)) < getDistance(location1: currentUserLocation, location2: createCLLocation(latitude: $1.latitude, longitude: $1.longitude))})
         
         return selectedRestaurants
     }

@@ -57,7 +57,7 @@ internal class FirestoreAPICallsRestaurants {
                         restaurants.append(restaurant)
                     }
                     
-                    let closeRestaurants = DistanceCatalog.getRestaurantsNearCurrentLocation(restaurants: restaurants, minGeoPoint: minGeoPoint, maxGeoPoint: maxGeoPoint)
+                    let closeRestaurants = DistanceCatalog.getRestaurantsNearCurrentLocation(restaurants: restaurants, minGeoPoint: minGeoPoint, maxGeoPoint: maxGeoPoint, currentUserLocation: CLLocation.init(latitude: currentLocation.latitude, longitude: currentLocation.longitude))
                     
                     self.dataReceivedForFetchRestaurants?(closeRestaurants)
                 }
