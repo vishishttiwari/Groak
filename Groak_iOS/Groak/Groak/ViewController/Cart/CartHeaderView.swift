@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class the represents the header view of cart view
 
 import Foundation
 import UIKit
 
 internal class CartHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     internal var delete: (() -> ())?

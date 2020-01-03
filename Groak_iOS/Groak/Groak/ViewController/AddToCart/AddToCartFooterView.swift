@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Footer of the add to cart view controller
 
 import Foundation
 import UIKit
 
 internal class AddToCartFooterView: UIView {
+    
     // Optional Closures
     internal var order: ((_ quantity: Int, _ dishPrice: Double) -> ())?
     
@@ -87,12 +89,14 @@ internal class AddToCartFooterView: UIView {
         order?(quantity, dishPrice)
     }
     
+    // This function is called when add button is pressed
     @objc func add() {
         quantity += 1
         addToCartButton.setTitle("Add \(quantity) to Order", for: .normal)
         price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
     }
     
+    // This function is called when reduce button is pressed
     @objc func reduce() {
         if (quantity > 1) {
             quantity -= 1

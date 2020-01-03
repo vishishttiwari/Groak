@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/24/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the suggestions cell in special requests footer view
 
 import Foundation
 import UIKit

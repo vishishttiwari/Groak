@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Header of the add to cart view controller
 
 import Foundation
 import UIKit
 
 internal class AddToCartHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     

@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  The special instructions cell is represented in this class.
 
 import Foundation
 import UIKit

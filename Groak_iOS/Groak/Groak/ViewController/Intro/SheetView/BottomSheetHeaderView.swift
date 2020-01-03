@@ -5,6 +5,8 @@
 //  Created by Vishisht Tiwari on 12/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This has the header of the bottom sheet view. When a restaurant is found it contains Welcome to
+//  and when a restaurant is not found, it contains groak
 
 import Foundation
 import UIKit

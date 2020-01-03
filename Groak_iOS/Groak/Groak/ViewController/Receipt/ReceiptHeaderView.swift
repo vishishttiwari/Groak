@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/12/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the header of the receipt view controller
 
 import Foundation
 import UIKit
 
 internal class ReceiptHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     internal var leave: (() -> ())?

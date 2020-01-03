@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/27/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the dish restrictions cell such as vegetarian in the dish details view
 
 import Foundation
 import UIKit

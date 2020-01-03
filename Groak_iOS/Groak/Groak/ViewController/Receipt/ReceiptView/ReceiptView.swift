@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/12/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the receipt view inside receipt view controllee
 
 import Foundation
 import UIKit

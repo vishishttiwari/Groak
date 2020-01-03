@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class contains all the restaurant around user is a UITableVIew form
 
 import Foundation
 import UIKit
 
 internal class RestaurantsListView: UITableView {
+    
     // Optional Closures
     internal var restaurantSelected: ((_ restaurant: Restaurant) -> ())?
     

@@ -5,6 +5,8 @@
 //  Created by Vishisht Tiwari on 12/10/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Class used up for setting up the screen that will show up if location permissions is not allowed
+//  This is actually not used
 
 import Foundation
 import UIKit

@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the header of the view controller
 
 import Foundation
 import UIKit

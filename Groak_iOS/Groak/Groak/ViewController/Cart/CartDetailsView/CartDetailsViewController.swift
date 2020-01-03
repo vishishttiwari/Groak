@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the details view of each dish in cart
 
 import Foundation
 import UIKit
@@ -107,6 +108,7 @@ internal class CartDetailsViewController: ViewControllerWithPan {
         cartDetailsView?.endEditing(true)
     }
     
+    // This changes the dimension of the view so that the textview is visible when the keyboard shows up
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer!.cancelsTouchesInView = true
@@ -116,10 +118,12 @@ internal class CartDetailsViewController: ViewControllerWithPan {
         }
     }
     
+    // When keyboard is hid...this returns the dimensions to previous dimensions
     @objc func keyboardWillHide(_ notification: Notification) {
         cartDetailsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
     }
     
+    // Cancels all the tap gestures
     @objc func keyboardDidHide(_ notification: Notification) {
         tapGestureRecognizer!.cancelsTouchesInView = false
     }

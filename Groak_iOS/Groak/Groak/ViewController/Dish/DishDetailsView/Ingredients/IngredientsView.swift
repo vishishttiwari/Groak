@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This function is used to show all the ingredients in tabular form
 
 import Foundation
 import UIKit
 
 internal class IngredientsView: UITableView {
+    
     // Optional Closures
     internal var ingredientWebView: ((_ ingredientName: String) -> ())?
     

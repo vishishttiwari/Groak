@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/8/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This view controller is used for showing the menus
 
 import Foundation
 import UIKit
@@ -61,6 +62,8 @@ internal class MenuViewController: UIViewController {
         menu = MenuView.init()
         self.view.addSubview(menu!)
         
+        // When dish is selected...if there is no info to show for the dish except the image
+        // then the user is taken directly to ordering..otherwise infor is shown first
         menu?.dishSelected = { (_ dish: Dish) -> () in
             let controller: UIViewController?
             if dish.ingredients.count == 0 &&
@@ -81,6 +84,7 @@ internal class MenuViewController: UIViewController {
                 }
             }
         }
+        // This is used for changing the cell selected in header when the menu category being shown is changed
         menu?.menuSectionChanged = { (_ section: Int) -> () in
             self.header?.sectionChanged(section: section)
         }
@@ -102,6 +106,7 @@ internal class MenuViewController: UIViewController {
         menu?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
+    // This function is used for downloading the menu...it also deletes the loading indicator.
     private func downloadMenu() {
         let fsRestaurant = FirestoreAPICallsRestaurants.init();
         

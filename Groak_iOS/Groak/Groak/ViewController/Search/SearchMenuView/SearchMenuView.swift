@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This sets the actual menu view showing all the matching dishes
 
 import Foundation
 import UIKit

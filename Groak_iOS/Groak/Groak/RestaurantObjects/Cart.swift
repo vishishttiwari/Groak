@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This file has classes for cart, dishes in cart, extra and options of dishes
 
 import Foundation
 import Firebase

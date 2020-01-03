@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the header of order view
 
 import Foundation
 import UIKit
 
 internal class OrderFooterView: UIView {
+    
     // Optional Closures
     internal var pay: (() -> ())?
     
@@ -53,6 +55,7 @@ internal class OrderFooterView: UIView {
         pay?()
     }
     
+    // Total price depending on segment control
     private func calculateTotalPrice(index: Int) -> Double {
         var totalPrice: Double = 0
         if index == 0 {

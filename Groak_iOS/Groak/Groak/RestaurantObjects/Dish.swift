@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This file contains classes for dish, dish extra and dish extra options
 
 import Foundation
 import Firebase

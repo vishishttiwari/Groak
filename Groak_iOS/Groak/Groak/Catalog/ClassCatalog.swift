@@ -5,10 +5,12 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to create random classes used all across the project
 
 import Foundation
 import UIKit
 
+// Header of tables view used all across the project
 internal class UITableViewHeader: UITableViewHeaderFooterView {
     private let background: UIView = UIView()
     internal let title: UILabel = UILabel()
@@ -65,7 +67,7 @@ internal class UITableViewHeader: UITableViewHeaderFooterView {
     }
 }
 
-
+// Table View Cells with arrows
 internal class UITableViewCellWithArrow: UITableViewCell {
     private var container: UIView = UIView()
     internal let title: UILabel = UILabel()
@@ -125,6 +127,7 @@ internal class UITableViewCellWithArrow: UITableViewCell {
     }
 }
 
+// This is the badge used to show YOUR ORDER or YOUR INSTRUCTION
 internal class LocalBadgeView: UIView {
     private let local: UILabel = UILabel()
     
@@ -172,6 +175,7 @@ internal class LocalBadgeView: UIView {
     }
 }
 
+// This is used for dismiss by sliding right to left. Any view controller that is the child of this class will be able to go back when slid from left to right
 internal class ViewControllerWithPan: UIViewController {
 
     var initialTouchPoint: CGPoint = CGPoint(x: 0, y: 0)

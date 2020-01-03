@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the header view in ingredients view controller
 
 import Foundation
 import UIKit
 
 internal class IngredientsHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     

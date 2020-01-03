@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the dish cell in menu
 
 import Foundation
 import UIKit
@@ -66,6 +67,7 @@ internal class DishCell: UITableViewCell {
                 dishCalorie.text = ""
             }
             
+            // This variable is used to see where each of restrictions badge will be placed
             var x: CGFloat = 0
             
             vegRestriction.frame.origin.x = 0

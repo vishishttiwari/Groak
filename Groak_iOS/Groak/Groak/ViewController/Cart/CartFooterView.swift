@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This represents the footer of cart view including the price
 
 import Foundation
 import UIKit
 
 internal class CartFooterView: UIView {
+    
     // Optional Closures
     internal var order: (() -> ())?
     

@@ -5,45 +5,13 @@
 //  Created by Vishisht Tiwari on 11/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+// This is the main class called everytime app starts
 
 import Foundation
 import UIKit
 import Firebase
 import CoreLocation
 import CoreData
-
-// See why any of the textview is not working. Make a different common extension for textview
-// Any new stuff will be added to order view controller
-// Add a back button to BottomSheetView
-// See when you come back from MenuViewController, how to make the list appear again
-// Add times to orderviewcontroller'
-// The special instructions is not working so look into that
-// Use dimensions rather than contraints in Special Requests
-// See if cell dynamically change size if image etc. is not present
-// Loading indicator for view controllers
-// Loading indicator for images
-// Get the user out either after distance or after time 3 hours maybe
-// Notifications
-// Start with camera and also have, not your restaurant and then show table
-// Detach firestore listeners
-// Add screens for when location or camera is not activated
-// Save your order locally in cache (permanent)
-// When ready to pay add it to the server
-
-
-// Screen for when location or camera not added
-// Times in order
-// Instructions in order
-// Notifications
-
-// Loading indicator for cell
-// See if cells change size dynamically
-// get the user out of restaurant when location changes and after 3 hours
-// Detach listeners
-// Vegetarian icons etc.
-
-// Have temporary graphics
-// Different graphics for different loading
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -57,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         setupLocation()
         
+        // configuring firebase
         FirebaseApp.configure()
 
         let baseViewController = IntroViewController()
@@ -68,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         return true
     }
     
-    // This sets up the location manager for getting the current position of user
+    // Get curent location to see if the user is close to the restaurant all the time while going through menu
     private func setupLocation() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -87,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    // Timer is used to make the user leave the restaurant after some time
     static func resetTimer() {
         timer = Timer.scheduledTimer(timeInterval: TimeInterval(TimeCatalog.leaveRestaurantTimeInHours), target: self, selector: #selector(leaveRestaurant), userInfo: nil, repeats: false)
     }
@@ -95,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         timer = nil
     }
     
+    // Make user leave restaurant
     @objc static func leaveRestaurant() {
         if let _ = LocalRestaurant.restaurant.restaurant {
             LocalRestaurant.leaveRestaurant()
@@ -115,13 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
+    // Whenever the application starts, it checks if location is being allowed or not
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         PermissionsCatalog.askLocationPermission()
     }
 
+    // Whenever application terminates, the restaurant is deleted. This is mostly for unsubscribing the snapshot listeners for requests and orders
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        LocalRestaurant.deleteRestaurant()
     }
     
     // MARK: - Core Data stack

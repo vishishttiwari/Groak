@@ -5,6 +5,8 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Contains all API calls for fetching orders information. There will always be only one instance of this
+//  in the project because this is a snapshor listener. So all the instances have to be unsubscribed before leaving.
 
 import Foundation
 import Firebase
@@ -34,6 +36,7 @@ internal class FirestoreAPICallsOrders {
         listener?.remove()
     }
     
+    // Add all order to to server from cart
     func addOrdersFirestoreAPI(viewController: UIViewController) {
         let order = Order.init(cart: LocalRestaurant.cart)
         
@@ -93,6 +96,7 @@ internal class FirestoreAPICallsOrders {
         }
     }
     
+    // Add comment to order
     func addCommentFirestoreAPI(viewController: UIViewController?, comment: String) {
         let commentObject = OrderComment.init(comment: comment)
         
@@ -139,6 +143,7 @@ internal class FirestoreAPICallsOrders {
         }
     }
     
+    // Add order to coredata
     private func addOrderToCoreData(order: Order) -> Bool {
         for dish in order.dishes {
             
@@ -188,6 +193,7 @@ internal class FirestoreAPICallsOrders {
         return true
     }
     
+    // Add comment to core data
     private func addCommentToCoreData(orderComment: OrderComment) -> Bool {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         

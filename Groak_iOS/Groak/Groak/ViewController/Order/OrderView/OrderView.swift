@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the order view
 
 import Foundation
 import UIKit
@@ -66,6 +67,7 @@ internal class OrderView: UITableView {
         self.dataSource = self
     }
     
+    // When segment control is changed, trhis function is called
     func orderChanged(index: Int) {
         if index == 0 {
             order = LocalRestaurant.tableOrder
@@ -78,9 +80,6 @@ internal class OrderView: UITableView {
             }
         }
         reloadData()
-    }
-    
-    @objc func downloadOrder() {
     }
 
     required init?(coder aDecoder: NSCoder) {

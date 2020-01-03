@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/12/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the info cell inside receipt view controller which contains restaurant name, address and time
 
 import Foundation
 import UIKit

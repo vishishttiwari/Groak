@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/9/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This sets up the tabbarview controller which is used for showing cart, order and menu
 
 import Foundation
 import UIKit
@@ -49,7 +50,7 @@ internal class TabbarViewController: UITabBarController {
         self.performSpringAnimation(tabImageView: subView)
     }
     
-    //func to perform spring animation on imageview
+    // Func to perform spring animation on imageview
     private func performSpringAnimation(tabImageView: UIImageView) {
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
@@ -63,6 +64,7 @@ internal class TabbarViewController: UITabBarController {
         })
     }
     
+    // Func called when item added to cart
     func addToCart() {
         let tabBarItem = tabBar.items?[0]
         tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
@@ -70,6 +72,7 @@ internal class TabbarViewController: UITabBarController {
         self.addToCartAnimation(tabImageView: subView)
     }
     
+    // Func to perform spring animation when something is added to cart
     private func addToCartAnimation(tabImageView: UIImageView) {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
 
@@ -80,6 +83,11 @@ internal class TabbarViewController: UITabBarController {
                 tabImageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
             })
         })
+    }
+    
+    // Func called when order is placed or cart is deleted
+    func deleteCart() {
+        tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
     }
     
     required init?(coder: NSCoder) {

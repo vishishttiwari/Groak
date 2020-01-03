@@ -5,10 +5,11 @@
 //  Created by Vishisht Tiwari on 11/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
-//  Restaurant class used to refer to a restaurant
+//  Table class used to refer to a table
 
 import Firebase
 
+// Different table status of a table
 internal enum TableStatus: String {
     case available
     case seated

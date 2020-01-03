@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to access random time related information all across the project
 
 import Foundation
 import Firebase
@@ -14,7 +15,9 @@ internal class TimeCatalog {
     // Animation time for different things such as time takes for options view to show up
     static let animateTime: Double! = 0.25
     
+    // The amount of time after logging into an account after which the user is thrown out
     static let leaveRestaurantTimeInHours = 3 * 3600
+    // This is used to show the animation time for the bottom sheet in intro screen to go up or down
     static let bottomSheetGoUpAgainTimeInSeconds = 10
     
     // Get which day it is
@@ -51,6 +54,7 @@ internal class TimeCatalog {
         return hour*60 + minutes
     }
     
+    // Get time in string from a timestamp
     static func getTimeFromTimestamp(timestamp: Timestamp) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -62,6 +66,7 @@ internal class TimeCatalog {
         return timeString
     }
     
+    // Get both date and time in string from a timestamp
     static func getDateTimeFromTimestamp(timestamp: Timestamp) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -73,6 +78,7 @@ internal class TimeCatalog {
         return timeString
     }
     
+    // Get date in string from a timestamp
     static func getDateFromTimestamp(timestamp: Timestamp) -> Date {
         return timestamp.dateValue()
     }

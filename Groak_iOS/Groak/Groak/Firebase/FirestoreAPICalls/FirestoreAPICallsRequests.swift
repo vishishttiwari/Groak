@@ -5,6 +5,8 @@
 //  Created by Vishisht Tiwari on 11/25/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Contains all API calls for fetching request information. There will always be only one instance of this
+//  in the project because this is a snapshor listener. So all the instances have to be unsubscribed before leaving.
 
 import Foundation
 import Firebase
@@ -17,6 +19,7 @@ internal class FirestoreAPICallsRequests {
     
     var listener: ListenerRegistration?
     
+    // Used for fetching requests
     func fetchRequestsFirestoreAPI() {
         listener  = LocalRestaurant.requests.requestsReference?.addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
@@ -28,10 +31,12 @@ internal class FirestoreAPICallsRequests {
         }
     }
     
+    // Used for unsubscribing the snapshot listener
     func unsubscribe() {
         listener?.remove()
     }
     
+    // Used for adding a request message to the server
     func addRequestsFirestoreAPI(request: Request) {
         guard let requestsReference = LocalRestaurant.requests.requestsReference else {
             dataReceivedForAddRequests?(false)

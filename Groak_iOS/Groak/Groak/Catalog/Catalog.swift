@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to access random information all across the project
 
 import AVFoundation
 import UIKit
@@ -14,6 +15,7 @@ internal class Catalog {
     // This cell is used as a special id for special instructions cell in the whole project
     static let specialInstructionsId = "specialInstructionsCellIdABCD1234"
     
+    // Different restrictions sumbol for vegetarian, gluten-free etc.
     enum RestrictionsSymbol: String {
         case U
         case V
@@ -34,10 +36,12 @@ internal class Catalog {
         view.present(alert, animated: true, completion: nil)
     }
     
+    // Calculate the price in two decimal places
     static func calculateTotalPriceOfDish(pricePerItem: Double, quantity: Int) -> Double {
         return round(Double(quantity) * pricePerItem * 100)/100
     }
     
+    // This function is used to show all the xtras selected for a dish in cart and in order
     static func showExtras(dishExtras: [DishExtra], showSpecialInstructions: Bool) -> String {
         var str = ""
         for extra in dishExtras {

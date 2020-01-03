@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the header of order view
 
 import Foundation
 import UIKit
 
 internal class OrderHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     internal var orderChanged: ((_ index: Int) -> ())?
@@ -70,6 +72,7 @@ internal class OrderHeaderView: UIView {
         dismiss?()
     }
     
+    // When the segment control changes..it sends the info to callback function
     @objc func indexChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
             case 0:

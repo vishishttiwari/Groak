@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the status cell in order view
 
 import Foundation
 import UIKit

@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Class contains the view when restaurant is found either by location or clicking a restaurant
 
 import Foundation
 import UIKit
 
 internal class RestaurantFullView: UIView {
+    
     // Optional Closures
     internal var notCorrectRestaurantClosure: (() -> ())?
     

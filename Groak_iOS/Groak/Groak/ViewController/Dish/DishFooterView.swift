@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+// Footer of the dish info. Also has the button to take user to all the options of the dish
 
 import Foundation
 import UIKit
 
 internal class DishFooterView: UIView {
+    
     // Optional Closures
     internal var order: (() -> ())?
     

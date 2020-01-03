@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the cart view controller
 
 import Foundation
 import UIKit
@@ -118,10 +119,8 @@ internal class CartViewController: UIViewController {
                 self.fsOrders?.addOrdersFirestoreAPI(viewController: self)
                 self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
                     if success {
-                        LocalRestaurant.cart.delete()
+                        self.deleteCart()
                         self.view.hideLoader(hideFrom: self.view)
-                        self.reload()
-                        self.tabBarController?.selectedIndex = 1
                     } else {
                         Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
                     }
@@ -144,6 +143,7 @@ internal class CartViewController: UIViewController {
         cartView.endEditing(true)
     }
     
+    // This changes the dimension of the view so that the textview is visible when the keyboard shows up
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer!.cancelsTouchesInView = true
@@ -153,21 +153,28 @@ internal class CartViewController: UIViewController {
         }
     }
     
+    // When keyboard is hid...this returns the dimensions to previous dimensions
     @objc func keyboardWillHide(_ notification: Notification) {
         cartView.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
+    // Cancels all the tap gestures
     @objc func keyboardDidHide(_ notification: Notification) {
         tapGestureRecognizer!.cancelsTouchesInView = false
     }
     
+    // Deletes the cart...switch to menu and change the badge view in cart badge to 0
     private func deleteCart() {
         LocalRestaurant.cart.delete()
         reload()
 
         self.tabBarController?.selectedIndex = 1
+        
+        let tabBarController = self.presentingViewController as? TabbarViewController
+        tabBarController?.deleteCart()
     }
     
+    // Reload so that price and cart shows the updated items
     func reload() {
         cartView.cart = LocalRestaurant.cart
         cartView.reloadData()

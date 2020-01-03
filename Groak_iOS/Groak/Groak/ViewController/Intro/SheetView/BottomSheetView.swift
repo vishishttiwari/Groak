@@ -147,6 +147,7 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
          print("error:: \(error.localizedDescription)")
     }
     
+    // This changes all the state when a restaurant is not found
     @objc func setRestaurantNotFound() {
         self.state = BottomSheetState.RestaurantNotFound
         self.locationManager.startUpdatingLocation()
@@ -164,6 +165,7 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         }
     }
     
+    // This changes all the states when a restaurant is found
     func setRestaurantFound(restaurant: Restaurant) {
         self.state = BottomSheetState.RestaurantFound
         self.locationManager.stopUpdatingLocation()

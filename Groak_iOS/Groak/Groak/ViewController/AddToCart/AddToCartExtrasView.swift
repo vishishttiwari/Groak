@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  All the extras are shown in this view in UITableView form
 
 import Foundation
 import UIKit
@@ -20,7 +21,7 @@ internal class AddToCartExtrasView: UITableView {
     
     private var viewController: UIViewController?
     private var dishExtras: [DishExtra] = []
-    private var extras: [CartDishExtra] = []
+    private var extrasSelected: [CartDishExtra] = []
 
     private var price: Double = 0
     
@@ -52,16 +53,18 @@ internal class AddToCartExtrasView: UITableView {
         self.dataSource = self
     }
     
+    // This initializes the selected map with the right keys
     private func initializeSelectedMaps() {
         for extra in dishExtras {
-            extras.append(CartDishExtra.init(title: extra.title))
+            extrasSelected.append(CartDishExtra.init(title: extra.title))
         }
-        extras.append(CartDishExtra.init(title: Catalog.specialInstructionsId))
+        extrasSelected.append(CartDishExtra.init(title: Catalog.specialInstructionsId))
     }
     
+    // This function is called to get all the sections made in this view. If the selections are less or more than what they should be then this raises an alert view.
     internal func getSelections() -> [CartDishExtra]? {
         for (index, dishExtra) in dishExtras.enumerated() {
-            let extraSelected = extras[index]
+            let extraSelected = extrasSelected[index]
             if !dishExtra.multipleSelections {
                 if extraSelected.options.count != 1 {
                     Catalog.alert(vc: viewController, title: "Option not selected", message: "Please select an option for \(dishExtra.title)")
@@ -79,7 +82,7 @@ internal class AddToCartExtrasView: UITableView {
             }
         }
 
-        return extras
+        return extrasSelected
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -157,13 +160,16 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: Catalog.specialInstructionsId, for: indexPath) as! SpecialInstructionsCell
             
             cell.commentAdded = { (_ comment: String) -> () in
-                self.extras.last?.options.append(CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0))
+                self.extrasSelected.last?.options.append(CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0))
             }
             
             return cell
         }
     }
     
+    // When an option is selected then its option price is added...the rwo is selected. If multiple selections
+    // are allowed then the the user can select until the maximum options is reached, after which is alert view is raised.
+    // If only one is allowed then it deselects the previous selected row in the same section. This also adds the selected row to the map
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.section < dishExtras.count) {
             let sec = indexPath.section
@@ -171,20 +177,20 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
             let dishExtra = dishExtras[sec]
             
             if !dishExtra.multipleSelections {
-                if let lastOption = extras[sec].options.last, extras[sec].options.count > 0 {
+                if let lastOption = extrasSelected[sec].options.last, extrasSelected[sec].options.count > 0 {
                     deselectRow(at: IndexPath.init(row: lastOption.optionIndex, section: sec), animated: true)
                     price -= lastOption.price
-                    extras[sec].options = []
+                    extrasSelected[sec].options = []
                 }
-                extras[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
+                extrasSelected[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
                 price += dishExtra.options[row].price
                 cartAltered?(price)
             } else {
-                if extras[sec].options.count >= dishExtra.maxOptionsSelect   {
+                if extrasSelected[sec].options.count >= dishExtra.maxOptionsSelect   {
                     deselectRow(at: IndexPath.init(row: row, section: sec), animated: true)
                     Catalog.alert(vc: viewController, title: "Maximum options selected", message: "Up to \(dishExtra.maxOptionsSelect) option(s) required for \(dishExtra.title)")
                 } else {
-                    extras[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
+                    extrasSelected[sec].options.append(CartDishExtraOption.init(dishExtraOption: dishExtra.options[row], optionIndex: row))
                     price += dishExtra.options[row].price
                     cartAltered?(price)
                 }
@@ -192,15 +198,16 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // This also deletes the selected row from map and als reduces the overall price
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if (indexPath.section < dishExtras.count) {
             let sec = indexPath.section
             let row = indexPath.row
             let dishExtra = dishExtras[sec]
             
-            for (index, option) in extras[sec].options.enumerated() {
+            for (index, option) in extrasSelected[sec].options.enumerated() {
                 if option.optionIndex == row {
-                    extras[sec].options.remove(at: index)
+                    extrasSelected[sec].options.remove(at: index)
                     price -= dishExtra.options[row].price
                     cartAltered?(price)
                     break

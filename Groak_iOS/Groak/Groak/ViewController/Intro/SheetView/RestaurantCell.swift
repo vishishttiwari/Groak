@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Class defines each cell of the Restaurant List View
 
 import Foundation
 import UIKit

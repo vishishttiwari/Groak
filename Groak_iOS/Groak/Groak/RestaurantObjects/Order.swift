@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This file has classes for order, dishes in order, extra and options of dishes and order comments
 
 import Foundation
 import Firebase

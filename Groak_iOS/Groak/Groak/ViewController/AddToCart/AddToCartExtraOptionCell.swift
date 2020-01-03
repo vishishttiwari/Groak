@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  The extra options cell is represented in this class.
 
 import Foundation
 import UIKit

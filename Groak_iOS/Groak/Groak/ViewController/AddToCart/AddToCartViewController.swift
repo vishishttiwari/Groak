@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the add to cart view controller
 
 import Foundation
 import UIKit
@@ -71,6 +72,7 @@ internal class AddToCartViewController: ViewControllerWithPan {
     private func setupFooter(dish: Dish) {
         self.view.addSubview(footer!)
         
+        // When add to cart is pressed on footer then the dish is added to cart in the local restaurant class. It also changes the number of the badge value in tab bar UITabbarController
         footer?.order = { (_ quantity: Int, _ dishPrice: Double) -> () in
             if let extras = self.addToCartExtras!.getSelections() {
                 let cartDish: CartDish = CartDish.init(dishName: dish.name, dishReference: dish.reference, pricePerItem: dishPrice, quantity: quantity, extras: extras)
@@ -114,6 +116,7 @@ internal class AddToCartViewController: ViewControllerWithPan {
         addToCartExtras?.endEditing(true)
     }
     
+    // This function makes sure that the are where the keyboard is support to write is actually visible when typing
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer!.cancelsTouchesInView = true
@@ -123,6 +126,7 @@ internal class AddToCartViewController: ViewControllerWithPan {
         }
     }
     
+    // This sets back all the dimensions to original
     @objc func keyboardWillHide(_ notification: Notification) {
         addToCartExtras?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - DimensionsCatalog.viewControllerFooterDimensions.heightExtended
     }

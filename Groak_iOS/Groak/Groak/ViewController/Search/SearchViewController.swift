@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the Search view controller
 
 import Foundation
 import UIKit
@@ -28,6 +29,7 @@ internal class SearchViewController: UIViewController {
         header?.isHidden = false
         self.view.addSubview(header!)
         
+        // When it is edited and there are more than 2 letters then the matching dishes are shown
         header?.searchBarEdited = { (_ searchText: String) -> () in
             if searchText.count >= 2 {
                 let newCategories = self.getAllDishes(searchText: searchText, categories: categories)
@@ -52,6 +54,7 @@ internal class SearchViewController: UIViewController {
         header?.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended).isActive = true
     }
     
+    // Sets up the dark background. It also has a tap handler which dismisses the view controller
     private func setupDarkBackground() {
         darkBackground.addDarkInBackground(alpha: 0.5)
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -89,6 +92,7 @@ internal class SearchViewController: UIViewController {
         menu?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
+    // This gets all the categories with dishes that match the text anywhere in the name
     private func getAllDishes(searchText: String, categories: [MenuCategory]) -> [MenuCategory] {
         var newCategories: [MenuCategory] = []
         for category in categories {

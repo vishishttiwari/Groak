@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+// Header of the dish info
 
 import Foundation
 import UIKit
 
 internal class DishHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     

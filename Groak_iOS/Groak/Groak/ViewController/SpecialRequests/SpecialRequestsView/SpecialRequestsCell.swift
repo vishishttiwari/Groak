@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/25/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents each message  in special requests
 
 import Foundation
 import UIKit
@@ -23,6 +24,7 @@ internal class SpecialRequestsCell: UITableViewCell {
             requestString.text = request.request
             created.text = TimeCatalog.getTimeFromTimestamp(timestamp: request.created)
             
+            // This is used to set the background of message delending on who wrote it
             if !request.createdByUser {
                 container.backgroundColor = ColorsCatalog.shadesOfGray[2]
                 requestString.textColor = .black

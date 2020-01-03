@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This function is used to show the detailed data from google for any ingredient
 
 import Foundation
 import UIKit

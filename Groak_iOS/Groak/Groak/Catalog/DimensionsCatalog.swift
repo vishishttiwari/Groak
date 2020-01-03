@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/7/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to access random dimension related information all across the project
 
 import UIKit
 
@@ -24,6 +25,7 @@ internal class DimensionsCatalog {
     static let tableViewInsetDistance: CGFloat = -36
     static let UITableViewCellWithArrowHeight: CGFloat = 70
     
+    // Sizes for headers used across project
     struct viewControllerHeaderDimensions {
         static let heightExtended: CGFloat = 100 + topSafeArea
         static let heightNormal: CGFloat = 50 + topSafeArea
@@ -32,6 +34,7 @@ internal class DimensionsCatalog {
         static let titleSize: CGFloat = 30
     }
     
+    // Sizes for footers used across project
     struct viewControllerFooterDimensions {
         static let heightExtended: CGFloat = 140 + bottomSafeArea
         static let heightNormal: CGFloat = 80 + bottomSafeArea
@@ -41,7 +44,6 @@ internal class DimensionsCatalog {
         static let distanceFromBottom: CGFloat = bottomSafeArea
         static let distanceBetweenElements: CGFloat = 20
     }
-    
     
     // Size for the height of the bottom sheet in the intro screen
     static let bottomSheetHeight = screenSize.height/2

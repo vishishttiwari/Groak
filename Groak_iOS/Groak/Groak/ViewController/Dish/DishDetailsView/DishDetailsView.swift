@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/19/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents all the details of the dish such as content, image, description etc.
 
 import Foundation
 import UIKit
 
 internal class DishDetailsView: UITableView {
+    
     // Optional Closures
     internal var ingredients: (() -> ())?
     internal var order: (() -> ())?
@@ -40,6 +42,10 @@ internal class DishDetailsView: UITableView {
         setupViews()
     }
     
+    // This function finds teh section number of each sections.
+    // If the data for specific section is not present then this function
+    // will make the section number -1 and hence it will not be shown in the view.
+    // It also reduces the total sections if some dish data is not present
     private func findSectionNumbers(dish: Dish) {        
         if dish.imageLink.count == 0 {
             totalSections -= 1

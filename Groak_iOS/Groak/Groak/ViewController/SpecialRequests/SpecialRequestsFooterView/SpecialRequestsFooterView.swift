@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/24/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the special requests footer view
 
 import Foundation
 import UIKit
 
 internal class SpecialReqiestsFooterView: UIView {
+    
     // Optional Closures
     internal var sendRequest: ((_ request: String) -> ())?
     
@@ -74,7 +76,6 @@ internal class SpecialReqiestsFooterView: UIView {
         requestTextInput.textColor = .lightGray
         requestTextInput.clipsToBounds = true
         requestTextInput.keyboardAppearance = .dark
-//        requestTextInput.becomeFirstResponder()
         requestTextInputContainer.addSubview(requestTextInput)
         
         requestSendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
@@ -150,19 +151,7 @@ extension SpecialReqiestsFooterView: UICollectionViewDataSource, UICollectionVie
         return cell
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let layout = requestSuggestionsView!.collectionViewLayout as! UICollectionViewFlowLayout
-        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        
-        var offset = targetContentOffset.pointee
-        let index = (offset.x + scrollView.contentInset.left)/cellWidthIncludingSpacing
-        let roundedIndex = round(index)
-        
-        offset = CGPoint.init(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: scrollView.contentInset.top)
-        
-        targetContentOffset.pointee = offset
-    }
-    
+    // When it is selected the uitextview is changed to the value of the item that was selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         requestTextInput.text = suggestions[indexPath.row]?[1]
         requestTextInput.textColor = UIColor.black

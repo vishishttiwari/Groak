@@ -37,31 +37,6 @@ class IntroViewController: UIViewController {
                 }
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-//        let restaurant = Restaurant.init("jk")
-//        let controller = TabbarViewController(restaurant: restaurant)
-//
-//        controller.modalTransitionStyle = .coverVertical
-//        controller.modalPresentationStyle = .overCurrentContext
-//
-//        DispatchQueue.main.async {
-//            self.present(controller, animated: true, completion: nil)
-//        }
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     // Setup the top and bottom safe area when the first view controller loads up
@@ -83,9 +58,9 @@ class IntroViewController: UIViewController {
         cameraView = CameraQRCodeView()
         self.view.addSubview(cameraView!)
         
-//      When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
-//      user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
-//      the camera stops scanning for qr codes
+        // When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
+        // user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
+        // the camera stops scanning for qr codes
         cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
             if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID {
                 LocalRestaurant.createRestaurant(restaurant: restaurant, table: table)
@@ -112,7 +87,7 @@ class IntroViewController: UIViewController {
         }
     }
     
-    // This sets up the view at the bottom
+    // This sets up the view at the bottom sheet view
     private func setupBottomSheetView() {
         bottomSheetView = BottomSheetView()
         
@@ -154,6 +129,7 @@ class IntroViewController: UIViewController {
         }
     }
     
+    // This function is called whenever you return to this screen from a restaurant view
     func returningToIntro() {
         bottomSheetView?.setRestaurantNotFound()
         AppDelegate.stopTimer()

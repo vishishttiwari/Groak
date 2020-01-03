@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/10/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to create random premission checks used all across the project
 
 import AVFoundation
 import UIKit
@@ -40,19 +41,7 @@ internal class PermissionsCatalog {
         return false
     }
     
-    static func askLocationPermission1(locationManager: CLLocationManager) {
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-                case .restricted, .denied:
-                    locationManager.requestWhenInUseAuthorization()
-                default:
-                    break
-            }
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
+    // This function asks for location permission
     static func askLocationPermission() {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
@@ -66,6 +55,7 @@ internal class PermissionsCatalog {
         }
     }
     
+    // This function is used for to raise the alert view for taking user to the settings of this app
     private static func askLocation() {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Location is turned off", message: "Groak would like to access the location to find the restaurants around you. Please go to settings to allow location use.", preferredStyle: .alert)

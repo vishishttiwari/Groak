@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/4/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This shows the detailed dish in cart in scroll form
 
 import Foundation
 import UIKit
 
 internal class CartDetailsView: UIScrollView {
+    
     // Optional Closures
     internal var orderAltered: ((_ cartDish: CartDish) -> ())?
     
@@ -154,6 +156,7 @@ internal class CartDetailsView: UIScrollView {
         reduceDishButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.priceSize).isActive = true
     }
     
+    // When quantity is added, price is changed
     @objc func add() {
         self.cartDish.quantity += 1
         self.cartDish.price = Catalog.calculateTotalPriceOfDish(pricePerItem: self.cartDish.pricePerItem, quantity: self.cartDish.quantity)
@@ -161,6 +164,8 @@ internal class CartDetailsView: UIScrollView {
         orderAltered?(cartDish)
     }
     
+    
+    // When quantity is reduced, price is changed
     @objc func reduce() {
         if (self.cartDish.quantity > 1) {
             self.cartDish.quantity -= 1

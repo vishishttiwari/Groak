@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/7/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to access random font related information all across the project
 
 import UIKit
 

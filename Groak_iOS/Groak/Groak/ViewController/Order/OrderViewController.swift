@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/5/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the Order View Controller
 
 import Foundation
 import UIKit
@@ -124,6 +125,7 @@ internal class OrderViewController: UIViewController {
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
+    // When segment control is changed...price and order is changed through this function
     private func orderChanged(index: Int) {
         orderView?.orderChanged(index: index)
         footer.orderChanged(index: index)
@@ -134,6 +136,7 @@ internal class OrderViewController: UIViewController {
         orderView?.endEditing(true)
     }
     
+    // This changes the dimension of the view so that the textview is visible when the keyboard shows up
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             tapGestureRecognizer?.cancelsTouchesInView = true
@@ -143,14 +146,18 @@ internal class OrderViewController: UIViewController {
         }
     }
     
+    // When keyboard is hid...this returns the dimensions to previous dimensions
     @objc func keyboardWillHide(_ notification: Notification) {
         orderView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightExtended - DimensionsCatalog.viewControllerFooterDimensions.heightExtendedWithBarItem - DimensionsCatalog.tabBarHeight
     }
     
+    // Cancels all the tap gestures
     @objc func keyboardDidHide(_ notification: Notification) {
         tapGestureRecognizer?.cancelsTouchesInView = false
     }
     
+    // This function downloads the order at start and also at refresh
+    // TODO: I think I dont need to do pull to refresh because order has a snapshot receiver so it should be updated on its own
     @objc private func downloadOrder() {
         let fsOrder = LocalRestaurant.fsOrders
         

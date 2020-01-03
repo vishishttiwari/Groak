@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the header of the view controller
 
 import Foundation
 import UIKit
@@ -94,6 +95,7 @@ internal class MenuHeaderView: UIView {
         foodCategories!.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
+    // This function is called when a new section is scrolled in the menu
     internal func sectionChanged(section: Int) {
         if (section <= 0) {
             return
@@ -112,9 +114,12 @@ internal class MenuHeaderView: UIView {
         find?()
     }
     
+    // This function is called when menu is loaded. It also shows the search button which is hidden before
     internal func reloadData(categories: [MenuCategory]) {
         self.categories = categories
-        searchButton.isHidden = false
+        if categories.count > 0 {
+            searchButton.isHidden = false
+        }
         DispatchQueue.main.async {
             self.foodCategories?.reloadData()
         }
@@ -149,6 +154,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
         return cell
     }
     
+    // This makes sure after scrolling that item stays in the middle of the screen excelt the first and the last one
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let layout = foodCategories!.collectionViewLayout as! UICollectionViewFlowLayout
         let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
@@ -162,6 +168,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
         targetContentOffset.pointee = offset
     }
     
+    // When you select an item then scroll to that section in the actual menu
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell
 
@@ -182,6 +189,7 @@ extension MenuHeaderView: UICollectionViewDataSource, UICollectionViewDelegate, 
         cell?.category.textColor = .black
     }
 
+    // When it is scrolled..it makes sure that the cell that is slected stays colored when it becomes visible
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for cells in foodCategories!.visibleCells {
             let cell = cells as! CategoryCell

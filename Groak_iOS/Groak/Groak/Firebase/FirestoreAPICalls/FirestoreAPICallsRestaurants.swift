@@ -5,7 +5,7 @@
 //  Created by Vishisht Tiwari on 11/6/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
-// Contains all API calls for fetching restaurant information
+//  Contains all API calls for fetching restaurant information
 
 import Foundation
 import Firebase
@@ -65,6 +65,9 @@ internal class FirestoreAPICallsRestaurants {
         }
     }
     
+    // Fetch all restaurant categories and see which one will be seen according to available, startime and end time.
+    // Each of the category, also simultaneously downloads the dishes inside them. It uses dispatch group to see
+    // when all the dishes in each category has been downloaded
     func fetchRestaurantCategoriesFirestoreAPI() {
         let day = TimeCatalog.getDay()
         let minutes = TimeCatalog.getTimeInMinutes()
@@ -98,6 +101,7 @@ internal class FirestoreAPICallsRestaurants {
                 }
             }
             
+            // This function is called when all the leaves of dishesDownloadGroup is called for all enters
             dishesDownloadGroup.notify(queue: .main) {
                 self.dataReceivedForFetchRestaurantCategories?(categories)
             }

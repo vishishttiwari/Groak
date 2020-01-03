@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Whenever a restaurant qr code is scanned, the values in following file get loaded uo
 
 import Foundation
 import Firebase
@@ -15,6 +16,7 @@ internal class LocalRestaurant {
     static var fsOrders: FirestoreAPICallsOrders?
     static var fsRequests: FirestoreAPICallsRequests?
     
+    // Because orders and requests use snapshot listener, orders and requests are in the firebase are initialized here
     static func createRestaurant(restaurant: Restaurant, table: Table) {
         self.restaurant.restaurant = restaurant
         
@@ -25,6 +27,7 @@ internal class LocalRestaurant {
         requests.requestsReference = table.requestsReference
     }
     
+    // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned
     static func leaveRestaurant(title: String = "Scan QR code again", message: String = "Please scan your QR code again to order") {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
         var topViewController = UIApplication.shared.keyWindow?.rootViewController
@@ -42,6 +45,7 @@ internal class LocalRestaurant {
         topViewController?.present(alert, animated: true, completion: nil)
     }
     
+    // Function called when the user presses the button to leave the restaurant
     static func askToLeaveRestaurant(title: String = "Leaving restaurant?", message: String = "Are you sure you would like to leave the restaurant?. Your cart will be lost.") {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
         var topViewController = UIApplication.shared.keyWindow?.rootViewController
@@ -60,6 +64,7 @@ internal class LocalRestaurant {
         topViewController?.present(alert, animated: true, completion: nil)
     }
     
+    // This checks if the restaurant creation was successful
     static func isRestaurantCreationSuccessful() -> Bool {
         if let _ = restaurant.restaurant, let _ = table.table, let _ = order.orderReference, let _ =  requests.requestsReference {
             return true
@@ -70,7 +75,8 @@ internal class LocalRestaurant {
         return false
     }
     
-    private static func deleteRestaurant() {
+    // This removes the restaurant info, table info, order info and requests info. This also removes the cart and order. This also unsubscribes from the two snapshot listeners
+    static func deleteRestaurant() {
         restaurant.restaurant = nil
         table.table = nil
         order.orderReference = nil
@@ -106,6 +112,7 @@ internal class LocalRestaurant {
     
     static var tableOrder: Order = Order.init()
     
+    // This sets all the table orders that were local. It does this by seeing all orders which are local. If any of them are exactly same as the one locally then it sets the local variable as true
     static func setLocalTableOrder(viewController: UIViewController, order: Order) {
         LocalRestaurant.tableOrder = order
         let localDishes = self.downloadDishesFromCoreData(viewController: viewController)
@@ -127,7 +134,7 @@ internal class LocalRestaurant {
         }
     }
     
-    // TODO: Not deleting pevious dishes
+    // Download local dishes from coredata. If any of the dish is older than 24 hours then it deletes it from the local core data
     private static func downloadDishesFromCoreData(viewController: UIViewController) -> [CoreDataDish] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -140,7 +147,6 @@ internal class LocalRestaurant {
                 for dish in dishes {
                     if let created = dish.created, let previousDay = Calendar.current.date(byAdding: .hour, value: -24, to: Date()) {
                         if created < previousDay {
-                            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                             context.delete(dish)
                         }
                     }
@@ -153,7 +159,7 @@ internal class LocalRestaurant {
         return []
     }
     
-    // TODO: Not deleting pevious comments
+    // Download local comments from coredata. If any of the dish is older than 24 hours then it deletes it from the local core data
     private static func downloadCommentsFromCoreData(viewController: UIViewController) -> [CoreDataComment] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -166,7 +172,6 @@ internal class LocalRestaurant {
                 for comment in comments {
                     if let created = comment.created, let previousDay = Calendar.current.date(byAdding: .hour, value: -24, to: Date()) {
                         if created < previousDay {
-                            print("#################################################################################################")
                             context.delete(comment)
                         }
                     }

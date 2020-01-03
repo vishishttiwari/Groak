@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/7/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Catalog file is used to create random extensions used all across the project
 
 import UIKit
 
@@ -12,7 +13,6 @@ import UIKit
 let gradientHeight: CGFloat = 50
 let gradientTransparency: CGFloat = 0.3
 
-// This extension is used to add blur and dark background to views
 extension UIView {
     // Blur background
     func addBlurInBackground() {
@@ -91,6 +91,7 @@ extension UIView {
         }
     }
     
+    // This is used to add the loading indicator
     func customActivityIndicator() -> UIView{
         let dimensions = DimensionsCatalog.screenSize.width/3
 
@@ -131,12 +132,13 @@ extension UIView {
         return self
     }
     
+    // Used to hide the loading indicator. This only works if the last view added onto the sceeen was loading indicator. If it was
+    // something else then that will be deleted
     func hideLoader(hideFrom : UIView){
         hideFrom.subviews.last?.removeFromSuperview()
     }
     
-    // Using a function since `var image` might conflict with an existing variable
-    // (like on `UIImageView`)
+    // Using a function since `var image` might conflict with an existing variable(like on `UIImageView`)
     func asImage() -> UIImage {
         if #available(iOS 10.0, *) {
             let renderer = UIGraphicsImageRenderer(bounds: bounds)
@@ -152,6 +154,7 @@ extension UIView {
         }
     }
     
+    // This is used to present a uiView horizontally
     func coverHorizontalPresent() {
         let transition = CATransition()
         transition.duration = TimeCatalog.animateTime
@@ -161,6 +164,7 @@ extension UIView {
         window!.layer.add(transition, forKey: kCATransition)
     }
     
+    // This is used to dismiss a uiView horizontally
     func coverHorizontalDismiss() {
         let transition = CATransition()
         transition.duration = TimeCatalog.animateTime
@@ -232,8 +236,8 @@ extension UIImageView {
     }
 }
 
-// This is used to set the color the cell becomes when it is selected
 extension UITableViewCell {
+    // This is used to set the color the cell becomes when it is selected
     func selectedColor() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = ColorsCatalog.shadesOfGray[2]
@@ -242,18 +246,21 @@ extension UITableViewCell {
 }
 
 extension String {
+    // Check if a string is alphanumeric
     var isAlphanumeric: Bool {
         return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
     }
 }
 
 extension Double {
+    // This is used to show the price always as a two decimal digit
     var priceInString: String {
         return "$\(String(format: "%.2f", self))"
     }
 }
 
 extension UILabel {
+    // This is used to set the styles of all titles in all the headers
     func viewControllerHeaderTitle(title: String) {
         text = title
         font = UIFont(name: FontCatalog.fontLevels[1], size: DimensionsCatalog.viewControllerHeaderDimensions.titleSize - 5)
@@ -262,6 +269,7 @@ extension UILabel {
         textAlignment = .center
     }
     
+    // This is used to show all the trices in the footers
     func isPrice(price: Double) {
         text = price.priceInString
         font = UIFont(name: FontCatalog.fontLevels[0], size: DimensionsCatalog.viewControllerFooterDimensions.priceSize)
@@ -272,6 +280,7 @@ extension UILabel {
         textAlignment = .center
     }
     
+    // This is used to show all the times in order and request
     func isTime() {
         font = UIFont(name: FontCatalog.fontLevels[1], size: 12)
         backgroundColor = .clear
@@ -279,6 +288,7 @@ extension UILabel {
         clipsToBounds = true
     }
     
+    // This is used to highlight the substrings in a string with specific color
     func colorBackgroundForegroundOfSubString(originalString: String, substrings: [String], backgroundColor: UIColor, foregroundColor: UIColor) {
         let s = originalString as NSString
         let att = NSMutableAttributedString(string: s as String)
@@ -293,6 +303,7 @@ extension UILabel {
         attributedText = att
     }
     
+    // This is used to bold the string
     func boldSubString(originalString: String, substrings: [String], font: UIFont) {
         let s = originalString as NSString
         let att = NSMutableAttributedString(string: s as String)
@@ -307,6 +318,7 @@ extension UILabel {
         attributedText = att
     }
     
+    // This is used to show restrictions in circular badge form
     func isRestrictions(symbol: Catalog.RestrictionsSymbol, height: CGFloat) {
         backgroundColor = .green
         switch symbol {
@@ -329,6 +341,7 @@ extension UILabel {
 }
 
 extension UIButton {
+    // Footer button used all across the project
     func footerButton(title: String) {
         setTitle(title, for: .normal)
         titleLabel?.font = UIFont(name: FontCatalog.fontLevels[3], size: 25)!
@@ -339,6 +352,7 @@ extension UIButton {
 }
 
 extension Date {
+    // This is used to check if the comment uploaded has the same time as the comment saved locally so that it can be shown that this is your comment
     var millisecondsSince1970:Int64 {
         return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
     }

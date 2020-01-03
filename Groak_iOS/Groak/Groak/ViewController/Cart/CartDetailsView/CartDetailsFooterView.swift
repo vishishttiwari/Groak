@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 12/3/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+// This class represents the footer view of detailed view of dishes in cart
 
 import Foundation
 import UIKit
 
 internal class CartDetailsFooterView: UIView {
+    
     // Optional Closures
     internal var update: ((_ cartDish: CartDish) -> ())?
     

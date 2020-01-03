@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/24/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  The class is used for the special requests view controller
 
 import Foundation
 import UIKit
@@ -106,6 +107,7 @@ internal class SpecialRequestsViewController: ViewControllerWithPan {
         footer.resignKeyboard()
     }
     
+    // When the keyboard is shown...this function makes sure that the area that is going to be written is shown and keyboard does not go over it
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             footer.frame.origin.y = DimensionsCatalog.screenSize.height - footer.frame.size.height + DimensionsCatalog.bottomSafeArea - keyboardFrame.cgRectValue.height - DimensionsCatalog.viewControllerFooterDimensions.distanceBetweenElements
@@ -114,6 +116,7 @@ internal class SpecialRequestsViewController: ViewControllerWithPan {
         }
     }
     
+    // When the keyboard hides then the change in dimensions that was done when keyboard was shown is returned
     @objc func keyboardWillHide(_ notification: Notification) {
         self.footer.frame.origin.y = DimensionsCatalog.screenSize.height - self.footer.frame.size.height
         self.specialRequestsView?.frame.size.height = DimensionsCatalog.screenSize.height - DimensionsCatalog.viewControllerHeaderDimensions.heightNormal - self.footer.layer.frame.height

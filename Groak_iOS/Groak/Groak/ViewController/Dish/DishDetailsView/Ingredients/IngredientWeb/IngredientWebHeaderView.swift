@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/20/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This show the web view where google is shown showing the details of any ingredient
 
 import Foundation
 import UIKit
 
 internal class IngredientWebHeaderView: UIView {
+    
     // Optional Closures
     internal var dismiss: (() -> ())?
     

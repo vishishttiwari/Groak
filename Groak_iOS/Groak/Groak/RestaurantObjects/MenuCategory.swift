@@ -5,11 +5,13 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  Menu Category class used to refer to a restaurant
 
 import Foundation
 import Firebase
 
 internal class MenuCategory {
+    
     // Optional Closures
     var categoryLoaded: (() -> ())?
     

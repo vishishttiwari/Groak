@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the menu view in UITableView form
 
 import Foundation
 import UIKit
@@ -51,12 +52,14 @@ internal class MenuView: UITableView {
         self.showsVerticalScrollIndicator = false
     }
     
+    // When the user presses a menu category in the header...this function is called to scroll to the correct section
     internal func sectionChanged(section: Int) {
         let indexPath = IndexPath.init(row: 0, section: section + 1)
         sectionChangedFromHeader = true
         self.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
+    // This function is called when the menu is downloaded
     internal func reloadData(categories: [MenuCategory]) {
         self.categories = categories
 
@@ -124,6 +127,8 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
         }
     }
 
+    // The variable is used to make sure that the scrolling is actually done by the user or by selecting
+    // something in the header
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let section = self.indexPath(for: self.visibleCells[0])!.section
         if (section != currentSection) {

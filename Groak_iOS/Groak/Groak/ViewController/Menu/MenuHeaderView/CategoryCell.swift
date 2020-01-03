@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 11/18/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class is used to represent the cell of each category in the menu header
 
 import Foundation
 import UIKit

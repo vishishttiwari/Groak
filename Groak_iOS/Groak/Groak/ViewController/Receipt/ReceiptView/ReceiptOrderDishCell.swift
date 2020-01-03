@@ -5,6 +5,7 @@
 //  Created by Vishisht Tiwari on 12/13/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
+//  This class represents the dish cell inside receipt view controller
 
 import Foundation
 import UIKit
