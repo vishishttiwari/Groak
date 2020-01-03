@@ -120,10 +120,10 @@ internal class CartViewController: UIViewController {
                 self.fsOrders?.dataReceivedForAddOrder = { (_ success: Bool) -> () in
                     if success {
                         self.deleteCart()
-                        self.view.hideLoader(hideFrom: self.view)
                     } else {
                         Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
                     }
+                    self.view.hideLoader(hideFrom: self.view)
                 }
             }
             else {
@@ -170,7 +170,7 @@ internal class CartViewController: UIViewController {
 
         self.tabBarController?.selectedIndex = 1
         
-        let tabBarController = self.presentingViewController as? TabbarViewController
+        let tabBarController = self.tabBarController as? TabbarViewController
         tabBarController?.deleteCart()
     }
     

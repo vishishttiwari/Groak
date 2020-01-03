@@ -87,6 +87,7 @@ internal class TabbarViewController: UITabBarController {
     
     // Func called when order is placed or cart is deleted
     func deleteCart() {
+        let tabBarItem = tabBar.items?[0]
         tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
     }
     
