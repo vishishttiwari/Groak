@@ -28,7 +28,7 @@ export const AddTableMessage = 'Enter table name. You can press the barcode butt
 
 export const IncludeLogoMessage = 'To include your logo, please upload your logo in settings.';
 
-export const TablesDesc = 'Tables that are currently in use cannot be updated. Wait for the tables to be available to edit them. Click available tables to edit them and non-available tebles to see orders at that table.';
+export const TablesDesc = 'Tables that are currently in use cannot be updated. Wait for the tables to be available to edit them. Click available tables to edit them and non-available tables to see orders at that table.';
 export const TableAvailable = 'Table is available for customers';
 export const TableRequested = 'Customers have placed their order';
 export const TableUpdated = 'Customers have updates their order';
