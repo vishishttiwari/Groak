@@ -16,6 +16,9 @@ const config = {
 firebase.initializeApp(config);
 
 export const db = firebase.firestore();
+export const createGeoPoint = (latitude, longitude) => {
+    return new firebase.firestore.GeoPoint(latitude, longitude)
+}
 export const deleteField = firebase.firestore.FieldValue.delete();
 export const auth = firebase.auth();
 export const storageRef = firebase.storage().ref();

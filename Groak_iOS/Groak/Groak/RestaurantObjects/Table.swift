@@ -24,8 +24,9 @@ internal enum TableStatus: String {
 internal class Table {
     var name: String
     var reference: DocumentReference?
+    var originalReference: DocumentReference?
     var orderReference: DocumentReference?
-    var requestsReference: DocumentReference?
+    var requestReference: DocumentReference?
     var restaurantReference: DocumentReference?
     var status: TableStatus
     
@@ -33,7 +34,8 @@ internal class Table {
         name = ""
         reference = nil
         orderReference = nil
-        requestsReference = nil
+        originalReference = nil
+        requestReference = nil
         restaurantReference = nil
         status = TableStatus.available
     }
@@ -42,7 +44,8 @@ internal class Table {
         name = table["name"] as? String ?? ""
         reference = table["originalReference"] as? DocumentReference
         orderReference = table["orderReference"] as? DocumentReference
-        requestsReference = table["requestsReference"] as? DocumentReference
+        originalReference = table["originalReference"] as? DocumentReference
+        requestReference = table["requestReference"] as? DocumentReference
         restaurantReference = table["restaurantReference"] as? DocumentReference
         status = (table["status"] as? String).map { (TableStatus(rawValue: $0) ?? TableStatus.available) } ?? TableStatus.available
     }
@@ -52,7 +55,11 @@ internal class Table {
             return false;
         } else if (reference == nil) {
             return false;
+        } else if (originalReference == nil) {
+            return false;
         } else if (orderReference == nil) {
+            return false;
+        } else if (requestReference == nil) {
             return false;
         } else if (restaurantReference == nil) {
             return false;
@@ -63,8 +70,9 @@ internal class Table {
     var description : String {
         var str = "Table Name: \(name)\n"
         str += "Table Reference: \(reference?.documentID ?? "Table reference not present")\n"
+        str += "Table Original Reference: \(originalReference?.documentID ?? "Table  original reference not present")\n"
         str += "Order Reference: \(orderReference?.documentID ?? "Order reference not present")\n"
-        str += "Requests Reference: \(requestsReference?.documentID ?? "Requests reference not present")\n"
+        str += "Requests Reference: \(requestReference?.documentID ?? "Requests reference not present")\n"
         str += "Restaurant Reference: \(restaurantReference?.documentID ?? "Restaurant reference not present")\n"
         str += "Table Status: \(status)"
         

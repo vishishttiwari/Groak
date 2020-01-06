@@ -2,9 +2,10 @@
  * This class implements all firebase APIs related to fetching orders
  */
 import { fetchOrdersFirestoreAPI, fetchOrderFirestoreAPI, updateOrderFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
+import { fetchRequestFirestoreAPI, updateRequestFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { differenceInMinutesFromNow } from '../../../catalog/TimesDates';
 import { TableStatus } from '../../../catalog/Others';
-import { ErrorFetchingOrders, ErrorFetchingOrder, ErrorUpdatingOrder, ErrorUnsubscribingOrders, ErrorUnsubscribingOrder, OrderAdded, OrderUpdated, OrderReadyForPayment } from '../../../catalog/NotificationsComments';
+import { ErrorFetchingOrders, ErrorFetchingOrder, ErrorUpdatingOrder, ErrorUnsubscribingOrders, ErrorUnsubscribingOrder, OrderAdded, OrderUpdated, OrderReadyForPayment, ErrorFetchingRequest, ErrorUnsubscribingRequest, ErrorUpdatingRequest } from '../../../catalog/NotificationsComments';
 
 let ordersSnapshot;
 let orderSnapshot;
@@ -182,5 +183,69 @@ export const updateOrderAPI = async (restaurantId, orderId, data, snackbar) => {
         await updateOrderFirestoreAPI(restaurantId, orderId, data);
     } catch (error) {
         snackbar(ErrorUpdatingOrder, { variant: 'error' });
+    }
+};
+
+let requestSnapshot;
+
+/**
+ * This function is used for unsubscribing from realtime updates of request
+ *
+ * @param {*} snackbar used for notifications
+ */
+export const unsubscribeFetchRequestAPI = (snackbar) => {
+    try {
+        if (requestSnapshot) {
+            requestSnapshot();
+        }
+    } catch (error) {
+        snackbar(ErrorUnsubscribingRequest, { variant: 'error' });
+    }
+};
+
+/**
+ * The function is used for fetching request
+ *
+ * @param {*} restaurantId id of the restaurant for which request needs to be fetched
+ * @param {*} requestId request id of the request that needs to be fetched
+ * @param {*} setState used for setting the request
+ * @param {*} snackbar used for notifications
+ */
+export const fetchRequestAPI = async (restaurantId, requestId, setState, snackbar) => {
+    try {
+        const getRequest = (querySnapshot) => {
+            if (querySnapshot.data()) {
+                setState({
+                    type: 'setRequest',
+                    request: querySnapshot.data().requests,
+                });
+            } else {
+                snackbar(ErrorFetchingRequest, { variant: 'error' });
+                setState({ type: 'error' });
+                unsubscribeFetchRequestAPI(snackbar);
+            }
+        };
+        requestSnapshot = await fetchRequestFirestoreAPI(restaurantId, requestId, getRequest);
+    } catch (error) {
+        snackbar(ErrorFetchingRequest, { variant: 'error' });
+        setState({ type: 'error' });
+        unsubscribeFetchRequestAPI(snackbar);
+    }
+};
+
+/**
+ * The function is used for adding request by restaurant
+ *
+ * @param {*} restaurantId id of the restaurant for which request needs to be fetched
+ * @param {*} requestId request id of the request that needs to be fetched
+ * @param {*} setState used for setting the request
+ * @param {*} snackbar used for notifications
+ */
+export const updateRequestAPI = async (restaurantId, requestId, data, snackbar) => {
+    try {
+        await updateRequestFirestoreAPI(restaurantId, requestId, data)
+    } catch (error) {
+        snackbar(ErrorUpdatingRequest, { variant: 'error' });
+        unsubscribeFetchRequestAPI(snackbar);
     }
 };

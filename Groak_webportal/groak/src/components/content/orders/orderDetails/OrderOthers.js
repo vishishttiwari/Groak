@@ -1,30 +1,58 @@
 /**
  * This component is used to represent the buttons and server time and comments card on the order details page
  */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Card, CardHeader, CardContent, Typography, TextField, InputAdornment } from '@material-ui/core';
+import { Button, Card, CardHeader, CardContent, Typography, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Send } from '@material-ui/icons';
 import { context } from '../../../../globalState/globalState';
-import { updateOrderAPI } from '../OrdersAPICalls';
+import { updateOrderAPI, updateRequestAPI } from '../OrdersAPICalls';
+import styles from '../../../../globalCSS/_globalCSS.scss';
+import SureImage from '../../../../assets/icons/suggestions/sure1.png';
+import WeHaveImage from '../../../../assets/icons/suggestions/weHave1.png';
+import WeDontHaveImage from '../../../../assets/icons/suggestions/weDontHave1.png';
+import ComeImage from '../../../../assets/icons/suggestions/come.png';
+import GetImage from '../../../../assets/icons/suggestions/get.png';
 
-import { getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { randomNumber, calculateCostFromDishes, TextFieldLabelStyles, textFieldLabelProps, TableStatus } from '../../../../catalog/Others';
+import { getCurrentDateTime, getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
+import { randomNumber, calculatePriceFromDishes, calculateSalesTaxFromDishes, calculatePriceFromDishesWithTax, getPrice, TextFieldLabelStyles, textFieldLabelProps, TableStatus } from '../../../../catalog/Others';
 
 
 const OrderOthers = (props) => {
-    const { history, classes, orderId, status, comments, requests, dishes, serveTimeFromServer } = props;
+    const { history, classes, orderId, status, comments, request, dishes, serveTimeFromServer } = props;
     const { enqueueSnackbar } = useSnackbar();
     const [serveTime, setServeTime] = useState(30);
+    const [requestReply, setRequestReply] = useState('');
     const { globalState } = useContext(context);
 
+    // This ref is for the text field for comments for scrolling at the bottom
+    const requestEndRef = createRef()
+
+    const suggestionsImage = {
+        sure: SureImage,
+        weHave: WeHaveImage,
+        weDontHave: WeDontHaveImage,
+        come: ComeImage,
+        get: GetImage,
+    };
+
+    const suggestions = {
+        sure: "Sure, got it. We will get this done.",
+        weHave: "We do have that",
+        weDontHave: "Unfortunately, we dont have that",
+        come: "A waiter is on their way to your table.",
+        get: "Sure, we will get it to your table right away.",
+    };
+
     useEffect(() => {
-        if (serveTimeFromServer && serveTimeFromServer.seconds) {
+        if (serveTimeFromServer && serveTimeFromServer.seconds)
             setServeTime(differenceInMinutesFromNow(serveTimeFromServer));
-        }
-    }, [serveTimeFromServer]);
+        if (request && request.length > 0)
+            requestEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+    }, [serveTimeFromServer, request]);
 
     /**
      * This function is used for getting time in AM PM from time stamp as it is received from the server.
@@ -91,15 +119,15 @@ const OrderOthers = (props) => {
         await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
     };
 
+    const sendRequest = async () => {
+        const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
+        const data = { requests: requests };
+        await updateRequestAPI(globalState.restaurantId, orderId, data, enqueueSnackbar)
+        setRequestReply('')
+    }
+
     return (
         <div className="order-others">
-            <Button
-                className="success-buttons"
-                variant="contained"
-                onClick={setServeTimeHandler}
-            >
-                Set Serve Time
-            </Button>
             {status === TableStatus.payment ? (
                 <Button
                     className="success-buttons"
@@ -126,32 +154,89 @@ const OrderOthers = (props) => {
                 Go Back
             </Button>
             {status === TableStatus.ordered || status === TableStatus.updated || status === TableStatus.requested || status === TableStatus.approved ? (
+                <>
+                    <Button
+                        className="success-buttons"
+                        variant="contained"
+                        onClick={setServeTimeHandler}
+                    >
+                        Set Serve Time
+                    </Button>
+                    <Card className="card">
+                        <CardHeader
+                            title="Serve Time"
+                        />
+                        <CardContent>
+                            <Typography
+                                variant="body1"
+                                color="textPrimary"
+                                component="p"
+                            >
+                                {getServeTime()}
+                            </Typography>
+                            <TextField
+                                label="Serve in"
+                                type="number"
+                                placeholder="Ex: 20"
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                error={serveTime <= 0 || serveTime >= 180}
+                                value={serveTime}
+                                onChange={(event) => { timeChangeHandler(event); }}
+                                InputLabelProps={textFieldLabelProps(classes)}
+                                InputProps={{ endAdornment: <InputAdornment position="end">mins</InputAdornment> }}
+                            />
+                        </CardContent>
+                    </Card>
+                </>
+            ) : null}
+            {request ? (
                 <Card className="card">
                     <CardHeader
-                        title="Serve Time"
+                        title="Special Requests"
                     />
-                    <CardContent>
-                        <Typography
-                            variant="body1"
-                            color="textPrimary"
-                            component="p"
-                        >
-                            {getServeTime()}
-                        </Typography>
+                    <CardContent style={{maxHeight: 300, overflow: 'auto'}}>
+                        {request.map((request) => {
+                            return (
+                                <div className="comment" key={randomNumber()} 
+                                    style={request.createdByUser ? 
+                                        {marginLeft: 'auto', marginRight: '5px', color: 'black', backgroundColor: styles.secondaryColor} : 
+                                        {marginLeft: '5px', marginRight: 'auto', color: 'white', backgroundColor: styles.primaryColor}}>
+                                    <p className="comment-comment">{request.request}</p>
+                                    <p className="comment-created">{getTimeInAMPMFromTimeStamp(request.created)}</p>
+                                </div>
+                            );
+                        })}
                         <TextField
-                            label="Serve in"
-                            type="number"
-                            placeholder="Ex: 20"
+                            label="Your reply"
+                            type="text"
+                            placeholder="Sure, we will get that to you"
                             variant="outlined"
-                            margin="normal"
-                            required
+                            margin="dense"
                             fullWidth
-                            error={serveTime <= 0 || serveTime >= 180}
-                            value={serveTime}
-                            onChange={(event) => { timeChangeHandler(event); }}
-                            InputLabelProps={textFieldLabelProps(classes)}
-                            InputProps={{ endAdornment: <InputAdornment position="end">mins</InputAdornment> }}
+                            value={requestReply}
+                            onChange={(event) => { setRequestReply(event.target.value); }}
+                            InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position='end'>
+                                    <IconButton onClick={() => {sendRequest()}} >
+                                        <Send />
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                              }}
                         />
+                        <div className="suggestions" ref={requestEndRef}>
+                            {Object.keys(suggestions).map((suggestion) => {
+                                return (
+                                    <div className="suggestion" onClick={() => {setRequestReply(suggestions[suggestion]); }}>
+                                        <img draggable="false" className="suggestion-suggestion" src={suggestionsImage[suggestion]} alt={suggestions[suggestion]} />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </CardContent>
                 </Card>
             ) : null}
@@ -185,40 +270,10 @@ const OrderOthers = (props) => {
                     </CardContent>
                 </Card>
             ) : null}
-            {requests ? (
-                <Card className="card">
-                    <CardHeader
-                        title="Special Requests"
-                    />
-                    <CardContent>
-                        {requests.map((request) => {
-                            return (
-                                <div key={randomNumber()}>
-                                    <Typography
-                                        variant="body1"
-                                        color="textPrimary"
-                                        component="p"
-                                    >
-                                        {request.request}
-                                    </Typography>
-                                    <Typography
-                                        className="sub-header"
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                        {`Requested at: ${getTimeInAMPMFromTimeStamp(request.created)}`}
-                                    </Typography>
-                                </div>
-                            );
-                        })}
-                    </CardContent>
-                </Card>
-            ) : null}
             <Card className="card">
                 <CardHeader
                     title="Total"
-                    subheader={`$${calculateCostFromDishes(dishes)}`}
+                    subheader={`$${calculatePriceFromDishes(dishes)} + $${calculateSalesTaxFromDishes(dishes, globalState.restaurant.salesTax)} = $${calculatePriceFromDishesWithTax(dishes, globalState.restaurant.salesTax)}`}
                 />
                 <CardContent>
                     {dishes.map((dish) => {
@@ -237,7 +292,7 @@ const OrderOthers = (props) => {
                                     color="textSecondary"
                                     component="p"
                                 >
-                                    {`$${dish.price}`}
+                                    {`$${getPrice(dish.price)}`}
                                 </Typography>
                             </div>
                         );

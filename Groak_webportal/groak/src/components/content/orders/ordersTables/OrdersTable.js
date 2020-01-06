@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
 
 import { differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { refreshPeriod, useInterval, calculateCostFromDishes } from '../../../../catalog/Others';
+import { refreshPeriod, useInterval, calculatePriceFromDishes } from '../../../../catalog/Others';
 
 const OrdersTable = (props) => {
     const { title, button, orders = [], onClick, onButtonClick, serveTime } = props;
@@ -112,7 +112,7 @@ const OrdersTable = (props) => {
                                             {order.items}
                                         </TableCell>
                                         <TableCell width={columns.price.width} align={columns.price.align}>
-                                            {`$${calculateCostFromDishes(order.dishes)}`}
+                                            {`$${calculatePriceFromDishes(order.dishes)}`}
                                         </TableCell>
                                         {serveTime ? (
                                             <>

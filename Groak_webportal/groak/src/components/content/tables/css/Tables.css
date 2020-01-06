@@ -1,5 +1,6 @@
 :export {
   primaryColor: #800000;
+  secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
   tableWhiteColor: white;
@@ -77,6 +78,7 @@
   margin: 10px 10px 0 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .tables .tables-canvas .table .table-inside .table-desc {

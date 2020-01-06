@@ -20,7 +20,7 @@ internal class FirestoreAPICallsRequests {
     var listener: ListenerRegistration?
     
     // Used for fetching requests
-    func fetchRequestsFirestoreAPI() {
+    func fetchRequestFirestoreAPI() {
         listener  = LocalRestaurant.requests.requestsReference?.addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
                 self.dataReceivedForFetchRequests?(nil)
@@ -37,12 +37,20 @@ internal class FirestoreAPICallsRequests {
     }
     
     // Used for adding a request message to the server
-    func addRequestsFirestoreAPI(request: Request) {
+    func addRequestFirestoreAPI(request: Request) {
         guard let requestsReference = LocalRestaurant.requests.requestsReference else {
             dataReceivedForAddRequests?(false)
             return
         }
         guard let orderReference = LocalRestaurant.order.orderReference else {
+            dataReceivedForAddRequests?(false)
+            return
+        }
+        guard let tableReference = LocalRestaurant.table.table?.reference else {
+            dataReceivedForAddRequests?(false)
+            return
+        }
+        guard let tableOriginalReference = LocalRestaurant.table.table?.originalReference else {
             dataReceivedForAddRequests?(false)
             return
         }
@@ -65,6 +73,8 @@ internal class FirestoreAPICallsRequests {
 
             transaction.updateData(["requests": requests.convertRequestsToDictionary()], forDocument: requestsReference)
             transaction.updateData(["status": TableStatus.requested.rawValue], forDocument: orderReference)
+            transaction.updateData(["status": TableStatus.requested.rawValue], forDocument: tableReference)
+            transaction.updateData(["status": TableStatus.requested.rawValue], forDocument: tableOriginalReference)
             
             return nil
         }) { (object, error) in

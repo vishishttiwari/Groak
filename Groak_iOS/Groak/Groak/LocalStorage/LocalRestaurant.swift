@@ -24,7 +24,7 @@ internal class LocalRestaurant {
         fsRequests = FirestoreAPICallsRequests.init();
         self.table.table = table
         order.orderReference = table.orderReference
-        requests.requestsReference = table.requestsReference
+        requests.requestsReference = table.requestReference
     }
     
     // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned

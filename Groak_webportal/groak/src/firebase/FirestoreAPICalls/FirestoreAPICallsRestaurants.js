@@ -1,6 +1,6 @@
-import { db, storageRef } from '../Firebase';
+import { db, createGeoPoint, storageRef } from '../Firebase';
 import { randomNumber } from '../../catalog/Others';
-import { createDemoDish, createDemoCategory, createDemoTable, createDemoOrder } from '../../catalog/Demo';
+import { createDemoDish, createDemoCategory, createDemoTable, createDemoOrder, createDemoRequest } from '../../catalog/Demo';
 
 export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
@@ -50,14 +50,15 @@ export const addRestaurantFirestoreAPI = (restaurantId, data) => {
     const categoryId = randomNumber();
     const tableId = randomNumber();
 
-    const newData = { ...data, location: db.GeoPoint(data.address.latitude, data.address.longitude) };
+    const newData = { ...data, location: createGeoPoint(data.address.latitude, data.address.longitude) };
 
     batch.set(db.collection('restaurants/').doc(restaurantId), newData);
     batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, categoryId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, tableId));
     batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, tableId));
-    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, tableId));
+    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, tableId, dishId));
+    batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), createDemoRequest(restaurantId, tableId));
 
     return batch.commit();
 };

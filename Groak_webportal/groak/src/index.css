@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap");
 :export {
   primaryColor: #800000;
+  secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
   tableWhiteColor: white;

@@ -1,5 +1,5 @@
 /**
- * This function is used for converting date and time into format that can be shown onto UI
+ * Thiese functions are used for converting date and time into format that can be shown onto UI
  */
 
 /**

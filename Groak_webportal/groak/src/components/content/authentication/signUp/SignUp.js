@@ -32,6 +32,10 @@ const initialState = {
         latitude: -1000,
         longitude: -1000,
     },
+    location: {
+        latitude: -1000,
+        longitude: -1000,
+    },
     loadingSpinner: false,
 };
 

@@ -1,6 +1,8 @@
 import { db, getCurrentDateTime } from '../Firebase';
 import { createOrderReference } from './FirestoreAPICallsOrders';
+import { createRequestReference } from './FirestoreAPICallsRequests';
 import { TableStatus } from '../../catalog/Others';
+import { DemoRequest } from '../../catalog/Demo'
 
 export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
@@ -23,7 +25,7 @@ export const fetchTableFirestoreAPI = (restaurantId, tableId) => {
 };
 
 /**
- * This function adds table to both restaurants collection and tables collection
+ * This function adds table to both restaurants collection and tables collection and order and request to restaurants collection
  *
  * @param {*} restaurantId restaurant where table is being added
  * @param {*} tableId table being added
@@ -40,6 +42,7 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
+        requestReference: createRequestReference(restaurantId, tableId),
         status: TableStatus.available,
         x: data.x,
         y: data.y,
@@ -48,7 +51,7 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), tableData);
     batch.set(db.collection('tables/').doc(tableId), tableData);
 
-    const restaurantData = {
+    const orderData = {
         comments: [],
         dishes: [],
         requests: [],
@@ -59,9 +62,16 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         status: TableStatus.available,
         table: data.name,
         tableReference: createTableReferenceInTableCollections(tableId),
+        requestReference: createRequestReference(restaurantId, tableId),
     };
 
-    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), restaurantData);
+    const requestData = {
+        reference: createRequestReference(restaurantId, tableId),
+        requests: DemoRequest,
+    };
+
+    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), orderData);
+    batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), requestData);
 
     return batch.commit();
 };

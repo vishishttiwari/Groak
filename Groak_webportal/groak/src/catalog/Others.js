@@ -77,16 +77,55 @@ export const randomNumber = () => {
 };
 
 /**
- * Calculate costs of all dishes by adding them
+ * Calculate prices of all dishes by adding them
  *
- * @param {*} dishes all the dishes for which the total cost needs to be added
+ * @param {*} dishes all the dishes for which the total price needs to be added
  */
-export const calculateCostFromDishes = (dishes) => {
+export const calculatePriceFromDishes = (dishes) => {
     let price = 0;
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    return price;
+    return price.toFixed(2);
+};
+
+/**
+ * Calculate sales tax of all dishes
+ *
+ * @param {*} dishes all the dishes for which the total price needs to be added
+ * @param {*} salesTax sales tax of the restaurant
+ */
+export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
+    let price = 0;
+    dishes.forEach((dish) => {
+        price += dish.price;
+    });
+    price = price * salesTax/100
+    return price.toFixed(2);
+};
+
+/**
+ * Calculate prices of all dishes by adding them and also add the tax at the end
+ *
+ * @param {*} dishes all the dishes for which the total price needs to be added
+ * @param {*} salesTax sales tax of the restaurant
+ */
+export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
+    let price = 0;
+    dishes.forEach((dish) => {
+        price += dish.price;
+    });
+    price += price * salesTax/100
+    return price.toFixed(2);
+};
+
+/**
+ * This function gets price in right format
+ * 
+ * @param {*} price 
+ */
+export const getPrice = (price) => {
+    return price.toFixed(2);
 };
 
 /**

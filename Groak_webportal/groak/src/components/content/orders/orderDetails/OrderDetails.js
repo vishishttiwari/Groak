@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { context } from '../../../../globalState/globalState';
 
 import './css/OrderDetails.css';
-import { unsubscribeFetchOrderAPI, fetchOrderAPI } from '../OrdersAPICalls';
+import { unsubscribeFetchOrderAPI, fetchOrderAPI , fetchRequestAPI, unsubscribeFetchRequestAPI } from '../OrdersAPICalls';
 
 import OrderDishes from './OrderDishes';
 import OrderOthers from './OrderOthers';
@@ -18,7 +18,7 @@ const initialState = {
     serve: {},
     status: '',
     comments: [],
-    requests: [],
+    request: [],
     dishes: [],
     loadingSpinner: true,
 };
@@ -26,15 +26,15 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchOrder':
-            return { ...state, status: action.status, serve: action.serve, comments: action.comments, requests: action.requests, dishes: action.dishes, loadingSpinner: false };
+            return { ...state, status: action.status, serve: action.serve, comments: action.comments, dishes: action.dishes, loadingSpinner: false };
         case 'setStatus':
             return { ...state, status: action.status };
         case 'setServe':
             return { ...state, serve: action.serve };
         case 'setComments':
             return { ...state, comments: action.comments };
-        case 'setRequests':
-            return { ...state, requests: action.requests };
+        case 'setRequest':
+            return { ...state, request: action.request };
         case 'setDishes':
             return { ...state, dishes: action.dishes };
         case 'setLoadingSpinner':
@@ -53,11 +53,13 @@ const OrderDetails = (props) => {
     useEffect(() => {
         async function fetchOrder() {
             await fetchOrderAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar);
+            await fetchRequestAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar);
         }
         fetchOrder();
 
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
+            unsubscribeFetchRequestAPI(enqueueSnackbar)
         };
     }, [globalState, match.params.id, enqueueSnackbar]);
 
@@ -71,7 +73,7 @@ const OrderDetails = (props) => {
                         orderId={match.params.id}
                         status={state.status}
                         comments={state.comments}
-                        requests={state.requests}
+                        request={state.request}
                         dishes={state.dishes}
                         serveTimeFromServer={state.serve}
 

@@ -63,6 +63,10 @@ class IntroViewController: UIViewController {
         // the camera stops scanning for qr codes
         cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
             if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID {
+                
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
+                
                 LocalRestaurant.createRestaurant(restaurant: restaurant, table: table)
                 if LocalRestaurant.isRestaurantCreationSuccessful() {
                 

@@ -49,6 +49,14 @@ internal class FirestoreAPICallsOrders {
             dataReceivedForAddOrder?(false)
             return
         }
+        guard let tableReference = LocalRestaurant.table.table?.reference else {
+            dataReceivedForAddOrder?(false)
+            return
+        }
+        guard let tableOriginalReference = LocalRestaurant.table.table?.originalReference else {
+            dataReceivedForAddOrder?(false)
+            return
+        }
         
         db.runTransaction({ (transaction, errorPointer) in
             let orderDocument: DocumentSnapshot
@@ -82,6 +90,8 @@ internal class FirestoreAPICallsOrders {
             }
 
             transaction.updateData(["comments": newComments, "dishes": newDishes, "status": TableStatus.ordered.rawValue, "updated": Timestamp.init(), "items": savedOrder.items + order.items], forDocument: orderReference)
+            transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableReference)
+            transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableOriginalReference)
             
             return nil
         }) { (object, error) in
@@ -101,6 +111,14 @@ internal class FirestoreAPICallsOrders {
         let commentObject = OrderComment.init(comment: comment)
         
         guard let orderReference = LocalRestaurant.order.orderReference else {
+            dataReceivedForAddOrder?(false)
+            return
+        }
+        guard let tableReference = LocalRestaurant.table.table?.reference else {
+            dataReceivedForAddOrder?(false)
+            return
+        }
+        guard let tableOriginalReference = LocalRestaurant.table.table?.originalReference else {
             dataReceivedForAddOrder?(false)
             return
         }
@@ -126,7 +144,9 @@ internal class FirestoreAPICallsOrders {
             }
             newComments.append(commentObject.dictionary)
 
-            transaction.updateData(["comments": newComments], forDocument: orderReference)
+            transaction.updateData(["comments": newComments, "status": TableStatus.updated.rawValue], forDocument: orderReference)
+            transaction.updateData(["status": TableStatus.updated.rawValue], forDocument: tableReference)
+            transaction.updateData(["status": TableStatus.updated.rawValue], forDocument: tableOriginalReference)
             
             return nil
         }) { (object, error) in

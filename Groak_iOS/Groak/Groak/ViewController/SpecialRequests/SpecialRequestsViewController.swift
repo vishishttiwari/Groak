@@ -68,7 +68,7 @@ internal class SpecialRequestsViewController: ViewControllerWithPan {
         
         footer.sendRequest = { (_ request: String) -> () in
             let requestObject = Request.init(request: request)
-            fsRequests?.addRequestsFirestoreAPI(request: requestObject)
+            fsRequests?.addRequestFirestoreAPI(request: requestObject)
         }
         
         footer.frame.size.width = DimensionsCatalog.screenSize.width
@@ -93,7 +93,7 @@ internal class SpecialRequestsViewController: ViewControllerWithPan {
     private func downloadRequests(restaurant: Restaurant) {
         let fsRequests = LocalRestaurant.fsRequests
         
-        fsRequests?.fetchRequestsFirestoreAPI()
+        fsRequests?.fetchRequestFirestoreAPI()
         
         fsRequests?.dataReceivedForFetchRequests = { (_ requests: Requests?) -> () in
             if let requests = requests, requests.success() {

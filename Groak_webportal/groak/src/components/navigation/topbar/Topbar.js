@@ -12,7 +12,7 @@ const Topbar = () => {
         <header>
             <AppBar>
                 <Toolbar className="topbar">
-                    <Typography className="logo">Menu Door</Typography>
+                    <Typography className="logo">Groak</Typography>
                     <TopNavigationItems />
                 </Toolbar>
             </AppBar>

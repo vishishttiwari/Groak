@@ -25,7 +25,7 @@ const QRPage = (props) => {
                     <Image style={styles.qr} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=${tableReference}`} />
                 </View>
                 <View style={styles.applicationArea}>
-                    {/* <Text style={styles.applicationTitle}>Menu Door</Text>
+                    {/* <Text style={styles.applicationTitle}>Groak</Text>
                     <Image style={styles.applicationLinks} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=${iosAppLink}`} />
                     <Image style={styles.applicationLinks} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=${androidAppLink}`} /> */}
                 </View>

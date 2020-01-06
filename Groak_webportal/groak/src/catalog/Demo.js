@@ -7,8 +7,11 @@ import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPI
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
+import { createRequestReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { TableStatus } from './Others';
 
+export const DemoRestaurantType = ['Pizza']
+export const DemoRestaurantSalesTax = 9
 export const DemoRestaurantQRStylePage = {
     pageSize: 'A4',
     qrStyleImage: 'Strawberries',
@@ -40,15 +43,21 @@ export const DemoTableName = 'Demo Table 1';
 
 export const DemoOrderComments = [{ comment: 'Please make Tomato Soup extra spicy', created: getCurrentDateTime() }];
 // Once you have placed order for a dish, you cant add comments in the dish, you have to add it in order comments
-export const DemoOrderDishes = [{
-    comments: { 'Spicy?': DemoDishExtraOptions1.title },
+export const createDemoOrderDishes = (restaurantId, dishId) => {
+    return [{
+        extras: { 'Spicy?': DemoDishExtraOptions1.title },
+        created: getCurrentDateTime(),
+        name: DemoDishName,
+        price: DemoDishPrice,
+        quantity: 1,
+        reference: createDishReference(restaurantId, dishId),
+    }]
+};
+
+export const DemoRequest = [{
+    request: 'Welcome. Is there anything we can help you with?',
     created: getCurrentDateTime(),
-    name: DemoDishName,
-    price: DemoDishPrice,
-}];
-export const DemoOrderRequests = [{
-    request: 'Can I please get some water?',
-    created: getCurrentDateTime(),
+    createdByUser: false
 }];
 
 /**
@@ -69,7 +78,7 @@ const createRestaurantReference = (restaurantId) => {
  */
 export const createDemoRestaurant = (restaurantId, restaurantName, address) => {
     const ref = createRestaurantReference(restaurantId);
-    return { name: restaurantName, address, qrStylePage: DemoRestaurantQRStylePage, reference: ref, logo: '', type: ['Pizza'] };
+    return { name: restaurantName, address, qrStylePage: DemoRestaurantQRStylePage, reference: ref, logo: '', type: DemoRestaurantType, salesTax: DemoRestaurantSalesTax };
 };
 
 /**
@@ -132,7 +141,7 @@ export const createDemoCategory = (restaurantId, categoryId, dishId) => {
     return {
         available: true,
         name: DemoCategoryName,
-        days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+        days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
         dishes: [createDishReference(restaurantId, dishId)],
         created: getCurrentDateTime(),
         startTime: DemoCategoryStartTime,
@@ -158,7 +167,8 @@ export const createDemoTable = (restaurantId, tableId) => {
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
-        status: TableStatus.available,
+        requestReference: createRequestReference(restaurantId, tableId),
+        status: TableStatus.ordered,
         x: 0,
         y: 0,
     };
@@ -168,19 +178,33 @@ export const createDemoTable = (restaurantId, tableId) => {
  * This function creates demo table
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
- * @param {*} tableId id of the table for which order is placed. This is same as order id
+ * @param {*} orderId id of the table for which order is placed. This is same as order id
+ * @param {*} dishId id of the dish which is placed in the order
  */
-export const createDemoOrder = (restaurantId, tableId) => {
+export const createDemoOrder = (restaurantId, orderId, dishId) => {
     return {
         comments: DemoOrderComments,
-        dishes: DemoOrderDishes,
-        requests: DemoOrderRequests,
+        dishes: createDemoOrderDishes(restaurantId, dishId),
         items: 0,
         updated: getCurrentDateTime(),
-        reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
+        reference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
         restaurantReference: createRestaurantReference(restaurantId),
-        status: TableStatus.available,
+        status: TableStatus.ordered,
         table: DemoTableName,
-        tableReference: createTableReferenceInTableCollections(tableId),
+        tableReference: createTableReferenceInTableCollections(orderId),
+        requestReference: createRequestReference(restaurantId, orderId),
     };
 };
+
+/**
+ * Thos function creates demo request
+ * 
+ * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} requestId id of the request for which order is placed. This is same as order id
+ */
+export const createDemoRequest = (restaurantId, requestId) => {
+    return {
+        reference: createRequestReference(restaurantId, requestId),
+        requests: DemoRequest,
+    }
+}
