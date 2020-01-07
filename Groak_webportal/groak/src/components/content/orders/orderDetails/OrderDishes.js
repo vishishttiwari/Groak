@@ -22,13 +22,13 @@ const OrderDishes = (props) => {
                                     dish.extras.map((extra) => {
                                         return (
                                             extra.options && extra.options.length > 0 ? 
-                                                <div key={randomNumber()}>
-                                                    <Typography variant="body1" color="textPrimary" component="p">
+                                                <div className="dish-extra" key={randomNumber()}>
+                                                    <Typography variant="body1" className="dish-extra-title" color="textPrimary" component="p">
                                                         {extra.title === specialInstructionsId ? "Special Instructions" : extra.title}
                                                     </Typography>
                                                         {extra.options.map((option) => {
                                                             return (
-                                                                <Typography key={randomNumber()} className="sub-header" variant="body2" color="textSecondary" component="p">
+                                                                <Typography key={randomNumber()} className="dish-extra-options" variant="body2" color="textSecondary" component="p">
                                                                     {option.title}
                                                                 </Typography>
                                                             )
@@ -42,7 +42,7 @@ const OrderDishes = (props) => {
                                     <Typography variant="body1" color="textPrimary" component="p">
                                         Price
                                     </Typography>
-                                    <Typography className="sub-header" variant="body2" color="textSecondary" component="p">
+                                    <Typography className="dish-price" variant="body2" color="textSecondary" component="p">
                                         {`$${getPrice(dish.price)}`}
                                     </Typography>
                                 </div>

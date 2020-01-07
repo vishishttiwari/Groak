@@ -38,12 +38,20 @@ $imageWidth: 40px;
             flex-flow: column;
             box-shadow: $cardShadow;
             height: auto;
-        }
 
-        .sub-header {
-            margin-left: $commentMarginLeft;
-            margin-bottom: $cardMargin;
-            text-transform: 'capitalize';
+            .dish-extra {
+                margin-bottom: $cardMargin;
+
+                .dish-extra-options {
+                    margin-left: $commentMarginLeft;
+                    text-transform: 'capitalize';
+                }
+            }
+
+            .dish-price {
+                margin-left: $commentMarginLeft;
+                text-transform: 'capitalize';
+            }
         }
     }
 

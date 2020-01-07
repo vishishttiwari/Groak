@@ -50,9 +50,12 @@ const OrderOthers = (props) => {
     useEffect(() => {
         if (serveTimeFromServer && serveTimeFromServer.seconds)
             setServeTime(differenceInMinutesFromNow(serveTimeFromServer));
+    }, [serveTimeFromServer]);
+
+    useEffect(() => {
         if (request && request.length > 0)
             requestEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-    }, [serveTimeFromServer, request, requestEndRef]);
+    }, [request, requestEndRef]);
 
     /**
      * This function is used for getting time in AM PM from time stamp as it is received from the server.
@@ -94,7 +97,6 @@ const OrderOthers = (props) => {
     /**
      * This function is used change the status to approve without changing serve time
      *
-     * @param {*} serveTime this is the new Serve Time
      */
     const setApprovedHandler = async () => {
         const data = { status: TableStatus.approved };

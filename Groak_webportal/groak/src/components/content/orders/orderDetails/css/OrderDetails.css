@@ -79,9 +79,17 @@
   height: auto;
 }
 
-.order-details .order-dishes .sub-header {
-  margin-left: 20px;
+.order-details .order-dishes .card .dish-extra {
   margin-bottom: 20px;
+}
+
+.order-details .order-dishes .card .dish-extra .dish-extra-options {
+  margin-left: 20px;
+  text-transform: 'capitalize';
+}
+
+.order-details .order-dishes .card .dish-price {
+  margin-left: 20px;
   text-transform: 'capitalize';
 }
 

@@ -20,7 +20,7 @@ function preProcessData(state) {
         const updatedExtra = { ...extra };
         delete updatedExtra.id;
         updatedExtra.minOptionsSelect = extra.minOptionsSelect ? parseFloat(extra.minOptionsSelect) : 0;
-        updatedExtra.maxOptionsSelect = extra.maxOptionsSelect ? parseFloat(extra.maxOptionsSelect) : 0;
+        updatedExtra.maxOptionsSelect = extra.maxOptionsSelect ? parseFloat(extra.maxOptionsSelect) : updatedExtra.options.length;
         updatedExtra.options = extra.options.map((option) => {
             const updatedOption = { ...option };
             delete updatedOption.id;
