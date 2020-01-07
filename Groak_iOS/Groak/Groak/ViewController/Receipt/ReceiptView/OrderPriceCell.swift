@@ -27,8 +27,8 @@ internal class OrderPriceCell: UITableViewCell {
                 totalPrice += dish.price
             }
             subtotal.text = totalPrice.priceInString
-            salesTax.text = (totalPrice * (LocalRestaurant.restaurant.restaurant?.salesTax ?? 9)/100).priceInString
             total.text = (totalPrice + (totalPrice * (LocalRestaurant.restaurant.restaurant?.salesTax ?? 9)/100)).priceInString
+            salesTax.text = ((totalPrice + (totalPrice * (LocalRestaurant.restaurant.restaurant?.salesTax ?? 9)/100)) - totalPrice).priceInString
         }
     }
     

@@ -78,7 +78,7 @@ extension RequestView: UITableViewDataSource, UITableViewDelegate, UIScrollViewD
     func scrollToBottom(){
         DispatchQueue.main.async {
             let bottomOffset = CGPoint(x: 0, y: self.contentSize.height - self.bounds.size.height + DimensionsCatalog.tableViewInsetDistance)
-            self.setContentOffset(bottomOffset, animated: true)
+            self.setContentOffset(bottomOffset, animated: false)
         }
     }
     

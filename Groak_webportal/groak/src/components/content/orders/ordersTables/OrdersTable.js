@@ -21,20 +21,20 @@ const OrdersTable = (props) => {
     let columns = {
         table: { label: 'Table', width: '50%', align: 'center' },
         items: { label: 'Items', width: '25%', align: 'center' },
-        price: { label: 'Price', width: '25%', align: 'center', format: (value) => { return value.toFixed(2); } },
+        price: { label: 'Total', width: '25%', align: 'center', format: (value) => { return value.toFixed(2); } },
     };
     if (!serveTime && !button) {
         columns = {
             table: { label: 'Table', width: '50%', align: 'center' },
             items: { label: 'Items', width: '25%', align: 'center' },
-            price: { label: 'Price', width: '25%', align: 'center', format: (value) => { return value.toFixed(2); } },
+            price: { label: 'Total', width: '25%', align: 'center', format: (value) => { return value.toFixed(2); } },
         };
     }
     if (serveTime && !button) {
         columns = {
             table: { label: 'Table', width: '30%', align: 'center' },
             items: { label: 'Items', width: '18%', align: 'center' },
-            price: { label: 'Price', width: '17%', align: 'center', format: (value) => { return value.toFixed(2); } },
+            price: { label: 'Total', width: '17%', align: 'center', format: (value) => { return value.toFixed(2); } },
             serveTime: { label: 'Serve Time', width: '18%', align: 'center' },
             minutesLeft: { label: 'Minutes Left', width: '17%', align: 'center' },
         };
@@ -43,7 +43,7 @@ const OrdersTable = (props) => {
         columns = {
             table: { label: 'Table', width: '35%', align: 'center' },
             items: { label: 'Items', width: '20%', align: 'center' },
-            price: { label: 'Price', width: '20%', align: 'center', format: (value) => { return value.toFixed(2); } },
+            price: { label: 'Total', width: '20%', align: 'center', format: (value) => { return value.toFixed(2); } },
             action: { label: button, width: '25%', align: 'center' },
         };
     }
@@ -51,7 +51,7 @@ const OrdersTable = (props) => {
         columns = {
             table: { label: 'Table', width: '20%', align: 'center' },
             items: { label: 'Items', width: '12%', align: 'center' },
-            price: { label: 'Price', width: '13%', align: 'center', format: (value) => { return value.toFixed(2); } },
+            price: { label: 'Total', width: '13%', align: 'center', format: (value) => { return value.toFixed(2); } },
             serveTime: { label: 'Serve Time', width: '17%', align: 'center' },
             minutesLeft: { label: 'Minutes Left', width: '18%', align: 'center' },
             action: { label: button, width: '20%', align: 'center' },

@@ -92,6 +92,7 @@ internal class ReceiptViewController: ViewControllerWithPan {
                     })
                 }
             } else if photos == .authorized {
+                Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
                 UIImageWriteToSavedPhotosAlbum(self.receiptView.asImage(), nil, nil, nil)
             }
         }

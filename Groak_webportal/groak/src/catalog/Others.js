@@ -98,7 +98,9 @@ export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    price = price * salesTax/100
+    let totalPrice = price
+    price += price * salesTax/100
+    price -= totalPrice
     return price.toFixed(2);
 };
 

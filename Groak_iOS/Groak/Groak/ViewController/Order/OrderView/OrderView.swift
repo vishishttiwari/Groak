@@ -119,8 +119,12 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
                 cell.status.text = "Your order has been served. Enjoy!"
             } else if self.order.status == TableStatus.payment {
                 cell.status.text = "You have requested for payment. Someone will be at your table soon."
+            } else if self.order.status == TableStatus.available {
+                cell.status.text = "Please scan the QR code again to start ordering."
+            } else if self.order.status == TableStatus.available {
+                cell.status.text = "You can start ordering. Your orders will appear here."
             } else {
-                cell.status.text = "Your order has been requested. Pending for approval."
+                cell.status.text = ""
             }
 
             return cell
