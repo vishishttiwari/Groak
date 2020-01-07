@@ -81,6 +81,8 @@ internal class AddToCartExtrasView: UITableView {
                 }
             }
         }
+        
+        extrasSelected = extrasSelected.filter({$0.options.count > 0})
 
         return extrasSelected
     }

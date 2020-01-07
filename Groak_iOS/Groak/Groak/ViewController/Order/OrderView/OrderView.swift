@@ -63,9 +63,15 @@ internal class OrderView: UITableView {
             order = LocalRestaurant.tableOrder
         } else if index == 1 {
             order = Order.init()
+            order.status = LocalRestaurant.tableOrder.status
             for dish in LocalRestaurant.tableOrder.dishes {
                 if dish.local {
                     order.dishes.append(dish)
+                }
+            }
+            for comment in LocalRestaurant.tableOrder.comments {
+                if comment.local {
+                    order.comments.append(comment)
                 }
             }
         }

@@ -17,6 +17,8 @@ class IntroViewController: UIViewController {
     
     private var selectedRestaurant: Restaurant? = nil
     
+    private var processingQR: Bool = false
+    
     private let permissions = PermissionsCatalog.init()
     
     private let fsTable = FirestoreAPICallsTables.init();
@@ -60,14 +62,12 @@ class IntroViewController: UIViewController {
         cameraView = CameraQRCodeView()
         self.view.addSubview(cameraView!)
         
-        var processing = false
-        
         // When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
         // user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
         // the camera stops scanning for qr codes
         cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
-            if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID && !processing {
-                processing = true
+            if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID && !self.processingQR {
+                self.processingQR = true
                 
                 self.fsTable.setSeatedStatusFirestoreAPI(orderReference: table.orderReference, tableReference: table.reference, tableOriginalReference: table.originalReference)
                 
@@ -89,19 +89,18 @@ class IntroViewController: UIViewController {
                             controller.modalTransitionStyle = .coverVertical
                             controller.modalPresentationStyle = .overCurrentContext
 
-                            processing = false
                             DispatchQueue.main.async {
                                 self.present(controller, animated: true, completion: nil)
                             }
                         } else {
                             self.bottomSheetView?.setRestaurantNotFound()
                             Catalog.alert(vc: self, title: "Error finding table", message: "Error finding table. Please contact the restaurant and we will get this sorted")
-                            processing = false
+                            self.processingQR = false
                         }
                     } else {
                         self.bottomSheetView?.setRestaurantNotFound()
                         Catalog.alert(vc: self, title: "Error finding table", message: "Error finding table. Please contact the restaurant and we will get this sorted")
-                        processing = false
+                        self.processingQR = false
                     }
                 }
             }
@@ -154,5 +153,6 @@ class IntroViewController: UIViewController {
     func returningToIntro() {
         bottomSheetView?.setRestaurantNotFound()
         AppDelegate.stopTimer()
+        processingQR = false
     }
 }

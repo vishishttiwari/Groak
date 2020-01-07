@@ -98,6 +98,7 @@ internal class Dish {
     
     var description: String {
         var str = "Dish Name: \(name)\n"
+        str += "Dish Reference: \(reference?.documentID ?? "Reference not present")\n"
         str += "Dish Image Link: \(imageLink)\n"
         str += "Price: \(price)\n"
         str += "Short Info: \(shortInfo)\n"

@@ -31,7 +31,6 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
     // Variables used for location
     private let locationManager = CLLocationManager()
     private var previousLocation: CLLocation? = nil
-    private var timer: Timer?
     
     // Initialize variable for finding the closest restaurant
     private let fsRestaurant = FirestoreAPICallsRestaurants.init();
@@ -154,7 +153,6 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         self.restaurantFullView.restaurant = Restaurant.init()
         self.header.stateChanged(state: self.state)
         self.stateChanged?(self.state, nil)
-        timer = nil
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: TimeCatalog.animateTime, animations: {
@@ -172,7 +170,6 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
         self.restaurantFullView.restaurant = restaurant
         self.header.stateChanged(state: self.state)
         self.stateChanged?(self.state, restaurant)
-        timer = Timer.scheduledTimer(timeInterval: TimeInterval(TimeCatalog.bottomSheetGoUpAgainTimeInSeconds), target: self, selector: #selector(setRestaurantNotFound), userInfo: nil, repeats: false)
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: TimeCatalog.animateTime, animations: {

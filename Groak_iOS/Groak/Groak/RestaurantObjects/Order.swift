@@ -215,7 +215,7 @@ internal class OrderDish {
     
     init(orderDish: [String: Any]) {
         name = orderDish["name"] as? String ?? ""
-        dishReference = orderDish["dishReference"] as? DocumentReference
+        dishReference = orderDish["reference"] as? DocumentReference
         price = orderDish["price"] as? Double ?? -1
         quantity = orderDish["quantity"] as? Int ?? -1
         let tempExtras = orderDish["extras"] as? [[String: Any]] ?? []
