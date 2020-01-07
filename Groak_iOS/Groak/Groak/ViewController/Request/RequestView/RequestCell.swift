@@ -1,5 +1,5 @@
 //
-//  SpecialRequestsCell.swift
+//  RequestCell.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/25/19.
@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-internal class SpecialRequestsCell: UITableViewCell {
+internal class RequestCell: UITableViewCell {
     private let container: UIView = UIView()
     private let requestString: UILabel = UILabel()
     private let created: UILabel = UILabel()

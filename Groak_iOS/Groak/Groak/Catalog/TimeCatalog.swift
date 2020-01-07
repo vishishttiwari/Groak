@@ -82,4 +82,9 @@ internal class TimeCatalog {
     static func getDateFromTimestamp(timestamp: Timestamp) -> Date {
         return timestamp.dateValue()
     }
+    
+    // This function is used to set serveTime of 30 minutes for the first order placed at table
+    static func addThirtyMinutesToTimestamp() -> Timestamp {
+        return Timestamp.init(seconds: (Timestamp.init().dateValue().millisecondsSince1970/1000) + (30 * 60), nanoseconds: 0)
+    }
 }

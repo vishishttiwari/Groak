@@ -9,6 +9,7 @@ import { createCategoryReference } from '../firebase/FirestoreAPICalls/Firestore
 import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { createRequestReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { TableStatus } from './Others';
+import { getCurrentDateTimePlusMinutes } from './TimesDates'
 
 export const DemoRestaurantType = ['Pizza']
 export const DemoRestaurantSalesTax = 9
@@ -36,8 +37,10 @@ export const DemoDishExtraOptions2 = { price: 0.5, title: 'Medium' };
 export const DemoDishExtraOptions3 = { price: 0, title: 'Mild' };
 
 export const DemoCategoryName = 'Starters';
-export const DemoCategoryStartTime = 540;
-export const DemoCategoryEndTime = 1320;
+// export const DemoCategoryStartTime = 540;
+// export const DemoCategoryEndTime = 1320;
+export const DemoCategoryStartTime = 0;
+export const DemoCategoryEndTime = 1339;
 
 export const DemoTableName = 'Demo Table 1';
 
@@ -169,6 +172,8 @@ export const createDemoTable = (restaurantId, tableId) => {
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
         status: TableStatus.ordered,
+        newRequest: false,
+        serveTime: getCurrentDateTimePlusMinutes(30),
         x: 0,
         y: 0,
     };
@@ -187,11 +192,14 @@ export const createDemoOrder = (restaurantId, orderId, dishId) => {
         dishes: createDemoOrderDishes(restaurantId, dishId),
         items: 0,
         updated: getCurrentDateTime(),
-        reference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
-        restaurantReference: createRestaurantReference(restaurantId),
         status: TableStatus.ordered,
+        serveTime: getCurrentDateTimePlusMinutes(30),
+        newRequest: false,
         table: DemoTableName,
-        tableReference: createTableReferenceInTableCollections(orderId),
+        reference: createOrderReference(restaurantId, orderId),
+        restaurantReference: createRestaurantReference(restaurantId),
+        tableReference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
+        tableOriginalReference: createTableReferenceInTableCollections(orderId),
         requestReference: createRequestReference(restaurantId, orderId),
     };
 };

@@ -23,6 +23,8 @@ internal class OrderViewController: UIViewController {
     
     private var tapGestureRecognizer: UITapGestureRecognizer?
     
+    private let fsTable = FirestoreAPICallsTables.init();
+    
     required init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -107,13 +109,21 @@ internal class OrderViewController: UIViewController {
             if LocalRestaurant.tableOrder.dishes.count == 0 {
                 Catalog.alert(vc: self, title: "No orders", message: "Please order dishes before paying")
             } else {
-                let controller = ReceiptViewController.init()
+                self.fsTable.setPaymentStatusFirestoreAPI(orderReference: LocalRestaurant.order.orderReference, tableReference: LocalRestaurant.table.table?.reference, tableOriginalReference: LocalRestaurant.table.table?.originalReference)
+                
+                self.fsTable.dataReceivedSetStatus = { (_ success: Bool?) -> () in
+                    if success ?? false {
+                        let controller = ReceiptViewController.init()
 
-                self.view.coverHorizontalPresent()
-                controller.modalPresentationStyle = .overCurrentContext
+                        self.view.coverHorizontalPresent()
+                        controller.modalPresentationStyle = .overCurrentContext
 
-                DispatchQueue.main.async {
-                    self.present(controller, animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            self.present(controller, animated: false, completion: nil)
+                        }
+                    } else {
+                        Catalog.alert(vc: self, title: "Error while asking for payment", message: "There was an error. Please make sure you have placed an order and then try again.")
+                    }
                 }
             }
         }

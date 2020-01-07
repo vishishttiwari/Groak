@@ -1,5 +1,5 @@
 //
-//  SpecialRequestsViewController.swift
+//  RequestViewController.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/24/19.
@@ -10,10 +10,10 @@
 import Foundation
 import UIKit
 
-internal class SpecialRequestsViewController: ViewControllerWithPan {
-    private var header: SpecialRequestsHeaderView?
-    private var specialRequestsView: SpecialRequestsView?
-    private var footer: SpecialReqiestsFooterView = SpecialReqiestsFooterView()
+internal class RequestViewController: ViewControllerWithPan {
+    private var header: RequestHeaderView?
+    private var specialRequestsView: RequestView?
+    private var footer: RequestFooterView = RequestFooterView()
     
     private var tapGestureRecognizer: UITapGestureRecognizer?
     
@@ -36,8 +36,8 @@ internal class SpecialRequestsViewController: ViewControllerWithPan {
         )
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         
-        header = SpecialRequestsHeaderView.init(restaurant: restaurant)
-        specialRequestsView = SpecialRequestsView.init()
+        header = RequestHeaderView.init(restaurant: restaurant)
+        specialRequestsView = RequestView.init()
         
         setupHeader()
         setupFooter(restaurant: restaurant)

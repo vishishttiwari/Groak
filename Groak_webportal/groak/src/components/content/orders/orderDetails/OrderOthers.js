@@ -52,7 +52,7 @@ const OrderOthers = (props) => {
             setServeTime(differenceInMinutesFromNow(serveTimeFromServer));
         if (request && request.length > 0)
             requestEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-    }, [serveTimeFromServer, request]);
+    }, [serveTimeFromServer, request, requestEndRef]);
 
     /**
      * This function is used for getting time in AM PM from time stamp as it is received from the server.
@@ -87,6 +87,17 @@ const OrderOthers = (props) => {
     const setServeTimeHandler = async () => {
         const serveDate = getCurrentDateTimePlusMinutes(serveTime);
         const data = { serveTime: serveDate, status: TableStatus.approved };
+        history.goBack();
+        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+    };
+
+    /**
+     * This function is used change the status to approve without changing serve time
+     *
+     * @param {*} serveTime this is the new Serve Time
+     */
+    const setApprovedHandler = async () => {
+        const data = { status: TableStatus.approved };
         history.goBack();
         await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
     };
@@ -153,7 +164,16 @@ const OrderOthers = (props) => {
             >
                 Go Back
             </Button>
-            {status === TableStatus.ordered || status === TableStatus.updated || status === TableStatus.requested || status === TableStatus.approved ? (
+            {status === TableStatus.ordered ? (
+                <Button
+                    className="success-buttons"
+                    variant="contained"
+                    onClick={setApprovedHandler}
+                >
+                    Approve
+                </Button>
+            ) : null}
+            {status === TableStatus.ordered || status === TableStatus.approved ? (
                 <>
                     <Button
                         className="success-buttons"
@@ -231,7 +251,7 @@ const OrderOthers = (props) => {
                         <div className="suggestions" ref={requestEndRef}>
                             {Object.keys(suggestions).map((suggestion) => {
                                 return (
-                                    <div className="suggestion" onClick={() => {setRequestReply(suggestions[suggestion]); }}>
+                                    <div className="suggestion" key={randomNumber()} onClick={() => {setRequestReply(suggestions[suggestion]); }}>
                                         <img draggable="false" className="suggestion-suggestion" src={suggestionsImage[suggestion]} alt={suggestions[suggestion]} />
                                     </div>
                                 );
@@ -316,13 +336,14 @@ OrderOthers.propTypes = {
     orderId: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired,
-    requests: PropTypes.array.isRequired,
+    requests: PropTypes.array,
     dishes: PropTypes.array.isRequired,
     serveTimeFromServer: PropTypes.object,
 };
 
 OrderOthers.defaultProps = {
     serveTimeFromServer: {},
+    requests: []
 };
 
 export default withRouter(React.memo(withStyles(TextFieldLabelStyles)(OrderOthers)));

@@ -15,24 +15,28 @@ internal class Order {
     var comments: [OrderComment]
     var dishes: [OrderDish]
     var items: Int
-    var serveTime: Timestamp
     var restaurantReference: DocumentReference?
     var tableName: String
     var tableReference: DocumentReference?
+    var requestReference: DocumentReference?
     var updated: Timestamp
     var status: TableStatus
+    var newRequest: Bool
+    var serveTime: Timestamp
     
     init() {
         reference = nil
         comments = []
         dishes = []
         items = -1
-        serveTime = Timestamp.init()
         restaurantReference = nil
         tableName = ""
         tableReference = nil
+        requestReference = nil
         updated = Timestamp.init()
         status = TableStatus.available
+        newRequest = false
+        serveTime = Timestamp.init()
     }
     
     init(order: [String: Any]) {
@@ -48,22 +52,25 @@ internal class Order {
             dishes.append(OrderDish.init(orderDish: tempDish))
         }
         items = order["items"] as? Int ?? -1
-        serveTime = order["serveTime"] as? Timestamp ?? Timestamp.init()
         restaurantReference = order["restaurantReference"] as? DocumentReference
+        requestReference = order["requestReference"] as? DocumentReference
         tableName = order["tableName"] as? String ?? ""
         tableReference = order["tableReference"] as? DocumentReference
         updated = order["updated"] as? Timestamp ?? Timestamp.init()
         status = (order["status"] as? String).map { (TableStatus(rawValue: $0) ?? TableStatus.available) } ?? TableStatus.available
+        newRequest = order["newRequest"] as? Bool ?? false
+        serveTime = order["serveTime"] as? Timestamp ?? Timestamp.init()
     }
     
     init(cart: Cart) {
         reference = nil
-        serveTime = Timestamp.init()
         restaurantReference = nil
         tableName = ""
         tableReference = nil
         updated = Timestamp.init()
         status = TableStatus.ordered
+        newRequest = false
+        serveTime = Timestamp.init()
         
         comments = []
         if (cart.comment.count > 0) {

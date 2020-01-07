@@ -24,7 +24,7 @@ internal class LocalRestaurant {
         fsRequests = FirestoreAPICallsRequests.init();
         self.table.table = table
         order.orderReference = table.orderReference
-        requests.requestsReference = table.requestReference
+        request.requestReference = table.requestReference
     }
     
     // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned
@@ -66,7 +66,7 @@ internal class LocalRestaurant {
     
     // This checks if the restaurant creation was successful
     static func isRestaurantCreationSuccessful() -> Bool {
-        if let _ = restaurant.restaurant, let _ = table.table, let _ = order.orderReference, let _ =  requests.requestsReference {
+        if let _ = restaurant.restaurant, let _ = table.table, let _ = order.orderReference, let _ =  request.requestReference {
             return true
         }
         
@@ -80,7 +80,7 @@ internal class LocalRestaurant {
         restaurant.restaurant = nil
         table.table = nil
         order.orderReference = nil
-        requests.requestsReference = nil
+        request.requestReference = nil
         
         cart = Cart.init()
         tableOrder = Order.init()
@@ -104,8 +104,8 @@ internal class LocalRestaurant {
         static var orderReference: DocumentReference? = nil
     }
     
-    struct requests {
-        static var requestsReference: DocumentReference? = nil
+    struct request {
+        static var requestReference: DocumentReference? = nil
     }
     
     static var cart: Cart = Cart.init()

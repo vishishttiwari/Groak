@@ -89,7 +89,11 @@ internal class FirestoreAPICallsOrders {
                 newDishes.append(dish.dictionary)
             }
 
-            transaction.updateData(["comments": newComments, "dishes": newDishes, "status": TableStatus.ordered.rawValue, "updated": Timestamp.init(), "items": savedOrder.items + order.items], forDocument: orderReference)
+            if savedOrder.status == TableStatus.seated || savedOrder.status == TableStatus.available {
+                transaction.updateData(["comments": newComments, "dishes": newDishes, "status": TableStatus.ordered.rawValue, "updated": Timestamp.init(), "serveTime": TimeCatalog.addThirtyMinutesToTimestamp(), "items": savedOrder.items + order.items], forDocument: orderReference)
+            } else {
+                transaction.updateData(["comments": newComments, "dishes": newDishes, "status": TableStatus.ordered.rawValue, "updated": Timestamp.init(), "items": savedOrder.items + order.items], forDocument: orderReference)
+            }
             transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableReference)
             transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableOriginalReference)
             
@@ -144,9 +148,9 @@ internal class FirestoreAPICallsOrders {
             }
             newComments.append(commentObject.dictionary)
 
-            transaction.updateData(["comments": newComments, "status": TableStatus.updated.rawValue], forDocument: orderReference)
-            transaction.updateData(["status": TableStatus.updated.rawValue], forDocument: tableReference)
-            transaction.updateData(["status": TableStatus.updated.rawValue], forDocument: tableOriginalReference)
+            transaction.updateData(["updated": Timestamp.init(), "comments": newComments, "status": TableStatus.ordered.rawValue], forDocument: orderReference)
+            transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableReference)
+            transaction.updateData(["status": TableStatus.ordered.rawValue], forDocument: tableOriginalReference)
             
             return nil
         }) { (object, error) in

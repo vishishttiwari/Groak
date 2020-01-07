@@ -1,5 +1,5 @@
 //
-//  SpecialRequestsView.swift
+//  RequestView.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/24/19.
@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-internal class SpecialRequestsView: UITableView {
+internal class RequestView: UITableView {
     
     internal var requests: Requests = Requests.init()
     
@@ -33,7 +33,7 @@ internal class SpecialRequestsView: UITableView {
         let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: 0, right: 0)
         self.contentInset = insets
         
-        self.register(SpecialRequestsCell.self, forCellReuseIdentifier: specialRequestCellId)
+        self.register(RequestCell.self, forCellReuseIdentifier: specialRequestCellId)
                 
         self.dataSource = self
         self.delegate = self
@@ -61,14 +61,14 @@ internal class SpecialRequestsView: UITableView {
     }
 }
 
-extension SpecialRequestsView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+extension RequestView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return requests.requests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: specialRequestCellId, for: indexPath) as! SpecialRequestsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: specialRequestCellId, for: indexPath) as! RequestCell
         
         cell.request = requests.requests[indexPath.row]
         

@@ -152,7 +152,6 @@ export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) =
                     type: 'fetchOrder',
                     status: querySnapshot.data().status,
                     comments: querySnapshot.data().comments,
-                    requests: querySnapshot.data().requests,
                     serve: querySnapshot.data().serveTime,
                     dishes: querySnapshot.data().dishes,
                 });

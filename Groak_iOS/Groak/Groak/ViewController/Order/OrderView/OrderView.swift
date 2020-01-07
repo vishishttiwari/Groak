@@ -115,12 +115,14 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: statusCellId, for: indexPath) as! OrderStatusCell
 
-            if self.order.status == TableStatus.requested {
+            if self.order.status == TableStatus.ordered {
                 cell.status.text = "Your order has been requested. Pending for approval."
             } else if self.order.status == TableStatus.approved {
-                cell.status.text = TimeCatalog.getTimeFromTimestamp(timestamp: self.order.serveTime)
+                cell.status.text = "Your order will be served at \(TimeCatalog.getTimeFromTimestamp(timestamp: self.order.serveTime))"
             } else if self.order.status == TableStatus.served {
                 cell.status.text = "Your order has been served. Enjoy!"
+            } else if self.order.status == TableStatus.served {
+                cell.status.text = "You have requested for payment. Someone will be at your table soon."
             } else {
                 cell.status.text = "Your order has been requested. Pending for approval."
             }

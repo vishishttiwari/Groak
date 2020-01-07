@@ -3,6 +3,7 @@ import { createOrderReference } from './FirestoreAPICallsOrders';
 import { createRequestReference } from './FirestoreAPICallsRequests';
 import { TableStatus } from '../../catalog/Others';
 import { DemoRequest } from '../../catalog/Demo'
+import { getCurrentDateTimePlusMinutes } from '../../catalog/TimesDates';
 
 export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
@@ -44,6 +45,8 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
         status: TableStatus.available,
+        newRequest: false,
+        serveTime: getCurrentDateTimePlusMinutes(30),
         x: data.x,
         y: data.y,
     };
@@ -54,14 +57,16 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
     const orderData = {
         comments: [],
         dishes: [],
-        requests: [],
         items: 0,
         updated: getCurrentDateTime(),
         reference: createOrderReference(restaurantId, tableId),
-        restaurantReference: db.collection('restaurants').doc(restaurantId),
+        restaurantReference: createRestaurantReference(restaurantId),
         status: TableStatus.available,
+        newRequest: false,
+        serveTime: getCurrentDateTimePlusMinutes(30),
         table: data.name,
-        tableReference: createTableReferenceInTableCollections(tableId),
+        tableReference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
+        tableOriginalReference: createTableReferenceInTableCollections(tableId),
         requestReference: createRequestReference(restaurantId, tableId),
     };
 

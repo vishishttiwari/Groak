@@ -1,18 +1,18 @@
 //
-//  SpecialRequestsHeaderView.swift
+//  RequestHeaderView.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/24/19.
 //  Copyright © 2019 Groak. All rights reserved.
 //
-//  Header of special requests
+//  Header of requests
 
 import Foundation
 
 import Foundation
 import UIKit
 
-internal class SpecialRequestsHeaderView: UIView {
+internal class RequestHeaderView: UIView {
     
     // Optional Closures
     internal var dismiss: (() -> ())?

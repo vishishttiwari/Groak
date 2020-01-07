@@ -89,7 +89,7 @@ internal class MenuViewController: UIViewController {
             self.header?.sectionChanged(section: section)
         }
         menu?.specialRequests = { () -> () in
-            let controller = SpecialRequestsViewController(restaurant: restaurant)
+            let controller = RequestViewController(restaurant: restaurant)
 
             self.view.coverHorizontalPresent()
             controller.modalPresentationStyle = .overCurrentContext

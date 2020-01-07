@@ -23,7 +23,7 @@ const Table = (props) => {
                 setOverdue(true);
             }
         }
-    }, []);
+    }, [overdue, table.status, table.serveTime]);
 
     /**
      * Called every 5 seconds
@@ -37,14 +37,9 @@ const Table = (props) => {
         }
     }, refreshPeriod);
 
-    const badgeInvisibilty = (table.status === TableStatus.available
-        || table.status === TableStatus.seated
-        || table.status === TableStatus.served
-        || (table.status === TableStatus.approved && !overdue))
-
     return (
-        <div className="table" style={overdue ? TableStatusStyle.requested : TableStatusStyle[table.status]}>
-            <Badge badgeContent={<TableBadge table={table} overdue={overdue}/>} color="primary" invisible={badgeInvisibilty}>
+        <div className="table" style={overdue || table.newRequest ? TableStatusStyle.requested : TableStatusStyle[table.status]}>
+            <Badge badgeContent={<TableBadge table={table} overdue={overdue} />} color="primary" invisible={table.status === TableStatus.available}>
                 <div className="table-inside">
                     <p className="table-name">{table.name}</p>
                     <p className="table-desc">{overdue ? 'Order Overdue' : TableStatusText[table.status]}</p>

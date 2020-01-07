@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 
-import { getPrice, randomNumber } from '../../../../catalog/Others';
+import { getPrice, randomNumber, specialInstructionsId } from '../../../../catalog/Others';
 import { getDateTimeFromTimeStamp, getTimeInAMPM } from '../../../../catalog/TimesDates';
 
 const OrderDishes = (props) => {
@@ -19,26 +19,33 @@ const OrderDishes = (props) => {
                         <CardHeader title={dish.name} subheader={`Ordered at: ${getTimeInAMPM(getDateTimeFromTimeStamp(dish.created))}`} />
                             <CardContent>
                                 {dish.extras ? 
-                                    Object.keys(dish.extras).map((extra) => {
+                                    dish.extras.map((extra) => {
                                         return (
-                                            <div key={randomNumber()}>
-                                                <Typography variant="body1" color="textPrimary" component="p">
-                                                    {extra}
-                                                </Typography>
-                                                <Typography className="sub-header" variant="body2" color="textSecondary" component="p">
-                                                    {dish.extras[extra]}
-                                                </Typography>
-                                            </div>
+                                            extra.options && extra.options.length > 0 ? 
+                                                <div key={randomNumber()}>
+                                                    <Typography variant="body1" color="textPrimary" component="p">
+                                                        {extra.title === specialInstructionsId ? "Special Instructions" : extra.title}
+                                                    </Typography>
+                                                        {extra.options.map((option) => {
+                                                            return (
+                                                                <Typography key={randomNumber()} className="sub-header" variant="body2" color="textSecondary" component="p">
+                                                                    {option.title}
+                                                                </Typography>
+                                                            )
+                                                        })}
+                                                </div>
+                                            : null
                                         );
-                                    }) : null }
-                                    <div key={randomNumber()}>
-                                        <Typography variant="body1" color="textPrimary" component="p">
-                                            Price
-                                        </Typography>
-                                        <Typography className="sub-header" variant="body2" color="textSecondary" component="p">
-                                            {`$${getPrice(dish.price)}`}
-                                        </Typography>
-                                    </div>
+                                    }) : null 
+                                }
+                                <div key={randomNumber()}>
+                                    <Typography variant="body1" color="textPrimary" component="p">
+                                        Price
+                                    </Typography>
+                                    <Typography className="sub-header" variant="body2" color="textSecondary" component="p">
+                                        {`$${getPrice(dish.price)}`}
+                                    </Typography>
+                                </div>
                             </CardContent>
                     </Card>
                 );

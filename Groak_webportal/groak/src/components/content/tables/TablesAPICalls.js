@@ -2,7 +2,7 @@
  * This class includes tables related functions such as fetching table, updating table etc.
  */
 import { addTableFirestoreAPI, fetchTablesFirestoreAPI, fetchTableFirestoreAPI, updateTableFirestoreAPI, deleteTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
-import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderUpdated, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest } from '../../../catalog/NotificationsComments';
+import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest } from '../../../catalog/NotificationsComments';
 import { TableStatus } from '../../../catalog/Others';
 
 let tablesSnapshot;
@@ -55,27 +55,28 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
         const getTables = (querySnapshot) => {
             querySnapshot.docChanges().forEach((change) => {
                 let oldStatus;
+                let oldNewRequest;
                 newTables = newTables.filter((table) => {
                     if (table.id === change.doc.id) {
                         oldStatus = table.status;
+                        oldNewRequest = table.newRequest
                     }
                     return (table.id !== change.doc.id);
                 });
                 newTables.push({ id: change.doc.id, ...change.doc.data() });
                 if (change.type === 'modified') {
-                    const { status } = change.doc.data();
+                    const { status, newRequest } = change.doc.data();
                     // This if is used to check if changes have occurred in status. We dont
                     // want to report any changes that occur on lets say the x and y coordinates of the table etc.
                     if (oldStatus !== status) {
                         if (status === TableStatus.ordered) {
                             snackbar(OrderAdded(change.doc.data().name), { variant: 'success' });
-                        } else if (status === TableStatus.updated) {
-                            snackbar(OrderUpdated(change.doc.data().name), { variant: 'info' });
-                        } else if (status === TableStatus.requested) {
-                            snackbar(SpecialRequest(change.doc.data().name), { variant: 'info' });
                         } else if (status === TableStatus.payment) {
                             snackbar(OrderReadyForPayment(change.doc.data().name), { variant: 'success' });
                         }
+                    }
+                    if (oldNewRequest !== newRequest) {
+                        snackbar(SpecialRequest(change.doc.data().name), { variant: 'success' });
                     }
                 }
             });

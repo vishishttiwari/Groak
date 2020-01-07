@@ -1,5 +1,5 @@
 //
-//  SpecialRequestsFooterView.swift
+//  RequestFooterView.swift
 //  Groak
 //
 //  Created by Vishisht Tiwari on 11/24/19.
@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-internal class SpecialReqiestsFooterView: UIView {
+internal class RequestFooterView: UIView {
     
     // Optional Closures
     internal var sendRequest: ((_ request: String) -> ())?
@@ -132,7 +132,7 @@ internal class SpecialReqiestsFooterView: UIView {
     }
 }
 
-extension SpecialReqiestsFooterView: UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
+extension RequestFooterView: UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -163,7 +163,7 @@ extension SpecialReqiestsFooterView: UICollectionViewDataSource, UICollectionVie
 // Text view does not have any placeholder so all this drama has to be done.
 // When the view is empty then it is replaced with gray text.
 // When the user is writing the if there is a gray text then it is all removed,
-extension SpecialReqiestsFooterView: UITextViewDelegate {
+extension RequestFooterView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil

@@ -12,12 +12,13 @@ export const iosAppLink = 'https://apps.apple.com/us/app/menu-door-menu-explorer
 export const refreshPeriod = 5000;
 export const cuisines = ['Asian Fusion', 'Bagels', 'Bakery', 'Bar/Lounge/Pub', 'Barbeque', 'Breakfast', 'British', 'Brunch', 'Buffets', 'Burgers', 'Cajun/Creole', 'Caribbean', 'Chinese', 'Coffee/Espresso', 'Country Food', 'Cuban', 'Deli', 'Doughnuts', 'Family Fare', 'Fast Food', 'Fine Dining', 'Food Trucks', 'French', 'German', 'Gluten-free', 'Greek', 'Hot Dogs', 'Ice Cream', 'Indian', 'Irish', 'Italian', 'Japanese', 'Latin American', 'Live Entertainment', 'Mediterranean', 'Mexican', 'Nouvelle', 'Pancakes/Waffles', 'Pizza', 'Polish', 'Sandwiches', 'Seafood', 'Soul Food', 'Soup & Salad', 'Southern', 'Spanish', 'Sports Bar', 'Steaks', 'Sushi', 'Tapas', 'Thai', 'Vegan Friendly', 'Vegetarian'];
 
+// This cell is used as a special id for special instructions cell in the whole project
+export const  specialInstructionsId = "specialInstructionsCellIdABCD1234"
+
 export const TableStatus = {
     available: 'available',
     seated: 'seated',
     ordered: 'ordered',
-    updated: 'updated',
-    requested: 'requested',
     approved: 'approved',
     served: 'served',
     payment: 'payment',
@@ -27,8 +28,6 @@ export const TableStatusText = {
     available: 'Table Available',
     seated: 'Customers are seated',
     ordered: 'Order Requested',
-    updated: 'Order Updated',
-    requested: 'Special requests',
     approved: 'Order Approved',
     served: 'Order Served',
     payment: 'Ready for Payment',
@@ -38,7 +37,6 @@ export const TableStatusStyle = {
     available: { backgroundColor: CSSVariables.tableGreenColor },
     seated: { backgroundColor: CSSVariables.tableOrangeColor },
     ordered: { backgroundColor: CSSVariables.tableRedColor },
-    updated: { backgroundColor: CSSVariables.tableRedColor },
     requested: { backgroundColor: CSSVariables.tableRedColor },
     approved: { backgroundColor: CSSVariables.tableOrangeColor },
     served: { backgroundColor: CSSVariables.tableOrangeColor },
