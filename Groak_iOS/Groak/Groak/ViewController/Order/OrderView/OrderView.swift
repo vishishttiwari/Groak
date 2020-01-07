@@ -12,8 +12,8 @@ import UIKit
 import Firebase
 
 internal class OrderView: UITableView {
-    internal let newRefreshControl = UIRefreshControl()
     
+    // Optional Closures
     internal var instructionSent: (() -> ())?
 
     private let headerCellId = "headerCellId"
@@ -41,16 +41,6 @@ internal class OrderView: UITableView {
         self.showsVerticalScrollIndicator = false
         
         self.keyboardDismissMode = .onDrag
-        
-        self.newRefreshControl.backgroundColor = ColorsCatalog.themeColor
-        self.newRefreshControl.tintColor = .white
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: FontCatalog.fontLevels[1], size: 20)]
-        self.newRefreshControl.attributedTitle = NSAttributedString.init(string: "Pull to refresh order", attributes: attributes as [NSAttributedString.Key : Any])
-        if #available(iOS 10.0, *) {
-            self.refreshControl = newRefreshControl
-        } else {
-            self.addSubview(newRefreshControl)
-        }
         
         self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight

@@ -90,7 +90,6 @@ internal class OrderViewController: UIViewController {
     private func setupOrderView() {
         orderView = OrderView.init(viewController: self)
         self.view.addSubview(orderView!)
-        orderView?.newRefreshControl.addTarget(self, action: #selector(downloadOrder), for: .valueChanged)
         
         orderView?.instructionSent = { () -> () in
             Catalog.alert(vc: self, title: "Instruction Sent", message: "Restaurant has been notified")
@@ -167,7 +166,6 @@ internal class OrderViewController: UIViewController {
     }
     
     // This function downloads the order at start and also at refresh
-    // TODO: I think I dont need to do pull to refresh because order has a snapshot receiver so it should be updated on its own
     @objc private func downloadOrder() {
         let fsOrder = LocalRestaurant.fsOrders
         
@@ -179,10 +177,6 @@ internal class OrderViewController: UIViewController {
             self.orderView?.reloadData()
             self.footer.reload()
             self.header.showWhichOrder?.isUserInteractionEnabled = true
-        }
-        if self.orderView?.refreshControl?.isRefreshing ?? false
-        {
-            self.orderView?.refreshControl?.endRefreshing()
         }
     }
     
