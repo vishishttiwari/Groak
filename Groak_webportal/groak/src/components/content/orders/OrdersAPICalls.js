@@ -51,8 +51,8 @@ export const unsubscribeFetchOrderAPI = (snackbar) => {
 export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) => {
     try {
         let newNewOrders = [...state.newOrders];
-        let newUpdatedOrders = [...state.updatedOrders];
-        let newCurrentOrders = [...state.currentOrders];
+        let newNewRequests = [...state.requests];
+        let newApprovedOrders = [...state.approvedOrders];
         let newOverdueOrders = [...state.overdueOrders];
         let newServedOrders = [...state.servedOrders];
         let newPaymentOrders = [...state.paymentOrders];
@@ -61,16 +61,16 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                 // This is called whenever the orders page is loaded. This calls no notifications
                 // The modified if is called whenever something is changed while we are at the page.
                 if (change.type === 'added') {
-                    const { status } = change.doc.data();
+                    const { status, newRequest } = change.doc.data();
                     if (status === TableStatus.ordered) {
                         newNewOrders.unshift({ id: change.doc.id, ...change.doc.data() });
-                    } else if (status === TableStatus.updated || status === TableStatus.requested) {
-                        newUpdatedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
+                    } else if (status !== TableStatus.ordered && status !== TableStatus.payment && newRequest) {
+                        newNewRequests.unshift({ id: change.doc.id, ...change.doc.data() });
                     } else if (status === TableStatus.approved) {
                         if (differenceInMinutesFromNow(change.doc.data().serveTime) < 0) {
                             newOverdueOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         } else {
-                            newCurrentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
+                            newApprovedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         }
                     } else if (status === TableStatus.served) {
                         newServedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
@@ -78,15 +78,15 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                         newPaymentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                     }
                 } else if (change.type === 'modified') {
-                    const { status } = change.doc.data();
+                    const { status, newRequest } = change.doc.data();
                     // First delete this order from every other table and then add it to whichever table it needs to be added
                     newNewOrders = newNewOrders.filter((order) => {
                         return (order.id !== change.doc.id);
                     });
-                    newUpdatedOrders = newUpdatedOrders.filter((order) => {
+                    newNewRequests = newNewRequests.filter((order) => {
                         return (order.id !== change.doc.id);
                     });
-                    newCurrentOrders = newCurrentOrders.filter((order) => {
+                    newApprovedOrders = newApprovedOrders.filter((order) => {
                         return (order.id !== change.doc.id);
                     });
                     newOverdueOrders = newOverdueOrders.filter((order) => {
@@ -102,14 +102,14 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                     if (status === TableStatus.ordered) {
                         newNewOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         snackbar(OrderAdded(change.doc.data().table), { variant: 'success' });
-                    } else if (status === TableStatus.updated || status === TableStatus.requested) {
-                        newUpdatedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
+                    } else if (status !== TableStatus.ordered && status !== TableStatus.payment && newRequest) {
+                        newNewRequests.unshift({ id: change.doc.id, ...change.doc.data() });
                         snackbar(OrderUpdated(change.doc.data().table), { variant: 'info' });
                     } else if (status === TableStatus.approved) {
                         if (differenceInMinutesFromNow(change.doc.data().serveTime) < 0) {
                             newOverdueOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         } else {
-                            newCurrentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
+                            newApprovedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                         }
                     } else if (status === TableStatus.served) {
                         newServedOrders.unshift({ id: change.doc.id, ...change.doc.data() });
@@ -121,8 +121,8 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
             });
             setState({ type: 'fetchOrders',
                 newOrders: newNewOrders,
-                updatedOrders: newUpdatedOrders,
-                currentOrders: newCurrentOrders,
+                requests: newNewRequests,
+                approvedOrders: newApprovedOrders,
                 overdueOrders: newOverdueOrders,
                 servedOrders: newServedOrders,
                 paymentOrders: newPaymentOrders,

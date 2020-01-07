@@ -117,7 +117,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
                 cell.status.text = "Your order will be served at \(TimeCatalog.getTimeFromTimestamp(timestamp: self.order.serveTime))"
             } else if self.order.status == TableStatus.served {
                 cell.status.text = "Your order has been served. Enjoy!"
-            } else if self.order.status == TableStatus.served {
+            } else if self.order.status == TableStatus.payment {
                 cell.status.text = "You have requested for payment. Someone will be at your table soon."
             } else {
                 cell.status.text = "Your order has been requested. Pending for approval."

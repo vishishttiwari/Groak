@@ -1,17 +1,19 @@
 /**
  * This component is used to represent each table in Orders Table
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { context } from '../../../../globalState/globalState';
 
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
 
 import { differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { refreshPeriod, useInterval, calculatePriceFromDishes } from '../../../../catalog/Others';
+import { refreshPeriod, useInterval, calculatePriceFromDishesWithTax } from '../../../../catalog/Others';
 
 const OrdersTable = (props) => {
     const { title, button, orders = [], onClick, onButtonClick, serveTime } = props;
     const [timeLeft, setTimeLeft] = useState([]);
+    const { globalState } = useContext(context);
 
     /**
      * Following describe the different columns that are there when lets say button is provided etc.
@@ -112,7 +114,7 @@ const OrdersTable = (props) => {
                                             {order.items}
                                         </TableCell>
                                         <TableCell width={columns.price.width} align={columns.price.align}>
-                                            {`$${calculatePriceFromDishes(order.dishes)}`}
+                                            {`$${calculatePriceFromDishesWithTax(order.dishes, globalState.restaurant.salesTax)}`}
                                         </TableCell>
                                         {serveTime ? (
                                             <>

@@ -72,7 +72,7 @@ internal class FirestoreAPICallsRequests {
             requests.requests.append(request)
 
             transaction.updateData(["requests": requests.convertRequestsToDictionary()], forDocument: requestsReference)
-            transaction.updateData(["newRequest": true], forDocument: orderReference)
+            transaction.updateData(["newRequest": true, "updated": Timestamp.init()], forDocument: orderReference)
             transaction.updateData(["newRequest": true], forDocument: tableReference)
             transaction.updateData(["newRequest": true], forDocument: tableOriginalReference)
             

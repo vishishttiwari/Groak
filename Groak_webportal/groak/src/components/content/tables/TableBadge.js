@@ -19,7 +19,7 @@ const TableBadge = (props) => {
     var image
     if (table.status === TableStatus.ordered)
         image = <img draggable="false" className="table-badge-image" src={FoodBadgeImage} alt={"foodBadgeImage"} />
-    else if (table.status === TableStatus.approved && table.newRequest)
+    else if (table.status !== TableStatus.ordered && table.status !== TableStatus.payment && table.newRequest)
         image = <img draggable="false" className="table-badge-image" src={RequestBadgeImage} alt={"requestbadgeImage"} />
     else if (table.status === TableStatus.payment)
         image = <img draggable="false" className="table-badge-image" src={PaymentBadgeImage} alt={"paymentbadgeImage"} />

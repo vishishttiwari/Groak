@@ -39,7 +39,7 @@ const Table = (props) => {
 
     return (
         <div className="table" style={overdue || table.newRequest ? TableStatusStyle.requested : TableStatusStyle[table.status]}>
-            <Badge badgeContent={<TableBadge table={table} overdue={overdue} />} color="primary" invisible={table.status === TableStatus.available}>
+            <Badge badgeContent={<TableBadge table={table} overdue={overdue} />} color="primary" invisible={table.status === TableStatus.available && !overdue && !table.newRequest}>
                 <div className="table-inside">
                     <p className="table-name">{table.name}</p>
                     <p className="table-desc">{overdue ? 'Order Overdue' : TableStatusText[table.status]}</p>

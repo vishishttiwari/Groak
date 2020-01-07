@@ -91,7 +91,7 @@ const ShowTableAlert = (props) => {
                     Cancel
                 </Button>
                 <Button className="table-alert-button" onClick={qrCodeHandler} variant="outlined" disabled={!state || !state.initialName || state.initialName.length === 0}>
-                    Barcode
+                    QR Code
                 </Button>
                 <Button className="table-alert-button" onClick={() => { updateHandler(state.table); }} variant="outlined" disabled={!state.table || !state.table.name || state.table.name.length === 0}>
                     Update

@@ -17,8 +17,8 @@ import Spinner from '../../../ui/spinner/Spinner';
 
 const initialState = {
     newOrders: [],
-    updatedOrders: [],
-    currentOrders: [],
+    requests: [],
+    approvedOrders: [],
     overdueOrders: [],
     servedOrders: [],
     paymentOrders: [],
@@ -31,8 +31,8 @@ function reducer(state, action) {
         case 'fetchOrders':
             return { ...state,
                 newOrders: action.newOrders,
-                updatedOrders: action.updatedOrders,
-                currentOrders: action.currentOrders,
+                requests: action.requests,
+                approvedOrders: action.approvedOrders,
                 overdueOrders: action.overdueOrders,
                 servedOrders: action.servedOrders,
                 paymentOrders: action.paymentOrders,
@@ -40,10 +40,10 @@ function reducer(state, action) {
             };
         case 'setNewOrders':
             return { ...state, newOrders: action.newOrders };
-        case 'setUpdatedOrders':
-            return { ...state, updatedOrders: action.updatedOrders };
-        case 'setCurrentOrders':
-            return { ...state, currentOrders: action.currentOrders };
+        case 'setRequests':
+            return { ...state, requests: action.requests };
+        case 'setApprovedOrders':
+            return { ...state, approvedOrders: action.approvedOrders };
         case 'setOverdueOrders':
             return { ...state, overdueOrders: action.overdueOrders };
         case 'setServedOrders':
@@ -68,18 +68,18 @@ const Orders = (props) => {
      * has gone overdue
      */
     function determineOverdueOrders() {
-        let newCurrentOrders = [...state.currentOrders];
+        let newApprovedOrders = [...state.approvedOrders];
         const newOverdueOrders = [...state.overdueOrders];
-        state.currentOrders.forEach((order) => {
+        state.approvedOrders.forEach((order) => {
             if (differenceInMinutesFromNow(order.serveTime) < 0) {
-                newCurrentOrders = newCurrentOrders.filter((order1) => {
+                newApprovedOrders = newApprovedOrders.filter((order1) => {
                     return (order1.id !== order.id);
                 });
                 newOverdueOrders.unshift(order);
                 enqueueSnackbar(OrderLate(order.table), { variant: 'error' });
             }
         });
-        setState({ type: 'setCurrentOrders', currentOrders: newCurrentOrders });
+        setState({ type: 'setApprovedOrders', approvedOrders: newApprovedOrders });
         setState({ type: 'setOverdueOrders', overdueOrders: newOverdueOrders });
     }
 
@@ -99,7 +99,7 @@ const Orders = (props) => {
         return () => {
             unsubscribeFetchOrdersAPI(enqueueSnackbar);
         };
-    }, []);
+    }, [enqueueSnackbar, globalState.restaurantId]);
 
     /**
      * This function is used whenever the order row is pressed
@@ -139,9 +139,9 @@ const Orders = (props) => {
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
-                    <OrdersTable title="New Orders" orders={state.newOrders} onClick={clickHandler} />
-                    <OrdersTable title="Orders Updated or Special Requests" orders={state.updatedOrders} onClick={clickHandler} serveTime />
-                    <OrdersTable title="Due Orders" button="Served" orders={state.currentOrders} onClick={clickHandler} onButtonClick={servedClickHandler} serveTime />
+                    <OrdersTable title="Orders" orders={state.newOrders} onClick={clickHandler} />
+                    <OrdersTable title="Requests" orders={state.requests} onClick={clickHandler} serveTime />
+                    <OrdersTable title="Due Orders" button="Served" orders={state.approvedOrders} onClick={clickHandler} onButtonClick={servedClickHandler} serveTime />
                     <OrdersTable title="Overdue Orders" button="Served" orders={state.overdueOrders} onClick={clickHandler} onButtonClick={servedClickHandler} serveTime />
                     <OrdersTable title="Served Orders" orders={state.servedOrders} onClick={clickHandler} />
                     <OrdersTable title="Orders ready for payment" button="Paid" orders={state.paymentOrders} onClick={clickHandler} onButtonClick={paidClickHandler} />
