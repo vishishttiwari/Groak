@@ -62,10 +62,13 @@ export const getTimeInAMPM = (date) => {
  * @param {*} minutes to be converted
  */
 export const getTimeInAMPMFromMinutesComplete = (minutes) => {
-    let hour = (minutes / 60).toFixed(0);
+    let hour = Math.floor(minutes / 60).toFixed(0);
     const minute = (minutes % 60).toFixed(0);
     const PM = hour > 11;
-    hour -= hour > 12 ? 12 : 0;
+    if (parseFloat(hour) === 0) {
+        hour = 12
+    } else
+        hour -= hour > 12 ? 12 : 0;
     return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()} ${PM ? 'PM' : 'AM'}`;
 };
 
@@ -75,16 +78,16 @@ export const getTimeInAMPMFromMinutesComplete = (minutes) => {
  * @param {*} minutes to be converted
  */
 export const getTimeIn24FromMinutes = (minutes) => {
-    const hour = (minutes / 60).toFixed(0);
+    const hour = Math.floor(minutes / 60).toFixed(0);
     const minute = (minutes % 60).toFixed(0);
     return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()}`;
 };
 
 /**
-     * This function is used for getting time in AM and PM from time stamp
-     *
-     * @param {*} orderServeTime serve time in timestamp
-     */
+ * This function is used for getting time in AM and PM from time stamp
+ *
+ * @param {*} orderServeTime serve time in timestamp
+ */
 export const getTimeInAMPMFromTimeStamp = (timeStamp) => {
     return getTimeInAMPM(getDateTimeFromTimeStamp(timeStamp));
 };

@@ -119,6 +119,7 @@
 		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
 		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
 		693648A723C320EA00D23631 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
+		693648A923C5649E00D23631 /* Groak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Groak.entitlements; sourceTree = "<group>"; };
 		6978388223A9FF2200C06EEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6978388423B6C38300C06EEB /* DishInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishInfoCell.swift; sourceTree = "<group>"; };
 		69A5879F23A9DF2E003C9D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -495,6 +496,7 @@
 		7CDDD9CD237374C000C6EF37 /* Groak */ = {
 			isa = PBXGroup;
 			children = (
+				693648A923C5649E00D23631 /* Groak.entitlements */,
 				7CDDD9CE237374C000C6EF37 /* AppDelegate.swift */,
 				7C25A4722374FE24009F26F9 /* Catalog */,
 				7C0B8A91239774130005F093 /* LocalStorage */,
@@ -998,6 +1000,7 @@
 			baseConfigurationReference = 3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Groak/Groak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V48W32Q848;
@@ -1021,6 +1024,7 @@
 			baseConfigurationReference = 5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Groak/Groak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V48W32Q848;
