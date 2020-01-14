@@ -79,21 +79,34 @@ internal class ReceiptViewController: ViewControllerWithPan {
         self.view.addSubview(footer)
         
         footer.saveToCameraRoll = { () -> () in
+            guard let image = self.receiptView.createImage() else {
+                Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")
+                return
+            }
+            
             let photos = PHPhotoLibrary.authorizationStatus()
             if photos == .notDetermined || photos == .denied || photos == .restricted {
-                DispatchQueue.main.async {
-                    PHPhotoLibrary.requestAuthorization({status in
-                        if status == .authorized {
-                            Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
-                            UIImageWriteToSavedPhotosAlbum(self.receiptView.asImage(), nil, nil, nil)
-                        } else {
-                            Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")
+                PHPhotoLibrary.requestAuthorization({status in
+                    if status == .authorized {
+                        DispatchQueue.main.async {
+                            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
                         }
-                    })
-                }
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Access to camera roll not authorized", message: "Groak would like to access the camera roll to save receipts", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                            alert.addAction(UIAlertAction(title: "Go To Settings", style: .default, handler: { (UIAlertAction) in
+                                if let bundleId = Bundle.main.bundleIdentifier,
+                                  let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {
+                                  UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                }
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                })
             } else if photos == .authorized {
-                Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
-                UIImageWriteToSavedPhotosAlbum(self.receiptView.asImage(), nil, nil, nil)
+                UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.savedImage), nil)
             }
         }
         
@@ -102,6 +115,14 @@ internal class ReceiptViewController: ViewControllerWithPan {
         footer.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         footer.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerFooterDimensions.heightNormalWithBarItem).isActive = true
         footer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
+    @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
+        if let _ = error {
+            Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")
+            return
+        }
+        Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
     }
     
     required init?(coder aDecoder: NSCoder) {

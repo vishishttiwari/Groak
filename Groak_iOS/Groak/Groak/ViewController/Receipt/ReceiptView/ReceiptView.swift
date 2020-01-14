@@ -29,7 +29,7 @@ internal class ReceiptView: UITableView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        self.separatorStyle = .none
+        self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
         let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)
@@ -54,6 +54,40 @@ internal class ReceiptView: UITableView {
             }
         }
         reloadData()
+    }
+    
+    func createImage() -> UIImage? {
+        var totalHeight: CGFloat = 0
+        let receiptInfo = RestaurantInfo.init()
+        let orderPrice = OrderPrice.init(order: order)
+        totalHeight += receiptInfo.getHeight() + orderPrice.getHeight()
+        for dish in order.dishes {
+            let receiptOrderDish = ReceiptOrderDish.init(dish: dish)
+            totalHeight += receiptOrderDish.getHeight()
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize.init(width: DimensionsCatalog.screenSize.width, height: totalHeight), true, 0)
+        if let _ = UIGraphicsGetCurrentContext() {
+            var height: CGFloat = 0
+            
+            receiptInfo.asImage().draw(in: CGRect.init(x: 0, y: height, width: DimensionsCatalog.screenSize.width, height: receiptInfo.getHeight()))
+            height += receiptInfo.getHeight()
+            orderPrice.asImage().draw(in: CGRect.init(x: 0, y: height, width: DimensionsCatalog.screenSize.width, height: orderPrice.getHeight()))
+            height += orderPrice.getHeight()
+            
+            for dish in order.dishes {
+                let receiptOrderDish = ReceiptOrderDish.init(dish: dish)
+                receiptOrderDish.asImage().draw(in: CGRect.init(x: 0, y: height, width: DimensionsCatalog.screenSize.width, height: receiptOrderDish.getHeight()))
+                height += receiptOrderDish.getHeight()
+            }
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return image
+        } else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

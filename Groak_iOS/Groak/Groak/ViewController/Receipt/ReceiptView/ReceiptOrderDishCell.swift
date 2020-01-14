@@ -43,10 +43,6 @@ internal class ReceiptOrderDishCell: UITableViewCell {
         setupInitialLayout()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func setupViews() {
         self.backgroundColor = .white
         self.isUserInteractionEnabled = false
@@ -103,17 +99,14 @@ internal class ReceiptOrderDishCell: UITableViewCell {
         
         quantity.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         quantity.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        quantity.heightAnchor.constraint(equalToConstant: textHeight).isActive = true
         quantity.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/10).isActive = true
         
         name.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         name.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        name.heightAnchor.constraint(equalToConstant: textHeight).isActive = true
         name.widthAnchor.constraint(equalToConstant: 2*DimensionsCatalog.screenSize.width/3).isActive = true
         
         price.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         price.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        price.heightAnchor.constraint(equalToConstant: textHeight).isActive = true
         price.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
         
         localBadgeView.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
@@ -123,5 +116,9 @@ internal class ReceiptOrderDishCell: UITableViewCell {
         created.centerYAnchor.constraint(equalTo: localBadgeView.centerYAnchor).isActive = true
         created.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/2).isActive = true
         created.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

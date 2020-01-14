@@ -62,10 +62,14 @@ internal class Catalog {
             }
         }
         
-        let index = str.index(str.endIndex, offsetBy: -1)
-        
-        if str.count > 2 && str.suffix(from: index) == "\n" {
-            return String(str.dropLast(1))
+        if str.count > 2 {
+            let index = str.index(str.endIndex, offsetBy: -1)
+            
+            if str.suffix(from: index) == "\n" {
+                return String(str.dropLast(1))
+            } else {
+                return str
+            }
         } else {
             return str
         }

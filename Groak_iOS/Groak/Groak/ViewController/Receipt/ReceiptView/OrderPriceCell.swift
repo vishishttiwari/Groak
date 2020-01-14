@@ -43,10 +43,6 @@ internal class OrderPriceCell: UITableViewCell {
         setupInitialLayout()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func setupViews() {
         self.backgroundColor = .white
         self.isUserInteractionEnabled = false
@@ -129,5 +125,9 @@ internal class OrderPriceCell: UITableViewCell {
         salesTax.centerYAnchor.constraint(equalTo: salesTaxLabel.centerYAnchor).isActive = true
         salesTax.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         salesTax.leftAnchor.constraint(equalTo: salesTaxLabel.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

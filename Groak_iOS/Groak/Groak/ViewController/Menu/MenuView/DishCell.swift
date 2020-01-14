@@ -203,12 +203,10 @@ internal class DishCell: UITableViewCell {
         dishName.topAnchor.constraint(equalTo: dishImage.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishName.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         dishName.widthAnchor.constraint(equalToConstant: 3*self.frame.width/4).isActive = true
-        dishName.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
         
         dishPrice.topAnchor.constraint(equalTo: dishImage.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishPrice.widthAnchor.constraint(equalToConstant: self.frame.width/3).isActive = true
         dishPrice.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
-        dishPrice.heightAnchor.constraint(equalToConstant: titleDimensions).isActive = true
         
         restrictions.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restrictions.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true

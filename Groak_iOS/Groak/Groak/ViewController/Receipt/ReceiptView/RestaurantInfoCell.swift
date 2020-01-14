@@ -28,15 +28,12 @@ internal class RestaurantInfoCell: UITableViewCell {
         setupInitialLayout()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func setupViews() {
         self.backgroundColor = .white
         self.isUserInteractionEnabled = false
         
         restaurantName.isHidden = LocalRestaurant.restaurant.restaurant?.logo.count != 0
+        restaurantName.text = LocalRestaurant.restaurant.restaurant?.name
         restaurantName.textAlignment = .center
         restaurantName.backgroundColor = .clear
         restaurantName.font = UIFont(name: FontCatalog.fontLevels[1], size: restaurantTitleHeight)!
@@ -101,5 +98,9 @@ internal class RestaurantInfoCell: UITableViewCell {
         currentDateTime.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         currentDateTime.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         currentDateTime.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

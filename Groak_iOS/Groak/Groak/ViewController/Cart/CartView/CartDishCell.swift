@@ -104,18 +104,15 @@ internal class CartDishCell: UITableViewCell {
         
         quantity.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         quantity.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        quantity.heightAnchor.constraint(equalToConstant: dishHeight).isActive = true
         quantity.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/10).isActive = true
         
         name.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         name.leftAnchor.constraint(equalTo: quantity.rightAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
-        name.heightAnchor.constraint(equalToConstant: dishHeight).isActive = true
         name.widthAnchor.constraint(equalToConstant: 2*DimensionsCatalog.screenSize.width/3).isActive = true
         name.bottomAnchor.constraint(equalTo: details.topAnchor, constant: -2*DimensionsCatalog.distanceBetweenElements).isActive = true
         
         price.topAnchor.constraint(equalTo: container.topAnchor, constant: 2*DimensionsCatalog.distanceBetweenElements).isActive = true
         price.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        price.heightAnchor.constraint(equalToConstant: dishHeight).isActive = true
         price.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
         
         details.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
