@@ -70,7 +70,7 @@ export const ErrorUnsubscribingOrders = 'Error unsubscribing orders';
 export const ErrorUnsubscribingOrder = 'Error unsubscribing order';
 
 export const ErrorFetchingRequest = 'Error fetching requests';
-export const ErrorUpdatingRequest= 'Error sending your response. Please try again.';
+export const ErrorUpdatingRequest = 'Error sending your response. Please try again.';
 export const ErrorUnsubscribingRequest = 'Error unsubscribing requests';
 
 export const OrderAdded = (table) => {

@@ -22,13 +22,12 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
         batch.update(db.collection('tables').doc(orderId), { status: data.status, newRequest: false });
         const newData = { ...data, updated: getCurrentDateTime(), comments: [], dishes: [], items: 0, newRequest: false };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
-        batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(orderId), {requests: DemoRequest});
+        batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(orderId), { requests: DemoRequest });
     } else if (data.status === TableStatus.approved) {
         if (data.serveTime) {
             batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, serveTime: data.serveTime });
             batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: data.serveTime });
-        }
-        else {
+        } else {
             batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status });
             batch.update(db.collection('tables').doc(orderId), { status: data.status });
         }

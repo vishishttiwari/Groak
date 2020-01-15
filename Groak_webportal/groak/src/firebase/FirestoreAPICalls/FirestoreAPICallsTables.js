@@ -2,7 +2,7 @@ import { db, getCurrentDateTime } from '../Firebase';
 import { createOrderReference } from './FirestoreAPICallsOrders';
 import { createRequestReference } from './FirestoreAPICallsRequests';
 import { TableStatus } from '../../catalog/Others';
-import { DemoRequest } from '../../catalog/Demo'
+import { DemoRequest } from '../../catalog/Demo';
 import { getCurrentDateTimePlusMinutes } from '../../catalog/TimesDates';
 
 export const createRestaurantReference = (restaurantId) => {

@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { context } from '../../../../globalState/globalState';
 
 import './css/OrderDetails.css';
-import { unsubscribeFetchOrderAPI, fetchOrderAPI , fetchRequestAPI, unsubscribeFetchRequestAPI } from '../OrdersAPICalls';
+import { unsubscribeFetchOrderAPI, fetchOrderAPI, fetchRequestAPI, unsubscribeFetchRequestAPI } from '../OrdersAPICalls';
 
 import OrderDishes from './OrderDishes';
 import OrderOthers from './OrderOthers';
@@ -59,7 +59,7 @@ const OrderDetails = (props) => {
 
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
-            unsubscribeFetchRequestAPI(enqueueSnackbar)
+            unsubscribeFetchRequestAPI(enqueueSnackbar);
         };
     }, [globalState, match.params.id, enqueueSnackbar]);
 

@@ -29,6 +29,7 @@ module.exports = {
     "react/prefer-stateless-function": "off",
     "react/prefer-default-export": "off",
     "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
     "arrow-body-style": ["error", "always"],
     "object-curly-newline": "off",
     "react/self-closing-comp": "off",

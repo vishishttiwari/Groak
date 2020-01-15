@@ -16,21 +16,22 @@ import ServedBadgeImage from '../../../assets/icons/tableBadge/served.png';
 const TableBadge = (props) => {
     const { table, overdue } = props;
 
-    var image
-    if (table.status === TableStatus.ordered)
-        image = <img draggable="false" className="table-badge-image" src={FoodBadgeImage} alt={"foodBadgeImage"} />
-    else if (table.status !== TableStatus.ordered && table.status !== TableStatus.payment && table.newRequest)
-        image = <img draggable="false" className="table-badge-image" src={RequestBadgeImage} alt={"requestbadgeImage"} />
-    else if (table.status === TableStatus.payment)
-        image = <img draggable="false" className="table-badge-image" src={PaymentBadgeImage} alt={"paymentbadgeImage"} />
-    else if (table.status === TableStatus.approved && overdue)
-        image = <img draggable="false" className="table-badge-image" src={OverdueBadgeImage} alt={"overduebadgeImage"} />
-    else if (table.status === TableStatus.seated)
-        image = <img draggable="false" className="table-badge-image" src={SeatedBadgeImage} alt={"seatedbadgeImage"} />
-    else if (table.status === TableStatus.approved && !overdue)
-        image = <img draggable="false" className="table-badge-image" src={ApprovedBadgeImage} alt={"approvedbadgeImage"} />
-    else if (table.status === TableStatus.served)
-        image = <img draggable="false" className="table-badge-image" src={ServedBadgeImage} alt={"servedbadgeImage"} />
+    let image;
+    if (table.status === TableStatus.ordered) {
+        image = <img draggable="false" className="table-badge-image" src={FoodBadgeImage} alt="foodBadgeImage" />;
+    } else if (table.status !== TableStatus.ordered && table.status !== TableStatus.payment && table.newRequest) {
+        image = <img draggable="false" className="table-badge-image" src={RequestBadgeImage} alt="requestbadgeImage" />;
+    } else if (table.status === TableStatus.payment) {
+        image = <img draggable="false" className="table-badge-image" src={PaymentBadgeImage} alt="paymentbadgeImage" />;
+    } else if (table.status === TableStatus.approved && overdue) {
+        image = <img draggable="false" className="table-badge-image" src={OverdueBadgeImage} alt="overduebadgeImage" />;
+    } else if (table.status === TableStatus.seated) {
+        image = <img draggable="false" className="table-badge-image" src={SeatedBadgeImage} alt="seatedbadgeImage" />;
+    } else if (table.status === TableStatus.approved && !overdue) {
+        image = <img draggable="false" className="table-badge-image" src={ApprovedBadgeImage} alt="approvedbadgeImage" />;
+    } else if (table.status === TableStatus.served) {
+        image = <img draggable="false" className="table-badge-image" src={ServedBadgeImage} alt="servedbadgeImage" />;
+    }
 
     return (
         <div className="table-badge">
@@ -41,7 +42,7 @@ const TableBadge = (props) => {
 
 TableBadge.propTypes = {
     table: PropTypes.object.isRequired,
-    overdue: PropTypes.bool.isRequired
+    overdue: PropTypes.bool.isRequired,
 };
 
 export default React.memo(TableBadge);

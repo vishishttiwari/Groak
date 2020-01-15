@@ -9,10 +9,10 @@ import { createCategoryReference } from '../firebase/FirestoreAPICalls/Firestore
 import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { createRequestReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { TableStatus } from './Others';
-import { getCurrentDateTimePlusMinutes } from './TimesDates'
+import { getCurrentDateTimePlusMinutes } from './TimesDates';
 
-export const DemoRestaurantType = ['Pizza']
-export const DemoRestaurantSalesTax = 9
+export const DemoRestaurantType = ['Pizza'];
+export const DemoRestaurantSalesTax = 9;
 export const DemoRestaurantQRStylePage = {
     pageSize: 'A4',
     qrStyleImage: 'Strawberries',
@@ -48,19 +48,19 @@ export const DemoOrderComments = [{ comment: 'Please make Tomato Soup extra spic
 // Once you have placed order for a dish, you cant add comments in the dish, you have to add it in order comments
 export const createDemoOrderDishes = (restaurantId, dishId) => {
     return [{
-        extras: [ {'title': DemoDishExtraTitle, 'options': [DemoDishExtraOptions1] } ],
+        extras: [{ title: DemoDishExtraTitle, options: [DemoDishExtraOptions1] }],
         created: getCurrentDateTime(),
         name: DemoDishName,
         price: DemoDishPrice,
         quantity: 1,
         reference: createDishReference(restaurantId, dishId),
-    }]
+    }];
 };
 
 export const DemoRequest = [{
     request: 'Welcome. Is there anything we can help you with?',
     created: getCurrentDateTime(),
-    createdByUser: false
+    createdByUser: false,
 }];
 
 /**
@@ -206,7 +206,7 @@ export const createDemoOrder = (restaurantId, orderId, dishId) => {
 
 /**
  * Thos function creates demo request
- * 
+ *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
  * @param {*} requestId id of the request for which order is placed. This is same as order id
  */
@@ -214,5 +214,5 @@ export const createDemoRequest = (restaurantId, requestId) => {
     return {
         reference: createRequestReference(restaurantId, requestId),
         requests: DemoRequest,
-    }
-}
+    };
+};

@@ -3,9 +3,8 @@
  */
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { context } from '../../../../globalState/globalState';
-
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
+import { context } from '../../../../globalState/globalState';
 
 import { differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
 import { refreshPeriod, useInterval, calculatePriceFromDishesWithTax } from '../../../../catalog/Others';

@@ -17,36 +17,37 @@ const OrderDishes = (props) => {
                 return (
                     <Card key={randomNumber()} className="card">
                         <CardHeader title={dish.name} subheader={`Ordered at: ${getTimeInAMPM(getDateTimeFromTimeStamp(dish.created))}`} />
-                            <CardContent>
-                                {dish.extras ? 
-                                    dish.extras.map((extra) => {
-                                        return (
-                                            extra.options && extra.options.length > 0 ? 
+                        <CardContent>
+                            {dish.extras
+                                ? dish.extras.map((extra) => {
+                                    return (
+                                        extra.options && extra.options.length > 0
+                                            ? (
                                                 <div className="dish-extra" key={randomNumber()}>
                                                     <Typography variant="body1" className="dish-extra-title" color="textPrimary" component="p">
-                                                        {extra.title === specialInstructionsId ? "Special Instructions" : extra.title}
+                                                        {extra.title === specialInstructionsId ? 'Special Instructions' : extra.title}
                                                     </Typography>
-                                                        {extra.options.map((option) => {
-                                                            return (
-                                                                <Typography key={randomNumber()} className="dish-extra-options" variant="body2" color="textSecondary" component="p">
-                                                                    {option.title}
-                                                                </Typography>
-                                                            )
-                                                        })}
+                                                    {extra.options.map((option) => {
+                                                        return (
+                                                            <Typography key={randomNumber()} className="dish-extra-options" variant="body2" color="textSecondary" component="p">
+                                                                {option.title}
+                                                            </Typography>
+                                                        );
+                                                    })}
                                                 </div>
+                                            )
                                             : null
-                                        );
-                                    }) : null 
-                                }
-                                <div key={randomNumber()}>
-                                    <Typography variant="body1" color="textPrimary" component="p">
+                                    );
+                                }) : null}
+                            <div key={randomNumber()}>
+                                <Typography variant="body1" color="textPrimary" component="p">
                                         Price
-                                    </Typography>
-                                    <Typography className="dish-price" variant="body2" color="textSecondary" component="p">
-                                        {`$${getPrice(dish.price)}`}
-                                    </Typography>
-                                </div>
-                            </CardContent>
+                                </Typography>
+                                <Typography className="dish-price" variant="body2" color="textSecondary" component="p">
+                                    {`$${getPrice(dish.price)}`}
+                                </Typography>
+                            </div>
+                        </CardContent>
                     </Card>
                 );
             })}

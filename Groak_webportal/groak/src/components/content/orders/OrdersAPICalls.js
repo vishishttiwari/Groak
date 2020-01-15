@@ -242,7 +242,7 @@ export const fetchRequestAPI = async (restaurantId, requestId, setState, snackba
  */
 export const updateRequestAPI = async (restaurantId, requestId, data, snackbar) => {
     try {
-        await updateRequestFirestoreAPI(restaurantId, requestId, data)
+        await updateRequestFirestoreAPI(restaurantId, requestId, data);
     } catch (error) {
         snackbar(ErrorUpdatingRequest, { variant: 'error' });
         unsubscribeFetchRequestAPI(snackbar);

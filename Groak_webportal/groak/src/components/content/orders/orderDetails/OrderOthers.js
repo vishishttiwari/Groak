@@ -29,7 +29,7 @@ const OrderOthers = (props) => {
     const { globalState } = useContext(context);
 
     // This ref is for the text field for comments for scrolling at the bottom
-    const requestEndRef = createRef()
+    const requestEndRef = createRef();
 
     const suggestionsImage = {
         sure: SureImage,
@@ -40,21 +40,19 @@ const OrderOthers = (props) => {
     };
 
     const suggestions = {
-        sure: "Sure, got it. We will get this done.",
-        weHave: "We do have that",
-        weDontHave: "Unfortunately, we dont have that",
-        come: "A waiter is on their way to your table.",
-        get: "Sure, we will get it to your table right away.",
+        sure: 'Sure, got it. We will get this done.',
+        weHave: 'We do have that',
+        weDontHave: 'Unfortunately, we dont have that',
+        come: 'A waiter is on their way to your table.',
+        get: 'Sure, we will get it to your table right away.',
     };
 
     useEffect(() => {
-        if (serveTimeFromServer && serveTimeFromServer.seconds)
-            setServeTime(differenceInMinutesFromNow(serveTimeFromServer));
+        if (serveTimeFromServer && serveTimeFromServer.seconds) { setServeTime(differenceInMinutesFromNow(serveTimeFromServer)); }
     }, [serveTimeFromServer]);
 
     useEffect(() => {
-        if (request && request.length > 0)
-            requestEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+        if (request && request.length > 0) { requestEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' }); }
     }, [request, requestEndRef]);
 
     /**
@@ -134,10 +132,10 @@ const OrderOthers = (props) => {
 
     const sendRequest = async () => {
         const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
-        const data = { requests: requests };
-        await updateRequestAPI(globalState.restaurantId, orderId, data, enqueueSnackbar)
-        setRequestReply('')
-    }
+        const data = { requests };
+        await updateRequestAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        setRequestReply('');
+    };
 
     return (
         <div className="order-others">
@@ -219,15 +217,18 @@ const OrderOthers = (props) => {
                     <CardHeader
                         title="Special Requests"
                     />
-                    <CardContent style={{maxHeight: 300, overflow: 'auto'}}>
-                        {request.map((request) => {
+                    <CardContent style={{ maxHeight: 300, overflow: 'auto' }}>
+                        {request.map((eachRequest) => {
                             return (
-                                <div className="comment" key={randomNumber()} 
-                                    style={request.createdByUser ? 
-                                        {marginLeft: 'auto', marginRight: '5px', color: 'black', backgroundColor: styles.secondaryColor} : 
-                                        {marginLeft: '5px', marginRight: 'auto', color: 'white', backgroundColor: styles.primaryColor}}>
-                                    <p className="comment-comment">{request.request}</p>
-                                    <p className="comment-created">{getTimeInAMPMFromTimeStamp(request.created)}</p>
+                                <div
+                                    className="comment"
+                                    key={randomNumber()}
+                                    style={eachRequest.createdByUser
+                                        ? { marginLeft: 'auto', marginRight: '5px', color: 'black', backgroundColor: styles.secondaryColor }
+                                        : { marginLeft: '5px', marginRight: 'auto', color: 'white', backgroundColor: styles.primaryColor }}
+                                >
+                                    <p className="comment-comment">{eachRequest.request}</p>
+                                    <p className="comment-created">{getTimeInAMPMFromTimeStamp(eachRequest.created)}</p>
                                 </div>
                             );
                         })}
@@ -242,18 +243,18 @@ const OrderOthers = (props) => {
                             onChange={(event) => { setRequestReply(event.target.value); }}
                             InputProps={{
                                 endAdornment: (
-                                  <InputAdornment position='end'>
-                                    <IconButton onClick={() => {sendRequest()}} >
-                                        <Send />
-                                    </IconButton>
-                                  </InputAdornment>
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={() => { sendRequest(); }}>
+                                            <Send />
+                                        </IconButton>
+                                    </InputAdornment>
                                 ),
-                              }}
+                            }}
                         />
                         <div className="suggestions" ref={requestEndRef}>
                             {Object.keys(suggestions).map((suggestion) => {
                                 return (
-                                    <div className="suggestion" key={randomNumber()} onClick={() => {setRequestReply(suggestions[suggestion]); }}>
+                                    <div className="suggestion" key={randomNumber()} onClick={() => { setRequestReply(suggestions[suggestion]); }}>
                                         <img draggable="false" className="suggestion-suggestion" src={suggestionsImage[suggestion]} alt={suggestions[suggestion]} />
                                     </div>
                                 );
@@ -338,14 +339,14 @@ OrderOthers.propTypes = {
     orderId: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired,
-    requests: PropTypes.array,
+    request: PropTypes.array,
     dishes: PropTypes.array.isRequired,
     serveTimeFromServer: PropTypes.object,
 };
 
 OrderOthers.defaultProps = {
     serveTimeFromServer: {},
-    requests: []
+    request: [],
 };
 
 export default withRouter(React.memo(withStyles(TextFieldLabelStyles)(OrderOthers)));

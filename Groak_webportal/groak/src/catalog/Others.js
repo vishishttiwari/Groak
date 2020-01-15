@@ -13,7 +13,7 @@ export const refreshPeriod = 5000;
 export const cuisines = ['Asian Fusion', 'Bagels', 'Bakery', 'Bar/Lounge/Pub', 'Barbeque', 'Breakfast', 'British', 'Brunch', 'Buffets', 'Burgers', 'Cajun/Creole', 'Caribbean', 'Chinese', 'Coffee/Espresso', 'Country Food', 'Cuban', 'Deli', 'Doughnuts', 'Family Fare', 'Fast Food', 'Fine Dining', 'Food Trucks', 'French', 'German', 'Gluten-free', 'Greek', 'Hot Dogs', 'Ice Cream', 'Indian', 'Irish', 'Italian', 'Japanese', 'Latin American', 'Live Entertainment', 'Mediterranean', 'Mexican', 'Nouvelle', 'Pancakes/Waffles', 'Pizza', 'Polish', 'Sandwiches', 'Seafood', 'Soul Food', 'Soup & Salad', 'Southern', 'Spanish', 'Sports Bar', 'Steaks', 'Sushi', 'Tapas', 'Thai', 'Vegan Friendly', 'Vegetarian'];
 
 // This cell is used as a special id for special instructions cell in the whole project
-export const  specialInstructionsId = "specialInstructionsCellIdABCD1234"
+export const specialInstructionsId = 'specialInstructionsCellIdABCD1234';
 
 export const TableStatus = {
     available: 'available',
@@ -98,9 +98,9 @@ export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    let totalPrice = price
-    price += price * salesTax/100
-    price -= totalPrice
+    const totalPrice = price;
+    price += price * (salesTax / 100);
+    price -= totalPrice;
     return price.toFixed(2);
 };
 
@@ -115,14 +115,14 @@ export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    price += price * salesTax/100
+    price += price * (salesTax / 100);
     return price.toFixed(2);
 };
 
 /**
  * This function gets price in right format
- * 
- * @param {*} price 
+ *
+ * @param {*} price
  */
 export const getPrice = (price) => {
     return price.toFixed(2);

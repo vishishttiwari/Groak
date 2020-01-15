@@ -66,9 +66,8 @@ export const getTimeInAMPMFromMinutesComplete = (minutes) => {
     const minute = (minutes % 60).toFixed(0);
     const PM = hour > 11;
     if (parseFloat(hour) === 0) {
-        hour = 12
-    } else
-        hour -= hour > 12 ? 12 : 0;
+        hour = 12;
+    } else { hour -= hour > 12 ? 12 : 0; }
     return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()} ${PM ? 'PM' : 'AM'}`;
 };
 
