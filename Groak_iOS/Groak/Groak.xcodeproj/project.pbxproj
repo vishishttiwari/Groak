@@ -12,7 +12,7 @@
 		69CEEA3C23CD6E7300EFB9AC /* RestaurantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */; };
 		69CEEA3E23CD6E8100EFB9AC /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */; };
 		69CEEA4023CD6E8D00EFB9AC /* ReceiptOrderDish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */; };
-		69CEEA4223CD92B400EFB9AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69CEEA4123CD92B400EFB9AC /* GoogleService-Info.plist */; };
+		69CEEA4423CEB45F00EFB9AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69CEEA4323CEB45F00EFB9AC /* GoogleService-Info.plist */; };
 		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
 		7C0B8A932397742D0005F093 /* LocalRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A922397742D0005F093 /* LocalRestaurant.swift */; };
 		7C0B8A95239774BE0005F093 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* Cart.swift */; };
@@ -127,7 +127,7 @@
 		69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantInfo.swift; sourceTree = "<group>"; };
 		69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
 		69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptOrderDish.swift; sourceTree = "<group>"; };
-		69CEEA4123CD92B400EFB9AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69CEEA4323CEB45F00EFB9AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C0B8A922397742D0005F093 /* LocalRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRestaurant.swift; sourceTree = "<group>"; };
 		7C0B8A94239774BE0005F093 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		7C0B8A9723977A9A0005F093 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -520,7 +520,7 @@
 				7CDDD9D7237374C100C6EF37 /* Assets.xcassets */,
 				7CDDD9D9237374C100C6EF37 /* LaunchScreen.storyboard */,
 				69A5879F23A9DF2E003C9D16 /* Info.plist */,
-				69CEEA4123CD92B400EFB9AC /* GoogleService-Info.plist */,
+				69CEEA4323CEB45F00EFB9AC /* GoogleService-Info.plist */,
 				7CDDD9CC237374C000C6EF37 /* Products */,
 			);
 			path = Groak;
@@ -724,7 +724,7 @@
 			files = (
 				7CDDD9DB237374C100C6EF37 /* LaunchScreen.storyboard in Resources */,
 				7CDDD9D8237374C100C6EF37 /* Assets.xcassets in Resources */,
-				69CEEA4223CD92B400EFB9AC /* GoogleService-Info.plist in Resources */,
+				69CEEA4423CEB45F00EFB9AC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

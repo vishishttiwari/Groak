@@ -4,16 +4,21 @@
  */
 import firebase from 'firebase';
 
-const config = {
-    apiKey: 'AIzaSyDj-sHwjRDiNgGs6BS9FVX9cTX7T5oS16Y',
-    authDomain: 'finedine-1.firebaseapp.com',
-    databaseURL: 'https://finedine-1.firebaseio.com',
-    projectId: 'finedine-1',
-    storageBucket: 'finedine-1.appspot.com',
-    messagingSenderId: '126653073255',
-    appId: '1:126653073255:web:ee1cfb1d8b8af18a',
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDtGWWB-3PlrB6pW5vEsvaRqrRv2vQKb_I",
+    authDomain: "groak-1.firebaseapp.com",
+    databaseURL: "https://groak-1.firebaseio.com",
+    projectId: "groak-1",
+    storageBucket: "groak-1.appspot.com",
+    messagingSenderId: "448899776119",
+    appId: "1:448899776119:web:dafbba5c1d8a38d5b7d072",
+    measurementId: "G-R1P29B7S4D"
 };
-firebase.initializeApp(config);
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 export const db = firebase.firestore();
 export const createGeoPoint = (latitude, longitude) => {

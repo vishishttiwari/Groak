@@ -24,7 +24,7 @@ export const DemoRestaurantQRStylePage = {
 export const DemoDishName = 'Tomato Soup';
 export const DemoDishPrice = 5.50;
 export const DemoDishIngredents = ['Tomatoes', 'Olive oil', 'Butter', 'Onion', 'Garlic', 'Oregano', 'Garlic', 'Flour', 'Sugar', 'Salt', 'Black Pepper'];
-export const DemoDishImage = 'https://firebasestorage.googleapis.com/v0/b/finedine-1.appspot.com/o/demo%2FdemoDishImage.jpg?alt=media&token=81e83ffb-4b5a-4f6b-9a77-ad8bc981db15';
+export const DemoDishImage = 'https://firebasestorage.googleapis.com/v0/b/groak-1.appspot.com/o/demo%2FdemoDishImage.jpg?alt=media&token=bc1c8787-1e39-4568-8360-41f9b5d724db';
 export const DemoDishDescription = 'Tomato soup is a soup made with tomatoes as the primary ingredient. It may be served hot or cold in a bowl, and may be made in a variety of ways. It may be smooth in texture, and there are also recipes which include chunks of tomato, cream and chicken or vegetable stock. Popular toppings for tomato soup include sour cream or croutons. In the United States, the soup is frequently served with crackers, which may be crumbled onto the soup by the diner, and a grilled cheese sandwich. Tomato soup is one of the top comfort foods in Poland and the United States. It can be made fresh by blanching tomatoes, removing the skins, then blending them into a puree.';
 export const DemoDishShortInfo = 'Rich and fragmant tomato soup, flavored with loads of garlic, oregano and gresh garlic.';
 export const DemoDishCalories = 30;
@@ -40,7 +40,7 @@ export const DemoCategoryName = 'Starters';
 // export const DemoCategoryStartTime = 540;
 // export const DemoCategoryEndTime = 1320;
 export const DemoCategoryStartTime = 0;
-export const DemoCategoryEndTime = 1339;
+export const DemoCategoryEndTime = 1439;
 
 export const DemoTableName = 'Demo Table 1';
 
@@ -48,7 +48,7 @@ export const DemoOrderComments = [{ comment: 'Please make Tomato Soup extra spic
 // Once you have placed order for a dish, you cant add comments in the dish, you have to add it in order comments
 export const createDemoOrderDishes = (restaurantId, dishId) => {
     return [{
-        extras: { 'Spicy?': DemoDishExtraOptions1.title },
+        extras: [ {'title': DemoDishExtraTitle, 'options': [DemoDishExtraOptions1] } ],
         created: getCurrentDateTime(),
         name: DemoDishName,
         price: DemoDishPrice,
