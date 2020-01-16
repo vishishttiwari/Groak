@@ -100,6 +100,18 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
             
             cell.title.text = defaulCells[indexPath.row]
             
+//            let size: CGFloat = 26
+//            let digits = CGFloat("\(AppDelegate.badgeCountRequest)".count) // digits in the label
+//            let width = max(size, 0.7 * size * digits) // perfect circle is smallest allowed
+//            let badge = UILabel(frame: CGRect.init(x: 0, y: 0, width: width, height: size))
+//            badge.text = "\(AppDelegate.badgeCountRequest)"
+//            badge.layer.cornerRadius = size / 2
+//            badge.layer.masksToBounds = true
+//            badge.textAlignment = .center
+//            badge.textColor = .white
+//            badge.backgroundColor = ColorsCatalog.themeColor
+//            cell.accessoryView = badge // !! change this line
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! DishCell

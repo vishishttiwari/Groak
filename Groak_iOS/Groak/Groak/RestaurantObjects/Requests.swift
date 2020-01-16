@@ -33,11 +33,6 @@ internal class Requests {
         if (reference == nil) {
             return false;
         }
-        for request in requests {
-            if !request.success() {
-                return false;
-            }
-        }
         return true;
     }
     
@@ -84,9 +79,6 @@ internal class Request {
     }
     
     func success() -> Bool {
-        if (request.count == 0) {
-            return false;
-        }
         return true;
     }
     

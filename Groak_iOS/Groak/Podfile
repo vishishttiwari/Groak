@@ -11,5 +11,7 @@ target 'Groak' do
   # Pods for Groak
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
 
 end

@@ -20,6 +20,9 @@ internal class RequestViewController: ViewControllerWithPan {
     required init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
         
+        AppDelegate.badgeCountRequest = 0
+        UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
+        
         self.view.backgroundColor = .white
         
         NotificationCenter.default.addObserver(

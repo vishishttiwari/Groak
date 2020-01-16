@@ -85,7 +85,7 @@ export const getTimeIn24FromMinutes = (minutes) => {
 /**
  * This function is used for getting time in AM and PM from time stamp
  *
- * @param {*} orderServeTime serve time in timestamp
+ * @param {*} timeStamp serve time in timestamp
  */
 export const getTimeInAMPMFromTimeStamp = (timeStamp) => {
     return getTimeInAMPM(getDateTimeFromTimeStamp(timeStamp));

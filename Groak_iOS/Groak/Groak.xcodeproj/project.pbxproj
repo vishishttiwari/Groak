@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		693648A823C320EA00D23631 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693648A723C320EA00D23631 /* RequestsViewController.swift */; };
 		6978388523B6C38300C06EEB /* DishInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6978388423B6C38300C06EEB /* DishInfoCell.swift */; };
+		69C24CBC23CFFCEB002C4053 /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */; };
 		69CEEA3C23CD6E7300EFB9AC /* RestaurantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */; };
 		69CEEA3E23CD6E8100EFB9AC /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */; };
 		69CEEA4023CD6E8D00EFB9AC /* ReceiptOrderDish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */; };
 		69CEEA4423CEB45F00EFB9AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69CEEA4323CEB45F00EFB9AC /* GoogleService-Info.plist */; };
+		69CEEA4723CFEC9800EFB9AC /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA4623CFEC9800EFB9AC /* UserNotifications.swift */; };
 		7B38BC44B37139B00DE4FBF1 /* Pods_Groak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E219F6C6360D565F741C7E3 /* Pods_Groak.framework */; };
 		7C0B8A932397742D0005F093 /* LocalRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A922397742D0005F093 /* LocalRestaurant.swift */; };
 		7C0B8A95239774BE0005F093 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B8A94239774BE0005F093 /* Cart.swift */; };
@@ -124,10 +126,12 @@
 		693648A723C320EA00D23631 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		6978388423B6C38300C06EEB /* DishInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishInfoCell.swift; sourceTree = "<group>"; };
 		69A5879F23A9DF2E003C9D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
 		69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantInfo.swift; sourceTree = "<group>"; };
 		69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
 		69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptOrderDish.swift; sourceTree = "<group>"; };
 		69CEEA4323CEB45F00EFB9AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69CEEA4623CFEC9800EFB9AC /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		7C0B8A922397742D0005F093 /* LocalRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRestaurant.swift; sourceTree = "<group>"; };
 		7C0B8A94239774BE0005F093 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		7C0B8A9723977A9A0005F093 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +258,15 @@
 				69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */,
 			);
 			path = ReceiptImage;
+			sourceTree = "<group>";
+		};
+		69CEEA4523CFEC7E00EFB9AC /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				69CEEA4623CFEC9800EFB9AC /* UserNotifications.swift */,
+				69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		7C0B8A91239774130005F093 /* LocalStorage */ = {
@@ -515,6 +528,7 @@
 				7C25A4722374FE24009F26F9 /* Catalog */,
 				7C0B8A91239774130005F093 /* LocalStorage */,
 				7CDDD9EE2373823C00C6EF37 /* Firebase */,
+				69CEEA4523CFEC7E00EFB9AC /* Notifications */,
 				7CDDD9E623737BC200C6EF37 /* ViewController */,
 				7CDDD9F42373A49400C6EF37 /* RestaurantObjects */,
 				7CDDD9D7237374C100C6EF37 /* Assets.xcassets */,
@@ -792,6 +806,7 @@
 				7C9854F5238BC42300241A62 /* RequestCell.swift in Sources */,
 				7C25A49D23847232009F26F9 /* SearchViewController.swift in Sources */,
 				7C25A4A52384A376009F26F9 /* MenuHeaderView.swift in Sources */,
+				69CEEA4723CFEC9800EFB9AC /* UserNotifications.swift in Sources */,
 				7C25A4712373BEDE009F26F9 /* BottomSheetView.swift in Sources */,
 				7C59E4072399FAF6005CFED5 /* OrderHeaderView.swift in Sources */,
 				7C59E40C2399FC0D005CFED5 /* OrderStatusCell.swift in Sources */,
@@ -844,6 +859,7 @@
 				7CDDD9E523737B4300C6EF37 /* Catalog.swift in Sources */,
 				7CEC21F623863FFA00F96390 /* SpecialInstructionsCell.swift in Sources */,
 				7CEC21FD238B604E00F96390 /* RequestHeaderView.swift in Sources */,
+				69C24CBC23CFFCEB002C4053 /* FirebaseMessaging.swift in Sources */,
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				69CEEA4023CD6E8D00EFB9AC /* ReceiptOrderDish.swift in Sources */,
 				7C5457C323A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift in Sources */,

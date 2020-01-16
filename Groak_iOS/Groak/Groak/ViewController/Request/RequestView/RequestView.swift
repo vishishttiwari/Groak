@@ -75,6 +75,13 @@ extension RequestView: UITableViewDataSource, UITableViewDelegate, UIScrollViewD
         return cell
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if AppDelegate.badgeCountRequest != 0 {
+//            AppDelegate.badgeCountRequest = 0
+//            UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
+//        }
+    }
+    
     func scrollToBottom(){
         DispatchQueue.main.async {
             let bottomOffset = CGPoint(x: 0, y: self.contentSize.height - self.bounds.size.height + DimensionsCatalog.tableViewInsetDistance)

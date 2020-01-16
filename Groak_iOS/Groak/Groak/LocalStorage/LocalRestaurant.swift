@@ -25,6 +25,35 @@ internal class LocalRestaurant {
         self.table.table = table
         order.orderReference = table.orderReference
         request.requestReference = table.requestReference
+        
+        if let orderReference =  order.orderReference {
+            FirebaseMessaging.shared.subscribe(orderId: orderReference.documentID)
+        }
+    }
+    
+    // This removes the restaurant info, table info, order info and requests info. This also removes the cart and order. This also unsubscribes from the two snapshot listeners
+    static func deleteRestaurant() {
+        if let orderReference =  order.orderReference {
+            FirebaseMessaging.shared.unsubscribe(orderId: orderReference.documentID)
+        }
+        
+        AppDelegate.badgeCountRequest = 0
+        AppDelegate.badgeCountOrder = 0
+        UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
+        
+        restaurant.restaurant = nil
+        table.table = nil
+        order.orderReference = nil
+        request.requestReference = nil
+        
+        cart = Cart.init()
+        tableOrder = Order.init()
+        
+        fsOrders?.unsubscribe()
+        fsRequests?.unsubscribe()
+        
+        fsOrders = nil
+        fsRequests = nil
     }
     
     // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned
@@ -73,23 +102,6 @@ internal class LocalRestaurant {
         deleteRestaurant()
         
         return false
-    }
-    
-    // This removes the restaurant info, table info, order info and requests info. This also removes the cart and order. This also unsubscribes from the two snapshot listeners
-    static func deleteRestaurant() {
-        restaurant.restaurant = nil
-        table.table = nil
-        order.orderReference = nil
-        request.requestReference = nil
-        
-        cart = Cart.init()
-        tableOrder = Order.init()
-        
-        fsOrders?.unsubscribe()
-        fsRequests?.unsubscribe()
-        
-        fsOrders = nil
-        fsRequests = nil
     }
     
     struct restaurant {
