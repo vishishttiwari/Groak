@@ -59,7 +59,7 @@ internal class MenuViewController: UIViewController {
     }
     
     private func setupMenu(restaurant: Restaurant) {
-        menu = MenuView.init()
+        menu = MenuView.init(viewController: self)
         self.view.addSubview(menu!)
         
         // When dish is selected...if there is no info to show for the dish except the image

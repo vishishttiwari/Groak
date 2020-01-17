@@ -75,7 +75,7 @@ internal class LocalRestaurant {
     }
     
     // Function called when the user presses the button to leave the restaurant
-    static func askToLeaveRestaurant(title: String = "Leaving restaurant?", message: String = "Are you sure you would like to leave the restaurant?. Your cart will be lost.") {
+    static func askToLeaveRestaurant(title: String = "Leaving restaurant?", message: String = "Are you sure you would like to leave the restaurant?. Your cart will be lost") {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
         var topViewController = UIApplication.shared.keyWindow?.rootViewController
         while let presentedViewController = topViewController?.presentedViewController {

@@ -58,7 +58,7 @@ internal class PermissionsCatalog {
     // This function is used for to raise the alert view for taking user to the settings of this app
     private static func askLocation() {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Location is turned off", message: "Groak would like to access the location to find the restaurants around you. Please go to settings to allow location use.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Location is turned off", message: "Groak would like to access the location to find the restaurants around you. Please go to settings to allow location use", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Go To Settings", style: .cancel, handler: { (UIAlertAction) in
                 if let bundleId = Bundle.main.bundleIdentifier,
                   let url = URL(string: "\(UIApplication.openSettingsURLString)&path=LOCATION/\(bundleId)") {

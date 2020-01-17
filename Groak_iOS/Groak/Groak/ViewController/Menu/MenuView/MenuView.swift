@@ -27,8 +27,12 @@ internal class MenuView: UITableView {
     
     private var categories: [MenuCategory] = []
     
-    required init() {
+    private var viewController: UIViewController?
+    
+    required init(viewController: UIViewController) {
         super.init(frame: .zero, style: .grouped)
+        
+        self.viewController = viewController
         
         setupViews()
     }
@@ -125,7 +129,11 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.section != 0) {
-            dishSelected?(categories[indexPath.section - 1].dishes[indexPath.row])
+            if categories[indexPath.section - 1].dishes[indexPath.row].available {
+                dishSelected?(categories[indexPath.section - 1].dishes[indexPath.row])
+            } else {
+                Catalog.message(vc: self.viewController, message: "This dish is currently unavailable")
+            }
         } else {
             specialRequests?()
         }

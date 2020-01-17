@@ -87,7 +87,7 @@ internal class AddToCartViewController: ViewControllerWithPan {
                     })
                 })
             } else {
-                Catalog.alert(vc: self, title: "Error adding to cart", message: "There was an error while adding \(dish.name) to cart. Please try again.")
+                Catalog.alert(vc: self, title: "Error adding to cart", message: "There was an error while adding \(dish.name) to cart. Please try again")
             }
         }
         

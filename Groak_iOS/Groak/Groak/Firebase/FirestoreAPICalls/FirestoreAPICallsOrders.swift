@@ -103,7 +103,7 @@ internal class FirestoreAPICallsOrders {
                 self.dataReceivedForAddOrder?(false)
             } else {
                 if !self.addOrderToCoreData(order: order) {
-                    Catalog.alert(vc: viewController, title: "Error adding this order locally", message: "This order will not be saved as your order but will still be sent to the restaurant on behalf of your table. Please contact the restaurant regarding this.")
+                    Catalog.alert(vc: viewController, title: "Error adding this order locally", message: "This order will not be saved as your order but will still be sent to the restaurant on behalf of your table. Please contact the restaurant regarding this")
                 }
                 self.dataReceivedForAddOrder?(true)
             }
@@ -159,7 +159,7 @@ internal class FirestoreAPICallsOrders {
             } else {
                 if !self.addCommentToCoreData(orderComment: commentObject) {
                     if let viewController = viewController {
-                        Catalog.alert(vc: viewController, title: "Error adding this comment locally", message: "This comment will not be saved as your comment but will still be sent to the restaurant on behalf of your table.")
+                        Catalog.alert(vc: viewController, title: "Error adding this comment locally", message: "This comment will not be saved as your comment but will still be sent to the restaurant on behalf of your table")
                     }
                 }
                 self.dataReceivedForAddOrder?(true)

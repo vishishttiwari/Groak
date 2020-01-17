@@ -3,6 +3,15 @@ const admin = require('firebase-admin')
 
 admin.initializeApp(functions.config().firebase)
 
+const TableStatus = {
+    available: 'available',
+    seated: 'seated',
+    ordered: 'ordered',
+    approved: 'approved',
+    served: 'served',
+    payment: 'payment',
+};
+
 exports.orderServeTimeChanged = functions.firestore
     .document('restaurants/{restaurantId}/orders/{orderId}')
     .onUpdate((change, context) => {
@@ -12,11 +21,27 @@ exports.orderServeTimeChanged = functions.firestore
         const orderId = context.params.orderId
 
         if (change.before.exists) {
-            if (before.status === "ordered" && after.status === "approved") {
-                sendNotification("Your order has been approved", `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, "order")
+            if (before.status === TableStatus.ordered && after.status === TableStatus.approved) {
+                sendNotification('Your order has been approved', `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
             }
-            if (before.status === "approved" && after.status === "approved" && before.serveTime !== after.serveTime) {
-                sendNotification("Serve time updated", `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, "order")
+            if (before.status === TableStatus.approved && after.status === TableStatus.approved && before.serveTime !== after.serveTime) {
+                sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
+            }
+        }
+
+        return true
+    })
+
+exports.orderServed = functions.firestore
+    .document('restaurants/{restaurantId}/orders/{orderId}')
+    .onUpdate((change, context) => {
+        const before = change.before.data()
+        const after = change.after.data()
+        const orderId = context.params.orderId
+
+        if (change.before.exists) {
+            if (before.status !== TableStatus.served && after.status === TableStatus.served) {
+                sendNotification('Your order has been served', 'Enjoy', orderId, 'order')
             }
         }
 
@@ -33,7 +58,7 @@ exports.userReceivesRequest = functions.firestore
         if (change.before.exists && afterRequests.length > 1) {
             if (beforeRequests.length !== afterRequests.length) {
                 if (!afterRequests[afterRequests.length - 1].createdByUser) {
-                    sendNotification("From Restaurant", `${afterRequests[afterRequests.length - 1].request}`, orderId, "request")
+                    sendNotification('From Restaurant', `${afterRequests[afterRequests.length - 1].request}`, orderId, 'request')
                 }
             }
         }

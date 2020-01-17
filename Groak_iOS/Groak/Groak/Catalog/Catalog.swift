@@ -36,6 +36,17 @@ internal class Catalog {
         view.present(alert, animated: true, completion: nil)
     }
     
+    static func message(vc: UIViewController?, message: String) {
+        guard let view = vc else { return }
+        
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        view.present(alert, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeCatalog.messageTime) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
     // Calculate the price in two decimal places
     static func calculateTotalPriceOfDish(pricePerItem: Double, quantity: Int) -> Double {
         return round(Double(quantity) * pricePerItem * 100)/100

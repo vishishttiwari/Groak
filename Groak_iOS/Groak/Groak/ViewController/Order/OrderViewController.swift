@@ -121,7 +121,7 @@ internal class OrderViewController: UIViewController {
                             self.present(controller, animated: false, completion: nil)
                         }
                     } else {
-                        Catalog.alert(vc: self, title: "Error while asking for payment", message: "There was an error. Please make sure you have placed an order and then try again.")
+                        Catalog.alert(vc: self, title: "Error while asking for payment", message: "There was an error. Please make sure you have placed an order and then try again")
                     }
                 }
             }

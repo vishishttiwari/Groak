@@ -14,6 +14,8 @@ internal class TimeCatalog {
     
     // Animation time for different things such as time takes for options view to show up
     static let animateTime: Double! = 0.25
+    // duration in for message
+    static let messageTime: Double = 3
     
     // The amount of time after logging into an account after which the user is thrown out
     static let leaveRestaurantTimeInHours = 3 * 3600

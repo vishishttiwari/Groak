@@ -121,7 +121,7 @@ internal class CartViewController: UIViewController {
                     if success {
                         self.deleteCart()
                     } else {
-                        Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again.")
+                        Catalog.alert(vc: self, title: "Error placing order", message: "Error placing order. Please try again")
                     }
                     self.view.hideLoader(hideFrom: self.view)
                 }

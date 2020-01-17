@@ -80,7 +80,7 @@ internal class ReceiptViewController: ViewControllerWithPan {
         
         footer.saveToCameraRoll = { () -> () in
             guard let image = self.receiptView.createImage() else {
-                Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")
+                Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll")
                 return
             }
             
@@ -119,10 +119,10 @@ internal class ReceiptViewController: ViewControllerWithPan {
     
     @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
         if let _ = error {
-            Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll.")
+            Catalog.alert(vc: self, title: "Error saving receipt", message: "Error saving receipt to camera roll")
             return
         }
-        Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll.")
+        Catalog.alert(vc: self, title: "Receipt saved to camera roll", message: "Your receipt has been saved to camera roll")
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -124,6 +124,7 @@ internal class DishCell: UITableViewCell {
             }
             
             dishInfo.text = dish.shortInfo
+            if dish.available { self.selectedColor() }
         }
     }
     

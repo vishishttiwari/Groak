@@ -144,7 +144,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
                         if success {
                             self.reloadData()
                         } else {
-                            Catalog.alert(vc: self.viewController, title: "Error placing instructions", message: "Please try again.")
+                            Catalog.alert(vc: self.viewController, title: "Error placing instructions", message: "Please try again")
                         }
                     }
                 }
