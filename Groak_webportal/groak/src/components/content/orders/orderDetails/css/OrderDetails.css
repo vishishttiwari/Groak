@@ -76,21 +76,52 @@
           flex-flow: column;
   -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
-  height: auto;
+  height: 300px;
 }
 
-.order-details .order-dishes .card .dish-extra {
+.order-details .order-dishes .card .card-content {
+  overflow: scroll;
+}
+
+.order-details .order-dishes .card .card-content .dish-extra {
   margin-bottom: 20px;
 }
 
-.order-details .order-dishes .card .dish-extra .dish-extra-options {
+.order-details .order-dishes .card .card-content .dish-extra .dish-extra-options {
   margin-left: 20px;
   text-transform: 'capitalize';
 }
 
-.order-details .order-dishes .card .dish-price {
+.order-details .order-dishes .card .card-content .dish-price {
   margin-left: 20px;
   text-transform: 'capitalize';
+}
+
+.order-details .order-dishes .card .actions {
+  margin-top: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.order-details .order-dishes .card .actions .dish-price {
+  text-transform: 'capitalize';
+}
+
+.order-details .order-dishes .card .actions .cancel-buttons {
+  min-width: 150px;
+  margin: 0;
+  font-size: 15px;
 }
 
 .order-details .order-others {

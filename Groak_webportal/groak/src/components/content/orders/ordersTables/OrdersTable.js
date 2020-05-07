@@ -70,8 +70,18 @@ const OrdersTable = (props) => {
     }
 
     useEffect(() => {
-        setTimeLeft(setTimeLeftFunc(serveTime, orders));
-    }, [orders]);
+        // This has been included here otherwise have to include in
+        // dependency array abd if I do that, that causes infinite renders
+        function setTimeLeftFuncUseEffect() {
+            if (serveTime) {
+                return orders.map((order) => {
+                    return (differenceInMinutesFromNow(order.serveTime));
+                });
+            }
+            return [];
+        }
+        setTimeLeft(setTimeLeftFuncUseEffect(serveTime, orders));
+    }, [serveTime, orders]);
 
     useInterval(() => {
         setTimeLeft(setTimeLeftFunc(serveTime, orders));

@@ -1,4 +1,4 @@
-import { db, storageRef } from '../Firebase';
+import { db, storageRef } from '../FirebaseLibrary';
 import { ErrorDeletingDish } from '../../catalog/NotificationsComments';
 
 export const createDishReference = (restaurantId, dishId) => {

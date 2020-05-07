@@ -3,7 +3,7 @@
  */
 import { fetchCategoryFirestoreAPI, fetchCategoriesFirestoreAPI, addCategoryFirestoreAPI, updateCategoryFirestoreAPI, deleteCategoryFirestoreAPI, createCategoryReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { fetchDishesFirestoreAPI, createDishReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
-import { getCurrentDateTime } from '../../../../firebase/Firebase';
+import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
 import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { DemoCategoryStartTime, DemoCategoryEndTime } from '../../../../catalog/Demo';
 import { randomNumber } from '../../../../catalog/Others';

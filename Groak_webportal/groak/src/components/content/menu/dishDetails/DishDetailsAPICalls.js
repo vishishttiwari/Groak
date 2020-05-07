@@ -2,7 +2,7 @@
  * This class includes dishes details related functions such as fetching dish, updating dish etc.
  */
 import { fetchDishFirestoreAPI, addDishFirestoreAPI, deleteDishFirestoreAPI, addDishImageFirestoreAPI, updateDishFirestoreAPI, getDishImageURLFirestoreAPI, createDishReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
-import { getCurrentDateTime } from '../../../../firebase/Firebase';
+import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
 import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { fetchCategoriesFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { randomNumber } from '../../../../catalog/Others';

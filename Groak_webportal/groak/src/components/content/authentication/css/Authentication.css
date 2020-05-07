@@ -103,9 +103,6 @@
   box-shadow: 0;
   outline: none;
   cursor: pointer;
-}
-
-.authentication form .other-buttons button:hover {
   background-color: white;
 }
 /*# sourceMappingURL=Authentication.css.map */

@@ -1,31 +1,53 @@
 /**
  * This component is used to represent the menu items in top bar
  */
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './css/TopNavigationItems.css';
+import { context } from '../../../../globalState/globalState';
 import TopNavigationItem from './TopNavigationItemDesktop/TopNavigationItem';
 import DropDownNavigationItems from './DropDownNavigationItems';
 
 const TopNavigationItems = () => {
-    const NAV_OPTIONS = ['orders', 'tables', 'menu', 'settings'];
+    const { globalState } = useContext(context);
+
+    const NAV_OPTIONS_IF_AUTHENTICATED = ['orders', 'tables', 'menu', 'settings'];
+    const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['sign in', 'sign up'];
 
     return (
         <>
             <ul className="top-navigation-items-desktop">
-                {NAV_OPTIONS.map((item) => {
-                    return (
-                        <TopNavigationItem
-                            className="item"
-                            key={item}
-                            link={`/${item}`}
-                            item={item}
-                        />
-                    );
-                })}
+                {globalState.user == null || !globalState.user
+                    ? NAV_OPTIONS_IF_NOT_AUTHENTICATED.map((item) => {
+                        return (
+                            <TopNavigationItem
+                                className="item"
+                                key={item}
+                                link={`/${item.replace(/\s/g, '')}`}
+                                item={item}
+                            />
+                        );
+                    }) : NAV_OPTIONS_IF_AUTHENTICATED.map((item) => {
+                        return (
+                            <TopNavigationItem
+                                className="item"
+                                key={item}
+                                link={`/${item.replace(/\s/g, '')}`}
+                                item={item}
+                            />
+                        );
+                    })}
             </ul>
             <div className="top-navigation-items-mobile">
-                <DropDownNavigationItems options={NAV_OPTIONS} buttonType="allOptions" />
+                <DropDownNavigationItems
+                    options={
+                        globalState.user == null
+                        || !globalState.user
+                            ? NAV_OPTIONS_IF_NOT_AUTHENTICATED
+                            : NAV_OPTIONS_IF_AUTHENTICATED
+                    }
+                    buttonType="allOptions"
+                />
             </div>
         </>
     );

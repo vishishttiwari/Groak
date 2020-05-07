@@ -1,4 +1,4 @@
-import { db, createGeoPoint, storageRef } from '../Firebase';
+import { db, createGeoPoint, storageRef } from '../FirebaseLibrary';
 import { randomNumber } from '../../catalog/Others';
 import { createDemoDish, createDemoCategory, createDemoTable, createDemoOrder, createDemoRequest } from '../../catalog/Demo';
 

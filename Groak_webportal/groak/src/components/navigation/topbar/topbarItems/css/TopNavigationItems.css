@@ -43,7 +43,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-bottom: 1px solid transparent;
-  width: 100px;
+  width: 120px;
 }
 
 .top-navigation-items-desktop .top-navigation-item .navigation-item .navigation-button {
@@ -52,7 +52,7 @@
   font-size: 18px;
   text-transform: capitalize;
   padding: 17px;
-  width: 100px;
+  width: 120px;
 }
 
 .top-navigation-items-desktop .top-navigation-item .navigation-item:hover {

@@ -1,4 +1,4 @@
-import { db, deleteField } from '../Firebase';
+import { db, deleteField } from '../FirebaseLibrary';
 
 export const createCategoryReference = (restaurantId, categoryId) => {
     return db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId);

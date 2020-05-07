@@ -2,7 +2,7 @@
  * This function creates demo items that are added to the backend whenever an account is created.
  * It also contains items that are added as placeholders in text fields.
  */
-import { db, getCurrentDateTime } from '../firebase/Firebase';
+import { db, getCurrentDateTime } from '../firebase/FirebaseLibrary';
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';

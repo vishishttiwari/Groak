@@ -37,20 +37,46 @@ $imageWidth: 40px;
             display: flex;
             flex-flow: column;
             box-shadow: $cardShadow;
-            height: auto;
+            height: 300px;
 
-            .dish-extra {
-                margin-bottom: $cardMargin;
+            .card-content {
+                overflow: scroll;
 
-                .dish-extra-options {
+                .dish-extra {
+                    margin-bottom: $cardMargin;
+    
+                    .dish-extra-options {
+                        margin-left: $commentMarginLeft;
+                        text-transform: 'capitalize';
+                    }
+                }
+    
+                .dish-price {
                     margin-left: $commentMarginLeft;
                     text-transform: 'capitalize';
                 }
             }
 
-            .dish-price {
-                margin-left: $commentMarginLeft;
-                text-transform: 'capitalize';
+            .actions {
+                margin-top: auto;
+                margin-left: 10px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .dish-price {
+                    // margin-left: 10px;
+                    text-transform: 'capitalize';
+                }
+
+                .cancel-buttons {
+                    min-width: 150px;
+                    margin: 0;
+                    font-size: $buttonFontSize - 3px;
+                    // margin-right: 10px;
+                }
             }
         }
     }

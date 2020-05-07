@@ -8,11 +8,7 @@ header {
         height: $topBarHeight;
 
         .logo {
-            color: white;
-            text-decoration: none;
-            font-weight: 100;
-            font-size: 30px;
-            width: 100%;
+            height: $topBarHeight - 5px;
         }
     }
 }

@@ -10,6 +10,7 @@ import DropDownNavigationItems from '../DropDownNavigationItems';
 
 const TopNavigationItem = (props) => {
     const { link, item, exact } = props;
+
     return (
         <li className="top-navigation-item">
             {item !== 'menu' ? (

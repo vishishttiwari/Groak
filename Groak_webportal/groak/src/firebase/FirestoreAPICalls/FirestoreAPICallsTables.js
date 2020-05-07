@@ -1,4 +1,4 @@
-import { db, getCurrentDateTime } from '../Firebase';
+import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { createOrderReference } from './FirestoreAPICallsOrders';
 import { createRequestReference } from './FirestoreAPICallsRequests';
 import { TableStatus } from '../../catalog/Others';

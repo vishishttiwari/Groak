@@ -1,4 +1,4 @@
-import { db } from '../Firebase';
+import { db } from '../FirebaseLibrary';
 
 export const createRequestReference = (restaurantId, requestId) => {
     return db.collection(`restaurants/${restaurantId}/requests`).doc(requestId);

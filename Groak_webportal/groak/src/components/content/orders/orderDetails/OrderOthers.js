@@ -113,7 +113,7 @@ const OrderOthers = (props) => {
      * This function is called when the served button is clicked on table
      *
      * @param {*} event contains action of the button
-     * @param {*} id order for which srrved was used
+     * @param {*} id order for which served was used
      */
     const servedClickHandler = async () => {
         const data = { status: TableStatus.served };

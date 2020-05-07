@@ -64,7 +64,7 @@ const DropDownNavigationItems = (props) => {
                                                 <NavLink
                                                     key={item}
                                                     style={{ textDecoration: 'none', color: 'black' }}
-                                                    to={`/${item}`}
+                                                    to={`/${item.replace(/\s/g, '')}`}
                                                     exact
                                                 >
                                                     <MenuItem onClick={handleClose} style={{ textTransform: 'capitalize' }}>{item}</MenuItem>

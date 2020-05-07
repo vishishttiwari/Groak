@@ -1,7 +1,7 @@
 /**
  * This class is used for all authentication api calls
  */
-import { auth } from './Firebase';
+import { auth } from './FirebaseLibrary';
 
 /**
  * This function is called when user needs to login

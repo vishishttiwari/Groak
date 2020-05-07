@@ -59,7 +59,7 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
                 newTables = newTables.filter((table) => {
                     if (table.id === change.doc.id) {
                         oldStatus = table.status;
-                        oldNewRequest = table.newRequest
+                        oldNewRequest = table.newRequest;
                     }
                     return (table.id !== change.doc.id);
                 });

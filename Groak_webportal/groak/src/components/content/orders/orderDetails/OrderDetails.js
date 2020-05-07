@@ -68,7 +68,11 @@ const OrderDetails = (props) => {
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
-                    <OrderDishes dishes={state.dishes} />
+                    <OrderDishes
+                        orderId={match.params.id}
+                        status={state.status}
+                        dishes={state.dishes}
+                    />
                     <OrderOthers
                         orderId={match.params.id}
                         status={state.status}
@@ -76,7 +80,6 @@ const OrderDetails = (props) => {
                         request={state.request}
                         dishes={state.dishes}
                         serveTimeFromServer={state.serve}
-
                     />
                 </>
             ) : null}

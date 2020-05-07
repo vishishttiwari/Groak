@@ -17,7 +17,7 @@ import { createDemoRestaurant } from '../../../catalog/Demo';
 export const signoutAPICall = async (history, setGlobalState, snackbar) => {
     try {
         await signoutFirebaseAPI();
-        history.replace('/signin');
+        history.replace('/');
         setGlobalState({ type: 'removeUser' });
     } catch (error) {
         snackbar(error.message, { variant: 'error' });

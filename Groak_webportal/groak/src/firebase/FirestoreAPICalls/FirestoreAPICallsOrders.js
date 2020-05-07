@@ -1,4 +1,4 @@
-import { db, getCurrentDateTime } from '../Firebase';
+import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { TableStatus } from '../../catalog/Others';
 import { DemoRequest } from '../../catalog/Demo';
 
