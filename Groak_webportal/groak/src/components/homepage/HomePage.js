@@ -10,8 +10,8 @@ import { Button } from '@material-ui/core';
 import { context } from '../../globalState/globalState';
 import Phone1 from '../../assets/images/homepage/phone_1.png';
 import Phone2 from '../../assets/images/homepage/phone_2.png';
-import Computer1 from '../../assets/images/homepage/computer_1_2.png';
-import Computer2 from '../../assets/images/homepage/computer_2_1.png';
+import Computer1 from '../../assets/images/homepage/computer_4_1.png';
+import Computer2 from '../../assets/images/homepage/computer_5_2.png';
 import Computer3 from '../../assets/images/homepage/computer_3_2.png';
 
 const HomePage = (props) => {
@@ -24,8 +24,7 @@ const HomePage = (props) => {
                 <img src={Phone1} alt="Groak - Phone demo 1" />
                 <div className="text verticallyCenter">
                     <p>
-                        Help your in-house customers order food through app and reduce your dependence on
-                        <i> waiters!</i>
+                        Enable your dine-in customers to explore an interactive menu and order through their phones!
                     </p>
                     <div className="buttons">
                         <Button
@@ -57,26 +56,26 @@ const HomePage = (props) => {
             </div>
             <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
-                    <p>Organize your tables and orders on a computer or a tablet</p>
+                    <p>View real time order updates from each table using the device of your choice</p>
                 </div>
                 <img src={Computer1} alt="Groak - Computer demo 2" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
                 <img src={Computer3} alt="Groak - Computer demo 2" />
                 <div className="text">
-                    <p>Not only get orders but also chat with customers at each table</p>
+                    <p>Interact with your customers at each table through chat messages to provide a personal touch</p>
                 </div>
             </div>
             <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
-                    <p>Set up your menu in a never before fashion and change the availability and details of any dish in real time</p>
+                    <p>Create a detailed menu that customers love to explore and update it anytime from your device, with immediate display of updates</p>
                 </div>
                 <img src={Computer2} alt="Groak - Computer demo 3" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
                 <img src={Phone2} alt="Groak - Phone demo 2" />
                 <div className="text">
-                    <p>Customers receive receipt directly through their app</p>
+                    <p>Automated receipt generation, sent directly to your customer&#39;s phone</p>
                 </div>
             </div>
             <div className="primaryColorBackground lastSection verticallyCenter">

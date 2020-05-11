@@ -2,6 +2,7 @@
 *.mov
 *.mp4
 *.MP4
+*.csv
 
 # Private Keys #
 ###############
