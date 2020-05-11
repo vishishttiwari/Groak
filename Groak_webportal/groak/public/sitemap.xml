@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+
+<url>
+  <loc>https://groakapp.com/</loc>
+  <lastmod>2020-05-11T15:33:41+00:00</lastmod>
+</url>
+<url>
+  <loc>https://groakapp.com/signin</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/signup</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/tables</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/orders</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/dishes</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/categories</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://groakapp.com/settings</loc>
+  <lastmod>2019-06-16T03:40:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>

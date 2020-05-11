@@ -23,9 +23,9 @@ const HomePage = (props) => {
             <div className="whiteBackground sections">
                 <img src={Phone1} alt="Groak - Phone demo 1" />
                 <div className="text verticallyCenter">
-                    <p>
+                    <h1>
                         Enable your dine-in customers to explore an interactive menu and order through their phones!
-                    </p>
+                    </h1>
                     <div className="buttons">
                         <Button
                             className="button"

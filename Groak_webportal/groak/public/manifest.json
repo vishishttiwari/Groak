@@ -1,19 +1,19 @@
 {
   "short_name": "Groak",
-  "name": "Inhouse app ordering service for restaurant",
+  "name": "Ordering service for restaurant dine-in customers",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "favicon_io/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/png"
+      "type": "image/x-icon"
     },
     {
-      "src": "icon.png",
+      "src": "favicon_io/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "icon.png",
+      "src": "favicon_io/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }	    
