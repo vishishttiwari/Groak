@@ -13,8 +13,10 @@ import { unsubscribeFetchOrderAPI, fetchOrderAPI, fetchRequestAPI, unsubscribeFe
 import OrderDishes from './OrderDishes';
 import OrderOthers from './OrderOthers';
 import Spinner from '../../../ui/spinner/Spinner';
+import Heading from '../../../ui/heading/Heading';
 
 const initialState = {
+    table: '',
     serve: {},
     status: '',
     comments: [],
@@ -26,7 +28,7 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchOrder':
-            return { ...state, status: action.status, serve: action.serve, comments: action.comments, dishes: action.dishes, loadingSpinner: false };
+            return { ...state, table: action.table, status: action.status, serve: action.serve, comments: action.comments, dishes: action.dishes, loadingSpinner: false };
         case 'setStatus':
             return { ...state, status: action.status };
         case 'setServe':
@@ -67,12 +69,15 @@ const OrderDetails = (props) => {
         <div className="order-details">
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <>
-                    <OrderDishes
-                        orderId={match.params.id}
-                        status={state.status}
-                        dishes={state.dishes}
-                    />
+                <div className="order-details-row">
+                    <div className="order-details-col">
+                        <Heading heading={state.table} className="heading" />
+                        <OrderDishes
+                            orderId={match.params.id}
+                            status={state.status}
+                            dishes={state.dishes}
+                        />
+                    </div>
                     <OrderOthers
                         orderId={match.params.id}
                         status={state.status}
@@ -81,7 +86,7 @@ const OrderDetails = (props) => {
                         dishes={state.dishes}
                         serveTimeFromServer={state.serve}
                     />
-                </>
+                </div>
             ) : null}
         </div>
     );

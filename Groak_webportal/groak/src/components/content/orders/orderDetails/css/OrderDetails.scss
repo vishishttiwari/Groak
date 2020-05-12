@@ -4,168 +4,178 @@ $imageHeight: 45px;
 $imageWidth: 40px;
 
 .order-details {
-    width: 100%;
-    display: flex;
-    flex-flow: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    margin-top: $margin;
 
-    @media (max-width: $phoneMaxWidth) {
-        flex-flow: column;
-    }
-    
-    .order-dishes {
+    .order-details-row {
+        width: 100%;
         display: flex;
         flex-flow: row;
-        flex-wrap: wrap;
-        justify-content: left;
-        width: 75%;
-        height: 0;
+        flex-wrap: nowrap;
+        justify-content: space-between;
 
         @media (max-width: $phoneMaxWidth) {
-            width: 100%;
-            justify-content: center;
-            height: auto;
+            flex-flow: column;
         }
 
-        .card {
-            width: $cardWidth;
-            margin-bottom: $cardMargin;
-            margin-left: $cardMargin/2;
-            margin-right: $cardMargin/2;
+        .order-details-col {
+            width: 75%;
             display: flex;
             flex-flow: column;
-            box-shadow: $cardShadow;
-            height: 300px;
 
-            .card-content {
-                overflow: scroll;
-
-                .dish-extra {
-                    margin-bottom: $cardMargin;
+            .order-dishes {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: left;
+                width: 100%;
+                height: 0;
     
-                    .dish-extra-options {
-                        margin-left: $commentMarginLeft;
-                        text-transform: 'capitalize';
+                @media (max-width: $phoneMaxWidth) {
+                    width: 100%;
+                    justify-content: center;
+                    height: auto;
+                }
+    
+                .card {
+                    width: $cardWidth;
+                    margin-bottom: $cardMargin;
+                    margin-left: $cardMargin/2;
+                    margin-right: $cardMargin/2;
+                    display: flex;
+                    flex-flow: column;
+                    box-shadow: $cardShadow;
+                    height: 300px;
+    
+                    .card-content {
+                        overflow: scroll;
+    
+                        .dish-extra {
+                            margin-bottom: $cardMargin;
+            
+                            .dish-extra-options {
+                                margin-left: $commentMarginLeft;
+                                text-transform: 'capitalize';
+                            }
+                        }
+            
+                        .dish-price {
+                            margin-left: $commentMarginLeft;
+                            text-transform: 'capitalize';
+                        }
+                    }
+    
+                    .actions {
+                        margin-top: auto;
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+    
+                        .dish-price {
+                            // margin-left: 10px;
+                            text-transform: 'capitalize';
+                        }
+    
+                        .cancel-buttons {
+                            min-width: 150px;
+                            margin: 0;
+                            font-size: $buttonFontSize - 3px;
+                            // margin-right: 10px;
+                        }
                     }
                 }
-    
-                .dish-price {
-                    margin-left: $commentMarginLeft;
-                    text-transform: 'capitalize';
-                }
-            }
-
-            .actions {
-                margin-top: auto;
-                margin-left: 10px;
-                margin-right: 10px;
-                margin-bottom: 10px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-
-                .dish-price {
-                    // margin-left: 10px;
-                    text-transform: 'capitalize';
-                }
-
-                .cancel-buttons {
-                    min-width: 150px;
-                    margin: 0;
-                    font-size: $buttonFontSize - 3px;
-                    // margin-right: 10px;
-                }
             }
         }
-    }
+        
+        
 
-    .order-others {
-        display: flex;
-        flex-flow: column;
-        flex-wrap: wrap;
+        .order-others {
+            display: flex;
+            flex-flow: column;
+            flex-wrap: wrap;
 
-        @media (max-width: $phoneMaxWidth) {
-            align-items: center;
-        }
-
-        .card {
-            width: $cardWidth;
-            margin-bottom: $cardMargin;
-            display: 'flex';
-            flex-flow: 'column';
-            box-shadow: $cardShadow;
-
-            .comment {
-                height: auto;
-                width: 80%;
-                border-radius: $borderRadius;
-                border: $border;
-                margin: 5px 0px 0px 0px;
-
-                .comment-comment {
-                    font-weight: 100;
-                    font-size: 15px;
-                    margin: 5px 10px 0 10px;
-                    text-align: left;
-                }
-
-                .comment-created {
-                    font-weight: 100;
-                    font-size: 10px;
-                    margin: 5px 10px;
-                    text-align: right;
-                }
+            @media (max-width: $phoneMaxWidth) {
+                align-items: center;
             }
 
-            .suggestions {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                flex-wrap: wrap;
-                cursor: pointer;
+            .card {
+                width: $cardWidth;
+                margin-bottom: $cardMargin;
+                display: 'flex';
+                flex-flow: 'column';
+                box-shadow: $cardShadow;
 
-                .suggestion {
-                    display: flex;
-                    justify-content: center;
-                    height: $imageHeight;
-                    width: $imageWidth;
-                    background-color: $primaryColor;
-                    color: white;
+                .comment {
+                    height: auto;
+                    width: 80%;
                     border-radius: $borderRadius;
                     border: $border;
+                    margin: 5px 0px 0px 0px;
 
-                    .suggestion-suggestion {
-                        margin: auto;
-                        padding: auto;
-                        height: 70%;
+                    .comment-comment {
+                        font-weight: 100;
+                        font-size: 15px;
+                        margin: 5px 10px 0 10px;
+                        text-align: left;
+                    }
+
+                    .comment-created {
+                        font-weight: 100;
+                        font-size: 10px;
+                        margin: 5px 10px;
+                        text-align: right;
+                    }
+                }
+
+                .suggestions {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    cursor: pointer;
+
+                    .suggestion {
+                        display: flex;
+                        justify-content: center;
+                        height: $imageHeight;
+                        width: $imageWidth;
+                        background-color: $primaryColor;
+                        color: white;
+                        border-radius: $borderRadius;
+                        border: $border;
+
+                        .suggestion-suggestion {
+                            margin: auto;
+                            padding: auto;
+                            height: 70%;
+                        }
                     }
                 }
             }
-        }
 
-        .success-buttons {
-            width: $cardWidth;
-            margin-top: 0;
-            margin-bottom: $cardMargin;
-        }
+            .success-buttons {
+                width: $cardWidth;
+                margin-top: 0;
+                margin-bottom: $cardMargin;
+            }
 
-        .cancel-buttons {
-            width: $cardWidth;
-            margin-bottom: $cardMargin;
-            margin-top: 0;
-        }
+            .cancel-buttons {
+                width: $cardWidth;
+                margin-bottom: $cardMargin;
+                margin-top: 0;
+            }
 
-        .delete-buttons {
-            width: $cardWidth;
-            margin-bottom: $cardMargin;
-            margin-top: 0;
-        }
+            .delete-buttons {
+                width: $cardWidth;
+                margin-bottom: $cardMargin;
+                margin-top: 0;
+            }
 
-        .sub-header {
-            margin-left: $commentMarginLeft;
-            text-transform: 'capitalize';
+            .sub-header {
+                margin-left: $commentMarginLeft;
+                text-transform: 'capitalize';
+            }
         }
     }
 }

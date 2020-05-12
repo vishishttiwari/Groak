@@ -9,7 +9,7 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
-.order-details {
+.order-details .order-details-row {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -23,11 +23,10 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-top: 20px;
 }
 
 @media (max-width: 700px) {
-  .order-details {
+  .order-details .order-details-row {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-flow: column;
@@ -35,7 +34,18 @@
   }
 }
 
-.order-details .order-dishes {
+.order-details .order-details-row .order-details-col {
+  width: 75%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+}
+
+.order-details .order-details-row .order-details-col .order-dishes {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -48,12 +58,12 @@
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
-  width: 75%;
+  width: 100%;
   height: 0;
 }
 
 @media (max-width: 700px) {
-  .order-details .order-dishes {
+  .order-details .order-details-row .order-details-col .order-dishes {
     width: 100%;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -62,7 +72,7 @@
   }
 }
 
-.order-details .order-dishes .card {
+.order-details .order-details-row .order-details-col .order-dishes .card {
   width: 300px;
   margin-bottom: 20px;
   margin-left: 10px;
@@ -79,25 +89,25 @@
   height: 300px;
 }
 
-.order-details .order-dishes .card .card-content {
+.order-details .order-details-row .order-details-col .order-dishes .card .card-content {
   overflow: scroll;
 }
 
-.order-details .order-dishes .card .card-content .dish-extra {
+.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-extra {
   margin-bottom: 20px;
 }
 
-.order-details .order-dishes .card .card-content .dish-extra .dish-extra-options {
+.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-extra .dish-extra-options {
   margin-left: 20px;
   text-transform: 'capitalize';
 }
 
-.order-details .order-dishes .card .card-content .dish-price {
+.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-price {
   margin-left: 20px;
   text-transform: 'capitalize';
 }
 
-.order-details .order-dishes .card .actions {
+.order-details .order-details-row .order-details-col .order-dishes .card .actions {
   margin-top: auto;
   margin-left: 10px;
   margin-right: 10px;
@@ -114,17 +124,17 @@
           justify-content: space-between;
 }
 
-.order-details .order-dishes .card .actions .dish-price {
+.order-details .order-details-row .order-details-col .order-dishes .card .actions .dish-price {
   text-transform: 'capitalize';
 }
 
-.order-details .order-dishes .card .actions .cancel-buttons {
+.order-details .order-details-row .order-details-col .order-dishes .card .actions .cancel-buttons {
   min-width: 150px;
   margin: 0;
   font-size: 15px;
 }
 
-.order-details .order-others {
+.order-details .order-details-row .order-others {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -137,14 +147,14 @@
 }
 
 @media (max-width: 700px) {
-  .order-details .order-others {
+  .order-details .order-details-row .order-others {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
   }
 }
 
-.order-details .order-others .card {
+.order-details .order-details-row .order-others .card {
   width: 300px;
   margin-bottom: 20px;
   display: 'flex';
@@ -156,7 +166,7 @@
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
 }
 
-.order-details .order-others .card .comment {
+.order-details .order-details-row .order-others .card .comment {
   height: auto;
   width: 80%;
   border-radius: 10px;
@@ -164,21 +174,21 @@
   margin: 5px 0px 0px 0px;
 }
 
-.order-details .order-others .card .comment .comment-comment {
+.order-details .order-details-row .order-others .card .comment .comment-comment {
   font-weight: 100;
   font-size: 15px;
   margin: 5px 10px 0 10px;
   text-align: left;
 }
 
-.order-details .order-others .card .comment .comment-created {
+.order-details .order-details-row .order-others .card .comment .comment-created {
   font-weight: 100;
   font-size: 10px;
   margin: 5px 10px;
   text-align: right;
 }
 
-.order-details .order-others .card .suggestions {
+.order-details .order-details-row .order-others .card .suggestions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -194,7 +204,7 @@
   cursor: pointer;
 }
 
-.order-details .order-others .card .suggestions .suggestion {
+.order-details .order-details-row .order-others .card .suggestions .suggestion {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -209,31 +219,31 @@
   border: 1px solid #DDDDDD;
 }
 
-.order-details .order-others .card .suggestions .suggestion .suggestion-suggestion {
+.order-details .order-details-row .order-others .card .suggestions .suggestion .suggestion-suggestion {
   margin: auto;
   padding: auto;
   height: 70%;
 }
 
-.order-details .order-others .success-buttons {
+.order-details .order-details-row .order-others .success-buttons {
   width: 300px;
   margin-top: 0;
   margin-bottom: 20px;
 }
 
-.order-details .order-others .cancel-buttons {
+.order-details .order-details-row .order-others .cancel-buttons {
   width: 300px;
   margin-bottom: 20px;
   margin-top: 0;
 }
 
-.order-details .order-others .delete-buttons {
+.order-details .order-details-row .order-others .delete-buttons {
   width: 300px;
   margin-bottom: 20px;
   margin-top: 0;
 }
 
-.order-details .order-others .sub-header {
+.order-details .order-details-row .order-others .sub-header {
   margin-left: 20px;
   text-transform: 'capitalize';
 }

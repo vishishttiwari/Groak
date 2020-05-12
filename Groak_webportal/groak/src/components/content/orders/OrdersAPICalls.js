@@ -150,6 +150,7 @@ export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) =
             if (querySnapshot.data()) {
                 setState({
                     type: 'fetchOrder',
+                    table: querySnapshot.data().table,
                     status: querySnapshot.data().status,
                     comments: querySnapshot.data().comments,
                     serve: querySnapshot.data().serveTime,

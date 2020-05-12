@@ -4,7 +4,7 @@ import { SnackbarProvider } from 'notistack';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import Layout from '../hoc/Layout';
+import Layout from '../components/layout/Layout';
 import HomePage from '../components/homepage/HomePage';
 import SignIn from '../components/content/authentication/signIn/SignIn';
 import SignUp from '../components/content/authentication/signUp/SignUp';
