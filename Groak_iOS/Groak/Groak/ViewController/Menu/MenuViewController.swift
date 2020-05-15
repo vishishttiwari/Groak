@@ -88,16 +88,6 @@ internal class MenuViewController: UIViewController {
         menu?.menuSectionChanged = { (_ section: Int) -> () in
             self.header?.sectionChanged(section: section)
         }
-        menu?.specialRequests = { () -> () in
-            let controller = RequestViewController(restaurant: restaurant)
-
-            self.view.coverHorizontalPresent()
-            controller.modalPresentationStyle = .overCurrentContext
-
-            DispatchQueue.main.async {
-                self.present(controller, animated: false, completion: nil)
-            }
-        }
         
         menu?.translatesAutoresizingMaskIntoConstraints = false
         menu?.topAnchor.constraint(equalTo: header!.bottomAnchor).isActive = true

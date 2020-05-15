@@ -123,8 +123,10 @@ internal class RequestFooterView: UIView {
     }
     
     @objc func send() {
-        sendRequest?(requestTextInput.text)
-        requestTextInput.text = nil
+        if (requestTextInput.text.count != 0) {
+            sendRequest?(requestTextInput.text)
+            requestTextInput.text = nil
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

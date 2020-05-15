@@ -65,12 +65,8 @@ internal class PermissionsCatalog {
                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             }))
-            if var topController = UIApplication.shared.keyWindow?.rootViewController {
-                while let presentedViewController = topController.presentedViewController {
-                    topController = presentedViewController
-                }
-                topController.present(alert, animated: true, completion: nil)
-            }
+            let (topViewController, _) = Catalog.getTopAndRootViewControllers()
+            topViewController?.present(alert, animated: true, completion: nil)
         }
     }
 }

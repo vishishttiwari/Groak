@@ -58,11 +58,7 @@ internal class LocalRestaurant {
     
     // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned
     static func leaveRestaurant(title: String = "Scan QR code again", message: String = "Please scan your QR code again to order") {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
-        var topViewController = UIApplication.shared.keyWindow?.rootViewController
-        while let presentedViewController = topViewController?.presentedViewController {
-            topViewController = presentedViewController
-        }
+        let (topViewController, rootViewController) = Catalog.getTopAndRootViewControllers()
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
@@ -76,11 +72,7 @@ internal class LocalRestaurant {
     
     // Function called when the user presses the button to leave the restaurant
     static func askToLeaveRestaurant(title: String = "Leaving restaurant?", message: String = "Are you sure you would like to leave the restaurant?. Your cart will be lost") {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
-        var topViewController = UIApplication.shared.keyWindow?.rootViewController
-        while let presentedViewController = topViewController?.presentedViewController {
-            topViewController = presentedViewController
-        }
+        let (topViewController, rootViewController) = Catalog.getTopAndRootViewControllers()
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

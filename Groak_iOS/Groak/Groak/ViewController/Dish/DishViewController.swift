@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 
 internal class DishViewController: ViewControllerWithPan {
+    var specialRequestButton: SpecialRequestButton?
     private var header: DishHeaderView?
     private var dishDetail: DishDetailsView?
     private var footer: DishFooterView = DishFooterView.init()
@@ -23,6 +24,9 @@ internal class DishViewController: ViewControllerWithPan {
         setupHeader(dish: dish)
         setupFooter(restaurant: restaurant, dish: dish)
         setupDishDetail(dish: dish)
+        
+        specialRequestButton = SpecialRequestButton(viewController: self, restaurant: restaurant)
+        specialRequestButton?.badge = AppDelegate.badgeCountRequest
     }
     
     private func setupHeader(dish: Dish) {

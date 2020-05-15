@@ -41,25 +41,27 @@ extension UserNotifications: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
+        print("I think its tapped")
+        
         if LocalRestaurant.isRestaurantCreationSuccessful(), let restaurant = LocalRestaurant.restaurant.restaurant {
             if let category = response.notification.request.content.userInfo["gcm.notification.category"] as? String {
-                var topViewController = UIApplication.shared.keyWindow?.rootViewController
-                while let presentedViewController = topViewController?.presentedViewController {
-                    topViewController = presentedViewController
-                }
+                let (topViewController, _) = Catalog.getTopAndRootViewControllers()
+
                 if category == "request" {
                     AppDelegate.badgeCountRequest = 0
                     UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
-                    if !(topViewController?.isKind(of: RequestViewController.self) ?? true) {
+                    if !(topViewController?.isKind(of: RequestViewController.self) ?? false) {
                         let controller = RequestViewController(restaurant: restaurant)
 
-                        topViewController?.view.coverHorizontalPresent()
-                        controller.modalPresentationStyle = .overCurrentContext
+                        controller.modalPresentationStyle = .fullScreen
 
                         DispatchQueue.main.async {
-                            topViewController?.present(controller, animated: false, completion: nil)
+                            topViewController?.present(controller, animated: true, completion: nil)
                         }
                     }
+                } else if category == "order" {
+                    AppDelegate.badgeCountOrder = 0
+                    UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
                 }
             }
         }

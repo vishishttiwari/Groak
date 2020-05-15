@@ -12,6 +12,7 @@ import UIKit
 import CoreData
 
 internal class AddToCartViewController: ViewControllerWithPan {
+    var specialRequestButton: SpecialRequestButton?
     private var header: AddToCartHeaderView?
     private var addToCartExtras: AddToCartExtrasView?
     private var footer: AddToCartFooterView?
@@ -52,6 +53,9 @@ internal class AddToCartViewController: ViewControllerWithPan {
         setupHeader()
         setupFooter(dish: dish)
         setupDishDescription(restaurant: restaurant)
+        
+        specialRequestButton = SpecialRequestButton(viewController: self, restaurant: restaurant)
+        specialRequestButton?.badge = AppDelegate.badgeCountRequest
     }
     
     private func setupHeader() {
@@ -78,14 +82,20 @@ internal class AddToCartViewController: ViewControllerWithPan {
                 let cartDish: CartDish = CartDish.init(dishName: dish.name, dishReference: dish.reference, pricePerItem: dishPrice, quantity: quantity, extras: extras)
                 LocalRestaurant.cart.dishes.append(cartDish)
                 
-                let customViewController1 = self.presentingViewController as? DishViewController
-                let tabBarController = customViewController1?.presentingViewController as? TabbarViewController
-                
-                self.dismiss(animated: false, completion: {
-                    customViewController1?.dismiss(animated: true, completion: {
-                        tabBarController?.addToCart()
+                if let customViewController1 = self.presentingViewController as? DishViewController {
+                    if let customViewController2 = customViewController1.presentingViewController as? TabbarViewController {
+                    
+                        self.dismiss(animated: false, completion: {
+                            customViewController1.dismiss(animated: true, completion: {
+                                customViewController2.addToCart()
+                            })
+                        })
+                    }
+                } else if let customViewController1 = self.presentingViewController as? TabbarViewController {
+                    self.dismiss(animated: false, completion: {
+                        customViewController1.addToCart()
                     })
-                })
+                }
             } else {
                 Catalog.alert(vc: self, title: "Error adding to cart", message: "There was an error while adding \(dish.name) to cart. Please try again")
             }

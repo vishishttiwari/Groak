@@ -14,6 +14,15 @@ let gradientHeight: CGFloat = 50
 let gradientTransparency: CGFloat = 0.3
 
 extension UIView {
+    // Create shadow around special request button. Can be used for shadow around any view
+    func dropShadow() {
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 5
+    }
+    
     // Blur background
     func addBlurInBackground() {
         let blurView = UIVisualEffectView(effect:  UIBlurEffect.init(style: .dark))

@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-internal class RequestViewController: ViewControllerWithPan {
+internal class RequestViewController: UIViewController {
     private var header: RequestHeaderView?
     private var specialRequestsView: RequestView?
     private var footer: RequestFooterView = RequestFooterView()
@@ -53,8 +53,14 @@ internal class RequestViewController: ViewControllerWithPan {
         self.view.addSubview(header!)
         
         header?.dismiss = { () -> () in
-            self.view.coverHorizontalDismiss()
-            self.dismiss(animated: false, completion: nil)
+            if let customViewController = self.presentingViewController as? TabbarViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = self.presentingViewController as? DishViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = self.presentingViewController as? AddToCartViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            }
+            self.dismiss(animated: true, completion: nil)
         }
         
         header?.translatesAutoresizingMaskIntoConstraints = false
@@ -130,3 +136,15 @@ internal class RequestViewController: ViewControllerWithPan {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+//            let size: CGFloat = 26
+//            let digits = CGFloat("\(AppDelegate.badgeCountRequest)".count) // digits in the label
+//            let width = max(size, 0.7 * size * digits) // perfect circle is smallest allowed
+//            let badge = UILabel(frame: CGRect.init(x: 0, y: 0, width: width, height: size))
+//            badge.text = "\(AppDelegate.badgeCountRequest)"
+//            badge.layer.cornerRadius = size / 2
+//            badge.layer.masksToBounds = true
+//            badge.textAlignment = .center
+//            badge.textColor = .white
+//            badge.backgroundColor = ColorsCatalog.themeColor
+//            cell.accessoryView = badge // !! change this line

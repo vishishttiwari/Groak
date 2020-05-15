@@ -62,7 +62,7 @@ internal class RestaurantFullView: UIView {
         restaurantName.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantName.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantName.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        restaurantName.heightAnchor.constraint(equalToConstant: restaurantTitleHeight).isActive = true
+        restaurantName.heightAnchor.constraint(equalToConstant: restaurantTitleHeight + 5).isActive = true
         
         restaurantLogo.topAnchor.constraint(equalTo: restaurantName.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantLogo.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true

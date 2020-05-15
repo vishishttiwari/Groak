@@ -41,6 +41,7 @@ internal class RestaurantCell: UITableViewCell {
         container.addSubview(restaurantLogo)
         
         restaurantName.text = ""
+        restaurantName.backgroundColor = .clear
         restaurantName.font = UIFont(name: FontCatalog.fontLevels[1], size: textHeight)
         restaurantName.numberOfLines = 0
         restaurantName.textColor = .black
@@ -66,7 +67,7 @@ internal class RestaurantCell: UITableViewCell {
         restaurantLogo.topAnchor.constraint(equalTo: container.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantLogo.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantLogo.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
-        restaurantLogo.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        restaurantLogo.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
         restaurantName.topAnchor.constraint(equalTo: restaurantLogo.bottomAnchor, constant: 3*DimensionsCatalog.distanceBetweenElements).isActive = true
         restaurantName.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true

@@ -214,3 +214,99 @@ internal class ViewControllerWithPan: UIViewController {
         }
     }
 }
+
+class SpecialRequestButton: UIButton {
+
+    private var badgeLabel = UILabel()
+    
+    private var restaurant: Restaurant?
+    private var viewController: UIViewController?
+
+    var badge: Int = 0 {
+        didSet {
+            badgeLabel.text = String(badge)
+            badgeLabel.isHidden = badge == 0 ? true : false
+        }
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    convenience init (viewController: UIViewController, restaurant: Restaurant?) {
+        self.init()
+        self.viewController = viewController
+        self.restaurant = restaurant
+        
+        setupBadge()
+        setupButton()
+    }
+    
+    private func setupButton() {
+        guard let view = self.viewController?.view else {
+            isHidden = true
+            return;
+        }
+        
+        addTarget(self, action: #selector(specialRequests), for: .touchUpInside)
+        setImage(#imageLiteral(resourceName: "chat"), for: .normal)
+        backgroundColor = ColorsCatalog.headerGrayShade
+        layer.zPosition = 100
+        layer.cornerRadius = 35
+        imageEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        dropShadow()
+        
+        view.addSubview(self)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(DimensionsCatalog.viewControllerFooterDimensions.heightExtended + DimensionsCatalog.distanceBetweenElements)).isActive = true
+        rightAnchor.constraint(equalTo: view.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        widthAnchor.constraint(equalToConstant: 70).isActive = true
+        heightAnchor.constraint(equalToConstant: 70).isActive = true
+    }
+    
+    private func setupBadge() {
+        badgeLabel.text = String(badge)
+        badgeLabel.textColor = UIColor.white
+        badgeLabel.backgroundColor = ColorsCatalog.themeColor
+        badgeLabel.font = UIFont(name: FontCatalog.fontLevels[1], size: 20)
+        badgeLabel.sizeToFit()
+        badgeLabel.textAlignment = .center
+        let badgeSize = badgeLabel.frame.size
+
+        let height = max(18, Double(badgeSize.height) + 5.0)
+        let width = max(height, Double(badgeSize.width) + 10.0)
+
+        var vertical: Double?, horizontal: Double?
+        let badgeInset = UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 0)
+        
+        vertical = Double(badgeInset.top) - Double(badgeInset.bottom)
+        horizontal = Double(badgeInset.left) - Double(badgeInset.right)
+
+        let x = (Double(bounds.size.width) - 10 + horizontal!)
+        let y = -(Double(badgeSize.height) / 2) - 10 + vertical!
+        badgeLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+
+        badgeLabel.layer.cornerRadius = badgeLabel.frame.height/2
+        badgeLabel.layer.masksToBounds = true
+        badgeLabel.isHidden = badge == 0 ? true : false
+        addSubview(badgeLabel)
+    }
+    
+    @objc private func specialRequests() {
+        if let restauarnt = self.restaurant, let viewController = self.viewController {
+            let controller = RequestViewController(restaurant: restauarnt)
+            
+            controller.modalPresentationStyle = .fullScreen
+
+            DispatchQueue.main.async {
+                viewController.present(controller, animated: true, completion: nil)
+            }
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        fatalError("init(coder:) is not implemented")
+    }
+}

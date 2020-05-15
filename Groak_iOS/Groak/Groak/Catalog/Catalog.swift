@@ -36,6 +36,7 @@ internal class Catalog {
         view.present(alert, animated: true, completion: nil)
     }
     
+    // This shows a message for certain type with no input from user
     static func message(vc: UIViewController?, message: String) {
         guard let view = vc else { return }
         
@@ -44,6 +45,32 @@ internal class Catalog {
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeCatalog.messageTime) {
             alert.dismiss(animated: true)
+        }
+    }
+    
+    // Get Top and Root View controllers
+    static func getTopAndRootViewControllers() -> (UIViewController?, IntroViewController?) {
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? IntroViewController
+        var topViewController = UIApplication.shared.keyWindow?.rootViewController
+        while let presentedViewController = topViewController?.presentedViewController {
+            topViewController = presentedViewController
+        }
+        
+        return (topViewController, rootViewController)
+    }
+    
+    // This sets the badge for special request and can be called wherever needs to be updated
+    static func setRequestBadge() {
+        let (topViewController, _) = Catalog.getTopAndRootViewControllers()
+        
+        DispatchQueue.main.async {
+            if let tabbarViewController = topViewController as? TabbarViewController {
+                tabbarViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let dishViewController = topViewController as? DishViewController {
+                dishViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let addToCartViewController = topViewController as? AddToCartViewController {
+                addToCartViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            }
         }
     }
     

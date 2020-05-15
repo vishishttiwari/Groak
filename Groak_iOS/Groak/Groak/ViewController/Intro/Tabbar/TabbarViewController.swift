@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 
 internal class TabbarViewController: UITabBarController {
+    
+    var specialRequestButton: SpecialRequestButton?
         
     init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
@@ -41,6 +43,9 @@ internal class TabbarViewController: UITabBarController {
         self.viewControllers = controllers
         
         selectedIndex = 1
+        
+        specialRequestButton = SpecialRequestButton(viewController: self, restaurant: restaurant)
+        specialRequestButton?.badge = AppDelegate.badgeCountRequest
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -66,6 +71,8 @@ internal class TabbarViewController: UITabBarController {
     
     // Func called when item added to cart
     func addToCart() {
+        print("cart")
+        print(LocalRestaurant.cart.dishes.count)
         let tabBarItem = tabBar.items?[0]
         tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
         let subView = tabBar.subviews[1].subviews.first as! UIImageView

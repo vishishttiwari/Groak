@@ -93,12 +93,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        let (topViewController, _) = Catalog.getTopAndRootViewControllers()
+        
         if let category = userInfo["gcm.notification.category"] as? String {
             if category == "request" {
-                AppDelegate.badgeCountRequest += 1
+                if !(topViewController?.isKind(of: RequestViewController.self) ?? false) {
+                    AppDelegate.badgeCountRequest += 1
+                    Catalog.setRequestBadge()
+                } else {
+                    AppDelegate.badgeCountRequest = 0
+                }
             }
             else if category == "order" {
-                AppDelegate.badgeCountOrder += 1
+                if !(topViewController?.isKind(of: TabbarViewController.self) ?? false) {
+                    AppDelegate.badgeCountOrder += 1
+                } else {
+                    AppDelegate.badgeCountOrder = 0
+                }
             }
             UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
         }

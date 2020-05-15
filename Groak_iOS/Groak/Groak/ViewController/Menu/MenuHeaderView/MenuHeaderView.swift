@@ -39,7 +39,9 @@ internal class MenuHeaderView: UIView {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        backButton.setTitle("Leave", for: .normal)
+        backButton.setTitleColor(ColorsCatalog.themeColor, for: .normal)
+        backButton.titleLabel?.font = UIFont(name: FontCatalog.fontLevels[1], size: 18)
         self.addSubview(backButton)
         
         searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
@@ -81,7 +83,7 @@ internal class MenuHeaderView: UIView {
         
         backButton.centerYAnchor.constraint(equalTo: restaurantTitle.centerYAnchor).isActive = true
         backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 20).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
         searchButton.centerYAnchor.constraint(equalTo: restaurantTitle.centerYAnchor).isActive = true
@@ -101,7 +103,7 @@ internal class MenuHeaderView: UIView {
             return
         }
         
-        let indexPath = IndexPath.init(row: section - 1, section: 0)
+        let indexPath = IndexPath.init(row: section, section: 0)
         foodCategorySelected = indexPath
         self.foodCategories?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }

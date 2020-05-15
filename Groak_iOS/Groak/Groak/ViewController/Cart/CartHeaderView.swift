@@ -32,7 +32,9 @@ internal class CartHeaderView: UIView {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        backButton.setTitle("Leave", for: .normal)
+        backButton.setTitleColor(ColorsCatalog.themeColor, for: .normal)
+        backButton.titleLabel?.font = UIFont(name: FontCatalog.fontLevels[1], size: 18)
         self.addSubview(backButton)
         
         deleteButton.addTarget(self, action: #selector(deleteCart), for: .touchUpInside)
@@ -55,7 +57,7 @@ internal class CartHeaderView: UIView {
         
         backButton.centerYAnchor.constraint(equalTo: title.centerYAnchor).isActive = true
         backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 20).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
         deleteButton.centerYAnchor.constraint(equalTo: title.centerYAnchor).isActive = true

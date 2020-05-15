@@ -109,7 +109,7 @@ internal class ReceiptOrderDishCell: UITableViewCell {
         price.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         price.widthAnchor.constraint(equalToConstant: DimensionsCatalog.screenSize.width/4).isActive = true
         
-        localBadgeView.topAnchor.constraint(equalTo: price.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        localBadgeView.topAnchor.constraint(equalTo: name.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         localBadgeView.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         localBadgeView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
