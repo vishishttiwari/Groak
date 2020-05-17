@@ -100,7 +100,7 @@ extension MenuView: UITableViewDataSource, UITableViewDelegate, UIScrollViewDele
         if categories[indexPath.section].dishes[indexPath.row].available {
             dishSelected?(categories[indexPath.section].dishes[indexPath.row])
         } else {
-            Catalog.message(vc: self.viewController, message: "This dish is currently unavailable")
+            Catalog.alert(vc: self.viewController, title: nil, message: "This dish is currently unavailable")
         }
     }
 

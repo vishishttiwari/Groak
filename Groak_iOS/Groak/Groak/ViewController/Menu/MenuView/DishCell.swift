@@ -144,7 +144,7 @@ internal class DishCell: UITableViewCell {
         dishImage.contentMode = .scaleToFill
         container.addSubview(dishImage)
 
-        dishName.numberOfLines = 1
+        dishName.numberOfLines = 0
         dishName.textAlignment = .left
         dishName.textColor = ColorsCatalog.themeColor
         dishName.font = UIFont(name: FontCatalog.fontLevels[3], size: titleDimensions)
@@ -204,12 +204,12 @@ internal class DishCell: UITableViewCell {
         dishName.topAnchor.constraint(equalTo: dishImage.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishName.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         dishName.widthAnchor.constraint(equalToConstant: 3*self.frame.width/4).isActive = true
+        dishName.bottomAnchor.constraint(equalTo: restrictions.topAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
         dishPrice.topAnchor.constraint(equalTo: dishImage.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishPrice.widthAnchor.constraint(equalToConstant: self.frame.width/3).isActive = true
         dishPrice.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         
-        restrictions.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         restrictions.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         restrictions.rightAnchor.constraint(equalTo: dishCalorie.leftAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         
@@ -218,7 +218,7 @@ internal class DishCell: UITableViewCell {
         restrictionsNoHeightConstraint = restrictions.heightAnchor.constraint(equalToConstant: 0)
         restrictionsNoHeightConstraint?.priority = UILayoutPriority.init(999)
         
-        dishCalorie.topAnchor.constraint(equalTo: dishPrice.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        dishCalorie.centerYAnchor.constraint(equalTo: restrictions.centerYAnchor).isActive = true
         dishCalorie.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         dishCalorie.widthAnchor.constraint(equalToConstant: self.frame.width/4).isActive = true
         
@@ -227,7 +227,7 @@ internal class DishCell: UITableViewCell {
         dishCalorieNoHeightConstraint = dishCalorie.heightAnchor.constraint(equalToConstant: 0)
         dishCalorieNoHeightConstraint?.priority = UILayoutPriority.init(999)
         
-        dishInfo.topAnchor.constraint(equalTo: dishCalorie.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        dishInfo.topAnchor.constraint(equalTo: restrictions.bottomAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         dishInfo.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
         dishInfo.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
         dishInfo.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true

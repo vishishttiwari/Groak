@@ -90,8 +90,10 @@ internal class CartViewController: UIViewController {
         self.view.addSubview(cartView)
         
         cartView.dismiss = { () -> () in
-            self.view.coverHorizontalDismiss()
-            self.dismiss(animated: false, completion: nil)
+            self.deleteCart()
+        }
+        cartView.update = { () -> () in
+            self.updateCart()
         }
         cartView.cartDishSelected = { (_ cartDish: CartDish, _ indexInCart: Int) -> () in
             let controller = CartDetailsViewController(cartDish: cartDish, indexInCart: indexInCart)
@@ -168,10 +170,14 @@ internal class CartViewController: UIViewController {
         LocalRestaurant.cart.delete()
         reload()
 
-        self.tabBarController?.selectedIndex = 1
+        self.tabBarController?.selectedIndex = 0
         
+        updateCart()
+    }
+    
+    private func updateCart() {
         let tabBarController = self.tabBarController as? TabbarViewController
-        tabBarController?.deleteCart()
+        tabBarController?.updateCart()
     }
     
     // Reload so that price and cart shows the updated items

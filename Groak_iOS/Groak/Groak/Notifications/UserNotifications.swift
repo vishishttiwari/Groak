@@ -39,9 +39,8 @@ internal class UserNotifications: NSObject {
 
 extension UserNotifications: UNUserNotificationCenterDelegate {
     
+    // This function is called when the notification is tapped
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        print("I think its tapped")
         
         if LocalRestaurant.isRestaurantCreationSuccessful(), let restaurant = LocalRestaurant.restaurant.restaurant {
             if let category = response.notification.request.content.userInfo["gcm.notification.category"] as? String {
@@ -62,6 +61,8 @@ extension UserNotifications: UNUserNotificationCenterDelegate {
                 } else if category == "order" {
                     AppDelegate.badgeCountOrder = 0
                     UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
+                } else if category == "reset" {
+                    LocalRestaurant.leaveRestaurant()
                 }
             }
         }

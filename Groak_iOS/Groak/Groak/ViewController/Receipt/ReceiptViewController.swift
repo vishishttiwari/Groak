@@ -12,12 +12,13 @@ import UIKit
 import Photos
 
 internal class ReceiptViewController: ViewControllerWithPan {
+    var specialRequestButton: SpecialRequestButton?
     private let header: ReceiptHeaderView = ReceiptHeaderView.init()
     internal var receiptView: ReceiptView = ReceiptView.init()
     private var text: UILabel = UILabel.init()
     private let footer: ReceiptFooterView = ReceiptFooterView.init()
     
-    required init() {
+    required init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = ColorsCatalog.headerGrayShade
@@ -26,6 +27,9 @@ internal class ReceiptViewController: ViewControllerWithPan {
         setupText()
         setupFooter()
         setupReceiptView()
+        
+        specialRequestButton = SpecialRequestButton(viewController: self, restaurant: restaurant)
+        specialRequestButton?.badge = AppDelegate.badgeCountRequest
     }
     
     private func setupHeader() {

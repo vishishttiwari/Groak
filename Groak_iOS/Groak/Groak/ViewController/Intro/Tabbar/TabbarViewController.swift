@@ -25,31 +25,30 @@ internal class TabbarViewController: UITabBarController {
         tabBar.barTintColor = .white
         tabBar.isTranslucent = false
         
+        let menu = MenuViewController.init(restaurant: restaurant)
+        let menuIcon = UITabBarItem(title: "Menu", image: #imageLiteral(resourceName: "menu2"), selectedImage: #imageLiteral(resourceName: "menu2"))
+        menu.tabBarItem = menuIcon
+        
         let cart = CartViewController()
         let cartIcon = UITabBarItem(title: "Cart", image: #imageLiteral(resourceName: "cart4"), selectedImage: #imageLiteral(resourceName: "cart4"))
         cart.tabBarItem = cartIcon
         cart.tabBarItem.badgeColor = ColorsCatalog.themeColor
         cart.tabBarItem.badgeValue = String(LocalRestaurant.cart.dishes.count)
         
-        let menu = MenuViewController.init(restaurant: restaurant)
-        let menuIcon = UITabBarItem(title: "Menu", image: #imageLiteral(resourceName: "menu2"), selectedImage: #imageLiteral(resourceName: "menu2"))
-        menu.tabBarItem = menuIcon
-        
-        let order = OrderViewController.init()
+        let order = OrderViewController.init(restaurant: restaurant)
         let orderIcon = UITabBarItem(title: "Table Order", image: #imageLiteral(resourceName: "table"), selectedImage: #imageLiteral(resourceName: "table"))
         order.tabBarItem = orderIcon
         
-        let controllers = [cart, menu, order]
+        let controllers = [menu, cart, order]
         self.viewControllers = controllers
         
-        selectedIndex = 1
+        selectedIndex = 0
         
         specialRequestButton = SpecialRequestButton(viewController: self, restaurant: restaurant)
         specialRequestButton?.badge = AppDelegate.badgeCountRequest
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-
         let index = self.tabBar.items?.firstIndex(of: item)
         let subView = tabBar.subviews[index!+1].subviews.first as! UIImageView
         self.performSpringAnimation(tabImageView: subView)
@@ -57,7 +56,6 @@ internal class TabbarViewController: UITabBarController {
     
     // Func to perform spring animation on imageview
     private func performSpringAnimation(tabImageView: UIImageView) {
-
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
 
             tabImageView.transform = CGAffineTransform.init(scaleX: 1.4, y: 1.4)
@@ -71,11 +69,9 @@ internal class TabbarViewController: UITabBarController {
     
     // Func called when item added to cart
     func addToCart() {
-        print("cart")
-        print(LocalRestaurant.cart.dishes.count)
-        let tabBarItem = tabBar.items?[0]
+        let tabBarItem = tabBar.items?[1]
         tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
-        let subView = tabBar.subviews[1].subviews.first as! UIImageView
+        let subView = tabBar.subviews[2].subviews.first as! UIImageView
         self.addToCartAnimation(tabImageView: subView)
     }
     
@@ -93,8 +89,8 @@ internal class TabbarViewController: UITabBarController {
     }
     
     // Func called when order is placed or cart is deleted
-    func deleteCart() {
-        let tabBarItem = tabBar.items?[0]
+    func updateCart() {
+        let tabBarItem = tabBar.items?[1]
         tabBarItem?.badgeValue = String(LocalRestaurant.cart.dishes.count)
     }
     

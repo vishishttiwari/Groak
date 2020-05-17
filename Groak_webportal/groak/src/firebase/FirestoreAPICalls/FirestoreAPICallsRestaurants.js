@@ -42,9 +42,10 @@ export const updateRestaurantFirestoreAPI = (restaurantId, data) => {
  * This function adds demo data like demo dish and demo category whenever a restaurant is created.
  *
  * @param {*} restaurantId id of the restaurant for which this is being created
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} data this contains data about the restaurant
  */
-export const addRestaurantFirestoreAPI = (restaurantId, data) => {
+export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, data) => {
     const batch = db.batch();
     const dishId = randomNumber();
     const categoryId = randomNumber();
@@ -53,12 +54,12 @@ export const addRestaurantFirestoreAPI = (restaurantId, data) => {
     const newData = { ...data, location: createGeoPoint(data.address.latitude, data.address.longitude) };
 
     batch.set(db.collection('restaurants/').doc(restaurantId), newData);
-    batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, dishId));
-    batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, categoryId, dishId));
-    batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, tableId));
-    batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, tableId));
-    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, tableId, dishId));
-    batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), createDemoRequest(restaurantId, tableId));
+    batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, restaurantName, dishId));
+    batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, restaurantName, categoryId, dishId));
+    batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, restaurantName, tableId));
+    batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, restaurantName, tableId));
+    batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, restaurantName, tableId, dishId));
+    batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), createDemoRequest(restaurantId, restaurantName, tableId));
 
     return batch.commit();
 };

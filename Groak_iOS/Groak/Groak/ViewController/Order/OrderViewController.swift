@@ -25,7 +25,7 @@ internal class OrderViewController: UIViewController {
     
     private let fsTable = FirestoreAPICallsTables.init();
     
-    required init() {
+    required init(restaurant: Restaurant) {
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = ColorsCatalog.headerGrayShade
@@ -53,7 +53,7 @@ internal class OrderViewController: UIViewController {
         self.view.addGestureRecognizer(tapGestureRecognizer!)
         
         setupHeader()
-        setupFooter()
+        setupFooter(restaurant: restaurant)
         setupOrderView()
         downloadOrder()
     }
@@ -101,7 +101,7 @@ internal class OrderViewController: UIViewController {
         orderView?.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.heightExtended
     }
     
-    private func setupFooter() {
+    private func setupFooter(restaurant: Restaurant) {
         self.view.addSubview(footer)
         
         footer.pay = { () -> () in
@@ -112,7 +112,7 @@ internal class OrderViewController: UIViewController {
                 
                 self.fsTable.dataReceivedSetStatus = { (_ success: Bool?) -> () in
                     if success ?? false {
-                        let controller = ReceiptViewController.init()
+                        let controller = ReceiptViewController.init(restaurant: restaurant)
 
                         self.view.coverHorizontalPresent()
                         controller.modalPresentationStyle = .overCurrentContext

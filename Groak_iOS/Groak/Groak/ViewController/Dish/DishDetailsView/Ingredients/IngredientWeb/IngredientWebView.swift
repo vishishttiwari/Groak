@@ -15,7 +15,7 @@ internal class IngredientWebView: UIWebView {
     required init(ingredientName: String) {
         super.init(frame: .zero)
         
-        loadRequest(URLRequest.init(url: URL(string: "https://www.google.com/search?q=\(ingredientName.replacingOccurrences(of: " ", with: "+"))+%22food+ingredient%22")!))
+        loadRequest(URLRequest.init(url: URL(string: "https://www.google.com/search?q=\(ingredientName.replacingOccurrences(of: " ", with: "+"))")!))
     }
     
     required init?(coder aDecoder: NSCoder) {

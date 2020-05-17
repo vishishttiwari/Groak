@@ -27,6 +27,8 @@ internal class MenuHeaderView: UIView {
     private var categories: [MenuCategory] = []
     private var foodCategorySelected: IndexPath = IndexPath.init(row: 0, section: 0)
     
+    private  let leftInset  = 0
+    
     required init(restaurant: Restaurant) {
         super.init(frame: .zero)
         
@@ -99,7 +101,7 @@ internal class MenuHeaderView: UIView {
     
     // This function is called when a new section is scrolled in the menu
     internal func sectionChanged(section: Int) {
-        if (section <= 0) {
+        if (section < 0) {
             return
         }
         

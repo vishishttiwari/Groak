@@ -112,6 +112,10 @@ internal class BottomSheetView: UIView, CLLocationManagerDelegate {
                return
            }
         }
+        
+        AppDelegate.badgeCountRequest = 0
+        AppDelegate.badgeCountOrder = 0
+        UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
 
         // Find the closest restaurant to the current coordinate. if a restaurant is found then return back with the
         // restaurant. Otherwise show that restaurant is not close to this position.

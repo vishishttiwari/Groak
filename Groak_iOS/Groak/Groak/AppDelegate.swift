@@ -82,11 +82,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidBecomeActive(_ application: UIApplication) {
         PermissionsCatalog.askLocationPermission()
         AppDelegate.badgeCountOrder = 0
+        AppDelegate.badgeCountRequest = 0
         UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
     }
 
     // Whenever application terminates, the restaurant is deleted. This is mostly for unsubscribing the snapshot listeners for requests and orders
     func applicationWillTerminate(_ application: UIApplication) {
+        print("Terminate")
         LocalRestaurant.deleteRestaurant()
 //        FirebaseMessaging.shared = nil
     }
@@ -110,6 +112,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 } else {
                     AppDelegate.badgeCountOrder = 0
                 }
+            } else if category == "reset" {
+                LocalRestaurant.leaveRestaurantWithoutAsking()
+                AppDelegate.badgeCountOrder = 0
+                AppDelegate.badgeCountRequest = 0
             }
             UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
         }

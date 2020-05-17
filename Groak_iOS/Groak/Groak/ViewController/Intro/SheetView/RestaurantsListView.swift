@@ -28,7 +28,7 @@ internal class RestaurantsListView: UITableView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        self.separatorStyle = .none
+        self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
         self.rowHeight = UITableView.automaticDimension
         let insets = UIEdgeInsets(top: DimensionsCatalog.tableViewInsetDistance, left: 0, bottom: DimensionsCatalog.tableViewInsetDistance, right: 0)

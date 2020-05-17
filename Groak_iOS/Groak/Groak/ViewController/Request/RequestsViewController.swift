@@ -59,6 +59,8 @@ internal class RequestViewController: UIViewController {
                 customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
             } else if let customViewController = self.presentingViewController as? AddToCartViewController {
                 customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = self.presentingViewController as? ReceiptViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
             }
             self.dismiss(animated: true, completion: nil)
         }

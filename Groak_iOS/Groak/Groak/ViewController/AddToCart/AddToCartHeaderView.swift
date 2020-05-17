@@ -42,8 +42,8 @@ internal class AddToCartHeaderView: UIView {
         dishTitle.translatesAutoresizingMaskIntoConstraints = false
         
         dishTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop).isActive = true
-        dishTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
-        dishTitle.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
+        dishTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 2*DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements).isActive = true
+        dishTitle.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -(DimensionsCatalog.viewControllerHeaderDimensions.titleSize + 2*DimensionsCatalog.viewControllerHeaderDimensions.distanceBetweenElements)).isActive = true
         dishTitle.heightAnchor.constraint(equalToConstant: DimensionsCatalog.viewControllerHeaderDimensions.titleSize).isActive = true
         
         backButton.centerYAnchor.constraint(equalTo: dishTitle.centerYAnchor).isActive = true

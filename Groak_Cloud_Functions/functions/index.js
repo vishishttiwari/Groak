@@ -19,14 +19,18 @@ exports.orderServeTimeChanged = functions.firestore
         const after = change.after.data()
         const newServeTime = after.serveTime
         const orderId = context.params.orderId
+		const restaurantName = change.before.data().restaurantName
 
         if (change.before.exists) {
             if (before.status === TableStatus.ordered && after.status === TableStatus.approved) {
-                sendNotification('Your order has been approved', `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
+                sendNotification(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
             }
             if (before.status === TableStatus.approved && after.status === TableStatus.approved && before.serveTime !== after.serveTime) {
                 sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
             }
+			if (before.status !== TableStatus.available && after.status === TableStatus.available) {
+				sendNotification(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, orderId, 'reset')
+			}
         }
 
         return true
@@ -54,11 +58,12 @@ exports.userReceivesRequest = functions.firestore
         const beforeRequests = change.before.data().requests
         const afterRequests = change.after.data().requests
         const orderId = context.params.requestId
+		const restaurantName = change.before.data().restaurantName
 
         if (change.before.exists && afterRequests.length > 1) {
             if (beforeRequests.length !== afterRequests.length) {
                 if (!afterRequests[afterRequests.length - 1].createdByUser) {
-                    sendNotification('From Restaurant', `${afterRequests[afterRequests.length - 1].request}`, orderId, 'request')
+                    sendNotification(`From ${restaurantName}`, `${afterRequests[afterRequests.length - 1].request}`, orderId, 'request')
                 }
             }
         }

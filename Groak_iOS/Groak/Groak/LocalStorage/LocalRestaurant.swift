@@ -56,14 +56,23 @@ internal class LocalRestaurant {
         fsRequests = nil
     }
     
+    static func leaveRestaurantWithoutAsking() {
+        let (_, rootViewController) = Catalog.getTopAndRootViewControllers()
+        deleteRestaurant()
+        rootViewController?.dismiss(animated: false) {
+            rootViewController?.returningToIntro()
+        }
+    }
+    
     // Function called when the user either goes away from the restaurant or enough time has passed since the code was scanned
     static func leaveRestaurant(title: String = "Scan QR code again", message: String = "Please scan your QR code again to order") {
+        deleteRestaurant()
+        
         let (topViewController, rootViewController) = Catalog.getTopAndRootViewControllers()
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
             rootViewController?.dismiss(animated: false) {
-                deleteRestaurant()
                 rootViewController?.returningToIntro()
             }
         }))

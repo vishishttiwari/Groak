@@ -88,9 +88,10 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address) => {
  * This function creates a demo dish
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} dishId id of the item to be added
  */
-export const createDemoDish = (restaurantId, dishId) => {
+export const createDemoDish = (restaurantId, restaurantName, dishId) => {
     return {
         available: true,
         created: getCurrentDateTime(),
@@ -113,6 +114,7 @@ export const createDemoDish = (restaurantId, dishId) => {
         price: DemoDishPrice,
         reference: createDishReference(restaurantId, dishId),
         restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
         shortInfo: DemoDishShortInfo,
         extras: [{
             title: DemoDishExtraTitle,
@@ -137,10 +139,11 @@ export const createDemoDish = (restaurantId, dishId) => {
  * This function creates a demo category
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} categoryId id of the item to be added
  * @param {*} dishId id of the item of dish added to this category
  */
-export const createDemoCategory = (restaurantId, categoryId, dishId) => {
+export const createDemoCategory = (restaurantId, restaurantName, categoryId, dishId) => {
     return {
         available: true,
         name: DemoCategoryName,
@@ -152,6 +155,7 @@ export const createDemoCategory = (restaurantId, categoryId, dishId) => {
         order: 0,
         reference: createCategoryReference(restaurantId, categoryId),
         restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
     };
 };
 
@@ -159,9 +163,10 @@ export const createDemoCategory = (restaurantId, categoryId, dishId) => {
  * This function creates demo table
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} tableId id of the item to be added
  */
-export const createDemoTable = (restaurantId, tableId) => {
+export const createDemoTable = (restaurantId, restaurantName, tableId) => {
     return {
         name: DemoTableName,
         created: getCurrentDateTime(),
@@ -171,6 +176,7 @@ export const createDemoTable = (restaurantId, tableId) => {
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
+        restaurantName,
         status: TableStatus.ordered,
         newRequest: false,
         serveTime: getCurrentDateTimePlusMinutes(30),
@@ -183,10 +189,11 @@ export const createDemoTable = (restaurantId, tableId) => {
  * This function creates demo table
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} orderId id of the table for which order is placed. This is same as order id
  * @param {*} dishId id of the dish which is placed in the order
  */
-export const createDemoOrder = (restaurantId, orderId, dishId) => {
+export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) => {
     return {
         comments: DemoOrderComments,
         dishes: createDemoOrderDishes(restaurantId, dishId),
@@ -198,6 +205,7 @@ export const createDemoOrder = (restaurantId, orderId, dishId) => {
         table: DemoTableName,
         reference: createOrderReference(restaurantId, orderId),
         restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
         tableOriginalReference: createTableReferenceInTableCollections(orderId),
         requestReference: createRequestReference(restaurantId, orderId),
@@ -210,9 +218,11 @@ export const createDemoOrder = (restaurantId, orderId, dishId) => {
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
  * @param {*} requestId id of the request for which order is placed. This is same as order id
  */
-export const createDemoRequest = (restaurantId, requestId) => {
+export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
     return {
         reference: createRequestReference(restaurantId, requestId),
+        restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
         requests: DemoRequest,
     };
 };

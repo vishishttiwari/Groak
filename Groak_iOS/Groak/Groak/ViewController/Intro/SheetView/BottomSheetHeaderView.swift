@@ -25,7 +25,7 @@ internal class BottomSheetHeaderView: UIView {
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
         
-        groak.viewControllerHeaderTitle(title: "Groak")
+        groak.viewControllerHeaderTitle(title: "Select your restaurant")
         self.addSubview(groak)
     }
     
@@ -47,7 +47,7 @@ internal class BottomSheetHeaderView: UIView {
             }
         } else if state == BottomSheetState.RestaurantNotFound {
             DispatchQueue.main.async {
-                self.groak.text = "Groak"
+                self.groak.text = "Select your restaurant"
                 self.groak.frame.origin.y = DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop
             }
         }

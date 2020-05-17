@@ -20,7 +20,12 @@ internal class RestaurantFullView: UIView {
     private let notCorrectRestaurant: UIButton = UIButton()
     internal var restaurant: Restaurant = Restaurant.init() {
         didSet {
-            restaurantLogo.loadImageUsingCache(url: restaurant.logo)
+            if (restaurant.logo.count != 0) {
+                restaurantLogo.isHidden = false
+                restaurantLogo.loadImageUsingCache(url: restaurant.logo)
+            }  else {
+                restaurantLogo.isHidden = true
+            }
             restaurantName.text = restaurant.name
         }
     }

@@ -12,6 +12,7 @@ import UIKit
 
 internal class CartView: UITableView {
     internal var dismiss: (() -> ())?
+    internal var update: (() -> ())?
     internal var cartDishSelected: ((_ cartDish: CartDish, _ indexInCart: Int) -> ())?
     
     private let headerCellId = "headerCellId"
@@ -103,9 +104,9 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             cart.dishes.remove(at: indexPath.row)
-            LocalRestaurant.cart.dishes.remove(at: indexPath.row)
-            if (LocalRestaurant.cart.dishes.count > 0) {
+            if (cart.dishes.count > 0) {
                 self.reloadData()
+                update?()
             } else {
                 dismiss?()
             }

@@ -21,6 +21,8 @@ internal class FirebaseMessaging {
     }
     
     func unsubscribe(orderId: String) {
+        print("Unsubscribe Start")
         messaging.unsubscribe(fromTopic: orderId)
+        print("Unsubscribe End")
     }
 }

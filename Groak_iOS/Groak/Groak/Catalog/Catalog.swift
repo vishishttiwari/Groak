@@ -28,7 +28,7 @@ internal class Catalog {
     };
     
     // Simple alert views. Nothing special
-    static func alert(vc: UIViewController?, title: String, message: String) {
+    static func alert(vc: UIViewController?, title: String?, message: String) {
         guard let view = vc else { return }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -64,12 +64,14 @@ internal class Catalog {
         let (topViewController, _) = Catalog.getTopAndRootViewControllers()
         
         DispatchQueue.main.async {
-            if let tabbarViewController = topViewController as? TabbarViewController {
-                tabbarViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
-            } else if let dishViewController = topViewController as? DishViewController {
-                dishViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
-            } else if let addToCartViewController = topViewController as? AddToCartViewController {
-                addToCartViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            if let customViewController = topViewController as? TabbarViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = topViewController as? DishViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = topViewController as? AddToCartViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
+            } else if let customViewController = topViewController as? ReceiptViewController {
+                customViewController.specialRequestButton?.badge = AppDelegate.badgeCountRequest
             }
         }
     }
