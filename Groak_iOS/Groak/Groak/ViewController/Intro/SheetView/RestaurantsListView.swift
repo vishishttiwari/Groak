@@ -15,6 +15,8 @@ internal class RestaurantsListView: UITableView {
     // Optional Closures
     internal var restaurantSelected: ((_ restaurant: Restaurant) -> ())?
     
+    private let noRestaurant: UIImageView = UIImageView()
+    
     private let cellId: String = "cellId"
     
     private var restaurants: [Restaurant] = []
@@ -27,6 +29,17 @@ internal class RestaurantsListView: UITableView {
     
     private func setupViews() {
         self.backgroundColor = ColorsCatalog.headerGrayShade
+        
+        noRestaurant.image = UIImage.init(named: "noRestaurant")
+        noRestaurant.contentMode = .scaleAspectFit
+        noRestaurant.layer.zPosition = -10
+        noRestaurant.isHidden = true
+        self.addSubview(noRestaurant)
+        noRestaurant.translatesAutoresizingMaskIntoConstraints = false
+        noRestaurant.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        noRestaurant.topAnchor.constraint(equalTo: self.topAnchor, constant: DimensionsCatalog.screenSize.width/3).isActive = true
+        noRestaurant.heightAnchor.constraint(equalToConstant: 4*DimensionsCatalog.screenSize.width/5).isActive = true
+        noRestaurant.widthAnchor.constraint(equalToConstant: 4*DimensionsCatalog.screenSize.width/5).isActive = true
         
         self.separatorStyle = .singleLine
         self.estimatedRowHeight = self.rowHeight
@@ -44,6 +57,12 @@ internal class RestaurantsListView: UITableView {
     
     internal func reloadData(restaurants: [Restaurant]) {
         self.restaurants = restaurants
+        
+        if (restaurants.count == 0) {
+            noRestaurant.isHidden = false
+        } else {
+            noRestaurant.isHidden = true
+        }
 
         reloadData()
     }

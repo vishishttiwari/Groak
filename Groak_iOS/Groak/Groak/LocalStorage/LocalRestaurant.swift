@@ -133,14 +133,14 @@ internal class LocalRestaurant {
         
         for localDish in localDishes {
             for dish in LocalRestaurant.tableOrder.dishes {
-                if dish.equals(coreDataDish: localDish) {
+                if dish.equals(coreDataDishReference: localDish) {
                     dish.local = true
                 }
             }
         }
         for localComment in localComments {
             for comment in LocalRestaurant.tableOrder.comments {
-                if comment.equals(coreDataComment: localComment) {
+                if comment.equals(coreDataCommentReference: localComment) {
                     comment.local = true
                 }
             }
@@ -148,15 +148,15 @@ internal class LocalRestaurant {
     }
     
     // Download local dishes from coredata. If any of the dish is older than 24 hours then it deletes it from the local core data
-    private static func downloadDishesFromCoreData(viewController: UIViewController) -> [CoreDataDish] {
+    private static func downloadDishesFromCoreData(viewController: UIViewController) -> [CoreDataDishReference] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         
         if let context = delegate?.persistentContainer.viewContext {
-            let fetchDishes = NSFetchRequest<NSFetchRequestResult>.init(entityName: "CoreDataDish")
+            let fetchDishes = NSFetchRequest<NSFetchRequestResult>.init(entityName: "CoreDataDishReference")
             fetchDishes.sortDescriptors = [NSSortDescriptor.init(key: "created", ascending: true)]
             
             do {
-                let dishes: [CoreDataDish] = try(context.fetch(fetchDishes)) as? [CoreDataDish] ?? []
+                let dishes: [CoreDataDishReference] = try(context.fetch(fetchDishes)) as? [CoreDataDishReference] ?? []
                 for dish in dishes {
                     if let created = dish.created, let previousDay = Calendar.current.date(byAdding: .hour, value: -24, to: Date()) {
                         if created < previousDay {
@@ -173,15 +173,15 @@ internal class LocalRestaurant {
     }
     
     // Download local comments from coredata. If any of the dish is older than 24 hours then it deletes it from the local core data
-    private static func downloadCommentsFromCoreData(viewController: UIViewController) -> [CoreDataComment] {
+    private static func downloadCommentsFromCoreData(viewController: UIViewController) -> [CoreDataCommentReference] {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         
         if let context = delegate?.persistentContainer.viewContext {
-            let fetchDishes = NSFetchRequest<NSFetchRequestResult>.init(entityName: "CoreDataComment")
+            let fetchDishes = NSFetchRequest<NSFetchRequestResult>.init(entityName: "CoreDataCommentReference")
             fetchDishes.sortDescriptors = [NSSortDescriptor.init(key: "created", ascending: true)]
             
             do {
-                let comments: [CoreDataComment] = try(context.fetch(fetchDishes)) as? [CoreDataComment] ?? []
+                let comments: [CoreDataCommentReference] = try(context.fetch(fetchDishes)) as? [CoreDataCommentReference] ?? []
                 for comment in comments {
                     if let created = comment.created, let previousDay = Calendar.current.date(byAdding: .hour, value: -24, to: Date()) {
                         if created < previousDay {

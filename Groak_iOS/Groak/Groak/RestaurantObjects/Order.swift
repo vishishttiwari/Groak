@@ -131,39 +131,34 @@ internal class Order {
 }
 
 internal class OrderComment {
+    var reference: String?
     var comment: String
     var created: Timestamp
     var local: Bool
     
     init() {
+        reference = nil
         comment = ""
         created = Timestamp.init()
         local = false
     }
     
     init(orderComment: [String: Any]) {
+        reference = orderComment["reference"] as? String
         comment = orderComment["comment"] as? String ?? ""
         created = orderComment["created"] as? Timestamp ?? Timestamp.init()
         local = false
     }
     
     init(comment: String) {
+        self.reference = UUID().uuidString
         self.comment = comment
         self.created = Timestamp.init()
         local = false
     }
     
-    func equals(coreDataComment: CoreDataComment) -> Bool {
-        if self.comment != coreDataComment.comment {
-            return false
-        }
-        if self.created.dateValue().millisecondsSince1970 != coreDataComment.created?.millisecondsSince1970 {
-            return false
-        }
-        if LocalRestaurant.restaurant.restaurant?.name != coreDataComment.restaurantName {
-            return false
-        }
-        if LocalRestaurant.restaurant.restaurant?.reference?.documentID != coreDataComment.restaurantDocumentId {
+    func equals(coreDataCommentReference: CoreDataCommentReference) -> Bool {
+        if self.reference != coreDataCommentReference.reference {
             return false
         }
         
@@ -171,6 +166,12 @@ internal class OrderComment {
     }
     
     func success() -> Bool {
+        guard let reference = self.reference else {
+            return false;
+        }
+        if (reference.count == 0) {
+            return false
+        }
         if (comment.count == 0) {
             return false
         }
@@ -180,6 +181,7 @@ internal class OrderComment {
     
     var description: String {
         var str = "Comment: \(comment)\n"
+        str += "Reference: \(reference ?? "")"
         str += "Created: \(created)\n"
 
         return str;
@@ -187,6 +189,7 @@ internal class OrderComment {
     
     var dictionary: [String: Any] {
         var dict: [String: Any] = [:]
+        dict["reference"] = reference
         dict["comment"] = comment
         dict["created"] = created
         
@@ -195,6 +198,7 @@ internal class OrderComment {
 }
 
 internal class OrderDish {
+    var reference: String?
     var name: String
     var dishReference: DocumentReference?
     var price: Double
@@ -204,6 +208,7 @@ internal class OrderDish {
     var local: Bool
     
     init() {
+        reference = nil
         name = ""
         dishReference = nil
         price = -1
@@ -214,6 +219,7 @@ internal class OrderDish {
     }
     
     init(orderDish: [String: Any]) {
+        reference = orderDish["reference"] as? String
         name = orderDish["name"] as? String ?? ""
         dishReference = orderDish["reference"] as? DocumentReference
         price = orderDish["price"] as? Double ?? -1
@@ -228,6 +234,7 @@ internal class OrderDish {
     }
     
     init(cartDish: CartDish) {
+        self.reference = UUID().uuidString
         self.name = cartDish.name
         self.dishReference = cartDish.dishReference
         self.price = cartDish.price
@@ -240,41 +247,21 @@ internal class OrderDish {
         local = false
     }
     
-    func equals(coreDataDish: CoreDataDish) -> Bool {
-        if self.name != coreDataDish.name {
+    func equals(coreDataDishReference: CoreDataDishReference) -> Bool {
+        if self.reference != coreDataDishReference.reference {
             return false
         }
-        if self.quantity != coreDataDish.quantity {
-            return false
-        }
-        if self.price != coreDataDish.price {
-            return false
-        }
-        if self.created.dateValue().millisecondsSince1970 != coreDataDish.created?.millisecondsSince1970 {
-            return false
-        }
-        if LocalRestaurant.restaurant.restaurant?.name != coreDataDish.restaurantName {
-            return false
-        }
-        if LocalRestaurant.restaurant.restaurant?.reference?.documentID != coreDataDish.restaurantDocumentId {
-            return false
-        }
-        for coreDataDishExtra in coreDataDish.extras ?? [] {
-            var found = false
-            for extra in self.extras {
-                if extra.equals(coreDataDishExtra: coreDataDishExtra as! CoreDataDishExtra) {
-                    found = true
-                    break
-                }
-            }
-            if !found {
-                return false
-            }
-        }
+        
         return true
     }
     
     func success() -> Bool {
+        guard let reference = self.reference else {
+            return false;
+        }
+        if (reference.count == 0) {
+            return false
+        }
         if (name.count == 0) {
             return false
         }
@@ -292,6 +279,7 @@ internal class OrderDish {
     
     var description: String {
         var str = "Name: \(name)\n"
+        str +=  "Reference: \(reference ?? "")"
         str += "Dish Reference: \(dishReference?.documentID ?? "Dish reference not present")\n"
         str += "Price: \(price)\n"
         str += "Quantity: \(quantity)\n"
@@ -308,7 +296,8 @@ internal class OrderDish {
     var dictionary: [String: Any] {
         var dict: [String: Any] = [:]
         dict["name"] = name
-        dict["reference"] = dishReference
+        dict["reference"] = reference
+        dict["dishReference"] = dishReference
         dict["price"] = price
         dict["quantity"] = quantity
         
@@ -347,25 +336,6 @@ internal class OrderDishExtra {
         for option in cartDishExtra.options {
             options.append(OrderDishExtraOption.init(cartDishExtraOption: option))
         }
-    }
-    
-    func equals(coreDataDishExtra: CoreDataDishExtra) -> Bool {
-        if self.title != coreDataDishExtra.title {
-            return false
-        }
-        for coreDataDishExtraOption in coreDataDishExtra.options ?? [] {
-            var found = false
-            for option in self.options {
-                if option.equals(coreDataDishExtraOption: coreDataDishExtraOption as! CoreDataDishExtraOption) {
-                    found = true
-                    break
-                }
-            }
-            if !found {
-                return false
-            }
-        }
-        return true
     }
     
     func success() -> Bool {
@@ -422,16 +392,6 @@ internal class OrderDishExtraOption {
     init(cartDishExtraOption: CartDishExtraOption) {
         title = cartDishExtraOption.title
         price = cartDishExtraOption.price
-    }
-    
-    func equals(coreDataDishExtraOption: CoreDataDishExtraOption) -> Bool {
-        if self.title != coreDataDishExtraOption.title {
-            return false
-        }
-        if self.price != coreDataDishExtraOption.price {
-            return false
-        }
-        return true
     }
     
     func success() -> Bool {

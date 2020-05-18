@@ -55,7 +55,6 @@ internal class OrderCommentCell: UITableViewCell {
         
         container.addSubview(localBadgeView)
         
-        container.backgroundColor = .white
         self.addSubview(container)
     }
     

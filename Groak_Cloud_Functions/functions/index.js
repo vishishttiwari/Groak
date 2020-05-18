@@ -25,7 +25,7 @@ exports.orderServeTimeChanged = functions.firestore
             if (before.status === TableStatus.ordered && after.status === TableStatus.approved) {
                 sendNotification(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
             }
-            if (before.status === TableStatus.approved && after.status === TableStatus.approved && before.serveTime !== after.serveTime) {
+            if (before.status === TableStatus.approved && after.status === TableStatus.approved && getDifferenceInMinutes(before.serveTime) !== getDifferenceInMinutes(after.serveTime)) {
                 sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
             }
 			if (before.status !== TableStatus.available && after.status === TableStatus.available) {

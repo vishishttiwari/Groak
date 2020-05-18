@@ -88,7 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     // Whenever application terminates, the restaurant is deleted. This is mostly for unsubscribing the snapshot listeners for requests and orders
     func applicationWillTerminate(_ application: UIApplication) {
-        print("Terminate")
         LocalRestaurant.deleteRestaurant()
 //        FirebaseMessaging.shared = nil
     }

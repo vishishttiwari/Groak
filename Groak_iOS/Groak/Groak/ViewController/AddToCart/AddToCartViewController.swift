@@ -22,7 +22,7 @@ internal class AddToCartViewController: ViewControllerWithPan {
     required init(restaurant: Restaurant, dish: Dish) {
         super.init(nibName: nil, bundle: nil)
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = ColorsCatalog.headerGrayShade
         
         NotificationCenter.default.addObserver(
             self,

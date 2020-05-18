@@ -14,10 +14,10 @@ internal class SpecialInstructionsCartCell: UITableViewCell {
     internal var commentAdded: ((_ comment: String) -> ())?
     
     private let container: UIView = UIView()
-    private let specialInstructions: UITextView = UITextView()
-    internal let specialInstructionsShow: UILabel = UILabel()
+    internal let specialInstructions: UITextView = UITextView()
+    private let specialInstructionsShow: UILabel = UILabel()
     
-    private let placeholder: String! = "Any other instructions? (Ex: Please start with starters.)"
+    internal let placeholder: String! = "Any other instructions? (Ex: Please start with starters.)"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,10 +101,15 @@ extension SpecialInstructionsCartCell: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        let finalText =  NSString(string: textView.text).replacingCharacters(in: range, with: text)
+        
         if text == "\n" {
             LocalRestaurant.cart.comment = textView.text
             textView.resignFirstResponder()
             return false
+        } else {
+            LocalRestaurant.cart.comment = finalText
         }
         return true
     }

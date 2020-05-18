@@ -85,6 +85,14 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
         } else if (indexPath.section == 1) {
             let cell = tableView.dequeueReusableCell(withIdentifier: specialInstructionsCellId, for: indexPath) as! SpecialInstructionsCartCell
             
+            if (LocalRestaurant.cart.comment.count == 0) {
+                cell.specialInstructions.text = cell.placeholder
+                cell.specialInstructions.textColor = UIColor.lightGray
+            } else {
+                cell.specialInstructions.text = LocalRestaurant.cart.comment
+                cell.specialInstructions.textColor = UIColor.black
+            }
+            
             return cell
         }
         return UITableViewCell.init()
@@ -93,7 +101,7 @@ extension CartView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if (indexPath.section == 0) {
-            cartDishSelected?(cart.dishes[indexPath.row], indexPath.row)
+            cartDishSelected?(CartDish.init(cartDish: cart.dishes[indexPath.row]), indexPath.row)
         }
     }
     

@@ -250,6 +250,7 @@ extension UITableViewCell {
     func selectedColor() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = ColorsCatalog.shadesOfGray[2]
+        self.selectionStyle = .default
         self.selectedBackgroundView = bgColorView
     }
 }

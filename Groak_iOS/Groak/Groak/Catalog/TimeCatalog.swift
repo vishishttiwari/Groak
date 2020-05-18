@@ -18,7 +18,7 @@ internal class TimeCatalog {
     static let messageTime: Double = 3
     
     // The amount of time after logging into an account after which the user is thrown out
-    static let leaveRestaurantTimeInHours = 3 * 3600
+    static let leaveRestaurantTimeInHours = 0.5 * 3600
     // This is used to show the animation time for the bottom sheet in intro screen to go up or down
     static let bottomSheetGoUpAgainTimeInSeconds = 10
     

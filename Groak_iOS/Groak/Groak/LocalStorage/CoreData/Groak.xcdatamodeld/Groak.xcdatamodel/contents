@@ -1,34 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CoreDataComment" representedClassName="CoreDataComment" syncable="YES">
-        <attribute name="comment" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CoreDataCommentReference" representedClassName="CoreDataCommentReference" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="restaurantDocumentId" optional="YES" attributeType="String"/>
-        <attribute name="restaurantName" optional="YES" attributeType="String"/>
+        <attribute name="reference" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="CoreDataDish" representedClassName="CoreDataDish" syncable="YES">
+    <entity name="CoreDataDishReference" representedClassName="CoreDataDishReference" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="restaurantDocumentId" optional="YES" attributeType="String"/>
-        <attribute name="restaurantName" optional="YES" attributeType="String"/>
-        <relationship name="extras" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreDataDishExtra" inverseName="dish" inverseEntity="CoreDataDishExtra"/>
+        <attribute name="reference" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="CoreDataDishExtra" representedClassName="CoreDataDishExtra" syncable="YES">
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="dish" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreDataDish" inverseName="extras" inverseEntity="CoreDataDish"/>
-        <relationship name="options" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CoreDataDishExtraOption" inverseName="extra" inverseEntity="CoreDataDishExtraOption"/>
-    </entity>
-    <entity name="CoreDataDishExtraOption" representedClassName="CoreDataDishExtraOption" syncable="YES">
-        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="extra" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreDataDishExtra" inverseName="options" inverseEntity="CoreDataDishExtra"/>
+    <entity name="CoreDataOrderIdSubscribed" representedClassName="CoreDataOrderIdSubscribed" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="orderId" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="CoreDataComment" positionX="164.28515625" positionY="-171.6875" width="128" height="103"/>
-        <element name="CoreDataDish" positionX="-69.3125" positionY="-95.171875" width="128" height="148"/>
-        <element name="CoreDataDishExtra" positionX="174.2109375" positionY="-35.1015625" width="128" height="88"/>
-        <element name="CoreDataDishExtraOption" positionX="465.90234375" positionY="-20.3125" width="128" height="88"/>
+        <element name="CoreDataCommentReference" positionX="207" positionY="-9" width="128" height="73"/>
+        <element name="CoreDataDishReference" positionX="-67.68359375" positionY="116.3125" width="128" height="73"/>
+        <element name="CoreDataOrderIdSubscribed" positionX="72" positionY="72" width="128" height="73"/>
     </elements>
 </model>

@@ -123,7 +123,7 @@ internal class RequestFooterView: UIView {
     }
     
     @objc func send() {
-        if (requestTextInput.text.count != 0) {
+        if (requestTextInput.text.count != 0 && requestTextInput.textColor == UIColor.black) {
             sendRequest?(requestTextInput.text)
             requestTextInput.text = nil
         }

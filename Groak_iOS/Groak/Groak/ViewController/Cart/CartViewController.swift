@@ -98,11 +98,11 @@ internal class CartViewController: UIViewController {
         cartView.cartDishSelected = { (_ cartDish: CartDish, _ indexInCart: Int) -> () in
             let controller = CartDetailsViewController(cartDish: cartDish, indexInCart: indexInCart)
 
-            controller.modalTransitionStyle = .coverVertical
+            self.view.coverHorizontalPresent()
             controller.modalPresentationStyle = .overCurrentContext
 
             DispatchQueue.main.async {
-                self.present(controller, animated: true, completion: nil)
+                self.present(controller, animated: false, completion: nil)
             }
         }
         

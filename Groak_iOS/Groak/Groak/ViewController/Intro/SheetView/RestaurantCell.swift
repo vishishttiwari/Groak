@@ -34,7 +34,7 @@ internal class RestaurantCell: UITableViewCell {
     
     private func setupViews() {
         self.backgroundColor = .white
-        self.selectedColor()
+        self.selectionStyle = .none
         
         restaurantLogo.backgroundColor = .clear
         restaurantLogo.contentMode = .scaleAspectFit
@@ -50,7 +50,6 @@ internal class RestaurantCell: UITableViewCell {
         restaurantName.sizeToFit()
         container.addSubview(restaurantName)
         
-        container.backgroundColor = .white
         self.addSubview(container)
     }
     

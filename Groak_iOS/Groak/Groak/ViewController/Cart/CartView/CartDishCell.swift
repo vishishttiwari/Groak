@@ -86,7 +86,6 @@ internal class CartDishCell: UITableViewCell {
         details.sizeToFit()
         container.addSubview(details)
         
-        container.backgroundColor = .white
         self.addSubview(container)
     }
     

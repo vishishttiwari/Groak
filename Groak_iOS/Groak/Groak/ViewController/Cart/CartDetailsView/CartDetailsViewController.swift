@@ -73,11 +73,11 @@ internal class CartDetailsViewController: ViewControllerWithPan {
             LocalRestaurant.cart.dishes[indexInCart] = cartDish
             
             let customViewController1 = self.presentingViewController as? TabbarViewController
-            let customViewController2 = customViewController1?.viewControllers?[0] as? CartViewController
+            let customViewController2 = customViewController1?.viewControllers?[1] as? CartViewController
             
             self.dismiss(animated: false, completion: {
-                if let a = customViewController2 {
-                    a.reload()
+                if let customViewController = customViewController2 {
+                    customViewController.reload()
                 }
             })
         }

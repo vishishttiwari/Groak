@@ -44,7 +44,6 @@ internal class OrderStatusCell: UITableViewCell {
         status.sizeToFit()
         container.addSubview(status)
         
-        container.backgroundColor = .white
         self.addSubview(container)
     }
     

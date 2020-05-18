@@ -82,9 +82,16 @@ internal class AddToCartExtrasView: UITableView {
             }
         }
         
-        extrasSelected = extrasSelected.filter({$0.options.count > 0})
-
-        return extrasSelected
+        var finalExtrasSelected: [CartDishExtra] = []
+        for extra in extrasSelected {
+            if (extra.title == Catalog.specialInstructionsId)  {
+                finalExtrasSelected.append(extra)
+            } else if (extra.options.count > 0) {
+                finalExtrasSelected.append(extra)
+            }
+        }
+        
+        return finalExtrasSelected
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -162,7 +169,15 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: Catalog.specialInstructionsId, for: indexPath) as! SpecialInstructionsCell
             
             cell.commentAdded = { (_ comment: String) -> () in
-                self.extrasSelected.last?.options.append(CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0))
+                if (comment.count == 0) {
+                    self.extrasSelected.last?.options.removeAll()
+                } else {
+                    if (self.extrasSelected.last?.options.count == 0) {
+                        self.extrasSelected.last?.options.append( CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0))
+                    } else {
+                        self.extrasSelected.last?.options[0] = CartDishExtraOption.init(title: comment, price: 0, optionIndex: 0)
+                    }
+                }
             }
             
             return cell

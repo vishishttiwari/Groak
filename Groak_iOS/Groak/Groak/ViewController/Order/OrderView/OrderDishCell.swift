@@ -95,7 +95,6 @@ internal class OrderDishCell: UITableViewCell {
         created.textColor = .black
         container.addSubview(created)
         
-        container.backgroundColor = .white
         self.addSubview(container)
     }
     

@@ -41,6 +41,26 @@ class IntroViewController: UIViewController {
                 }
             }
         }
+        
+        unsubscribeFromAllTables()
+        
+        // The following code is specifically for testing on simulators. Comment out all camera code and uncomment the following code
+//        let fsRestaurant = FirestoreAPICallsRestaurants.init();
+//        fsTable.fetchTableFirestoreAPI(tableId: "hmi6199zds4ics9mqw0f0b")
+//        fsTable.dataReceivedForFetchTable = { (_ table: Table?) -> () in
+//            if let table = table, let restaurantReference = table.restaurantReference, table.success() {
+//                fsRestaurant.fetchRestaurantFirestoreAPI(restaurantReference: restaurantReference)
+//                fsRestaurant.dataReceivedForFetchRestaurant = { (_ restaurant: Restaurant?) -> () in
+//                    LocalRestaurant.createRestaurant(restaurant: restaurant!, table: table)
+//                    let controller = TabbarViewController.init(restaurant: restaurant!)
+//                    controller.modalTransitionStyle = .coverVertical
+//                    controller.modalPresentationStyle = .overCurrentContext
+//                    DispatchQueue.main.async {
+//                        self.present(controller, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        }
     }
     
     // Setup the top and bottom safe area when the first view controller loads up
@@ -55,33 +75,36 @@ class IntroViewController: UIViewController {
             DimensionsCatalog.topSafeArea = topLayoutGuide.length
             DimensionsCatalog.bottomSafeArea = bottomLayoutGuide.length
         }
+        if (DimensionsCatalog.bottomSafeArea == 0) {
+            DimensionsCatalog.bottomSafeArea = 10
+        }
     }
     
     // This sets up the camera view with qr code scanner
     private func setupCameraQRCodeView() {
         cameraView = CameraQRCodeView()
         self.view.addSubview(cameraView!)
-        
+
         // When the qrcode of a restaurant is found, check if it is same as the closest restaurant. If yes then the
         // user is at the restaurant. Otherwise the user is not at restaurant. Once the restaurants are matched then
         // the camera stops scanning for qr codes
         cameraView?.restaurantFound = { (_ table: Table, _ restaurant: Restaurant) -> () in
             if restaurant.reference?.documentID == self.selectedRestaurant?.reference?.documentID && !self.processingQR {
                 self.processingQR = true
-                
+
                 self.fsTable.setSeatedStatusFirestoreAPI(orderReference: table.orderReference, tableReference: table.reference, tableOriginalReference: table.originalReference)
-                
+
                 self.fsTable.dataReceivedSetStatus = { (_ success: Bool?) -> () in
                     if success ?? false {
                         LocalRestaurant.createRestaurant(restaurant: restaurant, table: table)
                         if LocalRestaurant.isRestaurantCreationSuccessful() {
-                            
+
                             let generator = UIImpactFeedbackGenerator(style: .heavy)
                             generator.impactOccurred()
-                        
+
                             self.cameraView?.stopScanningForQR()
                             self.bottomSheetView?.stopUpdatingLocation()
-                            
+
                             AppDelegate.resetTimer()
 
                             let controller = TabbarViewController.init(restaurant: restaurant)
@@ -154,5 +177,14 @@ class IntroViewController: UIViewController {
         bottomSheetView?.setRestaurantNotFound()
         AppDelegate.stopTimer()
         processingQR = false
+        unsubscribeFromAllTables()
+    }
+    
+    func unsubscribeFromAllTables() {
+        AppDelegate.badgeCountRequest = 0
+        AppDelegate.badgeCountOrder = 0
+        UIApplication.shared.applicationIconBadgeNumber = AppDelegate.badgeCountRequest + AppDelegate.badgeCountOrder
+        
+        FirebaseMessaging.shared.unsubscribe()
     }
 }

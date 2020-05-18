@@ -200,17 +200,32 @@ extension CartDetailsView: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            if (textView.text != "") {
-                cartDish.extras.last?.options.append(CartDishExtraOption.init(title: textView.text, price: 0, optionIndex: 0))
-                orderAltered?(cartDish)
+        
+        let finalText =  NSString(string: textView.text).replacingCharacters(in: range, with: text)
+        
+        if (finalText.count == 0) {
+            cartDish.extras.last?.options.removeAll()
+        } else {
+            if (cartDish.extras.last?.options.count == 0) {
+                if text == "\n" {
+                    cartDish.extras.last?.options.append(CartDishExtraOption.init(title: textView.text, price: 0, optionIndex: 0))
+                    textView.resignFirstResponder()
+                    return false
+                } else {
+                    cartDish.extras.last?.options.append(CartDishExtraOption.init(title: finalText, price: 0, optionIndex: 0))
+                }
             } else {
-                cartDish.extras.last?.options.removeAll()
-                orderAltered?(cartDish)
+                if text == "\n" {
+                    cartDish.extras.last?.options[0] = CartDishExtraOption.init(title: textView.text, price: 0, optionIndex: 0)
+                    textView.resignFirstResponder()
+                    return false
+                } else {
+                    cartDish.extras.last?.options[0] = CartDishExtraOption.init(title: finalText, price: 0, optionIndex: 0)
+                }
             }
-            textView.resignFirstResponder()
-            return false
         }
+        orderAltered?(cartDish)
+        
         return true
     }
     

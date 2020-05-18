@@ -58,6 +58,13 @@ internal class FirestoreAPICallsOrders {
             return
         }
         
+        if (order.comments.count == 0 || !order.comments[0].success()) {
+            let _ = self.addDishReferenceToCoreData(order: order)
+        } else {
+            let _ = self.addDishReferenceToCoreData(order: order)
+            let _ = self.addCommentReferenceToCoreData(orderComment: order.comments[0])
+        }
+        
         db.runTransaction({ (transaction, errorPointer) in
             let orderDocument: DocumentSnapshot
             do {
@@ -102,10 +109,21 @@ internal class FirestoreAPICallsOrders {
             if error != nil {
                 self.dataReceivedForAddOrder?(false)
             } else {
-                if !self.addOrderToCoreData(order: order) {
-                    Catalog.alert(vc: viewController, title: "Error adding this order locally", message: "This order will not be saved as your order but will still be sent to the restaurant on behalf of your table. Please contact the restaurant regarding this")
+                if (order.comments.count == 0 || !order.comments[0].success()) {
+                    if self.addDishReferenceToCoreData(order: order) {
+                        self.dataReceivedForAddOrder?(true)
+                    } else {
+                        Catalog.alert(vc: viewController, title: "Error adding this order locally", message: "This order will not be saved as your order but will still be sent to the restaurant on behalf of your table. Please contact the restaurant regarding this")
+                        self.dataReceivedForAddOrder?(true)
+                    }
+                } else {
+                    if (self.addDishReferenceToCoreData(order: order) && self.addCommentReferenceToCoreData(orderComment: order.comments[0])) {
+                        self.dataReceivedForAddOrder?(true)
+                    } else {
+                        Catalog.alert(vc: viewController, title: "Error adding this order locally", message: "This order will not be saved as your order but will still be sent to the restaurant on behalf of your table. Please contact the restaurant regarding this")
+                        self.dataReceivedForAddOrder?(true)
+                    }
                 }
-                self.dataReceivedForAddOrder?(true)
             }
         }
     }
@@ -157,7 +175,7 @@ internal class FirestoreAPICallsOrders {
             if error != nil {
                 self.dataReceivedForAddOrder?(false)
             } else {
-                if !self.addCommentToCoreData(orderComment: commentObject) {
+                if !self.addCommentReferenceToCoreData(orderComment: commentObject) {
                     if let viewController = viewController {
                         Catalog.alert(vc: viewController, title: "Error adding this comment locally", message: "This comment will not be saved as your comment but will still be sent to the restaurant on behalf of your table")
                     }
@@ -167,67 +185,34 @@ internal class FirestoreAPICallsOrders {
         }
     }
     
-    // Add order to coredata
-    private func addOrderToCoreData(order: Order) -> Bool {
-        for dish in order.dishes {
-            
-            let delegate = UIApplication.shared.delegate as? AppDelegate
-            
-            if let context = delegate?.persistentContainer.viewContext {
-                let coreDataDish = NSEntityDescription.insertNewObject(forEntityName: "CoreDataDish", into: context) as! CoreDataDish
+    // add order reference to coredata
+    private func addDishReferenceToCoreData(order: Order) -> Bool {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context = delegate?.persistentContainer.viewContext {
+            for dish in order.dishes {
+                let coreDataDishReference = NSEntityDescription.insertNewObject(forEntityName: "CoreDataDishReference", into: context) as! CoreDataDishReference
                 
-                coreDataDish.name = dish.name
-                coreDataDish.quantity = Int16(dish.quantity)
-                coreDataDish.price = dish.price
-                coreDataDish.created = dish.created.dateValue()
-                coreDataDish.restaurantName = LocalRestaurant.restaurant.restaurant?.name
-                coreDataDish.restaurantDocumentId = LocalRestaurant.restaurant.restaurant?.reference?.documentID
-                
-                for extra in dish.extras {
-                    let coreDataDishExtra = NSEntityDescription.insertNewObject(forEntityName: "CoreDataDishExtra", into: context) as! CoreDataDishExtra
-                    
-                    coreDataDishExtra.title = extra.title
-                    coreDataDishExtra.dish = coreDataDish
-                    
-                    for option in extra.options {
-                        let coreDataDishExtraOption = NSEntityDescription.insertNewObject(forEntityName: "CoreDataDishExtraOption", into: context) as! CoreDataDishExtraOption
-                        
-                        coreDataDishExtraOption.title = option.title
-                        coreDataDishExtraOption.price = option.price
-                        coreDataDishExtraOption.extra = coreDataDishExtra
-                        
-                        coreDataDishExtra.addToOptions(coreDataDishExtraOption)
-                    }
-                    
-                    coreDataDish.addToExtras(coreDataDishExtra)
-                }
-                do {
-                    try context.save()
-                } catch {
-                    return false
-                }
+                coreDataDishReference.reference = dish.reference
+                coreDataDishReference.created = dish.created.dateValue()
             }
-        }
-        
-        for comment in order.comments {
-            if !addCommentToCoreData(orderComment: comment) {
+            do {
+                try context.save()
+            } catch {
                 return false
             }
         }
+        
         return true
     }
     
-    // Add comment to core data
-    private func addCommentToCoreData(orderComment: OrderComment) -> Bool {
+    // add comment reference to coredata
+    private func addCommentReferenceToCoreData(orderComment: OrderComment) -> Bool {
         let delegate = UIApplication.shared.delegate as? AppDelegate
-        
         if let context = delegate?.persistentContainer.viewContext {
-            let coreDataComment = NSEntityDescription.insertNewObject(forEntityName: "CoreDataComment", into: context) as! CoreDataComment
+            let coreDataCommentReference = NSEntityDescription.insertNewObject(forEntityName: "CoreDataCommentReference", into: context) as! CoreDataCommentReference
             
-            coreDataComment.comment = orderComment.comment
-            coreDataComment.created = orderComment.created.dateValue()
-            coreDataComment.restaurantName = LocalRestaurant.restaurant.restaurant?.name
-            coreDataComment.restaurantDocumentId = LocalRestaurant.restaurant.restaurant?.reference?.documentID
+            coreDataCommentReference.reference = orderComment.reference
+            coreDataCommentReference.created = orderComment.created.dateValue()
             
             do {
                 try context.save()
@@ -235,6 +220,7 @@ internal class FirestoreAPICallsOrders {
                 return false
             }
         }
+        
         return true
     }
 }

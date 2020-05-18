@@ -92,13 +92,28 @@ internal class CartDish {
         extras = []
     }
     
+    init(cartDish: CartDish) {
+        self.name = cartDish.name
+        self.dishReference = cartDish.dishReference
+        self.price = cartDish.price
+        self.quantity = cartDish.quantity
+        self.pricePerItem = cartDish.pricePerItem
+        self.extras = []
+        for extra in cartDish.extras {
+            self.extras.append(CartDishExtra.init(cartDishExtra: extra))
+        }
+    }
+    
     init(dishName: String, dishReference: DocumentReference?, pricePerItem: Double, quantity: Int, extras: [CartDishExtra]) {
         self.name = dishName
         self.dishReference = dishReference
         self.price =  Catalog.calculateTotalPriceOfDish(pricePerItem: pricePerItem, quantity: quantity)
         self.quantity = quantity
         self.pricePerItem = pricePerItem
-        self.extras = extras
+        self.extras = []
+        for extra in extras {
+            self.extras.append(CartDishExtra.init(cartDishExtra: extra))
+        }
     }
     
     func success() -> Bool {
@@ -141,9 +156,25 @@ internal class CartDishExtra {
         options = []
     }
     
+    init(cartDishExtra: CartDishExtra) {
+        self.title = cartDishExtra.title
+        self.options = []
+        for option in cartDishExtra.options {
+            self.options.append(CartDishExtraOption.init(cartDishExtraOption: option))
+        }
+    }
+    
     init(title: String) {
         self.title = title
         options = []
+    }
+    
+    init(title: String, options: [CartDishExtraOption]) {
+        self.title = title
+        self.options = []
+        for option in options {
+            self.options.append(CartDishExtraOption.init(cartDishExtraOption: option))
+        }
     }
     
     func success() -> Bool {
@@ -178,6 +209,12 @@ internal class CartDishExtraOption {
         title = ""
         price = -1
         optionIndex = -1
+    }
+    
+    init(cartDishExtraOption: CartDishExtraOption) {
+        self.title = cartDishExtraOption.title
+        self.price = cartDishExtraOption.price
+        self.optionIndex = cartDishExtraOption.optionIndex
     }
     
     init(title: String, price: Double, optionIndex: Int) {

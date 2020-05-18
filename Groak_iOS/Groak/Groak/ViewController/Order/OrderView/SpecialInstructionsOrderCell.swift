@@ -15,7 +15,7 @@ internal class SpecialInstructionsOrderCell: UITableViewCell {
     
     private let container: UIView = UIView()
     private let specialInstructions: UITextView = UITextView()
-    internal let specialInstructionsShow: UILabel = UILabel()
+    private let specialInstructionsShow: UILabel = UILabel()
     
     private let placeholder: String! = "Any other instructions? (Ex: Please start with starters.)"
     

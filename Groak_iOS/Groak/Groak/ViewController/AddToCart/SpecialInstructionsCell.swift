@@ -77,12 +77,15 @@ extension SpecialInstructionsCell: UITextViewDelegate {
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        let finalText =  NSString(string: textView.text).replacingCharacters(in: range, with: text)
+        
         if text == "\n" {
-            if (textView.text != "") {
-                commentAdded?(specialInstructions.text)
-            }
+            commentAdded?(textView.text)
             textView.resignFirstResponder()
             return false
+        } else {
+            commentAdded?(finalText)
         }
         return true
     }

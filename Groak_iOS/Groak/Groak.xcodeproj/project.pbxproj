@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		69027D9024725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69027D8E24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift */; };
+		69027D9124725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69027D8F24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift */; };
 		693648A823C320EA00D23631 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693648A723C320EA00D23631 /* RequestsViewController.swift */; };
+		695B1BA62471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B1BA22471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift */; };
+		695B1BA72471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B1BA32471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift */; };
+		695B1BA82471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B1BA42471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift */; };
+		695B1BA92471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B1BA52471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift */; };
 		6978388523B6C38300C06EEB /* DishInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6978388423B6C38300C06EEB /* DishInfoCell.swift */; };
 		69C24CBC23CFFCEB002C4053 /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */; };
 		69CEEA3C23CD6E7300EFB9AC /* RestaurantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */; };
@@ -53,14 +59,6 @@
 		7C33417B23A0B6E2004300E1 /* PermissionsCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C33417A23A0B6E2004300E1 /* PermissionsCatalog.swift */; };
 		7C33417D23A0C486004300E1 /* AllowLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C33417C23A0C486004300E1 /* AllowLocationViewController.swift */; };
 		7C5457B323A300A500C79FC6 /* Groak.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B123A300A500C79FC6 /* Groak.xcdatamodeld */; };
-		7C5457BD23A3034700C79FC6 /* CoreDataComment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B523A3034700C79FC6 /* CoreDataComment+CoreDataClass.swift */; };
-		7C5457BE23A3034700C79FC6 /* CoreDataComment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B623A3034700C79FC6 /* CoreDataComment+CoreDataProperties.swift */; };
-		7C5457BF23A3034700C79FC6 /* CoreDataDish+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B723A3034700C79FC6 /* CoreDataDish+CoreDataClass.swift */; };
-		7C5457C023A3034700C79FC6 /* CoreDataDish+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B823A3034700C79FC6 /* CoreDataDish+CoreDataProperties.swift */; };
-		7C5457C123A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457B923A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataClass.swift */; };
-		7C5457C223A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457BA23A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataProperties.swift */; };
-		7C5457C323A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457BB23A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift */; };
-		7C5457C423A3034700C79FC6 /* CoreDataDishExtra+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5457BC23A3034700C79FC6 /* CoreDataDishExtra+CoreDataProperties.swift */; };
 		7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */; };
 		7C59E3FE239789BF005CFED5 /* CartDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */; };
 		7C59E400239789CC005CFED5 /* CartDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */; };
@@ -123,7 +121,13 @@
 /* Begin PBXFileReference section */
 		3198C123726362ECBA54CC8D /* Pods-Groak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.debug.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.debug.xcconfig"; sourceTree = "<group>"; };
 		5225B9348E5B5B29C5074626 /* Pods-Groak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Groak.release.xcconfig"; path = "Target Support Files/Pods-Groak/Pods-Groak.release.xcconfig"; sourceTree = "<group>"; };
+		69027D8E24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataOrderIdSubscribed+CoreDataClass.swift"; sourceTree = "<group>"; };
+		69027D8F24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataOrderIdSubscribed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		693648A723C320EA00D23631 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
+		695B1BA22471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataCommentReference+CoreDataClass.swift"; sourceTree = "<group>"; };
+		695B1BA32471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataCommentReference+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		695B1BA42471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishReference+CoreDataClass.swift"; sourceTree = "<group>"; };
+		695B1BA52471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishReference+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6978388423B6C38300C06EEB /* DishInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishInfoCell.swift; sourceTree = "<group>"; };
 		69A5879F23A9DF2E003C9D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
@@ -169,14 +173,6 @@
 		7C33417A23A0B6E2004300E1 /* PermissionsCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsCatalog.swift; sourceTree = "<group>"; };
 		7C33417C23A0C486004300E1 /* AllowLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowLocationViewController.swift; sourceTree = "<group>"; };
 		7C5457B223A300A500C79FC6 /* Groak.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Groak.xcdatamodel; sourceTree = "<group>"; };
-		7C5457B523A3034700C79FC6 /* CoreDataComment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataComment+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7C5457B623A3034700C79FC6 /* CoreDataComment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataComment+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7C5457B723A3034700C79FC6 /* CoreDataDish+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDish+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7C5457B823A3034700C79FC6 /* CoreDataDish+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDish+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7C5457B923A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishExtraOption+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7C5457BA23A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishExtraOption+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7C5457BB23A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishExtra+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7C5457BC23A3034700C79FC6 /* CoreDataDishExtra+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataDishExtra+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7C59E3FB2397898E005CFED5 /* CartDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsViewController.swift; sourceTree = "<group>"; };
 		7C59E3FD239789BF005CFED5 /* CartDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsHeaderView.swift; sourceTree = "<group>"; };
 		7C59E3FF239789CC005CFED5 /* CartDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDetailsFooterView.swift; sourceTree = "<group>"; };
@@ -415,14 +411,12 @@
 			isa = PBXGroup;
 			children = (
 				7C5457B123A300A500C79FC6 /* Groak.xcdatamodeld */,
-				7C5457B523A3034700C79FC6 /* CoreDataComment+CoreDataClass.swift */,
-				7C5457B623A3034700C79FC6 /* CoreDataComment+CoreDataProperties.swift */,
-				7C5457B723A3034700C79FC6 /* CoreDataDish+CoreDataClass.swift */,
-				7C5457B823A3034700C79FC6 /* CoreDataDish+CoreDataProperties.swift */,
-				7C5457B923A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataClass.swift */,
-				7C5457BA23A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataProperties.swift */,
-				7C5457BB23A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift */,
-				7C5457BC23A3034700C79FC6 /* CoreDataDishExtra+CoreDataProperties.swift */,
+				695B1BA22471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift */,
+				695B1BA32471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift */,
+				695B1BA42471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift */,
+				695B1BA52471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift */,
+				69027D8E24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift */,
+				69027D8F24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -814,13 +808,13 @@
 				7C0B8A9A23977ABA0005F093 /* CartHeaderView.swift in Sources */,
 				7CDDD9ED2373802B00C6EF37 /* Restaurant.swift in Sources */,
 				7CEC2204238B723500F96390 /* SuggestionsCell.swift in Sources */,
-				7C5457C023A3034700C79FC6 /* CoreDataDish+CoreDataProperties.swift in Sources */,
-				7C5457BE23A3034700C79FC6 /* CoreDataComment+CoreDataProperties.swift in Sources */,
 				7C25A4A023847A10009F26F9 /* SearchHeaderView.swift in Sources */,
 				69CEEA3C23CD6E7300EFB9AC /* RestaurantInfo.swift in Sources */,
 				7C59E40E2399FC1F005CFED5 /* OrderDishCell.swift in Sources */,
+				695B1BA72471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift in Sources */,
 				7C59E3FC2397898E005CFED5 /* CartDetailsViewController.swift in Sources */,
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
+				695B1BA62471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift in Sources */,
 				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
 				7C59E442239B4EBE005CFED5 /* RestaurantCell.swift in Sources */,
 				7C0B8A932397742D0005F093 /* LocalRestaurant.swift in Sources */,
@@ -835,9 +829,9 @@
 				7CEC21F423863FB700F96390 /* AddToCartExtraOptionCell.swift in Sources */,
 				7C25A4AD2384C586009F26F9 /* DishViewController.swift in Sources */,
 				69CEEA3E23CD6E8100EFB9AC /* OrderPrice.swift in Sources */,
-				7C5457C223A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataProperties.swift in Sources */,
 				7C59E4052399FA66005CFED5 /* OrderViewController.swift in Sources */,
 				7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */,
+				69027D9024725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift in Sources */,
 				7C59E416239AE317005CFED5 /* Order.swift in Sources */,
 				7CEC21F223863F7000F96390 /* AddToCartExtrasView.swift in Sources */,
 				7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */,
@@ -862,12 +856,12 @@
 				69C24CBC23CFFCEB002C4053 /* FirebaseMessaging.swift in Sources */,
 				7C25A47A2375297F009F26F9 /* DimensionsCatalog.swift in Sources */,
 				69CEEA4023CD6E8D00EFB9AC /* ReceiptOrderDish.swift in Sources */,
-				7C5457C323A3034700C79FC6 /* CoreDataDishExtra+CoreDataClass.swift in Sources */,
 				7C33417B23A0B6E2004300E1 /* PermissionsCatalog.swift in Sources */,
 				7C7F907E2385FEDC0012D2BF /* ClassCatalog.swift in Sources */,
-				7C5457BD23A3034700C79FC6 /* CoreDataComment+CoreDataClass.swift in Sources */,
+				695B1BA82471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift in Sources */,
 				7C25A47C237529E6009F26F9 /* FontCatalog.swift in Sources */,
 				7C59E4092399FB07005CFED5 /* OrderFooterView.swift in Sources */,
+				69027D9124725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift in Sources */,
 				7C0B8A9C23977BE10005F093 /* CartFooterView.swift in Sources */,
 				7C25A47E2375F9AC009F26F9 /* MenuViewController.swift in Sources */,
 				7CDE385123A3464A006F1950 /* ReceiptFooterView.swift in Sources */,
@@ -885,13 +879,11 @@
 				7C63CD6723A3827800650AE0 /* ReceiptViewController.swift in Sources */,
 				7C7F907C2385EC300012D2BF /* IngredientWebView.swift in Sources */,
 				7C63CD6123A3775100650AE0 /* RestaurantInfoCell.swift in Sources */,
-				7C5457BF23A3034700C79FC6 /* CoreDataDish+CoreDataClass.swift in Sources */,
 				7C0B8A9823977A9A0005F093 /* CartViewController.swift in Sources */,
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C5457B323A300A500C79FC6 /* Groak.xcdatamodeld in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
-				7C5457C123A3034700C79FC6 /* CoreDataDishExtraOption+CoreDataClass.swift in Sources */,
-				7C5457C423A3034700C79FC6 /* CoreDataDishExtra+CoreDataProperties.swift in Sources */,
+				695B1BA92471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
 				7C59E4102399FC39005CFED5 /* SpecialInstructionsOrderCell.swift in Sources */,
 				7CDE384F23A34630006F1950 /* ReceiptHeaderView.swift in Sources */,
