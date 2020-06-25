@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
+import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
 import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
@@ -79,6 +80,20 @@ const RestaurantSettings = (props) => {
                     return (<MenuItem key={cuisine} value={cuisine}>{cuisine}</MenuItem>);
                 })}
             </Select>
+            <TextField
+                label="Covid Message for customers:"
+                multiline
+                placeholder={`Ex: ${DemoRestaurantCovidMessage}`}
+                rows="5"
+                type="text"
+                value={state.restaurant ? state.restaurant.covidMessage : ''}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                required
+                onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
+                InputLabelProps={textFieldLabelProps(classes)}
+            />
             <p>Logo:</p>
             <input
                 accept="image/*"

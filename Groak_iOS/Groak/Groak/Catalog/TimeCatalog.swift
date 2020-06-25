@@ -22,6 +22,29 @@ internal class TimeCatalog {
     // This is used to show the animation time for the bottom sheet in intro screen to go up or down
     static let bottomSheetGoUpAgainTimeInSeconds = 10
     
+    // This is used for covid chart
+    static func getDaysInOrder() -> [String] {
+        let todayDate = Date()
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: todayDate)
+        if weekDay == 1 {
+            return ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        } else if weekDay == 2 {
+            return ["tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"]
+        } else if weekDay == 3 {
+            return ["wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday"]
+        } else if weekDay == 4 {
+            return ["thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday"]
+        } else if weekDay == 5 {
+            return ["friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday"]
+        } else if weekDay == 6 {
+            return ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"]
+        } else if weekDay == 7 {
+            return ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+        }
+        return []
+    }
+    
     // Get which day it is
     static func getDay() -> String {
         let todayDate = Date()
@@ -41,6 +64,26 @@ internal class TimeCatalog {
             return "friday"
         } else if weekDay == 7 {
             return "saturday"
+        }
+        return ""
+    }
+    
+    // Get which day it is
+    static func getShortDay(day: String) -> String {
+        if day == "sunday" {
+            return "Su"
+        } else if day == "monday" {
+            return "Mo"
+        } else if day == "tuesday" {
+            return "Tu"
+        } else if day == "wednesday" {
+            return "We"
+        } else if day == "thursday" {
+            return "Th"
+        } else if day == "friday" {
+            return "Fr"
+        } else if day == "saturday" {
+            return "Sa"
         }
         return ""
     }

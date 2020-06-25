@@ -18,6 +18,7 @@ internal class DimensionsCatalog {
     // Sizes for different things used in project
     static let screenSize = UIScreen.main.bounds.size
     static let tableHeaderHeight: CGFloat = 50
+    static let tableHeaderWithSubtitleHeight: CGFloat = 80
     static let imageHeights = 50 + round(screenSize.width/200)*100
     static let optionsViewWidth = 3 * screenSize.width/4
     static let distanceBetweenElements: CGFloat = 10

@@ -20,6 +20,19 @@ export const DemoRestaurantQRStylePage = {
     width: 90,
     includeTable: true,
 };
+export const DemoRestaurantOccupancy = {
+    monday: 0,
+    tuesday: 0,
+    wednesday: 0,
+    thursday: 0,
+    friday: 0,
+    saturday: 0,
+    sunday: 0,
+};
+export const DemoRestaurantMaxOccupancy = 10;
+export const DemoRestaurantCurrentOccupancy = 0;
+export const DemoRestaurantCovidGuidelines = '';
+export const DemoRestaurantCovidMessage = 'We are using Groak to minimize your interaction with waiters and to avoid cross-contamination through menus';
 
 export const DemoDishName = 'Tomato Soup';
 export const DemoDishPrice = 5.50;
@@ -37,10 +50,8 @@ export const DemoDishExtraOptions2 = { price: 0.5, title: 'Medium' };
 export const DemoDishExtraOptions3 = { price: 0, title: 'Mild' };
 
 export const DemoCategoryName = 'Starters';
-// export const DemoCategoryStartTime = 540;
-// export const DemoCategoryEndTime = 1320;
-export const DemoCategoryStartTime = 0;
-export const DemoCategoryEndTime = 1439;
+export const DemoCategoryStartTime = 540;
+export const DemoCategoryEndTime = 1320;
 
 export const DemoTableName = 'Demo Table 1';
 
@@ -81,7 +92,20 @@ const createRestaurantReference = (restaurantId) => {
  */
 export const createDemoRestaurant = (restaurantId, restaurantName, address) => {
     const ref = createRestaurantReference(restaurantId);
-    return { name: restaurantName, address, qrStylePage: DemoRestaurantQRStylePage, reference: ref, logo: '', type: DemoRestaurantType, salesTax: DemoRestaurantSalesTax };
+    return {
+        name: restaurantName,
+        address,
+        qrStylePage: DemoRestaurantQRStylePage,
+        reference: ref,
+        logo: '',
+        type: DemoRestaurantType,
+        salesTax: DemoRestaurantSalesTax,
+        occupancy: DemoRestaurantOccupancy,
+        maximumOccupancy: DemoRestaurantMaxOccupancy,
+        currentOccupancy: DemoRestaurantCurrentOccupancy,
+        covidGuidelines: DemoRestaurantCovidGuidelines,
+        covidMessage: DemoRestaurantCovidMessage,
+    };
 };
 
 /**

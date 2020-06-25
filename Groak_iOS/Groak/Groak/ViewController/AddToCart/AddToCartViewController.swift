@@ -12,6 +12,7 @@ import UIKit
 import CoreData
 
 internal class AddToCartViewController: ViewControllerWithPan {
+    
     var specialRequestButton: SpecialRequestButton?
     private var header: AddToCartHeaderView?
     private var addToCartExtras: AddToCartExtrasView?

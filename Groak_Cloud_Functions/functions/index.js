@@ -3,6 +3,8 @@ const admin = require('firebase-admin')
 
 admin.initializeApp(functions.config().firebase)
 
+const db = admin.firestore()
+
 const TableStatus = {
     available: 'available',
     seated: 'seated',
@@ -11,6 +13,70 @@ const TableStatus = {
     served: 'served',
     payment: 'payment',
 };
+
+// Eventually you will have to use timezones in this
+exports.changeOccupancy = functions.firestore
+    .document('restaurants/{restaurantId}/orders/{orderId}')
+    .onUpdate((change, context) => {
+        const after = change.after.data()		
+        const before = change.before.data()
+		const restaurantReference = before.restaurantReference
+		const updated = after.updated
+		const day = getDateTimeFromTimeStamp(updated).getDay()
+		var dayString = 'sunday'
+		if (day === 1) {
+			dayString = 'monday'
+		} else if (day === 2) {
+			dayString = 'tuesday'
+		} else if (day === 3) {
+			dayString = 'wednesday'
+		} else if (day === 4) {
+			dayString = 'thursday'
+		} else if (day === 5) {
+			dayString = 'friday'
+		} else if (day === 6) {
+			dayString = 'saturday'
+		}
+
+        if (change.before.exists) {			
+			if (before.status === TableStatus.available && after.status !== TableStatus.available) {
+				let transaction = db.runTransaction(t => {
+				    return t.get(restaurantReference)
+				        .then(doc => {
+							let currentOccupancy = doc.data().currentOccupancy + 1
+							let occupancy = doc.data().occupancy
+							occupancy[dayString] = Math.max(occupancy[dayString], currentOccupancy)
+							t.update(restaurantReference, {occupancy: occupancy, currentOccupancy: currentOccupancy})
+							return true
+				    });
+				}).then(result => {
+				  console.log('Transaction success!');
+				  return true
+				}).catch(err => {
+				  console.log('Transaction failure:', err);
+				});
+			}
+			if (before.status !== TableStatus.available && after.status === TableStatus.available) {
+				let transaction = db.runTransaction(t => {
+				    return t.get(restaurantReference)
+				        .then(doc => {
+							let currentOccupancy = doc.data().currentOccupancy - 1
+							let occupancy = doc.data().occupancy
+							occupancy[dayString] = Math.max(occupancy[dayString], currentOccupancy)
+							t.update(restaurantReference, {occupancy: occupancy, currentOccupancy: currentOccupancy})
+							return true
+				    });
+				}).then(result => {
+				  console.log('Transaction success!');
+				  return true
+				}).catch(err => {
+				  console.log('Transaction failure:', err);
+				});
+			}
+        }
+		
+        return true
+    })
 
 exports.orderServeTimeChanged = functions.firestore
     .document('restaurants/{restaurantId}/orders/{orderId}')
@@ -32,7 +98,7 @@ exports.orderServeTimeChanged = functions.firestore
 				sendNotification(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, orderId, 'reset')
 			}
         }
-
+		
         return true
     })
 
@@ -81,8 +147,6 @@ function sendNotification(title, body, orderId, category) {
             category,
         }
     }
-
-    console.log(payload);
 
     let topic = orderId
     admin.messaging().sendToTopic(topic, payload)

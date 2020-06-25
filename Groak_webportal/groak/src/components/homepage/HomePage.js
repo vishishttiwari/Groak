@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import './css/HomePage.css';
 import { Button } from '@material-ui/core';
 import { context } from '../../globalState/globalState';
+import AppleDownload from '../../assets/images/homepage/apple_download.png';
 import Phone1 from '../../assets/images/homepage/phone_1.png';
 import Phone2 from '../../assets/images/homepage/phone_2.png';
 import Computer1 from '../../assets/images/homepage/computer_4_1.png';
@@ -52,6 +53,9 @@ const HomePage = (props) => {
                                 </Button>
                             ) }
                     </div>
+                    <div className="iosDownload">
+                        <img className="download" src={AppleDownload} alt="Groak - iOS download" />
+                    </div>
                 </div>
             </div>
             <div className="primaryColorBackground sections verticallyCenter">
@@ -79,15 +83,28 @@ const HomePage = (props) => {
                 </div>
             </div>
             <div className="primaryColorBackground lastSection verticallyCenter">
-                <div>
-                    <div className="contactTitle">
-                        Contact Us
+                <div className="lastSectionContent">
+                    <div className="iosDownload">
+                        <img className="download" src={AppleDownload} alt="Groak - iOS download" />
                     </div>
-                    <div>
-                        <a href="mailto:contact@groakapp.com">contact@groakapp.com</a>
-                        <br />
-                        <a href="tel:6072792474">(607)-279-2474</a>
-                        <br />
+                    <div className="contactTitlePrivacy">
+                        <div className="contactTitle">
+                            Contact Us
+                        </div>
+                        <div className="contactDetails">
+                            <a href="mailto:contact@groakapp.com">contact@groakapp.com</a>
+                            <br />
+                            <a href="tel:6072792474">(607)-279-2474</a>
+                            <br />
+                        </div>
+                        <div className="privacyPolicy">
+                            <button
+                                type="button"
+                                onClick={() => { history.push('/privacypolicy'); }}
+                            >
+                                Privacy Policy
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

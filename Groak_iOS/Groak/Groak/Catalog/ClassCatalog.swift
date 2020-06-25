@@ -34,7 +34,7 @@ internal class UITableViewHeader: UITableViewHeaderFooterView {
         subTitle.numberOfLines = 1
         subTitle.textAlignment = .left
         subTitle.textColor = ColorsCatalog.grayColor
-        subTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: 18)
+        subTitle.font = UIFont(name: FontCatalog.fontLevels[1], size: 15)
         subTitle.backgroundColor = .white
         
         self.addSubview(background)

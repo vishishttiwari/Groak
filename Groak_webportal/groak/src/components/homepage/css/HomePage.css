@@ -60,26 +60,139 @@
   overflow-y: hidden;
 }
 
-.homepage .lastSection .contactTitle {
-  font-weight: 400;
-  font-size: 50px;
-  text-align: left;
+.homepage .lastSection .lastSectionContent {
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.homepage .lastSection a {
+@media (max-width: 700px) {
+  .homepage .lastSection .lastSectionContent {
+    width: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.homepage .lastSection .lastSectionContent .iosDownload {
+  width: 300px;
+}
+
+.homepage .lastSection .lastSectionContent .iosDownload .download {
+  width: 90%;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.homepage .lastSection .lastSectionContent .contactTitlePrivacy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+  .homepage .lastSection .lastSectionContent .contactTitlePrivacy {
+    padding-top: 50px;
+  }
+}
+
+.homepage .lastSection .lastSectionContent .contactTitlePrivacy .contactTitle {
+  font-weight: 400;
+  font-size: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: left;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  vertical-align: top;
+}
+
+@media (max-width: 700px) {
+  .homepage .lastSection .lastSectionContent .contactTitlePrivacy .contactTitle {
+    font-size: 30px;
+  }
+}
+
+.homepage .lastSection .lastSectionContent .contactTitlePrivacy .contactDetails a {
   font-weight: 300;
   font-size: 30px;
   text-decoration: none;
   color: white;
   text-align: left;
+  vertical-align: top;
 }
 
 @media (max-width: 700px) {
-  .homepage .lastSection .contactTitle {
-    font-size: 30px;
-  }
-  .homepage .lastSection a {
+  .homepage .lastSection .lastSectionContent .contactTitlePrivacy .contactDetails a {
     font-size: 20px;
+  }
+}
+
+.homepage .lastSection .lastSectionContent .contactTitlePrivacy .privacyPolicy {
+  vertical-align: bottom;
+  padding-top: 50px;
+}
+
+.homepage .lastSection .lastSectionContent .contactTitlePrivacy .privacyPolicy button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 300;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  .homepage .lastSection .lastSectionContent .contactTitlePrivacy .privacyPolicy {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .homepage .lastSection .lastSectionContent {
+    width: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .homepage .lastSection {
+    height: 500px;
   }
 }
 
@@ -197,6 +310,25 @@
   .homepage .sections .text .buttons .button {
     width: 80%;
     font-size: 13px;
+  }
+}
+
+.homepage .sections .text .iosDownload {
+  margin-top: 60px;
+  width: 250px;
+}
+
+.homepage .sections .text .iosDownload .download {
+  width: 100%;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .homepage .sections .text .iosDownload {
+    width: 80%;
   }
 }
 /*# sourceMappingURL=HomePage.css.map */

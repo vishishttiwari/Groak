@@ -15,7 +15,6 @@ internal class OrderStatusCell: UITableViewCell {
     private let container: UIView = UIView()
     internal let status: UILabel = UILabel()
     
-    private let distanceBetweenElements: CGFloat = 10
     private let textHeight: CGFloat = 20
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,9 +55,9 @@ internal class OrderStatusCell: UITableViewCell {
         container.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
-        status.topAnchor.constraint(equalTo: container.topAnchor, constant: distanceBetweenElements).isActive = true
-        status.leftAnchor.constraint(equalTo: container.leftAnchor, constant: distanceBetweenElements).isActive = true
-        status.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -distanceBetweenElements).isActive = true
-        status.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -distanceBetweenElements).isActive = true
+        status.topAnchor.constraint(equalTo: container.topAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        status.leftAnchor.constraint(equalTo: container.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
+        status.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
+        status.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
     }
 }

@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import Layout from '../components/layout/Layout';
 import HomePage from '../components/homepage/HomePage';
+import PrivacyPolicy from '../components/homepage/PrivacyPolicy';
 import SignIn from '../components/content/authentication/signIn/SignIn';
 import SignUp from '../components/content/authentication/signUp/SignUp';
 import Dishes from '../components/content/menu/dishes/Dishes';
@@ -46,6 +47,7 @@ function App() {
                             <Layout>
                                 <Switch>
                                     <Route path="/" exact render={() => { return <HomePage />; }} />
+                                    <Route path="/privacypolicy" exact render={() => { return <PrivacyPolicy />; }} />
                                     <Route path="/newemail" exact render={() => { return <NewEmailAddress />; }} />
                                     <Route path="/newpassword" exact render={() => { return <NewPassword />; }} />
                                     <Route path="/signin" exact render={() => { return <SignIn />; }} />

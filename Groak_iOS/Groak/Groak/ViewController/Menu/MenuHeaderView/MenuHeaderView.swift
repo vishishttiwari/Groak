@@ -57,7 +57,7 @@ internal class MenuHeaderView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.estimatedItemSize = CGSize(width: DimensionsCatalog.screenSize.width/3, height: DimensionsCatalog.viewControllerHeaderDimensions.heightExtended - (DimensionsCatalog.viewControllerHeaderDimensions.titleSize + DimensionsCatalog.viewControllerHeaderDimensions.distanceFromTop))
         foodCategories = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
         foodCategories!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         foodCategories!.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)

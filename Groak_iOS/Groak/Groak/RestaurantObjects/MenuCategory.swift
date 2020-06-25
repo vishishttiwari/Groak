@@ -46,29 +46,18 @@ internal class MenuCategory {
         available = menuCategory["available"] as? Bool ?? false
         
         if downloadDishes {
-            var downloaded = 0
-            for dishReference in dishesReference {
-                dishReference.getDocument{(document, error) in
-                    if let document = document, document.exists {
-                        let dish = Dish.init(dish: document.data() ?? [:])
-                        self.dishes.append(dish)
-                        downloaded += 1
-                        if (downloaded == self.dishesReference.count) {
-                            self.categoryLoaded?()
-                        }
-                    }
-                }
-            }
+            downloadDishesFunc()
         }
     }
     
-    func downloadDishes() {
+    func downloadDishesFunc() {
         var downloaded = 0
-        for dishReference in dishesReference {
+        dishes = Array.init(repeating: Dish.init(), count: dishesReference.count)
+        for (index, dishReference) in dishesReference.enumerated() {
             dishReference.getDocument{(document, error) in
                 if let document = document, document.exists {
                     let dish = Dish.init(dish: document.data() ?? [:])
-                    self.dishes.append(dish)
+                    self.dishes[index] = dish
                     downloaded += 1
                     if (downloaded == self.dishesReference.count) {
                         self.categoryLoaded?()

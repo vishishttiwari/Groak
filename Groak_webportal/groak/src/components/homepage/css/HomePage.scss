@@ -38,26 +38,101 @@
         overflow-x: hidden;
         overflow-y: hidden;
 
-        .contactTitle {
-            font-weight: 400;
-            font-size: 50px;
-            text-align: left;
-        }
-        a {
-            font-weight: 300;
-            font-size: 30px;
-            text-decoration: none;
-            color: white;
-            text-align: left;
+        .lastSectionContent {
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .iosDownload {
+                width: 300px;
+
+                .download {
+                    width: 90%;
+                    box-sizing: inherit;
+                    object-fit: cover;
+                }
+            }
+
+            .contactTitlePrivacy {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                @media (max-width: $phoneMaxWidth) {
+                    padding-top: 50px;
+                }
+
+                .contactTitle {
+                    font-weight: 400;
+                    font-size: 50px;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: left;
+                    justify-content: flex-start;
+                    vertical-align: top;
+
+                    @media (max-width: $phoneMaxWidth) {
+                        font-size: 30px;
+                    }
+                }
+
+                .contactDetails {
+                    a {
+                        font-weight: 300;
+                        font-size: 30px;
+                        text-decoration: none;
+                        color: white;
+                        text-align: left;
+                        vertical-align: top;
+
+                        @media (max-width: $phoneMaxWidth) {
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .privacyPolicy {
+                    vertical-align: bottom;
+                    padding-top: 50px;
+
+                    button {
+                        background-color: transparent;
+                        color: white;
+                        border: none;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-weight: 300;
+                        font-size: 20px;
+                        cursor: pointer;
+                        outline: none;
+                    }
+
+                    @media (max-width: $phoneMaxWidth) {
+                        font-size: 20px;
+                    }
+                }
+            }
         }
 
+
         @media (max-width: $phoneMaxWidth) {
-            .contactTitle {
-                font-size: 30px;
+            .lastSectionContent {
+                width: 100%;
+                flex-direction: column;
             }
-            a {
-                font-size: 20px;
-            }
+        }
+    }
+
+    @media (max-width: $phoneMaxWidth) {
+        .lastSection {
+            height: 500px;
         }
     }
 
@@ -140,6 +215,21 @@
                         width: 80%;
                         font-size: $buttonFontSize - 5px;
                     }
+                }
+            }
+
+            .iosDownload {
+                margin-top: 3*$margin;
+                width: 250px;
+
+                .download {
+                    width: 100%;
+                    box-sizing: inherit;
+                    object-fit: cover;
+                }
+
+                @media (max-width: $phoneMaxWidth) {
+                    width: 80%;
                 }
             }
         }

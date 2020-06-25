@@ -51,7 +51,9 @@ internal class CategoryCell: UICollectionViewCell {
         container.leftAnchor.constraint(equalTo: self.leftAnchor, constant: DimensionsCatalog.distanceBetweenElements).isActive = true
         container.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -DimensionsCatalog.distanceBetweenElements).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
-        container.widthAnchor.constraint(greaterThanOrEqualToConstant: DimensionsCatalog.screenSize.width/3).isActive = true
+        let widthConstraint = container.widthAnchor.constraint(greaterThanOrEqualToConstant: DimensionsCatalog.screenSize.width/3)
+        widthConstraint.priority = UILayoutPriority(rawValue: 999)
+        widthConstraint.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

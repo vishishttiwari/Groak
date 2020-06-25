@@ -129,9 +129,9 @@ extension AddToCartExtrasView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if (section < dishExtras.count) {
-            return 80
+            return DimensionsCatalog.tableHeaderWithSubtitleHeight
         } else {
-            return 50
+            return DimensionsCatalog.tableHeaderHeight
         }
     }
     

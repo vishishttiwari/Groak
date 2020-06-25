@@ -16,6 +16,11 @@
 		695B1BA92471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695B1BA52471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift */; };
 		6978388523B6C38300C06EEB /* DishInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6978388423B6C38300C06EEB /* DishInfoCell.swift */; };
 		69C24CBC23CFFCEB002C4053 /* FirebaseMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */; };
+		69C4F2B324A1DD890057B781 /* WeekCovidCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F2B224A1DD890057B781 /* WeekCovidCell.swift */; };
+		69CA67ED24A06AEE00B6F7D5 /* CovidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA67EC24A06AEE00B6F7D5 /* CovidViewController.swift */; };
+		69CA67EF24A06EFA00B6F7D5 /* CovidHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA67EE24A06EFA00B6F7D5 /* CovidHeaderView.swift */; };
+		69CA67F124A06FBE00B6F7D5 /* CovidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA67F024A06FBE00B6F7D5 /* CovidView.swift */; };
+		69CA67F324A071EE00B6F7D5 /* TextCovidCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CA67F224A071EE00B6F7D5 /* TextCovidCell.swift */; };
 		69CEEA3C23CD6E7300EFB9AC /* RestaurantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */; };
 		69CEEA3E23CD6E8100EFB9AC /* OrderPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */; };
 		69CEEA4023CD6E8D00EFB9AC /* ReceiptOrderDish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */; };
@@ -131,6 +136,11 @@
 		6978388423B6C38300C06EEB /* DishInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishInfoCell.swift; sourceTree = "<group>"; };
 		69A5879F23A9DF2E003C9D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69C24CBB23CFFCEB002C4053 /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
+		69C4F2B224A1DD890057B781 /* WeekCovidCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekCovidCell.swift; sourceTree = "<group>"; };
+		69CA67EC24A06AEE00B6F7D5 /* CovidViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidViewController.swift; sourceTree = "<group>"; };
+		69CA67EE24A06EFA00B6F7D5 /* CovidHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidHeaderView.swift; sourceTree = "<group>"; };
+		69CA67F024A06FBE00B6F7D5 /* CovidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidView.swift; sourceTree = "<group>"; };
+		69CA67F224A071EE00B6F7D5 /* TextCovidCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCovidCell.swift; sourceTree = "<group>"; };
 		69CEEA3B23CD6E7300EFB9AC /* RestaurantInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantInfo.swift; sourceTree = "<group>"; };
 		69CEEA3D23CD6E8100EFB9AC /* OrderPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrice.swift; sourceTree = "<group>"; };
 		69CEEA3F23CD6E8D00EFB9AC /* ReceiptOrderDish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptOrderDish.swift; sourceTree = "<group>"; };
@@ -246,6 +256,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69CA67EB24A06ACB00B6F7D5 /* Covid */ = {
+			isa = PBXGroup;
+			children = (
+				69CA67EC24A06AEE00B6F7D5 /* CovidViewController.swift */,
+				69CA67EE24A06EFA00B6F7D5 /* CovidHeaderView.swift */,
+				69CA67F624A0720500B6F7D5 /* CovidView */,
+			);
+			path = Covid;
+			sourceTree = "<group>";
+		};
+		69CA67F624A0720500B6F7D5 /* CovidView */ = {
+			isa = PBXGroup;
+			children = (
+				69CA67F024A06FBE00B6F7D5 /* CovidView.swift */,
+				69CA67F224A071EE00B6F7D5 /* TextCovidCell.swift */,
+				69C4F2B224A1DD890057B781 /* WeekCovidCell.swift */,
+			);
+			path = CovidView;
+			sourceTree = "<group>";
+		};
 		69CEEA3A23CD6E5C00EFB9AC /* ReceiptImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,8 +442,8 @@
 			children = (
 				7C5457B123A300A500C79FC6 /* Groak.xcdatamodeld */,
 				695B1BA22471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift */,
-				695B1BA32471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift */,
 				695B1BA42471DB2B007AFC76 /* CoreDataDishReference+CoreDataClass.swift */,
+				695B1BA32471DB2B007AFC76 /* CoreDataCommentReference+CoreDataProperties.swift */,
 				695B1BA52471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift */,
 				69027D8E24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift */,
 				69027D8F24725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataProperties.swift */,
@@ -546,6 +576,7 @@
 				7C0B8A962397784F0005F093 /* Cart */,
 				7C59E4032399FA48005CFED5 /* Order */,
 				7CDE384823A343AB006F1950 /* Receipt */,
+				69CA67EB24A06ACB00B6F7D5 /* Covid */,
 				7C33417723A0AD84004300E1 /* Permissions */,
 			);
 			path = ViewController;
@@ -816,6 +847,7 @@
 				7C25A4742374FE42009F26F9 /* DistanceCatalog.swift in Sources */,
 				695B1BA62471DB2B007AFC76 /* CoreDataCommentReference+CoreDataClass.swift in Sources */,
 				7C25A487238369E5009F26F9 /* MenuView.swift in Sources */,
+				69CA67EF24A06EFA00B6F7D5 /* CovidHeaderView.swift in Sources */,
 				7C59E442239B4EBE005CFED5 /* RestaurantCell.swift in Sources */,
 				7C0B8A932397742D0005F093 /* LocalRestaurant.swift in Sources */,
 				7C25A48523836000009F26F9 /* TimeCatalog.swift in Sources */,
@@ -832,15 +864,18 @@
 				7C59E4052399FA66005CFED5 /* OrderViewController.swift in Sources */,
 				7C7F907A2385EC240012D2BF /* IngredientWebHeaderView.swift in Sources */,
 				69027D9024725915000C27B9 /* CoreDataOrderIdSubscribed+CoreDataClass.swift in Sources */,
+				69C4F2B324A1DD890057B781 /* WeekCovidCell.swift in Sources */,
 				7C59E416239AE317005CFED5 /* Order.swift in Sources */,
 				7CEC21F223863F7000F96390 /* AddToCartExtrasView.swift in Sources */,
 				7C25A4B42384C60D009F26F9 /* DishDetailsView.swift in Sources */,
 				7C9854F7238BC85300241A62 /* FirestoreAPICallsRequests.swift in Sources */,
 				7CDDD9E923737C6A00C6EF37 /* IntroViewController.swift in Sources */,
+				69CA67ED24A06AEE00B6F7D5 /* CovidViewController.swift in Sources */,
 				7C334176239F2218004300E1 /* TabbarViewController.swift in Sources */,
 				7C7F906A2385CEF10012D2BF /* DishDescriptionCell.swift in Sources */,
 				7C59E444239B5126005CFED5 /* RestaurantFullView.swift in Sources */,
 				7CEC21F023863C4200F96390 /* AddToCartFooterView.swift in Sources */,
+				69CA67F124A06FBE00B6F7D5 /* CovidView.swift in Sources */,
 				7CDDD9CF237374C000C6EF37 /* AppDelegate.swift in Sources */,
 				7C25A49A2383B752009F26F9 /* CategoryCell.swift in Sources */,
 				7CEC21FF238B688C00F96390 /* RequestView.swift in Sources */,
@@ -882,6 +917,7 @@
 				7C0B8A9823977A9A0005F093 /* CartViewController.swift in Sources */,
 				7C25A46F2373B19B009F26F9 /* FirestoreAPICallsTables.swift in Sources */,
 				7C5457B323A300A500C79FC6 /* Groak.xcdatamodeld in Sources */,
+				69CA67F324A071EE00B6F7D5 /* TextCovidCell.swift in Sources */,
 				7C25A4782375291C009F26F9 /* ColorsCatalog.swift in Sources */,
 				695B1BA92471DB2B007AFC76 /* CoreDataDishReference+CoreDataProperties.swift in Sources */,
 				7C25A46D2373A50C009F26F9 /* Table.swift in Sources */,
@@ -1029,6 +1065,7 @@
 				CODE_SIGN_ENTITLEMENTS = Groak/Groak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = V48W32Q848;
 				INFOPLIST_FILE = Groak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1053,6 +1090,7 @@
 				CODE_SIGN_ENTITLEMENTS = Groak/Groak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = V48W32Q848;
 				INFOPLIST_FILE = Groak/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

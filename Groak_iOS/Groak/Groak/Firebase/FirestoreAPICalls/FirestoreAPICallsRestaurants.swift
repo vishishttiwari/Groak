@@ -93,7 +93,7 @@ internal class FirestoreAPICallsRestaurants {
                 let category = MenuCategory.init(menuCategory: document.data(), downloadDishes: false)
                 if category.checkIfCategoryIsAvailable(day: day, minutes: minutes) {
                     dishesDownloadGroup.enter()
-                    category.downloadDishes()
+                    category.downloadDishesFunc()
                     categories.append(category)
                     category.categoryLoaded = { () -> () in
                         dishesDownloadGroup.leave()

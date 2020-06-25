@@ -20,6 +20,9 @@ function localReducer(state, action) {
         case 'setType':
             updatedRestaurant = { ...state.restaurant, type: action.cuisineType };
             return { ...state, restaurant: updatedRestaurant };
+        case 'setCovidMessage':
+            updatedRestaurant = { ...state.restaurant, covidMessage: action.covidMessage };
+            return { ...state, restaurant: updatedRestaurant };
         case 'setLogo':
             return { ...state, logo: action.logo };
         case 'setEmail':

@@ -19,6 +19,11 @@ internal class Restaurant {
     var address: [String: Any]
     var latitude: Double
     var longitude: Double
+    var maximumOccupancy: Int
+    var currentOccupancy: Int
+    var occupancy: [String: Int]
+    var covidGuidelines: String
+    var covidMessage: String
     
     init() {
         reference = nil
@@ -29,6 +34,11 @@ internal class Restaurant {
         address = [:]
         latitude = -1000
         longitude = -1000
+        maximumOccupancy = 10
+        currentOccupancy = 0
+        occupancy = [:]
+        covidGuidelines = ""
+        covidMessage = ""
     }
     
     init(_ temp: String) {
@@ -42,6 +52,11 @@ internal class Restaurant {
         address = [:]
         latitude = -1000
         longitude = -1000
+        maximumOccupancy = 10
+        currentOccupancy = 0
+        occupancy = [:]
+        covidGuidelines = ""
+        covidMessage = ""
     }
     
     init(restaurant: [String: Any]) {
@@ -53,6 +68,11 @@ internal class Restaurant {
         address = restaurant["address"] as? [String: Any] ?? [:]
         latitude = (restaurant["address"] as? [String: Any] ?? [:])["latitude"] as? Double ?? -1000
         longitude = (restaurant["address"] as? [String: Any] ?? [:])["longitude"] as? Double ?? -1000
+        maximumOccupancy = restaurant["maximumOccupancy"] as? Int ?? 10
+        currentOccupancy = restaurant["currentOccupancy"] as? Int ?? 0
+        occupancy = restaurant["occupancy"] as? [String: Int] ?? [:]
+        covidGuidelines = restaurant["covidGuidelines"] as? String ?? ""
+        covidMessage = restaurant["covidMessage"] as? String ?? ""
     }
     
     func success() -> Bool {

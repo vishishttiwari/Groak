@@ -9,13 +9,19 @@
 
 import Foundation
 import UIKit
+import WebKit
 
-internal class IngredientWebView: UIWebView {
+internal class IngredientWebView: WKWebView {
     
     required init(ingredientName: String) {
-        super.init(frame: .zero)
+        let config = WKWebViewConfiguration()
+        super.init(frame: .zero, configuration: config)
         
-        loadRequest(URLRequest.init(url: URL(string: "https://www.google.com/search?q=\(ingredientName.replacingOccurrences(of: " ", with: "+"))")!))
+        load(URLRequest.init(url: URL(string: "https://www.google.com/search?q=\(ingredientName.replacingOccurrences(of: " ", with: "+"))")!))
+    }
+    
+    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        super.init(frame: frame, configuration: configuration)
     }
     
     required init?(coder aDecoder: NSCoder) {

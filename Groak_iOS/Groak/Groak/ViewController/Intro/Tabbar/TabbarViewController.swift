@@ -39,7 +39,11 @@ internal class TabbarViewController: UITabBarController {
         let orderIcon = UITabBarItem(title: "Table Order", image: #imageLiteral(resourceName: "table"), selectedImage: #imageLiteral(resourceName: "table"))
         order.tabBarItem = orderIcon
         
-        let controllers = [menu, cart, order]
+        let covid = CovidViewController.init(restaurant: restaurant)
+        let covidIcon = UITabBarItem(title: "Covid", image: #imageLiteral(resourceName: "covid"), selectedImage: #imageLiteral(resourceName: "covid"))
+        covid.tabBarItem = covidIcon
+        
+        let controllers = [menu, cart, order, covid]
         self.viewControllers = controllers
         
         selectedIndex = 0
