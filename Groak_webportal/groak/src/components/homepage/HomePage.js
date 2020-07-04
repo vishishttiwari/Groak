@@ -11,9 +11,10 @@ import { context } from '../../globalState/globalState';
 import AppleDownload from '../../assets/images/homepage/apple_download.png';
 import Phone1 from '../../assets/images/homepage/phone_1.png';
 import Phone2 from '../../assets/images/homepage/phone_2.png';
-import Computer1 from '../../assets/images/homepage/computer_4_1.png';
-import Computer2 from '../../assets/images/homepage/computer_5_2.png';
-import Computer3 from '../../assets/images/homepage/computer_3_2.png';
+import Phone3 from '../../assets/images/homepage/phone_3_2.png';
+import Computer1 from '../../assets/images/homepage/computer_4_2.png';
+import Computer2 from '../../assets/images/homepage/computer_5_1.png';
+import Computer3 from '../../assets/images/homepage/computer_3_1.png';
 
 const HomePage = (props) => {
     const { history } = props;
@@ -21,18 +22,21 @@ const HomePage = (props) => {
 
     return (
         <div className="homepage">
-            <div className="whiteBackground sections">
+            <div className="firstSection">
                 <img src={Phone1} alt="Groak - Phone demo 1" />
                 <div className="text verticallyCenter">
+                    <div className="iFrame-wrapper">
+                        <iframe title="Gro ak_Video" src="https://www.youtube.com/embed/J4VUeuBOu8g" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                    </div>
                     <h1>
-                        Enable your dine-in customers to explore an interactive menu and order through their phones!
+                        Your Free Contactless Dining Experience to Re-Open Your Restaurant!! Simple, Safe &#38; 100% Touch Free!
                     </h1>
                     <div className="buttons">
                         <Button
                             className="button"
                             type="button"
                         >
-                            <a style={{ textDecoration: 'none', color: 'white' }} href="mailto:contact@groakapp.com">Contact Us</a>
+                            <a style={{ textDecoration: 'none', color: 'white' }} href="mailto:contact@groakapp.com">Contact</a>
                         </Button>
                         {globalState.user == null || !globalState.user
                             ? (
@@ -54,38 +58,48 @@ const HomePage = (props) => {
                             ) }
                     </div>
                     <div className="iosDownload">
-                        <img className="download" src={AppleDownload} alt="Groak - iOS download" />
+                        <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
+                            <img className="download" src={AppleDownload} alt="Groak - iOS download" />
+                        </a>
                     </div>
                 </div>
             </div>
             <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
-                    <p>View real time order updates from each table using the device of your choice</p>
+                    <p>Connect your customers directly to your digital menu so they can view, order, and check-out on their own device</p>
                 </div>
-                <img src={Computer1} alt="Groak - Computer demo 2" />
+                <img src={Phone3} alt="Groak - Computer demo 2" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
-                <img src={Computer3} alt="Groak - Computer demo 2" />
+                <img src={Computer2} alt="Groak - Computer demo 2" />
                 <div className="text">
-                    <p>Interact with your customers at each table through chat messages to provide a personal touch</p>
+                    <p>Create a contactless digital menu that customers can explore. Update it anytime from your device, with immediate display of your updates to customers!</p>
                 </div>
             </div>
             <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
-                    <p>Create a detailed menu that customers love to explore and update it anytime from your device, with immediate display of updates</p>
+                    <p>Promote Safety and Wellbeing for your Customers! Interact with your customers at each table with our live chat feature to minimize health and safety risks</p>
                 </div>
-                <img src={Computer2} alt="Groak - Computer demo 3" />
+                <img src={Computer3} alt="Groak - Computer demo 3" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
-                <img src={Phone2} alt="Groak - Phone demo 2" />
+                <img src={Computer1} alt="Groak - Computer demo 3" />
+                <div className="text">
+                    <p>View real time order updates from each table using the device of your choice. Orders are automatically added and available in our webportal. This feature gives you a clear view into your customer’s recent orders, table occupancy, and order payment alerts</p>
+                </div>
+            </div>
+            <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
                     <p>Automated receipt generation, sent directly to your customer&#39;s phone</p>
                 </div>
+                <img src={Phone2} alt="Groak - Phone demo 2" />
             </div>
-            <div className="primaryColorBackground lastSection verticallyCenter">
+            <div className="lastSection verticallyCenter">
                 <div className="lastSectionContent">
                     <div className="iosDownload">
-                        <img className="download" src={AppleDownload} alt="Groak - iOS download" />
+                        <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
+                            <img className="download" src={AppleDownload} alt="Groak - iOS download" />
+                        </a>
                     </div>
                     <div className="contactTitlePrivacy">
                         <div className="contactTitle">
@@ -94,7 +108,7 @@ const HomePage = (props) => {
                         <div className="contactDetails">
                             <a href="mailto:contact@groakapp.com">contact@groakapp.com</a>
                             <br />
-                            <a href="tel:6072792474">(607)-279-2474</a>
+                            <a href="tel:6072792474">(317)-748-0245</a>
                             <br />
                         </div>
                         <div className="privacyPolicy">

@@ -20,6 +20,7 @@ import Settings from '../components/content/settings/Settings';
 import NewEmailAddress from '../components/content/authentication/new/NewEmailAddress';
 import NewPassword from '../components/content/authentication/new/NewPassword';
 import QRWindow from '../components/content/qr/QRWindow';
+import CustomerMenu from '../components/customerMenu/CustomerMenu';
 
 import { defaultState, reducer, Provider } from '../globalState/globalState';
 
@@ -44,9 +45,8 @@ function App() {
                 <SnackbarProvider maxSnack={10}>
                     <ThemeProvider theme={theme}>
                         <Provider value={{ globalState, setGlobalState }}>
-                            <Layout>
+                            <Layout allowedURLSegments={['privacypolicy', 'customermenu', 'signin', 'signup']}>
                                 <Switch>
-                                    <Route path="/" exact render={() => { return <HomePage />; }} />
                                     <Route path="/privacypolicy" exact render={() => { return <PrivacyPolicy />; }} />
                                     <Route path="/newemail" exact render={() => { return <NewEmailAddress />; }} />
                                     <Route path="/newpassword" exact render={() => { return <NewPassword />; }} />
@@ -61,6 +61,8 @@ function App() {
                                     <Route path="/categories" exact render={() => { return <Categories />; }} />
                                     <Route path="/settings" exact render={() => { return <Settings />; }} />
                                     <Route path="/qrcode/:id" exact render={() => { return <QRWindow />; }} />
+                                    <Route path="/customermenu/:id1/:id2" exact render={() => { return <CustomerMenu />; }} />
+                                    <Route path="/" exact render={() => { return <HomePage />; }} />
                                     <Redirect from="/qrcode" to="/tables" exact />
                                     <Redirect from="/menu" to="/dishes" exact />
                                     <Route render={() => { return <Redirect to={{ pathname: '/' }} />; }} />

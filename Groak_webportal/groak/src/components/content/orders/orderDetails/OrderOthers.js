@@ -20,7 +20,6 @@ import GetImage from '../../../../assets/icons/suggestions/get.png';
 import { getCurrentDateTime, getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
 import { randomNumber, calculatePriceFromDishes, calculateSalesTaxFromDishes, calculatePriceFromDishesWithTax, getPrice, TextFieldLabelStyles, textFieldLabelProps, TableStatus } from '../../../../catalog/Others';
 
-
 const OrderOthers = (props) => {
     const { history, classes, orderId, status, comments, request, dishes, serveTimeFromServer } = props;
     const { enqueueSnackbar } = useSnackbar();

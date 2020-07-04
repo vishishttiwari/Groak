@@ -90,7 +90,7 @@ const Categories = (props) => {
 
     return (
         <div className="categories">
-            <Heading heading="Categories" buttonName="Add Category" onClick={addCategoryHandler} />
+            <Heading heading="Menu Categories" buttonName="Add Category" onClick={addCategoryHandler} />
             <Spinner show={state.loadingSpinner} />
             {state.categories && state.categories.length !== 0 ? <p className="text-on-background">{CategoryOrder}</p> : null}
             {!state.loadingSpinner ? (

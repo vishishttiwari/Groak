@@ -76,9 +76,17 @@ const QRWindow = (props) => {
             <Heading heading="QR Code" />
             <div className="qr-content">
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
-                    <QRPage tableReference={match.params.id} tableName={tableName} state={state.qrStylePage} restaurantName={globalState.restaurant.name} logo={globalState.restaurant.logo} />
+                    <QRPage
+                        restaurantReference={globalState.restaurantId}
+                        tableReference={match.params.id}
+                        tableName={tableName}
+                        state={state.qrStylePage}
+                        restaurantName={globalState.restaurant.name}
+                        logo={globalState.restaurant.logo}
+                    />
                 </PDFViewer>
                 <QROptions
+                    restaurantReference={globalState.restaurantId}
                     tableReference={match.params.id}
                     tableName={tableName}
                     state={state}

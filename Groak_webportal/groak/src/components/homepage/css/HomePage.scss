@@ -4,146 +4,19 @@
     margin: -$margin;
     margin-top: -$margin - 10px;
 
-    .whiteBackground {
-        background-color: white;
-        color: $primaryColor;
-    }
-
-    .primaryColorBackground {
-        background-color: $primaryColor;
-        color: white;
-    }
-
-    .horizontallycenter {
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center; 
-    }
-
-    .verticallyCenter {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .lastSection {
-        width: 100%;
-        height: 300px;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-
-        overflow-x: hidden;
-        overflow-y: hidden;
-
-        .lastSectionContent {
-            width: 80%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            @media (max-width: $phoneMaxWidth) {
-                width: 100%;
-                flex-direction: column;
-            }
-
-            .iosDownload {
-                width: 300px;
-
-                .download {
-                    width: 90%;
-                    box-sizing: inherit;
-                    object-fit: cover;
-                }
-            }
-
-            .contactTitlePrivacy {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                @media (max-width: $phoneMaxWidth) {
-                    padding-top: 50px;
-                }
-
-                .contactTitle {
-                    font-weight: 400;
-                    font-size: 50px;
-                    display: flex;
-                    flex-direction: column;
-                    text-align: left;
-                    justify-content: flex-start;
-                    vertical-align: top;
-
-                    @media (max-width: $phoneMaxWidth) {
-                        font-size: 30px;
-                    }
-                }
-
-                .contactDetails {
-                    a {
-                        font-weight: 300;
-                        font-size: 30px;
-                        text-decoration: none;
-                        color: white;
-                        text-align: left;
-                        vertical-align: top;
-
-                        @media (max-width: $phoneMaxWidth) {
-                            font-size: 20px;
-                        }
-                    }
-                }
-                .privacyPolicy {
-                    vertical-align: bottom;
-                    padding-top: 50px;
-
-                    button {
-                        background-color: transparent;
-                        color: white;
-                        border: none;
-                        text-align: center;
-                        text-decoration: none;
-                        display: inline-block;
-                        font-weight: 300;
-                        font-size: 20px;
-                        cursor: pointer;
-                        outline: none;
-                    }
-
-                    @media (max-width: $phoneMaxWidth) {
-                        font-size: 20px;
-                    }
-                }
-            }
-        }
-
-
-        @media (max-width: $phoneMaxWidth) {
-            .lastSectionContent {
-                width: 100%;
-                flex-direction: column;
-            }
-        }
-    }
-
     @media (max-width: $phoneMaxWidth) {
         .lastSection {
             height: 500px;
         }
     }
 
-    .sections {
+    .firstSection {
         width: 100%;
-        height: 100vh;
+        height: 135vh;
 
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         overflow-x: hidden;
         overflow-y: hidden;
@@ -151,13 +24,18 @@
         position: sticky;
 
         @media (max-width: $phoneMaxWidth) {
-            height: 85vh;
+            flex-direction: column;
+            height: 150vh;
         }
 
         img {
             width: 60%;
             box-sizing: inherit;
             object-fit: cover;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+            }
         }
 
         .text {
@@ -165,21 +43,41 @@
             display: flex;
             flex-direction: column;
 
-            h1 {
-                font-weight: 800;
-                font-size: 30px;
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+                text-align: center;
+            }
+
+            .iFrame-wrapper {
+                max-width: 600px;
+                height: 400px;
+                margin-bottom: 50px;
                 width: 80%;
-                margin-left: auto;
-                margin-right: auto;
 
                 @media (max-width: $phoneMaxWidth) {
-                    font-size: 20px;
+                    width: 90%;
+                    height: 200px;
+                    text-align: center;
+                    margin-top: 50px;
+                }
+                iframe {
+                    max-width: 600px;
+                    height: 400px;
+                    width: 100%;
+
+                    @media (max-width: $phoneMaxWidth) {
+                        width: 100%;
+                        height: 200px;
+                        text-align: center;
+                    }
                 }
             }
 
-            p {
+            
+
+            h1 {
                 font-weight: 800;
-                font-size: 30px;
+                font-size: 20px;
                 width: 80%;
                 margin-left: auto;
                 margin-right: auto;
@@ -229,8 +127,225 @@
                 }
 
                 @media (max-width: $phoneMaxWidth) {
-                    width: 80%;
+                    width: 50%;
                 }
+            }
+        }
+    }
+
+    .horizontallycenter {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center; 
+    }
+
+    .verticallyCenter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .whiteBackground {
+        background-color: white;
+        color: $primaryColor;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        @media (max-width: $phoneMaxWidth) {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .primaryColorBackground {
+        background-color: $primaryColor;
+        color: white;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        @media (max-width: $phoneMaxWidth) {
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .sections {
+        width: 100%;
+        height: 100vh;
+
+        display: flex;
+        justify-content: space-evenly;
+
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        position: sticky;
+
+        @media (max-width: $phoneMaxWidth) {
+            height: 80vh;
+        }
+
+        img {
+            width: 40%;
+            box-sizing: inherit;
+            object-fit: cover;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+            }
+        }
+
+        .text {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                font-weight: 800;
+                font-size: 30px;
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+
+                @media (max-width: $phoneMaxWidth) {
+                    font-size: 20px;
+                }
+            }
+
+            p {
+                font-weight: 800;
+                font-size: 30px;
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+
+                @media (max-width: $phoneMaxWidth) {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .lastSection {
+        width: 100%;
+        height: 300px;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        .lastSectionContent {
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .iosDownload {
+                width: 300px;
+
+                .download {
+                    width: 90%;
+                    box-sizing: inherit;
+                    object-fit: cover;
+                    margin: 0 auto;
+                    display: block;
+
+                    @media (max-width: $phoneMaxWidth) {
+                        width: 50%;
+                    }
+                }
+            }
+
+            .contactTitlePrivacy {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                @media (max-width: $phoneMaxWidth) {
+                    padding-top: 50px;
+                    text-align: center;
+                }
+
+                .contactTitle {
+                    font-weight: 400;
+                    font-size: 50px;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: left;
+                    justify-content: flex-start;
+                    vertical-align: top;
+
+                    @media (max-width: $phoneMaxWidth) {
+                        font-size: 30px;
+                        text-align: center;
+                    }
+                }
+
+                .contactDetails {
+                    a {
+                        font-weight: 300;
+                        font-size: 30px;
+                        text-decoration: none;
+                        color: $primaryColor;
+                        text-align: left;
+                        vertical-align: top;
+
+                        @media (max-width: $phoneMaxWidth) {
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .privacyPolicy {
+                    vertical-align: bottom;
+                    padding-top: 50px;
+
+                    button {
+                        background-color: transparent;
+                        color: $primaryColor;
+                        border: none;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-weight: 300;
+                        font-size: 20px;
+                        cursor: pointer;
+                        outline: none;
+                    }
+
+                    @media (max-width: $phoneMaxWidth) {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+
+
+        @media (max-width: $phoneMaxWidth) {
+            .lastSectionContent {
+                width: 100%;
+                flex-direction: column;
             }
         }
     }

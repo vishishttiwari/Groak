@@ -14,7 +14,7 @@ import { IncludeLogoMessage } from '../../../catalog/Comments';
 import Spinner from '../../ui/spinner/Spinner';
 
 const QROptions = (props) => {
-    const { tableReference, tableName, state, logo, restaurantName, setState, loadingSpinner, goBackHandler, submitHandler } = props;
+    const { restaurantReference, tableReference, tableName, state, logo, restaurantName, setState, loadingSpinner, goBackHandler, submitHandler } = props;
     const pageSizeOptions = ['A2', 'A3', 'A4', 'A5', 'A6', 'LETTER', 'TABLOID'];
     const fontOptions = Object.keys(getFonts());
     const qrImages = Object.keys(getQRStyleImages());
@@ -79,7 +79,7 @@ const QROptions = (props) => {
             </Select>
             <div className="qr-buttons">
                 {state.saved ? (
-                    <PDFDownloadLink style={{ textDecoration: 'none' }} document={<QRPage tableReference={tableReference} tableName={tableName} state={state.qrStylePage} logo={logo} restaurantName={restaurantName} />} fileName={`${tableName}.pdf`}>
+                    <PDFDownloadLink style={{ textDecoration: 'none' }} document={<QRPage restaurantReference={restaurantReference} tableReference={tableReference} tableName={tableName} state={state.qrStylePage} logo={logo} restaurantName={restaurantName} />} fileName={`${tableName}.pdf`}>
                         {({ loading }) => { return <Button disabled={loading || !tableName} className="normal-buttons">Download</Button>; }}
                     </PDFDownloadLink>
                 ) : null}
@@ -92,6 +92,7 @@ const QROptions = (props) => {
 };
 
 QROptions.propTypes = {
+    restaurantReference: PropTypes.string.isRequired,
     tableReference: PropTypes.string.isRequired,
     tableName: PropTypes.string.isRequired,
     state: PropTypes.object.isRequired,

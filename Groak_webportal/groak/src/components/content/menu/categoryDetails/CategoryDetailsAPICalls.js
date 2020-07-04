@@ -59,7 +59,7 @@ export const fetchDishesAPI = async (restaurantId, setState, snackbar) => {
 
 /**
  * This function fetches the data from server, then converts it into a form that
- * the component will understand. This includes coonverting numbers into string,
+ * the component will understand. This includes converting numbers into string,
  * adding keys to extras and ingredients so that the map can show it correctly.
  *
  * @param {*} restaurantId id of the restaurant for which category needs to be fetched

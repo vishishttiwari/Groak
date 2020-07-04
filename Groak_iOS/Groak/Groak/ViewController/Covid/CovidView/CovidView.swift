@@ -78,6 +78,7 @@ extension CovidView: UITableViewDataSource, UITableViewDelegate {
         } else if section == 3 {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellId) as! UITableViewHeader
             header.title.text = "Message from restaurant"
+            header.subTitle.text = ""
             return header
         } else {
             return nil

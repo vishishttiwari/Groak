@@ -42,12 +42,12 @@ export const EmptyDishExtrasMaxOptions = 'Empty field will be considered as ther
 export const DeleteDishPopUpTitle = 'Delete Dish?';
 export const DeleteDishPopUp = 'Are you sure you would like to delete this dish?';
 
-export const ErrorFetchingCategories = 'Error fetching categories';
-export const ErrorFetchingCategory = 'Error fetching category';
-export const ErrorChangingOrderOfCategory = 'Error changing order of category';
-export const ErrorAddingCategory = 'Error adding category';
-export const ErrorUpdatingCategory = 'Error updating category';
-export const ErrorDeletingCategory = 'Error deleting category';
+export const ErrorFetchingCategories = 'Error fetching menu categories';
+export const ErrorFetchingCategory = 'Error fetching menu category';
+export const ErrorChangingOrderOfCategory = 'Error changing order of menu category';
+export const ErrorAddingCategory = 'Error adding menu category';
+export const ErrorUpdatingCategory = 'Error updating menu category';
+export const ErrorDeletingCategory = 'Error deleting menu category';
 export const CategoryNotFound = 'Category not found';
 
 export const NoCategoryTitle = 'Category title not entered. Please enter a valid title';

@@ -13,6 +13,37 @@ export const getCurrentDateTime = () => {
 };
 
 /**
+ * This function gets the current day
+ */
+export const getDay = () => {
+    const d = new Date();
+    const weekday = new Array(7);
+    weekday[0] = 'sunday';
+    weekday[1] = 'monday';
+    weekday[2] = 'tuesday';
+    weekday[3] = 'wednesday';
+    weekday[4] = 'thursday';
+    weekday[5] = 'friday';
+    weekday[6] = 'saturday';
+
+    return weekday[d.getDay()];
+};
+
+/**
+ * This function gets minutes from midnight
+ */
+export const getMinutesFromMidnight = () => {
+    const now = new Date();
+    const then = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        0, 0, 0,
+    );
+    return Math.floor((now.getTime() - then.getTime()) / (1000 * 60)); // difference in milliseconds
+};
+
+/**
  * This function returns the date with some minutes added to it
  *
  * @param {*} minutes this is the amount of minutes that is added

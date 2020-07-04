@@ -8,9 +8,8 @@ import { getQRStyleImages } from '../../../../catalog/Others';
 
 import QRPageStyles from './QRPage.styles';
 
-
 const QRPage = (props) => {
-    const { tableReference, tableName, state, logo, restaurantName } = props;
+    const { restaurantReference, tableReference, tableName, state, logo, restaurantName } = props;
 
     const styles = QRPageStyles(state.pageSize, state.font, state.includeTable, state.width);
     const qrStyleImages = getQRStyleImages();
@@ -22,7 +21,7 @@ const QRPage = (props) => {
                 {state.includeTable ? <Text style={styles.tableTitle}>{tableName}</Text> : null}
                 <View style={styles.qrArea}>
                     <Image style={styles.qrSideImage} src={qrStyleImages[state.qrStyleImage]} />
-                    <Image style={styles.qr} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=${tableReference}`} />
+                    <Image style={styles.qr} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/${restaurantReference}/${tableReference}`} />
                 </View>
                 <View style={styles.applicationArea}>
                     {/* <Text style={styles.applicationTitle}>Groak</Text>
@@ -35,6 +34,7 @@ const QRPage = (props) => {
 };
 
 QRPage.propTypes = {
+    restaurantReference: PropTypes.string.isRequired,
     tableReference: PropTypes.string.isRequired,
     tableName: PropTypes.string.isRequired,
     state: PropTypes.object.isRequired,

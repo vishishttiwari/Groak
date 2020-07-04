@@ -1,4 +1,5 @@
 import { db, deleteField } from '../FirebaseLibrary';
+import { getDay, getMinutesFromMidnight } from '../../catalog/TimesDates';
 
 export const createCategoryReference = (restaurantId, categoryId) => {
     return db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId);
@@ -6,6 +7,15 @@ export const createCategoryReference = (restaurantId, categoryId) => {
 
 export const fetchCategoriesFirestoreAPI = (restaurantId) => {
     return db.collection(`restaurants/${restaurantId}/categories`).orderBy('order').get();
+};
+
+export const fetchCategoriesWithConditionsFirestoreAPI = (restaurantId) => {
+    return db.collection(`restaurants/${restaurantId}/categories`)
+        .where('days', 'array-contains', getDay())
+        .where('startTime', '<=', getMinutesFromMidnight())
+        .orderBy('startTime')
+        .orderBy('order')
+        .get();
 };
 
 export const fetchCategoryFirestoreAPI = (restaurantId, categoryId) => {
