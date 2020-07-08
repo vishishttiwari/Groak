@@ -73,6 +73,14 @@ export const ErrorFetchingRequest = 'Error fetching requests';
 export const ErrorUpdatingRequest = 'Error sending your response. Please try again.';
 export const ErrorUnsubscribingRequest = 'Error unsubscribing requests';
 
+export const ErrorContactInfoFirstName = 'Please enter your first name';
+export const ErrorContactInfoLastName = 'Please enter your last name';
+export const ErrorContactInfoEmailName = 'Please enter your email';
+export const ErrorContactInfoPhoneName = 'Please enter your phone';
+export const ErrorContactInfoMessageName = 'Please enter a message for us describing your requirements';
+export const MessageSent = 'Thank you. Someone from our team will get in touch with you soon';
+export const ErrorMessageSent = 'There was an error sending message. Please use contact@groakapp.com to send us a message';
+
 export const OrderAdded = (table) => {
     return `New order added at ${table}`;
 };

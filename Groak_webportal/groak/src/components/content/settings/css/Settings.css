@@ -9,6 +9,10 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.settings {
+  margin: 20px;
+}
+
 .settings form .restaurant-settings {
   display: -webkit-box;
   display: -ms-flexbox;

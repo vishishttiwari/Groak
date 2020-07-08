@@ -1,6 +1,7 @@
 @import '../../../../../globalCSS/globalCSS';
 
 .orders {
+    margin: $margin;
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;

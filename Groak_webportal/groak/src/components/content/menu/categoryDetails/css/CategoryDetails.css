@@ -9,6 +9,10 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.category-details {
+  margin: 20px;
+}
+
 .category-details form .days .check-box {
   color: #800000;
 }

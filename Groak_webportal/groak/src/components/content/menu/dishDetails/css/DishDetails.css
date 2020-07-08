@@ -9,6 +9,10 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.dish-details {
+  margin: 20px;
+}
+
 .dish-details form .dish-images .normal-buttons {
   margin-bottom: 0;
 }

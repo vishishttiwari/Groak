@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Layout from '../components/layout/Layout';
 import HomePage from '../components/homepage/HomePage';
 import PrivacyPolicy from '../components/homepage/PrivacyPolicy';
+import ContactUs from '../components/contactus/ContactUs';
 import SignIn from '../components/content/authentication/signIn/SignIn';
 import SignUp from '../components/content/authentication/signUp/SignUp';
 import Dishes from '../components/content/menu/dishes/Dishes';
@@ -23,6 +24,7 @@ import QRWindow from '../components/content/qr/QRWindow';
 import CustomerMenu from '../components/customerMenu/CustomerMenu';
 
 import { defaultState, reducer, Provider } from '../globalState/globalState';
+import BottomSection from '../components/homepage/BottomSection';
 
 // I tried CSSVariables.primaryColor here but it threw error during deployment to firestore
 const theme = createMuiTheme({
@@ -45,9 +47,11 @@ function App() {
                 <SnackbarProvider maxSnack={10}>
                     <ThemeProvider theme={theme}>
                         <Provider value={{ globalState, setGlobalState }}>
-                            <Layout allowedURLSegments={['privacypolicy', 'customermenu', 'signin', 'signup']}>
+                            <Layout allowedURLSegments={['privacypolicy', 'customermenu', 'signin', 'signup', 'contactus', 'requestademo']}>
                                 <Switch>
                                     <Route path="/privacypolicy" exact render={() => { return <PrivacyPolicy />; }} />
+                                    <Route path="/contactus" exact render={() => { return <ContactUs />; }} />
+                                    <Route path="/requestademo" exact render={() => { return <ContactUs title="Request A Demo" />; }} />
                                     <Route path="/newemail" exact render={() => { return <NewEmailAddress />; }} />
                                     <Route path="/newpassword" exact render={() => { return <NewPassword />; }} />
                                     <Route path="/signin" exact render={() => { return <SignIn />; }} />
@@ -67,6 +71,7 @@ function App() {
                                     <Redirect from="/menu" to="/dishes" exact />
                                     <Route render={() => { return <Redirect to={{ pathname: '/' }} />; }} />
                                 </Switch>
+                                <BottomSection />
                             </Layout>
                         </Provider>
                     </ThemeProvider>

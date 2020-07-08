@@ -1,0 +1,40 @@
+@import '../../../globalCSS/globalCSS';
+
+.contactus {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .content {
+        margin: 100px auto;
+        padding: $padding;
+        width: 50%;
+        background-color: white;
+        box-shadow: $buttonShadow;
+
+        @media (max-width: $phoneMaxWidth) {
+            width: 80%;
+            margin-top: 50px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            border-style: none;
+
+            .fields {
+                .phone {
+                    margin-top: 15px;
+                    margin-bottom: 8px;
+                    width: 100%;
+                    height: 55px;
+                }
+            }
+
+            .sendbutton {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+    }
+}

@@ -15,16 +15,24 @@
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: auto;
 }
 
 .main-container main {
+  min-height: 100%;
+  overflow-x: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   position: absolute;
-  top: 76px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  overflow: initial;
-  z-index: 0;
+  top: 49px;
+  left: 0;
+  right: 0;
 }
 /*# sourceMappingURL=Layout.css.map */

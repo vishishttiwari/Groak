@@ -9,6 +9,10 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.dishes {
+  margin: 20px;
+}
+
 .dishes .dish-items {
   display: -webkit-box;
   display: -ms-flexbox;

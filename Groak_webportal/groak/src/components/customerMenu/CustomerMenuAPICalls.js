@@ -74,7 +74,7 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, snackbar) => {
             const newSelectedDishes = [];
             if (data.data().dishes) {
                 data.data().dishes.forEach((dish) => {
-                    if (data.data().endTime > getMinutesFromMidnight()) {
+                    if (data.data().endTime > getMinutesFromMidnight() && data.data().available) {
                         newSelectedDishes.push(dish.path.split('/').pop());
                     }
                 });
@@ -122,11 +122,18 @@ export const fetchCategoriesAPI = async (restaurantId, setState, snackbar) => {
         }));
         await Promise.allSettled(Array.from(fullCategories.keys()).map(async (categoryId) => {
             const dishes = fullCategories.get(categoryId);
-            const dishArray = new Array(dishes.length);
+            let dishArray = new Array(dishes.length);
             await Promise.allSettled(dishes.map(async (dish, index) => {
                 dishArray[index] = await fetchDishAPI(restaurantId, dish, snackbar);
             }));
-            menuItems.set(categoryId, dishArray);
+            dishArray = dishArray.filter((dish) => { return dish.available; });
+            if (dishArray.length > 0) {
+                menuItems.set(categoryId, dishArray);
+            } else {
+                categoryNames.delete(categoryId);
+                fullCategories.delete(categoryId);
+                menuItems.delete(categoryId);
+            }
         }));
         if (categoryNames.size === 0 || menuItems.size === 0) {
             setState({ type: 'error' });

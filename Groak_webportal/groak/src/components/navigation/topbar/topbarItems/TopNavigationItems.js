@@ -12,7 +12,7 @@ const TopNavigationItems = () => {
     const { globalState } = useContext(context);
 
     const NAV_OPTIONS_IF_AUTHENTICATED = ['orders', 'tables', 'menu', 'settings'];
-    const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['sign in', 'sign up'];
+    const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['sign in', 'contact us'];
 
     return (
         <>

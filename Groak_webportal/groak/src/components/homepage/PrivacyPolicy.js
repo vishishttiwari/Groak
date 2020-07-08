@@ -1,13 +1,23 @@
 /**
  * This page is used for the privacy policy.
  */
-import React from 'react';
+import React, { createRef, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 const PrivacyPolicy = () => {
+    const top = createRef(null);
+
+    useEffect(() => {
+        top.current.scrollIntoViewIfNeeded({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'start',
+        });
+    }, []);
+
     return (
-        <div>
-            <h1>Privacy Policy</h1>
+        <div style={{ margin: '20px' }}>
+            <h1 ref={top}>Privacy Policy</h1>
             <p>
                 Vishisht Tiwari built the Groak app as
                 a Free app. This SERVICE is provided by
@@ -187,11 +197,10 @@ const PrivacyPolicy = () => {
             {' '}
             <p><strong>Contact Us</strong></p>
             {' '}
-            <p>
+            <p style={{ marginBottom: '100px' }}>
         If you have any questions or suggestions about my
         Privacy Policy, do not hesitate to contact at contact@groakapp.com.
             </p>
-
         </div>
     );
 };

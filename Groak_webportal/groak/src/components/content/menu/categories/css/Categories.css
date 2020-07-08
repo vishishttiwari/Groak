@@ -9,6 +9,10 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.categories {
+  margin: 20px;
+}
+
 .categories .category-items {
   display: -webkit-box;
   display: -ms-flexbox;

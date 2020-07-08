@@ -4,6 +4,8 @@ $screenMargin: 2*($margin + 20);
 $cardFullWidth: ($cardWidth + $cardMargin);
 
 .category-details {
+    margin: $margin;
+    
     form {
         .days {
             .check-box {

@@ -9,7 +9,12 @@
   tableRedColor: rgba(255, 0, 0, 0.5);
 }
 
+.customerMenu {
+  margin: 20px auto;
+}
+
 .customerMenu .advertisement {
+  background-color: cadetblue;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -197,8 +202,6 @@
 .customerMenu .customerMenu-appbar {
   -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
           box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  margin-left: -20px;
-  margin-right: -20px;
   width: 100vw;
 }
 
@@ -575,12 +578,24 @@
   margin: 0 auto;
 }
 
+@media (max-width: 700px) {
+  .customerMenu .restaurantNotFound {
+    width: 70%;
+  }
+}
+
 .customerMenu .restaurantNotFound .restaurantNotFound-text {
   width: 100%;
   margin: 0 auto;
   text-align: center;
   font-weight: 100;
   font-size: 90px;
+}
+
+@media (max-width: 700px) {
+  .customerMenu .restaurantNotFound .restaurantNotFound-text {
+    font-size: 30px;
+  }
 }
 
 .customerMenu .restaurantNotFound .restaurantNotFound-image {

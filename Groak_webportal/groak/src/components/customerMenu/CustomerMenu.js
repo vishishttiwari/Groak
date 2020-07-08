@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -13,7 +13,7 @@ import Spinner from '../ui/spinner/Spinner';
 import { randomNumber } from '../../catalog/Others';
 import Empty from '../../assets/others/empty.png';
 import Advertisement from '../../assets/others/advertisement_2.png';
-import AppleDownload from '../../assets/images/homepage/apple_download.png';
+import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
 import DownArrow from '../../assets/icons/down_arrow.png';
 
 const initialState = { menuItems: new Map(), categoryNames: new Map(), restaurant: {}, loadingSpinner: true, tabValue: 0, error: false };
@@ -71,8 +71,14 @@ const CustomerMenu = (props) => {
     const { match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
+    const top = createRef(null);
 
     useEffect(() => {
+        top.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'start',
+        });
         async function fetchDishes() {
             await fetchCategoriesAPI(match.params.id1, setState, enqueueSnackbar);
         }
@@ -81,7 +87,7 @@ const CustomerMenu = (props) => {
 
     return (
         <div className="customerMenu">
-            <div className="advertisement">
+            {/* <div className="advertisement">
                 <div className="first-part">
                     <img className="advertisement-image" draggable="false" src={Advertisement} alt="GroakAdvertisement" />
                     <div className="first-first-part">
@@ -95,7 +101,8 @@ const CustomerMenu = (props) => {
                     <p className="advertisement-scroll">Scroll down to see the menu</p>
                     <img className="advertisement-down-arrow" draggable="false" src={DownArrow} alt="DownArrow" />
                 </div>
-            </div>
+            </div> */}
+            <p ref={top}> </p>
             {state.restaurant.logo ? <img className="customerMenu-restaurantLogo" src={state.restaurant.logo} alt={state.restaurant.name} /> : <Heading heading={state.error ? '' : state.restaurant.name} />}
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (

@@ -26,12 +26,13 @@ const Heading = (props) => {
 };
 
 Heading.propTypes = {
-    heading: PropTypes.string.isRequired,
+    heading: PropTypes.string,
     buttonName: PropTypes.string,
     onClick: PropTypes.func,
 };
 
 Heading.defaultProps = {
+    heading: '',
     buttonName: null,
     onClick: (() => {}),
 };

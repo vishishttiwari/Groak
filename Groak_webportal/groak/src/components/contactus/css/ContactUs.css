@@ -1,0 +1,63 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.contactus {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.contactus .content {
+  margin: 100px auto;
+  padding: 20px;
+  width: 50%;
+  background-color: white;
+  -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+          box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+}
+
+@media (max-width: 700px) {
+  .contactus .content {
+    width: 80%;
+    margin-top: 50px;
+  }
+}
+
+.contactus .content form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-style: none;
+}
+
+.contactus .content form .fields .phone {
+  margin-top: 15px;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 55px;
+}
+
+.contactus .content form .sendbutton {
+  display: block;
+  margin: 0 auto;
+}
+/*# sourceMappingURL=ContactUs.css.map */

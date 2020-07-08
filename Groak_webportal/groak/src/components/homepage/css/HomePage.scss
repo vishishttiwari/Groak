@@ -1,86 +1,116 @@
 @import '../../../globalCSS/globalCSS';
 
 .homepage {
-    margin: -$margin;
-    margin-top: -$margin - 10px;
+    margin-top: - 10px;
 
-    @media (max-width: $phoneMaxWidth) {
-        .lastSection {
-            height: 500px;
+    .pop-up {
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            padding: $padding;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.30);
+            background-color: white;
+            border-radius: 20px;
+            z-index: 1;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 300px;
+            }
+
+            .heading {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    
+        .hide {
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.5s;
+        }
+        
+        .show {
+            visibility: visible;
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+        .video {
+            width: 560px;
+            height: 315px;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 280px;
+                height: 157px;
+            }
         }
     }
 
     .firstSection {
         width: 100%;
-        height: 135vh;
+        height: 1200px;
 
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
+        background:linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../../assets/images/homepage/title_background.jpg');
 
-        overflow-x: hidden;
-        overflow-y: hidden;
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
 
-        position: sticky;
-
-        @media (max-width: $phoneMaxWidth) {
-            flex-direction: column;
-            height: 150vh;
+        @media (max-width: $padMaxWidth) {
+            height: 1300px;
         }
 
-        img {
-            width: 60%;
-            box-sizing: inherit;
-            object-fit: cover;
+        @media (max-width: $phoneMaxWidth) {
+            background:linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../../assets/images/homepage/title_background_mobile.jpg');
+            height: 700px;
+            background-size: 100% 100%;
+        }
+
+        .name-icon {
+            display: block;
+            height: 200px;
+            width: auto;
+            margin: 0 auto;
+            padding: 50px;
+
+            @media (max-width: $padMaxWidth) {
+                height: 200px;
+            }
 
             @media (max-width: $phoneMaxWidth) {
-                width: 100%;
+                height: 100px;
             }
         }
 
         .text {
-            width: 40%;
-            display: flex;
-            flex-direction: column;
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
 
             @media (max-width: $phoneMaxWidth) {
                 width: 100%;
                 text-align: center;
             }
 
-            .iFrame-wrapper {
-                max-width: 600px;
-                height: 400px;
-                margin-bottom: 50px;
-                width: 80%;
-
-                @media (max-width: $phoneMaxWidth) {
-                    width: 90%;
-                    height: 200px;
-                    text-align: center;
-                    margin-top: 50px;
-                }
-                iframe {
-                    max-width: 600px;
-                    height: 400px;
-                    width: 100%;
-
-                    @media (max-width: $phoneMaxWidth) {
-                        width: 100%;
-                        height: 200px;
-                        text-align: center;
-                    }
-                }
-            }
-
-            
-
             h1 {
+                display: block;
+                margin: 0 auto;
                 font-weight: 800;
-                font-size: 20px;
+                font-size: 50px;
                 width: 80%;
-                margin-left: auto;
-                margin-right: auto;
+                max-width: 1000px;
+                color: white;
 
                 @media (max-width: $phoneMaxWidth) {
                     font-size: 20px;
@@ -89,36 +119,55 @@
 
             .buttons {
                 width: 100%;
+                height: 200px;
+                margin-top: 100px;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
 
                 @media (max-width: $phoneMaxWidth) {
+                    margin-top: 0px;
                     flex-direction: column;
+                    align-items: center;
                 }
     
                 .button {
                     width: 40%;
-                    margin-top: $margin;
-                    margin-left: auto;
-                    margin-right: auto;
-                    height: $buttonHeight;
-                    font-weight: $buttonFontWeight;
+                    max-width: 500px;
+                    height: $buttonHeight + 30;
+                    font-weight: 500;
                     font-size: $buttonFontSize;
                     box-shadow: $buttonShadow;
-                    color: white;
-                    background-color: $primaryColor;
+                    background-color: white;
+                    color: $primaryColor;
+                    border-style: solid;
+                    border-width: 2px;
+                    border-color: white;
+                    border-radius: 20px;
 
                     @media (max-width: $phoneMaxWidth) {
                         width: 80%;
                         font-size: $buttonFontSize - 5px;
+                        height: $buttonHeight;
+                        font-weight: 100;
+                    }
+                }
+
+                .button:hover {
+                    background-color: transparent;
+                    color: white;
+
+                    @media (max-width: $phoneMaxWidth) {
+                        background-color: white;
+                        color: $primaryColor;
                     }
                 }
             }
 
             .iosDownload {
-                margin-top: 3*$margin;
-                width: 250px;
+                margin: 0 auto;
+                width: 350px;
+                height: 150px;
 
                 .download {
                     width: 100%;
@@ -154,7 +203,7 @@
         flex-wrap: wrap;
 
         @media (max-width: $phoneMaxWidth) {
-            flex-direction: column;
+            flex-direction: column-reverse;
             align-items: center;
             justify-content: center;
         }
@@ -169,7 +218,7 @@
         flex-wrap: wrap;
 
         @media (max-width: $phoneMaxWidth) {
-            flex-direction: column-reverse;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -177,7 +226,7 @@
 
     .sections {
         width: 100%;
-        height: 100vh;
+        height: 800px;
 
         display: flex;
         justify-content: space-evenly;
@@ -188,7 +237,7 @@
         position: sticky;
 
         @media (max-width: $phoneMaxWidth) {
-            height: 80vh;
+            height: 600px;
         }
 
         img {
@@ -197,7 +246,7 @@
             object-fit: cover;
 
             @media (max-width: $phoneMaxWidth) {
-                width: 100%;
+                width: 80%;
             }
         }
 
@@ -211,20 +260,8 @@
                 text-align: center;
             }
 
-            h1 {
-                font-weight: 800;
-                font-size: 30px;
-                width: 80%;
-                margin-left: auto;
-                margin-right: auto;
-
-                @media (max-width: $phoneMaxWidth) {
-                    font-size: 20px;
-                }
-            }
-
             p {
-                font-weight: 800;
+                font-weight: 200;
                 font-size: 30px;
                 width: 80%;
                 margin-left: auto;
@@ -236,116 +273,106 @@
             }
         }
     }
+}
 
-    .lastSection {
-        width: 100%;
-        height: 300px;
+.lastHomepageSection {
+    position: relative;
+    height: 300px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.30);
+    background-color: $secondaryColor;
+    clear: both;
+    margin: 0;
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .horizontallycenter {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center; 
+    }
+
+    .verticallyCenter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lastSectionContent {
+        width: 80%;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-between;
+        align-items: center;
 
-        overflow-x: hidden;
-        overflow-y: hidden;
+        @media (max-width: $phoneMaxWidth) {
+            width: 100%;
+            flex-direction: column-reverse;
+            justify-content: space-around;
+        }
 
-        .lastSectionContent {
-            width: 80%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
+        .iosDownload {
+            width: 200px;
 
-            @media (max-width: $phoneMaxWidth) {
-                width: 100%;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .iosDownload {
-                width: 300px;
-
-                .download {
-                    width: 90%;
-                    box-sizing: inherit;
-                    object-fit: cover;
-                    margin: 0 auto;
-                    display: block;
-
-                    @media (max-width: $phoneMaxWidth) {
-                        width: 50%;
-                    }
-                }
-            }
-
-            .contactTitlePrivacy {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+            .download {
+                width: 90%;
+                box-sizing: inherit;
+                object-fit: cover;
+                margin: 0 auto;
+                display: block;
 
                 @media (max-width: $phoneMaxWidth) {
-                    padding-top: 50px;
-                    text-align: center;
-                }
-
-                .contactTitle {
-                    font-weight: 400;
-                    font-size: 50px;
-                    display: flex;
-                    flex-direction: column;
-                    text-align: left;
-                    justify-content: flex-start;
-                    vertical-align: top;
-
-                    @media (max-width: $phoneMaxWidth) {
-                        font-size: 30px;
-                        text-align: center;
-                    }
-                }
-
-                .contactDetails {
-                    a {
-                        font-weight: 300;
-                        font-size: 30px;
-                        text-decoration: none;
-                        color: $primaryColor;
-                        text-align: left;
-                        vertical-align: top;
-
-                        @media (max-width: $phoneMaxWidth) {
-                            font-size: 20px;
-                        }
-                    }
-                }
-                .privacyPolicy {
-                    vertical-align: bottom;
-                    padding-top: 50px;
-
-                    button {
-                        background-color: transparent;
-                        color: $primaryColor;
-                        border: none;
-                        text-align: center;
-                        text-decoration: none;
-                        display: inline-block;
-                        font-weight: 300;
-                        font-size: 20px;
-                        cursor: pointer;
-                        outline: none;
-                    }
-
-                    @media (max-width: $phoneMaxWidth) {
-                        font-size: 20px;
-                    }
+                    width: 50%;
                 }
             }
         }
 
+        .other-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
 
-        @media (max-width: $phoneMaxWidth) {
-            .lastSectionContent {
-                width: 100%;
+            .sub-content {
+                display: flex;
                 flex-direction: column;
+                align-items: flex-start;
+                margin: 20px;
+
+                .topic {
+                    background-color: transparent;
+                    box-shadow: transparent;
+                    border-style: none;
+                    font-size: 18px;
+                    font-weight: 700;
+                    padding-bottom: 7px;
+                    margin-left: -2px;
+                    outline: none;
+                    word-wrap: break-word;
+                }
+
+                .subtopic {
+                    padding-bottom: 7px;
+                    color: gray;
+                    background-color: transparent;
+                    box-shadow: transparent;
+                    border-style: none;
+                    text-decoration: none;
+                    font-size: 15px;
+                    font-weight: 100;
+                    outline: none;
+                    word-wrap: break-word;
+                    text-align: left;
+                }
+
+                .topic:hover {
+                    cursor: pointer;
+                }
+
+                .subtopic:hover {
+                    cursor: pointer;
+                }
             }
         }
     }

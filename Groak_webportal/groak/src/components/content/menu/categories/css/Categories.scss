@@ -4,6 +4,7 @@ $screenMargin: 2*($margin + 20);
 $cardFullWidth: ($cardWidth + $cardMargin);
 
 .categories {
+    margin: $margin;
 
     .category-items {
         display: flex;
