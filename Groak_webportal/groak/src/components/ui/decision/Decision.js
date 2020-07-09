@@ -26,7 +26,7 @@ const Decision = (props) => {
                     </Button>
                 </DialogActions>
                 <DialogActions>
-                    <Button variant="outlined" onClick={() => { response(false); }} color="secondary">
+                    <Button style={{ color: 'red' }} variant="outlined" onClick={() => { response(false); }}>
                         Cancel
                     </Button>
                 </DialogActions>

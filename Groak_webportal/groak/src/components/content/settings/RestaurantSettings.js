@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
-import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton } from '@material-ui/core';
+import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip } from '@material-ui/core';
 import { CloseRounded, CloudUpload } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { context } from '../../../globalState/globalState';
@@ -74,10 +74,26 @@ const RestaurantSettings = (props) => {
                 value={state.restaurant ? state.restaurant.type : []}
                 onChange={(event) => { setState({ type: 'setType', cuisineType: event.target.value }); }}
                 variant="outlined"
+                renderValue={(selected) => {
+                    return (
+                        <div className={classes.chips}>
+                            {selected.map((value) => {
+                                return (
+                                    <Chip key={value} label={value} className={classes.chip} />
+                                );
+                            })}
+                        </div>
+                    );
+                }}
                 input={<OutlinedInput />}
             >
                 {cuisines.map((cuisine) => {
-                    return (<MenuItem key={cuisine} value={cuisine}>{cuisine}</MenuItem>);
+                    return (
+                        <MenuItem key={cuisine} value={cuisine}>
+                            <Checkbox style={{ color: '#800000' }} checked={state.restaurant ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
+                            <ListItemText primary={cuisine} />
+                        </MenuItem>
+                    );
                 })}
             </Select>
             <TextField

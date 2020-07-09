@@ -93,10 +93,10 @@ const ShowTableAlert = (props) => {
                 <Button className="table-alert-button" onClick={qrCodeHandler} variant="outlined" disabled={!state || !state.initialName || state.initialName.length === 0}>
                     QR Code
                 </Button>
-                <Button className="table-alert-button" onClick={() => { updateHandler(state.table); }} variant="outlined" disabled={!state.table || !state.table.name || state.table.name.length === 0}>
+                <Button className="table-alert-button" onClick={() => { updateHandler(state.table); }} variant="outlined" disabled={!state.table}>
                     Update
                 </Button>
-                <Button className="table-alert-button" onClick={() => { deleteHandler(state.table); }} variant="outlined" disabled={!state.table} color="secondary">
+                <Button style={{ color: 'red' }} className="table-alert-button" onClick={() => { deleteHandler(state.table); }} variant="outlined" disabled={!state.table}>
                     Delete
                 </Button>
             </DialogActions>

@@ -117,6 +117,7 @@ $cardFullWidth: ($cardWidth + $cardMargin);
     }
 
     .customerMenu-appbar {
+        background-color: white;
         box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
         width: 100vw;
     }
@@ -143,6 +144,17 @@ $cardFullWidth: ($cardWidth + $cardMargin);
             flex-flow: column;
             box-shadow: $cardShadow;
             cursor: pointer;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100vw;
+                margin: 0 -20px;
+                box-shadow: none;
+                border-radius: 0;
+                border-style: solid;
+                border-width: 0;
+                border-bottom-width: 1px;
+                border-color: gray;
+            }
 
             .media {
                 background-color: $secondaryColor;

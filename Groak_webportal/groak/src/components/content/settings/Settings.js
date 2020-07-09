@@ -34,7 +34,6 @@ function localReducer(state, action) {
     }
 }
 
-
 const Settings = () => {
     const { globalState } = useContext(context);
     const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurant, logo: { file: null, link: globalState.restaurant.logo }, email: globalState.email, loadingSpinner: false });

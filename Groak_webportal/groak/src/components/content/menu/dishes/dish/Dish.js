@@ -22,6 +22,13 @@ const Dish = (props) => {
                 className="media"
                 image={(dishItem.image) ? dishItem.image : NoImage}
                 title={dishItem.name}
+                onError={(e) => {
+                    console.log('failed');
+                    setTimeout(() => {
+                        console.log('timer');
+                        e.target.src = (dishItem.image) ? dishItem.image : NoImage;
+                    }, 5000);
+                }}
             />
             <CardContent onClick={clickHandler}>
                 <Typography variant="body2" color="textSecondary" component="p">

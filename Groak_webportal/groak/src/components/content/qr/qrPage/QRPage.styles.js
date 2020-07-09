@@ -43,6 +43,22 @@ const QRPageStyles = (pageSize, font, includeTable, width) => {
         },
         qr: {
             width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        qrText: {
+            width: '80%',
+            textAlign: 'center',
+        },
+        qrCode: {
+            marginBottom: '20px',
+            width: '90%',
+            borderStyle: 'solid',
+            borderWidth: '1pt',
+            borderRadius: '20',
+            borderColor: 'black',
         },
         applicationArea: {
         },

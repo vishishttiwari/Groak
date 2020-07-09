@@ -91,7 +91,7 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, setState, snack
             setState({
                 type: 'fetchCategory',
                 name: data.data().name ? data.data().name : '',
-                startTime: data.data().startTime ? data.data().startTime : DemoCategoryStartTime,
+                startTime: (data.data().startTime || data.data().startTime === 0) ? data.data().startTime : DemoCategoryStartTime,
                 endTime: data.data().endTime ? data.data().endTime : DemoCategoryEndTime,
                 days: newDays,
                 selectedDishes: newSelectedDishes,
