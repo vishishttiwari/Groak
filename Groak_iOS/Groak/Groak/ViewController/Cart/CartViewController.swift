@@ -71,7 +71,7 @@ internal class CartViewController: UIViewController {
             LocalRestaurant.askToLeaveRestaurant()
         }
         header.delete = { () -> () in
-            let alert = UIAlertController(title: "Clean the Cart", message: "Would you like to empty the cart?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete Cart", message: "Would you like to empty the cart?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 self.deleteCart()

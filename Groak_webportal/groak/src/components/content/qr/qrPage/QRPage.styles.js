@@ -41,8 +41,15 @@ const QRPageStyles = (pageSize, font, includeTable, width) => {
             width: '50%',
             height: '100%',
         },
-        qr: {
+        qrcodes: {
             width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        qr: {
+            width: '65%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

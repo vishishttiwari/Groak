@@ -92,7 +92,7 @@ internal class AddToCartFooterView: UIView {
     // This function is called when add button is pressed
     @objc func add() {
         quantity += 1
-        addToCartButton.setTitle("Add \(quantity) to Order", for: .normal)
+        addToCartButton.setTitle("Add \(quantity) to Cart", for: .normal)
         price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
     }
     
@@ -100,7 +100,7 @@ internal class AddToCartFooterView: UIView {
     @objc func reduce() {
         if (quantity > 1) {
             quantity -= 1
-            addToCartButton.setTitle("Add \(quantity) to Order", for: .normal)
+            addToCartButton.setTitle("Add \(quantity) to Cart", for: .normal)
             price.text = Catalog.calculateTotalPriceOfDish(pricePerItem: dishPrice, quantity: quantity).priceInString
         }
     }

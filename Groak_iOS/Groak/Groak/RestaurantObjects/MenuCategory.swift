@@ -74,7 +74,7 @@ internal class MenuCategory {
             return false;
         } else if startTime > minutes {
             return false;
-        } else if endTime < minutes {
+        } else if endTime <= minutes {
             return false;
         }
         return available;

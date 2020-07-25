@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "448899776119",
+    "firebase_url": "https://groak-1.firebaseio.com",
+    "project_id": "groak-1",
+    "storage_bucket": "groak-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448899776119:android:e5f73ed443736f76b7d072",
+        "android_client_info": {
+          "package_name": "com.groak.groak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448899776119-6hhfqdjj7sa9icihvdt980qijg5f5o5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJhxEb0o6qBp-umJux2y9bE2MgOh1xXSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448899776119-6hhfqdjj7sa9icihvdt980qijg5f5o5n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "448899776119-bhds7jba9eogin2svtjiknn9k2l20jk9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.groak.Groak-iOS-Application"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

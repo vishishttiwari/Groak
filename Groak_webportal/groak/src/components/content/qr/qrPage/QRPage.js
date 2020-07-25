@@ -21,9 +21,15 @@ const QRPage = (props) => {
                 {state.includeTable ? <Text style={styles.tableTitle}>{tableName}</Text> : null}
                 <View style={styles.qrArea}>
                     <Image style={styles.qrSideImage} src={qrStyleImages[state.qrStyleImage]} />
-                    <View style={styles.qr}>
-                        <Image style={styles.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/${restaurantReference}/${tableReference}`} />
-                        <Text style={styles.qrText}>Scan the QR code with camera or any qr code scanner to view the menu</Text>
+                    <View style={styles.qrcodes}>
+                        <View style={styles.qr}>
+                            <Text style={styles.qrText}>Food Menu</Text>
+                            <Image style={styles.qrCode} src="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/d0KGThgk11PotGsC3dQ7r1qlgVj2/ut3bhpmoy6ob6puvz6vc98" />
+                        </View>
+                        <View style={styles.qr}>
+                            <Text style={styles.qrText}>Drinks Menu</Text>
+                            <Image style={styles.qrCode} src="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/G6ItbLPhl8TWM4tU4IcDLqnJecn1/m4y3brjvda87iqgoiwqygu" />
+                        </View>
                     </View>
                 </View>
                 <View style={styles.applicationArea}>

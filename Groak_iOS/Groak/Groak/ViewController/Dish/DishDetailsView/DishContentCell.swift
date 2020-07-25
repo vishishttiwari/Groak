@@ -24,7 +24,7 @@ internal class DishContentCell: UITableViewCell {
                 str += "Carbs:\(carbs)g   "
             }
             if let protein = dishNutrition["protein"], protein > 0 {
-                str += "Protein:\(protein)g   "
+                str += "Protein:\(protein)g"
             }
             dishNutritionLabel.text = str
             dishNutritionLabel.boldSubString(originalString: str, substrings: ["calories", "fats", "carbs", "protein"], font: UIFont(name: FontCatalog.fontLevels[2], size: 18)!)
