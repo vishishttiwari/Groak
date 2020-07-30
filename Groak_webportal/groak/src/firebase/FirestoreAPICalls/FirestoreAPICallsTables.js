@@ -17,8 +17,12 @@ export const createTableReferenceInRestaurantCollections = (restaurantId, tableI
     return db.collection(`restaurants/${restaurantId}/tables`).doc(tableId);
 };
 
-export const fetchTablesFirestoreAPI = (restaurantId, getTablesFunction) => {
+export const fetchTablesRealtimeFirestoreAPI = (restaurantId, getTablesFunction) => {
     return db.collection(`restaurants/${restaurantId}/tables`).orderBy('created').onSnapshot(getTablesFunction);
+};
+
+export const fetchTablesFirestoreAPI = (restaurantId) => {
+    return db.collection(`restaurants/${restaurantId}/tables`).get();
 };
 
 export const fetchTableFirestoreAPI = (restaurantId, tableId) => {

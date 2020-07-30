@@ -11,8 +11,10 @@ import DropDownNavigationItems from './DropDownNavigationItems';
 const TopNavigationItems = () => {
     const { globalState } = useContext(context);
 
-    const NAV_OPTIONS_IF_AUTHENTICATED = ['orders', 'tables', 'menu', 'settings'];
-    const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['sign in', 'contact us'];
+    const NAV_OPTIONS_IF_AUTHENTICATED = ['Orders', 'Tables', 'Menu', 'QR codes', 'Settings'];
+    const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['Sign in', 'Contact us'];
+
+    console.log(NAV_OPTIONS_IF_AUTHENTICATED[3].toLowerCase().replace(/\s/g, ''));
 
     return (
         <>
@@ -23,7 +25,7 @@ const TopNavigationItems = () => {
                             <TopNavigationItem
                                 className="item"
                                 key={item}
-                                link={`/${item.replace(/\s/g, '')}`}
+                                link={`/${item.toLowerCase().replace(/\s/g, '')}`}
                                 item={item}
                             />
                         );
@@ -32,7 +34,7 @@ const TopNavigationItems = () => {
                             <TopNavigationItem
                                 className="item"
                                 key={item}
-                                link={`/${item.replace(/\s/g, '')}`}
+                                link={`/${item.toLowerCase().replace(/\s/g, '')}`}
                                 item={item}
                             />
                         );

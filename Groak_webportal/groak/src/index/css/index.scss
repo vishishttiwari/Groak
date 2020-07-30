@@ -2,118 +2,175 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap');
 
 html {
-  min-height: 100%;
-  height: 100%;
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    margin: 0;
-    background-color: $secondaryColor;
     min-height: 100%;
     height: 100%;
-    overflow: auto;
 
-    form {
-      padding: $padding;
-      background-color: white;
-      border: $border;
-      border-radius: $borderRadius;
+    body {
+        font-family: 'Nunito', sans-serif;
+        margin: 0;
+        background-color: $secondaryColor;
+        min-height: 100%;
+        height: 100%;
+        overflow: auto;
 
-      h2 {
-          color: $primaryColor;
-          font-size: 24px;
-          font-weight: 100;
-      }
+        .card-white {
+            background-color: white;
+        }
+        .card-gray {
+            background-color: $secondaryColor;
+        }
+        .card {
+            width: $cardWidth;
+            margin-bottom: $cardMargin;
+            margin-right: $cardMargin/2;
+            margin-left: $cardMargin/2;
+            display: flex;
+            flex-flow: column;
+            box-shadow: $cardShadow;
+            cursor: pointer;
 
-      p {
-          color: #555555;
-          padding: 0;
-          margin: 10px 0 5px 0;
-          font-family: 'Roboto', sans-serif;
-          font-weight: 200;
-          letter-spacing: 0.15px;
-      }
+            .subtopics {
+                margin-left: $commentMarginLeft;
+                text-transform: capitalize;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .media {
+                background-color: $secondaryColor;
+                height: 200px;
+            }
+
+            .actions {
+                margin: 0;
+                margin-top: auto;
+                .action-items {
+                    margin: 5px;
+                }
+                .buttons {
+					min-width: 150px;
+					margin: 10px;
+					font-size: $buttonFontSize - 3px;
+                }
+                .check-box {
+                    color: $primaryColor;
+                }
+            }
+
+            .actions-horizontal {
+                display: flex;
+                flex-flow: row;
+            }
+
+            .actions-vertical {
+                display: flex;
+                flex-flow: column;
+                justify-content: space-between;
+            }
+        }
+
+        form {
+            padding: $padding;
+            background-color: white;
+            border: $border;
+            border-radius: $borderRadius;
+
+            h2 {
+                    color: $primaryColor;
+                    font-size: 24px;
+                    font-weight: 100;
+            }
+
+            p {
+                    color: #555555;
+                    padding: 0;
+                    margin: 10px 0 5px 0;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 200;
+                    letter-spacing: 0.15px;
+            }
+        }
+
+        h1 {
+            margin: 0px;
+            padding: $padding;
+            font-size: 40px;
+            font-weight: 500;
+        }
+
+        .normal-buttons {
+            width: $buttonWidth;
+            min-width: $buttonMinWidth;
+            height: $buttonHeight;
+            margin: $margin auto;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            box-shadow: $buttonShadow;
+            background-color: $grayButtonColor;
+            &:hover {
+                background-color: $graySelectedButtonColor;
+            }
+        }
+
+        .success-buttons {
+            width: $buttonWidth;
+            min-width: $buttonMinWidth;
+            height: $buttonHeight;
+            margin: $margin auto;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            box-shadow: $buttonShadow;
+            color: white;
+            background-color: $greenButtonColor;
+            &:hover {
+                background-color: $greenSelectedButtonColor;
+            }
+        }
+
+        .cancel-buttons {
+            width: $buttonWidth;
+            min-width: $buttonMinWidth;
+            height: $buttonHeight;
+            margin: $margin auto;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            box-shadow: $buttonShadow;
+            color: white;
+            background-color: $redButtonColor;
+            &:hover {
+                background-color: $redSelectedButtonColor;
+            }
+        }
+
+        .delete-buttons {
+            width: 50%;
+            min-width: $buttonMinWidth;
+            height: 50px;
+            margin: 40px auto;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            box-shadow: $buttonShadow;
+            color: white;
+            background-color: $primaryColor;
+            &:hover {
+                background-color: $primarySelectedColor;
+            }
+        }
+
+        .text-on-background {
+            color: #555555;
+            padding: 0;
+            margin: $margin auto;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 200;
+            letter-spacing: 0.15px;
+        }
     }
 
-    h1 {
-      margin: 0px;
-      padding: $padding;
-      font-size: 40px;
-      font-weight: 500;
+
+    code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+            monospace;
     }
-
-    .normal-buttons {
-      width: $buttonWidth;
-      min-width: $buttonMinWidth;
-      height: $buttonHeight;
-      margin: $margin auto;
-      font-weight: $buttonFontWeight;
-      font-size: $buttonFontSize;
-      box-shadow: $buttonShadow;
-      background-color: $grayButtonColor;
-      &:hover {
-        background-color: $graySelectedButtonColor;
-      }
-    }
-
-    .success-buttons {
-      width: $buttonWidth;
-      min-width: $buttonMinWidth;
-      height: $buttonHeight;
-      margin: $margin auto;
-      font-weight: $buttonFontWeight;
-      font-size: $buttonFontSize;
-      box-shadow: $buttonShadow;
-      color: white;
-      background-color: $greenButtonColor;
-      &:hover {
-        background-color: $greenSelectedButtonColor;
-      }
-    }
-
-    .cancel-buttons {
-      width: $buttonWidth;
-      min-width: $buttonMinWidth;
-      height: $buttonHeight;
-      margin: $margin auto;
-      font-weight: $buttonFontWeight;
-      font-size: $buttonFontSize;
-      box-shadow: $buttonShadow;
-      color: white;
-      background-color: $redButtonColor;
-      &:hover {
-        background-color: $redSelectedButtonColor;
-      }
-    }
-
-    .delete-buttons {
-      width: 50%;
-      min-width: $buttonMinWidth;
-      height: 50px;
-      margin: 40px auto;
-      font-weight: $buttonFontWeight;
-      font-size: $buttonFontSize;
-      box-shadow: $buttonShadow;
-      color: white;
-      background-color: $primaryColor;
-      &:hover {
-        background-color: $primarySelectedColor;
-      }
-    }
-
-    .text-on-background {
-      color: #555555;
-      padding: 0;
-      margin: $margin auto;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 200;
-      letter-spacing: 0.15px;
-    }
-  }
-
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-      monospace;
-  }
 }

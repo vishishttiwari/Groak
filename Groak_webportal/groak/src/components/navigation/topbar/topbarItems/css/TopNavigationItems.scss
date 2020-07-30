@@ -5,7 +5,7 @@
     flex-flow: row;
     align-items: stretch;
 
-    @media (max-width: $phoneMaxWidth) {
+    @media (max-width: $padMaxWidth) {
         display: none;
     }
 
@@ -23,7 +23,7 @@
                 color: white;
                 font-weight: 100;
                 font-size: $optionFontSize;
-                text-transform: capitalize;
+                text-transform: none;
                 padding: $topBarHeight/2-$optionFontSize/2 - 2px;
                 width: $topNavigationItemWidth;
             }
@@ -39,7 +39,7 @@
 .top-navigation-items-mobile {
     display: none;
 
-    @media (max-width: $phoneMaxWidth) {
+    @media (max-width: $padMaxWidth) {
         display: block;
     }
 

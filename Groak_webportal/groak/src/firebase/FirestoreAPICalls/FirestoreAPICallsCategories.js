@@ -5,6 +5,10 @@ export const createCategoryReference = (restaurantId, categoryId) => {
     return db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId);
 };
 
+export const createCategoryReferenceFromPath = (categoryPath) => {
+    return db.doc(categoryPath);
+};
+
 export const fetchCategoriesFirestoreAPI = (restaurantId) => {
     return db.collection(`restaurants/${restaurantId}/categories`).orderBy('order').get();
 };

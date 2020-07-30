@@ -59,7 +59,7 @@ const ShowTableAlert = (props) => {
      */
     function qrCodeHandler() {
         history.push({
-            pathname: `/qrcode/${tableId}`,
+            pathname: `/qrmenupage/${tableId}`,
             search: `?table=${encodeURIComponent(state.initialName)}`,
         });
     }

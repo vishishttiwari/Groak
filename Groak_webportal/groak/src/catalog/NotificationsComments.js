@@ -49,7 +49,6 @@ export const ErrorAddingCategory = 'Error adding menu category';
 export const ErrorUpdatingCategory = 'Error updating menu category';
 export const ErrorDeletingCategory = 'Error deleting menu category';
 export const CategoryNotFound = 'Category not found';
-
 export const NoCategoryTitle = 'Category title not entered. Please enter a valid title';
 export const DeleteCategoryPopUpTitle = 'Delete Category?';
 export const DeleteCategoryPopUp = 'Are you sure you would like to delete this category?';
@@ -62,6 +61,19 @@ export const ErrorUpdatingTable = 'Error updating table';
 export const ErrorDeletingTable = 'Error deleting table';
 export const TableNotFound = 'Table not found';
 export const ErrorUnsubscribingTables = 'Error unsubscribing tables';
+
+export const InvalidQRCodeTitle = 'Invalid QR code title. Please enter a valid QR code table';
+export const ErrorAddingQRCode = 'Error adding QR code';
+export const ErrorFetchingQRCodes = 'Error fetching QR codes';
+export const ErrorFetchingQRCode = 'Error fetching QR code';
+export const ErrorUpdatingQRCode = 'Error updating QR code';
+export const ErrorDeletingQRCode = 'Error deleting QR code';
+export const QRCodeNotFound = 'QR code not found';
+export const DeleteQRCodePopUpTitle = 'Delete QR Code?';
+export const DeleteQRCodePopUp = 'Are you sure you would like to delete this qr code?';
+export const QRCodeAdded = 'QR code added';
+export const QRCodeUpdated = 'QR code updated';
+export const QRCodeOrderChanged = 'QR code order changed';
 
 export const ErrorFetchingOrders = 'Error fetching orders';
 export const ErrorFetchingOrder = 'Error fetching order';

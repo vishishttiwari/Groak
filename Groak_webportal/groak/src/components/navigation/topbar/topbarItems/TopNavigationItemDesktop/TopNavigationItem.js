@@ -13,7 +13,7 @@ const TopNavigationItem = (props) => {
 
     return (
         <li className="top-navigation-item">
-            {item !== 'menu' ? (
+            {item !== 'Menu' ? (
                 <NavLink
                     to={link}
                     exact={exact}

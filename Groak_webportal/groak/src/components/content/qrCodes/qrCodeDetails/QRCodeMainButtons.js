@@ -8,10 +8,10 @@ import { Delete } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
 import Decision from '../../../ui/decision/Decision';
 import { uploadButtonStyle } from '../../../../catalog/Others';
-import { DeleteCategoryPopUp, DeleteCategoryPopUpTitle } from '../../../../catalog/NotificationsComments';
+import { DeleteQRCodePopUpTitle, DeleteQRCodePopUp } from '../../../../catalog/NotificationsComments';
 
-const CategoryDetailsMainButtons = (props) => {
-    const { goBackHandler, submitHandler, deleteHandler, newCategory } = props;
+const QRCodeMainButtons = (props) => {
+    const { goBackHandler, submitHandler, deleteHandler, newQRCode } = props;
     const [deletePermission, setDeletePermission] = useState(false);
 
     /**
@@ -28,9 +28,9 @@ const CategoryDetailsMainButtons = (props) => {
 
     return (
         <>
-            <Decision open={deletePermission} response={userPermissionResponse} title={DeleteCategoryPopUpTitle} content={DeleteCategoryPopUp} />
-            <div className="category-details-main-buttons">
-                <div className="category-details-cancel-submit-buttons">
+            <Decision open={deletePermission} response={userPermissionResponse} title={DeleteQRCodePopUpTitle} content={DeleteQRCodePopUp} />
+            <div className="qrcode-details-main-buttons">
+                <div className="qrcode-details-cancel-submit-buttons">
                     <Button
                         className="cancel-buttons"
                         onClick={goBackHandler}
@@ -42,17 +42,17 @@ const CategoryDetailsMainButtons = (props) => {
                         type="submit"
                         onClick={submitHandler}
                     >
-                        {newCategory ? 'Add Category' : 'Save Changes'}
+                        {newQRCode ? 'Add QR Code' : 'Save Changes'}
                     </Button>
                 </div>
-                {newCategory ? null
+                {newQRCode ? null
                     : (
                         <Button
                             className="delete-buttons"
                             variant="contained"
                             onClick={() => { setDeletePermission(true); }}
                         >
-                            Delete Category
+                            Delete QR Code
                             <Delete className={uploadButtonStyle().rightIcon} />
                         </Button>
                     )}
@@ -61,11 +61,11 @@ const CategoryDetailsMainButtons = (props) => {
     );
 };
 
-CategoryDetailsMainButtons.propTypes = {
+QRCodeMainButtons.propTypes = {
     goBackHandler: PropTypes.func.isRequired,
     submitHandler: PropTypes.func.isRequired,
     deleteHandler: PropTypes.func.isRequired,
-    newCategory: PropTypes.bool.isRequired,
+    newQRCode: PropTypes.bool.isRequired,
 };
 
-export default React.memo(CategoryDetailsMainButtons);
+export default React.memo(QRCodeMainButtons);

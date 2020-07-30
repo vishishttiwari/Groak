@@ -22,7 +22,7 @@
           align-items: stretch;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1200px) {
   .top-navigation-items-desktop {
     display: none;
   }
@@ -50,7 +50,7 @@
   color: white;
   font-weight: 100;
   font-size: 18px;
-  text-transform: capitalize;
+  text-transform: none;
   padding: 17px;
   width: 150px;
 }
@@ -64,7 +64,7 @@
   display: none;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1200px) {
   .top-navigation-items-mobile {
     display: block;
   }

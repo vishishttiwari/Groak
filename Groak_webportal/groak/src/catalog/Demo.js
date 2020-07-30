@@ -2,7 +2,7 @@
  * This function creates demo items that are added to the backend whenever an account is created.
  * It also contains items that are added as placeholders in text fields.
  */
-import { db, getCurrentDateTime } from '../firebase/FirebaseLibrary';
+import { getCurrentDateTime, createGeoPoint } from '../firebase/FirebaseLibrary';
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
@@ -10,6 +10,8 @@ import { createTableReferenceInTableCollections, createTableReferenceInRestauran
 import { createRequestReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { TableStatus } from './Others';
 import { getCurrentDateTimePlusMinutes } from './TimesDates';
+import { createRestaurantReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { createQRCodeReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
 export const DemoRestaurantType = ['Pizza'];
 export const DemoRestaurantSalesTax = 9;
@@ -55,6 +57,8 @@ export const DemoCategoryEndTime = 1320;
 
 export const DemoTableName = 'Demo Table 1';
 
+export const DemoQRCodeName = 'Dish Menu';
+
 export const DemoOrderComments = [{ comment: 'Please make Tomato Soup extra spicy', created: getCurrentDateTime() }];
 // Once you have placed order for a dish, you cant add comments in the dish, you have to add it in order comments
 export const createDemoOrderDishes = (restaurantId, dishId) => {
@@ -75,22 +79,14 @@ export const DemoRequest = [{
 }];
 
 /**
- * This function creates a restaurant reference
- *
- * @param {*} restaurantId id of the restaurant where the demo needs to be added
- */
-const createRestaurantReference = (restaurantId) => {
-    return db.collection('restaurants').doc(restaurantId);
-};
-
-/**
  * This function creates a demo restaurant
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
  * @param {*} restaurantName name of the restaurant to be added
  * @param {*} address address of the restaurant
+ * @param {*} qrCodeId demo qrcode id
  */
-export const createDemoRestaurant = (restaurantId, restaurantName, address) => {
+export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCodeId) => {
     const ref = createRestaurantReference(restaurantId);
     return {
         name: restaurantName,
@@ -105,6 +101,8 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address) => {
         currentOccupancy: DemoRestaurantCurrentOccupancy,
         covidGuidelines: DemoRestaurantCovidGuidelines,
         covidMessage: DemoRestaurantCovidMessage,
+        qrCodes: [createQRCodeReference(restaurantId, qrCodeId)],
+        location: createGeoPoint(address.latitude, address.longitude),
     };
 };
 
@@ -237,9 +235,10 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
 };
 
 /**
- * Thos function creates demo request
+ * This function creates demo request
  *
  * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
  * @param {*} requestId id of the request for which order is placed. This is same as order id
  */
 export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
@@ -248,5 +247,24 @@ export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
         requests: DemoRequest,
+    };
+};
+
+/**
+ * This function creates demo qr code
+ *
+ * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ * @param {*} restaurantName name of the restaurant to be added
+ * @param {*} qrcodeId id of the qrcode
+ * @param {*} caegoryId category id included in the qrcode
+ */
+export const createDemoQRCode = (restaurantId, restaurantName, qrcodeId, categoryId) => {
+    return {
+        reference: createQRCodeReference(restaurantId, qrcodeId),
+        restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
+        name: DemoQRCodeName,
+        available: true,
+        categories: [createCategoryReference(restaurantId, categoryId)],
     };
 };

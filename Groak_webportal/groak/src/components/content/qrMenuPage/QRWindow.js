@@ -34,6 +34,8 @@ function reducer(state, action) {
         case 'setWidth':
             newQRStylePage = { ...state.qrStylePage, width: action.width };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'fetchCategories':
+            return { ...state, categories: action.categories };
         case 'setSaved':
             return { ...state, saved: action.saved };
         case 'setLoadingSpinner':
@@ -47,7 +49,7 @@ const QRWindow = (props) => {
     const { history, match, location } = props;
     let tableName = 'Table';
     const { globalState, setGlobalState } = useContext(context);
-    const [state, setState] = useReducer(reducer, { qrStylePage: { ...globalState.restaurant.qrStylePage }, saved: true, loadingSpinner: false });
+    const [state, setState] = useReducer(reducer, { categories: [], qrStylePage: { ...globalState.restaurant.qrStylePage }, saved: true, loadingSpinner: false });
     const { enqueueSnackbar } = useSnackbar();
 
     const query = new URLSearchParams(location.search);
@@ -73,7 +75,7 @@ const QRWindow = (props) => {
 
     return (
         <div className="qr">
-            <Heading heading="QR Code" />
+            <Heading heading="QR Menu Page" />
             <div className="qr-content">
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
                     <QRPage

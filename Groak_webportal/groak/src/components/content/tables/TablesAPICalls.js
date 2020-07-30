@@ -1,7 +1,7 @@
 /**
  * This class includes tables related functions such as fetching table, updating table etc.
  */
-import { addTableFirestoreAPI, fetchTablesFirestoreAPI, fetchTableFirestoreAPI, updateTableFirestoreAPI, deleteTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
+import { addTableFirestoreAPI, fetchTablesRealtimeFirestoreAPI, fetchTableFirestoreAPI, updateTableFirestoreAPI, deleteTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest } from '../../../catalog/NotificationsComments';
 import { TableStatus } from '../../../catalog/Others';
 
@@ -82,7 +82,7 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
             });
             setState({ type: 'fetchTables', tables: newTables });
         };
-        tablesSnapshot = await fetchTablesFirestoreAPI(restaurantId, getTables);
+        tablesSnapshot = await fetchTablesRealtimeFirestoreAPI(restaurantId, getTables);
     } catch (error) {
         snackbar(ErrorFetchingTables, { variant: 'error' });
         setState({ type: 'error' });

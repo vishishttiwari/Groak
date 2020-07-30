@@ -33,7 +33,7 @@ const DropDownNavigationItems = (props) => {
         if (buttonType === 'onlyMenu') {
             return (
                 <Button ref={anchorRef} className="navigation-button" onClick={handleToggle} onBlur={() => { setMenuOpen(false); }}>
-                Menu
+                    Menu
                     {' '}
                     <ArrowDropDown />
                 </Button>
@@ -59,15 +59,15 @@ const DropDownNavigationItems = (props) => {
                             <Paper>
                                 <MenuList>
                                     {options.map((item) => {
-                                        return (item !== 'menu'
+                                        return (item !== 'Menu'
                                             ? (
                                                 <NavLink
                                                     key={item}
                                                     style={{ textDecoration: 'none', color: 'black' }}
-                                                    to={`/${item.replace(/\s/g, '')}`}
+                                                    to={`/${item.toLowerCase().replace(/\s/g, '')}`}
                                                     exact
                                                 >
-                                                    <MenuItem onClick={handleClose} style={{ textTransform: 'capitalize' }}>{item}</MenuItem>
+                                                    <MenuItem onClick={handleClose}>{item}</MenuItem>
                                                 </NavLink>
                                             )
                                             : (
@@ -77,14 +77,14 @@ const DropDownNavigationItems = (props) => {
                                                         to="/dishes"
                                                         exact
                                                     >
-                                                        <MenuItem onClick={handleClose} style={{ textTransform: 'capitalize' }}>Dishes</MenuItem>
+                                                        <MenuItem onClick={handleClose}>Dishes</MenuItem>
                                                     </NavLink>
                                                     <NavLink
                                                         style={{ textDecoration: 'none', color: 'black' }}
                                                         to="/categories"
                                                         exact
                                                     >
-                                                        <MenuItem onClick={handleClose} style={{ textTransform: 'capitalize' }}>Categories</MenuItem>
+                                                        <MenuItem onClick={handleClose}>Categories</MenuItem>
                                                     </NavLink>
                                                 </div>
                                             ));

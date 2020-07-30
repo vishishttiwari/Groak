@@ -1,7 +1,12 @@
-import { db, createGeoPoint, storageRef } from '../FirebaseLibrary';
+import { db, storageRef } from '../FirebaseLibrary';
 import { randomNumber } from '../../catalog/Others';
-import { createDemoDish, createDemoCategory, createDemoTable, createDemoOrder, createDemoRequest } from '../../catalog/Demo';
+import { createDemoDish, createDemoCategory, createDemoTable, createDemoOrder, createDemoRequest, createDemoQRCode, createDemoRestaurant } from '../../catalog/Demo';
 
+/**
+ * This function creates a restaurant reference
+ *
+ * @param {*} restaurantId id of the restaurant where the demo needs to be added
+ */
 export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
 };
@@ -45,21 +50,21 @@ export const updateRestaurantFirestoreAPI = (restaurantId, data) => {
  * @param {*} restaurantName name of the restaurant to be added
  * @param {*} data this contains data about the restaurant
  */
-export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, data) => {
+export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, address) => {
     const batch = db.batch();
     const dishId = randomNumber();
     const categoryId = randomNumber();
     const tableId = randomNumber();
+    const qrCodeId = randomNumber();
 
-    const newData = { ...data, location: createGeoPoint(data.address.latitude, data.address.longitude) };
-
-    batch.set(db.collection('restaurants/').doc(restaurantId), newData);
+    batch.set(db.collection('restaurants/').doc(restaurantId), createDemoRestaurant(restaurantId, restaurantName, address, qrCodeId));
     batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, restaurantName, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, restaurantName, categoryId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, restaurantName, tableId));
     batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, restaurantName, tableId));
     batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, restaurantName, tableId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), createDemoRequest(restaurantId, restaurantName, tableId));
+    batch.set(db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId), createDemoQRCode(restaurantId, restaurantName, qrCodeId, categoryId));
 
     return batch.commit();
 };

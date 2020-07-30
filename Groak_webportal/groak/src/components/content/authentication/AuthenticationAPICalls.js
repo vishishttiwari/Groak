@@ -119,7 +119,7 @@ export const signupAPICall = async (history, state, setState, snackbar) => {
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         await signupFirebaseAPI(state.email, state.password);
         const restaurantId = getUIDFirebaseAPI();
-        await addRestaurantFirestoreAPI(restaurantId, state.restaurantName, createDemoRestaurant(restaurantId, state.restaurantName, state.address));
+        await addRestaurantFirestoreAPI(restaurantId, state.restaurantName, state.address);
         await sendEmailVerification();
         await signoutFirebaseAPI();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });

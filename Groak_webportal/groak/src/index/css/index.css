@@ -24,6 +24,86 @@ html body {
   overflow: auto;
 }
 
+html body .card-white {
+  background-color: white;
+}
+
+html body .card-gray {
+  background-color: #F0F0F0;
+}
+
+html body .card {
+  width: 300px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+          box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+  cursor: pointer;
+}
+
+html body .card .subtopics {
+  margin-left: 20px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html body .card .media {
+  background-color: #F0F0F0;
+  height: 200px;
+}
+
+html body .card .actions {
+  margin: 0;
+  margin-top: auto;
+}
+
+html body .card .actions .action-items {
+  margin: 5px;
+}
+
+html body .card .actions .buttons {
+  min-width: 150px;
+  margin: 10px;
+  font-size: 15px;
+}
+
+html body .card .actions .check-box {
+  color: #800000;
+}
+
+html body .card .actions-horizontal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+}
+
+html body .card .actions-vertical {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 html body form {
   padding: 20px;
   background-color: white;

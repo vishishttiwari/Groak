@@ -1,5 +1,5 @@
 /**
- * This component is used for the cetagories page
+ * This component is used for the categories page
  */
 import React, { useReducer, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
