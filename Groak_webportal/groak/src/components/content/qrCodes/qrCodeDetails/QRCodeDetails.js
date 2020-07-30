@@ -84,7 +84,7 @@ const QRCodeDetails = (props) => {
             categories: state.qrCodeSelectedCategoriesPath.map((categoryPath) => {
                 return createCategoryReferenceFromPath(categoryPath);
             }),
-            restaurantName: globalState.restaurantName,
+            restaurantName: globalState.restaurant.name,
             restaurantReference: createRestaurantReference(globalState.restaurantId),
             reference: createQRCodeReference(globalState.restaurantId, qrCodeId),
         };

@@ -2,7 +2,7 @@
  * This class includes qr codes related functions such as fetching all qr codes
  */
 import { fetchQRCodesFirestoreAPI, fetchQRCodeFirestoreAPI, updateQRCodeFirestoreAPI, addQRCodeFirestoreAPI, deleteQRCodeFirestoreAPI, changeOrderOfQRCodesFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
-import { ErrorFetchingCategories, ErrorAddingQRCode, ErrorFetchingQRCodes, ErrorFetchingQRCode, ErrorUpdatingQRCode, ErrorDeletingQRCode, QRCodeNotFound, QRCodeAdded, QRCodeUpdated, QRCodeOrderChanged } from '../../../catalog/NotificationsComments';
+import { ErrorFetchingCategories, ErrorAddingQRCode, ErrorFetchingQRCodes, ErrorFetchingQRCode, ErrorUpdatingQRCode, ErrorDeletingQRCode, QRCodeNotFound, QRCodeAdded, QRCodeUpdated, QRCodeOrderChanged, ErrorChangingQRCodeOrder, QRCodeDeleted } from '../../../catalog/NotificationsComments';
 import { fetchCategoriesFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 
 import { fetchTablesFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
@@ -130,6 +130,7 @@ export const deleteQRCodeAPI = async (restaurantId, qrCodeId, snackbar) => {
     try {
         const tables = await fetchTablesFirestoreAPI(restaurantId);
         await deleteQRCodeFirestoreAPI(restaurantId, qrCodeId, tables);
+        snackbar(QRCodeDeleted, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorDeletingQRCode, { variant: 'error' });
     }
@@ -147,6 +148,6 @@ export const changeQRCodeOrderAPI = async (restaurantId, qrCodeReferences, snack
         await changeOrderOfQRCodesFirestoreAPI(restaurantId, qrCodeReferences);
         snackbar(QRCodeOrderChanged, { variant: 'success' });
     } catch (error) {
-        snackbar(ErrorDeletingQRCode, { variant: 'error' });
+        snackbar(ErrorChangingQRCodeOrder, { variant: 'error' });
     }
 };

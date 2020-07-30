@@ -6,7 +6,7 @@ import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
 import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { fetchCategoriesFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { randomNumber } from '../../../../catalog/Others';
-import { ErrorFetchingDish, DishNotFound, ErrorAddingDish, ErrorUpdatingDish, ErrorDeletingDish } from '../../../../catalog/NotificationsComments';
+import { DishAdded, DishUpdated, ErrorFetchingDish, DishNotFound, ErrorAddingDish, ErrorUpdatingDish, ErrorDeletingDish, DishDeleted } from '../../../../catalog/NotificationsComments';
 
 /**
  * This function gets the information from the component's state and then converts it into
@@ -167,6 +167,7 @@ export const addDishAPI = async (restaurantId, state, snackbar) => {
             data = { ...data, image: state.image.link };
         }
         await addDishFirestoreAPI(restaurantId, dishId, data);
+        snackbar(DishAdded, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorAddingDish, { variant: 'error' });
     }
@@ -189,6 +190,7 @@ export const updateDishAPI = async (restaurantId, dishId, state, snackbar) => {
             data = { ...data, image: state.image.link };
         }
         await updateDishFirestoreAPI(restaurantId, dishId, data);
+        snackbar(DishUpdated, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorUpdatingDish, { variant: 'error' });
     }
@@ -206,6 +208,7 @@ export const deleteDishAPI = async (restaurantId, dishId, snackbar) => {
     try {
         const categories = await fetchCategoriesFirestoreAPI(restaurantId);
         await deleteDishFirestoreAPI(restaurantId, dishId, categories);
+        snackbar(DishDeleted, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorDeletingDish, { variant: 'error' });
     }

@@ -5,14 +5,17 @@ import React, { useEffect, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import arrayMove from 'array-move';
 import { context } from '../../../../globalState/globalState';
 
 import './css/Dishes.css';
-import { fetchDishesAPI, changeAvailabilityOfDishAPI } from './DishesAPICalls';
+import { fetchDishesAPI, changeAvailabilityOfDishAPI, changeDishOrderAPI } from './DishesAPICalls';
 import Dish from './dish/Dish';
 import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
 import { NoDishes } from '../../../../catalog/Comments';
+import SortableList from '../../../dnd/SortableList';
+import SortableItem from '../../../dnd/SortableItem';
 
 const initialState = { dishes: [], loadingSpinner: true };
 
@@ -20,7 +23,7 @@ function reducer(state, action) {
     switch (action.type) {
         case 'fetchDishes':
             return { dishes: action.dishes, loadingSpinner: false };
-        case 'setDish':
+        case 'setDishes':
             return { dishes: action.dishes, loadingSpinner: false };
         default:
             return initialState;
@@ -66,24 +69,44 @@ const Dishes = (props) => {
         history.push(`/dishes/${id}`);
     }
 
+    /**
+     * This function is called when drag and drop has ended
+     *
+     * @param {*} param0
+     */
+    const onSortEnd = async ({ oldIndex, newIndex }) => {
+        if (oldIndex !== newIndex) {
+            const updatedDishes = arrayMove(state.dishes, oldIndex, newIndex);
+            setState({ type: 'setDishes',
+                dishes: updatedDishes,
+            });
+            await changeDishOrderAPI(globalState.restaurantId, updatedDishes.map((dish) => {
+                return dish.reference;
+            }), enqueueSnackbar);
+        }
+    };
+
     return (
         <div className="dishes">
             <Heading heading="Dishes" buttonName="Add Dish" onClick={addDishHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <div className="dish-items">
-                    {state.dishes && state.dishes.length === 0 ? <p className="text-on-background">{NoDishes}</p> : null}
-                    {state.dishes.map((dish) => {
-                        return (
-                            <Dish
-                                key={dish.id}
-                                dishItem={dish}
-                                availableDishHandler={availableDishHandler}
-                                clickHandler={() => { dishDetailHandler(dish.id); }}
-                            />
-                        );
-                    })}
-                </div>
+                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1}>
+                    <div className="dish-items">
+                        {state.dishes && state.dishes.length === 0 ? <p className="text-on-background">{NoDishes}</p> : null}
+                        {state.dishes.map((dish, index) => {
+                            return (
+                                <SortableItem key={dish.id} index={index}>
+                                    <Dish
+                                        dishItem={dish}
+                                        availableDishHandler={availableDishHandler}
+                                        clickHandler={() => { dishDetailHandler(dish.id); }}
+                                    />
+                                </SortableItem>
+                            );
+                        })}
+                    </div>
+                </SortableList>
             ) : null}
         </div>
     );

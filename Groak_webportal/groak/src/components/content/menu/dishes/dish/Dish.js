@@ -13,7 +13,7 @@ const Dish = (props) => {
     const { dishItem, availableDishHandler, clickHandler } = props;
 
     return (
-        <Card className="card" onClick={clickHandler}>
+        <Card className="card card-white" onClick={clickHandler}>
             <CardHeader
                 title={dishItem.name}
                 subheader={`$ ${dishItem.price.toFixed(2)}`}
@@ -23,9 +23,7 @@ const Dish = (props) => {
                 image={(dishItem.image) ? dishItem.image : NoImage}
                 title={dishItem.name}
                 onError={(e) => {
-                    console.log('failed');
                     setTimeout(() => {
-                        console.log('timer');
                         e.target.src = (dishItem.image) ? dishItem.image : NoImage;
                     }, 5000);
                 }}
@@ -35,10 +33,10 @@ const Dish = (props) => {
                     {dishItem.shortInfo}
                 </Typography>
             </CardContent>
-            <CardActions className="actions">
+            <CardActions className="actions actions-vertical">
                 <Button
                     variant="contained"
-                    className={dishItem.available ? 'normal-buttons' : 'cancel-buttons'}
+                    className={dishItem.available ? 'normal-buttons buttons' : 'cancel-buttons buttons'}
                     onClick={(event) => {
                         event.stopPropagation();
                         dishItem.available = !dishItem.available;

@@ -9,6 +9,11 @@ export const createQRCodeReference = (restaurantId, qrCodeId) => {
     return db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId);
 };
 
+/**
+ * Fetches from restaurant document
+ *
+ * @param {*} restaurantId
+ */
 export const fetchQRCodesFirestoreAPI = (restaurantId) => {
     const restaurantReference = createRestaurantReference(restaurantId);
     return db.runTransaction(async (transaction) => {
@@ -41,8 +46,8 @@ export const changeOrderOfQRCodesFirestoreAPI = (restaurantId, qrCodeReferences)
  * in the qrcode colletions and also adds it to the qrcode array in restaurant document
  *
  * @param {*} restaurantId restaurant for which dish needs to be deleted
- * @param {*} dishId dish id that needs to be deleted
- * @param {*} categories all the categories in the restaurant
+ * @param {*} qrCodeId qrcode id that needs to be deleted
+ * @param {*} data qr code data
  */
 export const addQRCodeFirestoreAPI = (restaurantId, qrCodeId, data) => {
     const restaurantReference = createRestaurantReference(restaurantId);
@@ -73,13 +78,6 @@ export const deleteQRCodeFirestoreAPI = (restaurantId, qrCodeId, tables) => {
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
         const { qrCodes } = restaurantDoc.data();
-        if (qrCodes) {
-            const updatedQRCodes = qrCodes.filter((qrCode) => {
-                if (qrCode.path === qrCodeRef.path) return false;
-                return true;
-            });
-            transaction.update(restaurantReference, { qrCodes: updatedQRCodes });
-        }
 
         tables.forEach((doc) => {
             const table = doc.data();
@@ -96,6 +94,14 @@ export const deleteQRCodeFirestoreAPI = (restaurantId, qrCodeId, tables) => {
                 });
             }
         });
+
+        if (qrCodes) {
+            const updatedQRCodes = qrCodes.filter((qrCode) => {
+                if (qrCode.path === qrCodeRef.path) return false;
+                return true;
+            });
+            transaction.update(restaurantReference, { qrCodes: updatedQRCodes });
+        }
 
         transaction.delete(qrCodeRef);
     });

@@ -86,7 +86,7 @@ export const DemoRequest = [{
  * @param {*} address address of the restaurant
  * @param {*} qrCodeId demo qrcode id
  */
-export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCodeId) => {
+export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCodeId, dishId) => {
     const ref = createRestaurantReference(restaurantId);
     return {
         name: restaurantName,
@@ -102,6 +102,7 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
         covidGuidelines: DemoRestaurantCovidGuidelines,
         covidMessage: DemoRestaurantCovidMessage,
         qrCodes: [createQRCodeReference(restaurantId, qrCodeId)],
+        dishes: [createDishReference(restaurantId, dishId)],
         location: createGeoPoint(address.latitude, address.longitude),
     };
 };
@@ -188,7 +189,7 @@ export const createDemoCategory = (restaurantId, restaurantName, categoryId, dis
  * @param {*} restaurantName name of the restaurant to be added
  * @param {*} tableId id of the item to be added
  */
-export const createDemoTable = (restaurantId, restaurantName, tableId) => {
+export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId) => {
     return {
         name: DemoTableName,
         created: getCurrentDateTime(),
@@ -204,6 +205,7 @@ export const createDemoTable = (restaurantId, restaurantName, tableId) => {
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: 0,
         y: 0,
+        qrCodes: [createQRCodeReference(restaurantId, qrCodeId)],
     };
 };
 

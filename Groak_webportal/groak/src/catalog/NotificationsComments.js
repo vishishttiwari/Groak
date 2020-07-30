@@ -28,6 +28,11 @@ export const ErrorAddingDish = 'Error adding dish';
 export const ErrorUpdatingDish = 'Error updating dish';
 export const ErrorDeletingDish = 'Error deleting dish';
 export const DishNotFound = 'Dish not found';
+export const DishAdded = 'Dish added';
+export const DishUpdated = 'Dish updated';
+export const DishDeleted = 'Dish deleted';
+export const DishOrderChanged = 'Dish order changed';
+export const ErrorChangingDishOrder = 'Error changing Dish order';
 
 export const NoDishTitle = 'Dish name not entered. Please enter a valid name';
 export const InvalidDishPrice = 'Please enter a valid price';
@@ -73,7 +78,9 @@ export const DeleteQRCodePopUpTitle = 'Delete QR Code?';
 export const DeleteQRCodePopUp = 'Are you sure you would like to delete this qr code?';
 export const QRCodeAdded = 'QR code added';
 export const QRCodeUpdated = 'QR code updated';
+export const QRCodeDeleted = 'QR code deleted';
 export const QRCodeOrderChanged = 'QR code order changed';
+export const ErrorChangingQRCodeOrder = 'Error changing QR code order';
 
 export const ErrorFetchingOrders = 'Error fetching orders';
 export const ErrorFetchingOrder = 'Error fetching order';
