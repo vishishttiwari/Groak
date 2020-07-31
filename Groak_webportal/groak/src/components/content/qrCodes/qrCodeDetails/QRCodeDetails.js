@@ -135,7 +135,7 @@ const QRCodeDetails = (props) => {
             const qrCodeid = randomNumber();
             await addQRCodeAPI(globalState.restaurantId, qrCodeid, createQRCode(qrCodeid), enqueueSnackbar);
         } else {
-            await updateQRCodeAPI(globalState.restaurantId, match.params.id, createQRCode(), enqueueSnackbar);
+            await updateQRCodeAPI(globalState.restaurantId, match.params.id, createQRCode(match.params.id), enqueueSnackbar);
         }
         history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });

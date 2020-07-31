@@ -2,7 +2,7 @@
  * This component is used for representing the qr page
  */
 import { PDFViewer } from '@react-pdf/renderer';
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -14,13 +14,25 @@ import './css/QR.css';
 import QROptions from './QROptions';
 import { context } from '../../../globalState/globalState';
 
-import { updateRestaurantAPI } from './QRAPICalls';
+import { updateRestaurantAPI, fetchQRCodesAPI, fetchTableAPI, updateTableAPI } from './QRAPICalls';
 
 function reducer(state, action) {
     let newQRStylePage;
     switch (action.type) {
+        case 'fetchQRCodes':
+            return { ...state, qrCodes: action.qrCodes, qrCodesMap: action.qrCodesMap };
+        case 'fetchTable':
+            return { ...state, table: action.table, loadingSpinner: false };
+        case 'setQRCodesInTable':
+            return { ...state, table: { ...state.table, qrCodes: action.qrCodes, saved: false } };
+        case 'setOrientation':
+            newQRStylePage = { ...state.qrStylePage, orientation: action.orientation };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setIncludeTable':
             newQRStylePage = { ...state.qrStylePage, includeTable: action.includeTable };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setUseRestaurantImage':
+            newQRStylePage = { ...state.qrStylePage, useRestaurantImage: action.useRestaurantImage };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setPageSize':
             newQRStylePage = { ...state.qrStylePage, pageSize: action.pageSize };
@@ -34,10 +46,10 @@ function reducer(state, action) {
         case 'setWidth':
             newQRStylePage = { ...state.qrStylePage, width: action.width };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
-        case 'fetchCategories':
-            return { ...state, categories: action.categories };
         case 'setSaved':
             return { ...state, saved: action.saved };
+        case 'setShowPDF':
+            return { ...state, showPDF: action.showPDF };
         case 'setLoadingSpinner':
             return { ...state, loadingSpinner: action.loadingSpinner };
         default:
@@ -49,11 +61,18 @@ const QRWindow = (props) => {
     const { history, match, location } = props;
     let tableName = 'Table';
     const { globalState, setGlobalState } = useContext(context);
-    const [state, setState] = useReducer(reducer, { categories: [], qrStylePage: { ...globalState.restaurant.qrStylePage }, saved: true, loadingSpinner: false });
+    const [state, setState] = useReducer(reducer, { qrCodes: [], qrCodesMap: new Map(), table: { qrCodes: [] }, qrStylePage: { ...globalState.restaurant.qrStylePage }, saved: true, showPDF: false, loadingSpinner: true });
     const { enqueueSnackbar } = useSnackbar();
 
     const query = new URLSearchParams(location.search);
     query.forEach((value) => { tableName = value; });
+
+    useEffect(() => {
+        async function fetchQRCodesAndTable() {
+            await Promise.all([await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar)]);
+        }
+        fetchQRCodesAndTable();
+    }, []);
 
     /**
      * This function is called for going back
@@ -63,13 +82,14 @@ const QRWindow = (props) => {
     };
 
     /**
-     * This function is called for when changed need to be saved to restaurant
+     * This function is called for when changes need to be saved to restaurant
      *
      * @param {*} event is the event sent from the button
      */
     async function submitHandler(event) {
         event.preventDefault();
-        await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
+        await Promise.all([await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantId, match.params.id, state.table, setState, enqueueSnackbar)]);
+        enqueueSnackbar('Changes Saved', { variant: 'success' });
         setState({ type: 'setSaved', saved: true });
     }
 
@@ -77,16 +97,22 @@ const QRWindow = (props) => {
         <div className="qr">
             <Heading heading="QR Menu Page" />
             <div className="qr-content">
+
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
                     <QRPage
                         restaurantReference={globalState.restaurantId}
                         tableReference={match.params.id}
                         tableName={tableName}
-                        state={state.qrStylePage}
+                        qrStylePage={state.qrStylePage}
+                        table={state.table}
+                        qrCodesMap={state.qrCodesMap}
                         restaurantName={globalState.restaurant.name}
                         logo={globalState.restaurant.logo}
+                        image={globalState.restaurant.image}
+                        showPDF={state.showPDF}
                     />
                 </PDFViewer>
+
                 <QROptions
                     restaurantReference={globalState.restaurantId}
                     tableReference={match.params.id}
@@ -94,6 +120,7 @@ const QRWindow = (props) => {
                     state={state}
                     restaurantName={globalState.restaurant.name}
                     logo={globalState.restaurant.logo}
+                    image={globalState.restaurant.image}
                     setState={setState}
                     loadingSpinner={state.loadingSpinner}
                     goBackHandler={goBackHandler}

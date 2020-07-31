@@ -47,7 +47,7 @@ const Category = (props) => {
                     );
                 })}
             </CardContent>
-            <CardActions className="actions">
+            <CardActions className="actions actions-vertical">
                 <Checkbox
                     className="check-box"
                     icon={<CheckBoxOutlineBlank fontSize="large" />}

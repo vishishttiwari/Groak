@@ -9,6 +9,10 @@ export const createQRCodeReference = (restaurantId, qrCodeId) => {
     return db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId);
 };
 
+export const fetchQRCodesFromCollectionFirestoreAPI = (restaurantId) => {
+    return db.collection(`restaurants/${restaurantId}/qrcodes`).get();
+};
+
 /**
  * Fetches from restaurant document
  *
@@ -19,13 +23,9 @@ export const fetchQRCodesFirestoreAPI = (restaurantId) => {
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
         const { qrCodes } = restaurantDoc.data();
-        const qrCodeItems = new Array(qrCodes.length);
-        Promise.allSettled(qrCodes.map(async (qrCode, index) => {
-            qrCodeItems[index] = await transaction.get(qrCode).then((qrCodeDoc) => {
-                return qrCodeDoc;
-            });
+        return Promise.all(qrCodes.map(async (qrCode) => {
+            return transaction.get(qrCode);
         }));
-        return qrCodeItems;
     });
 };
 

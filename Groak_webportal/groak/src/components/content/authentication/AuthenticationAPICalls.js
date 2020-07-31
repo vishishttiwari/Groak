@@ -5,7 +5,6 @@
 import { getUIDFirebaseAPI, signinFirebaseAPI, signupFirebaseAPI, sendEmailVerification, isInitialized, signoutFirebaseAPI, changeEmailFirebaseAPI, changePasswordFirebaseAPI } from '../../../firebase/FirebaseAuthenticationAPICalls';
 import { addRestaurantFirestoreAPI, fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import * as NotificationsComments from '../../../catalog/NotificationsComments';
-import { createDemoRestaurant } from '../../../catalog/Demo';
 
 /**
  * This function signs out the user and redirects to the signin page.

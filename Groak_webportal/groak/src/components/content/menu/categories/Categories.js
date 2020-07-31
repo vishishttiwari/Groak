@@ -5,14 +5,17 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import arrayMove from 'array-move';
 import { context } from '../../../../globalState/globalState';
 
 import './css/Categories.css';
-import { fetchCategoriesAPI, changeAvailabilityOfCategoryAPI, changeOrderOfCategoryToPriorAPI, changeOrderOfCategoryToNextAPI } from './CategoriesAPICalls';
+import { fetchCategoriesAPI, changeAvailabilityOfCategoryAPI, changeCategoryOrderAPI } from './CategoriesAPICalls';
 import Category from './category/Category';
 import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
 import { NoCategories, CategoryOrder } from '../../../../catalog/Comments';
+import SortableList from '../../../dnd/SortableList';
+import SortableItem from '../../../dnd/SortableItem';
 
 const initialState = { categories: [], loadingSpinner: true };
 
@@ -20,7 +23,7 @@ function reducer(state, action) {
     switch (action.type) {
         case 'fetchCategories':
             return { categories: action.categories, loadingSpinner: false };
-        case 'setCategory':
+        case 'setCategories':
             return { categories: action.categories, loadingSpinner: false };
         default:
             return state;
@@ -51,28 +54,6 @@ const Categories = (props) => {
     }
 
     /**
-     * This function is used to change the order of a card that has to be moved before
-     *
-     * @param {*} event this is used for stopping propgation so that card is not pressed when the button is pressed
-     * @param {*} order this contains the order that has to be moved left
-     */
-    async function changeOrderOfCategoryToPrior(event, order, index) {
-        event.stopPropagation();
-        await changeOrderOfCategoryToPriorAPI(state.categories, setState, order, index, enqueueSnackbar);
-    }
-
-    /**
-     * This function is used to change the order of a card that has to be moved next
-     *
-     * @param {*} event this is used for stopping propgation so that card is not pressed when the button is pressed
-     * @param {*} order this contains the order that has to be moved right
-     */
-    async function changeOrderOfCategoryToNext(event, order, index) {
-        event.stopPropagation();
-        await changeOrderOfCategoryToNextAPI(state.categories, setState, order, index, enqueueSnackbar);
-    }
-
-    /**
      * This function is called to add a category. This function is passed to the heading
      */
     function addCategoryHandler() {
@@ -88,28 +69,45 @@ const Categories = (props) => {
         history.push(`/categories/${id}`);
     }
 
+    /**
+     * This function is called when drag and drop has ended
+     *
+     * @param {*} param0
+     */
+    const onSortEnd = async ({ oldIndex, newIndex }) => {
+        if (oldIndex !== newIndex) {
+            const updatedCategories = arrayMove(state.categories, oldIndex, newIndex);
+            setState({ type: 'setCategories',
+                categories: updatedCategories,
+            });
+            await changeCategoryOrderAPI(globalState.restaurantId, updatedCategories.map((category) => {
+                return category.reference;
+            }), enqueueSnackbar);
+        }
+    };
+
     return (
         <div className="categories">
             <Heading heading="Menu Categories" buttonName="Add Category" onClick={addCategoryHandler} />
             <Spinner show={state.loadingSpinner} />
             {state.categories && state.categories.length !== 0 ? <p className="text-on-background">{CategoryOrder}</p> : null}
             {!state.loadingSpinner ? (
-                <div className="category-items">
-                    {state.categories && state.categories.length === 0 ? <p className="text-on-background">{NoCategories}</p> : null}
-                    {state.categories.map((category, index) => {
-                        return (
-                            <Category
-                                key={category.id}
-                                categoryItem={category}
-                                availableCategoryHandler={availableCategoryHandler}
-                                index={index}
-                                movePrior={changeOrderOfCategoryToPrior}
-                                moveNext={changeOrderOfCategoryToNext}
-                                clickHandler={() => { categoryDetailHandler(category.id); }}
-                            />
-                        );
-                    })}
-                </div>
+                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
+                    <div className="category-items">
+                        {state.categories && state.categories.length === 0 ? <p className="text-on-background">{NoCategories}</p> : null}
+                        {state.categories.map((category, index) => {
+                            return (
+                                <SortableItem key={category.id} index={index}>
+                                    <Category
+                                        categoryItem={category}
+                                        availableCategoryHandler={availableCategoryHandler}
+                                        clickHandler={() => { categoryDetailHandler(category.id); }}
+                                    />
+                                </SortableItem>
+                            );
+                        })}
+                    </div>
+                </SortableList>
             ) : null}
         </div>
     );

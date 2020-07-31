@@ -47,6 +47,12 @@
   margin: 0 20px;
 }
 
+.qr .qr-content form p {
+  color: #800000;
+  font-size: 25px;
+  margin-top: 50px;
+}
+
 @media (max-width: 1200px) {
   .qr .qr-content form {
     width: auto;
@@ -73,5 +79,40 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.qr .qr-content form .qrcodes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.qr .qr-content form .qrcodes .qrcode {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.qr .qr-content form .qrcodes .qrcode .qrcode-name {
+  color: black;
+  font-weight: 500;
+  font-size: 17px;
+  margin-top: 0px;
 }
 /*# sourceMappingURL=QR.css.map */

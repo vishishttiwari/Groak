@@ -1,9 +1,10 @@
 /**
  * This class is used to get all the table info for qr
  */
-import { fetchTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
+import { fetchTableFirestoreAPI, updateTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { updateRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
-import { ErrorFetchingTable, TableNotFound, ErrorUpdatingRestaurant } from '../../../catalog/NotificationsComments';
+import { ErrorFetchingTable, TableNotFound, ErrorUpdatingRestaurant, ErrorFetchingQRCodes, ErrorUpdatingTable } from '../../../catalog/NotificationsComments';
+import { fetchQRCodesFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
 /**
  * This function is used for fetching table
@@ -31,6 +32,29 @@ export const fetchTableAPI = async (restaurantId, tableId, setState, snackBar) =
 };
 
 /**
+ * This is used for fetching the qrCodes
+ *
+ * @param {*} restaurantId restaurantId
+ * @param {*} setState this is used for setting the qrCodes array
+ * @param {*} snackbar used for notifications
+ */
+export const fetchQRCodesAPI = async (restaurantId, setState, snackbar) => {
+    const newQRCodes = [];
+    const newQRCodesMap = new Map();
+    try {
+        const docs = await fetchQRCodesFirestoreAPI(restaurantId);
+        docs.forEach((doc) => {
+            newQRCodes.push({ id: doc.id, ...doc.data() });
+            newQRCodesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
+        });
+        setState({ type: 'fetchQRCodes', qrCodes: newQRCodes, qrCodesMap: newQRCodesMap });
+    } catch (error) {
+        snackbar(ErrorFetchingQRCodes, { variant: 'error' });
+        setState({ type: 'error' });
+    }
+};
+
+/**
  * This function is used for updating restaurant qr options
  *
  * @param {*} restaurantId restaurant ID
@@ -47,4 +71,22 @@ export const updateRestaurantAPI = async (restaurantId, data, setState, setGloba
         snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
     }
     setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+};
+
+/**
+ * This function is used for updating table
+ *
+ * @param {*} restaurantId id of the restaurant for which table needs to be updated
+ * @param {*} tableId id of the table that needs to be updated
+ * @param {*} data this contains information about the table
+ * @param {*} setState this is used for setting the component with initial state
+ * @param {*} snackbar this is used for notifications
+ */
+export const updateTableAPI = async (restaurantId, tableId, data, setState, snackbar) => {
+    try {
+        await updateTableFirestoreAPI(restaurantId, tableId, data);
+    } catch (error) {
+        snackbar(ErrorUpdatingTable, { variant: 'error' });
+        setState({ type: 'error' });
+    }
 };

@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { context } from '../../../../globalState/globalState';
+import { createCategoryReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 
 import './css/CategoryDetails.css';
-import { fetchDishesAPI, fetchCategoryAPI, addCategoryAPI, updateCategoryAPI, deleteCategoryAPI, updateSelectedDishesInCategoryAPI } from './CategoryDetailsAPICalls';
+import { fetchDishesAPI, fetchCategoryAPI, addCategoryAPI, updateCategoryAPI, deleteCategoryAPI } from './CategoryDetailsAPICalls';
 import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
 import CategoryTitle from './CategoryTitle';
@@ -19,6 +20,10 @@ import CategoryUnselectedDishes from './categoryDishes/CategoryUnselectedDishes'
 import CategoryDetailsMainButtons from './CategoryDetailsMainButtons';
 import { NoCategoryTitle } from '../../../../catalog/NotificationsComments';
 import { DemoCategoryStartTime, DemoCategoryEndTime } from '../../../../catalog/Demo';
+import { createDishReferenceFromPath } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
+import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
+import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { randomNumber } from '../../../../catalog/Others';
 
 const initialState = {
     checkFields: false,
@@ -35,8 +40,9 @@ const initialState = {
         friday: false,
         saturday: false,
     },
-    selectedDishes: [],
+    selectedDishesPath: [],
     allDishes: [],
+    allDishesMap: new Map(),
     loadingSpinner: true,
 };
 
@@ -54,10 +60,10 @@ function reducer(state, action) {
             return { ...state, endTime: action.endTime };
         case 'setDays':
             return { ...state, days: action.days };
-        case 'setSelectedDishes':
-            return { ...state, selectedDishes: action.selectedDishes };
+        case 'setSelectedDishesPath':
+            return { ...state, selectedDishesPath: action.selectedDishesPath };
         case 'setAllDishes':
-            return { ...state, allDishes: action.allDishes, loadingSpinner: false };
+            return { ...state, allDishes: action.allDishes, allDishesMap: action.allDishesMap, loadingSpinner: false };
         case 'setLoadingSpinner':
             return { ...state, loadingSpinner: action.loadingSpinner };
         case 'fetchCategory':
@@ -66,7 +72,7 @@ function reducer(state, action) {
                 startTime: action.startTime,
                 endTime: action.endTime,
                 days: action.days,
-                selectedDishes: action.selectedDishes,
+                selectedDishesPath: action.selectedDishesPath,
                 loadingSpinner: false,
             };
         default:
@@ -80,16 +86,40 @@ const CategoryDetails = (props) => {
     const { globalState } = useContext(context);
     const { enqueueSnackbar } = useSnackbar();
 
+    /**
+     * Used for creating a qr code object whensaving or updating
+     */
+    const createCategory = (categoryId) => {
+        const newDays = [];
+        Object.keys(state.days).forEach((day) => {
+            if (state.days[day]) {
+                newDays.push(day);
+            }
+        });
+        return {
+            restaurantReference: createRestaurantReference(globalState.restaurantId),
+            reference: createCategoryReference(globalState.restaurantId, categoryId),
+            available: true,
+            created: getCurrentDateTime(),
+            name: state.name,
+            startTime: state.startTime,
+            endTime: state.endTime,
+            days: newDays,
+            dishes: state.selectedDishesPath.map((dishPath) => {
+                return createDishReferenceFromPath(dishPath);
+            }),
+        };
+    };
+
     useEffect(() => {
-        async function fetchCategory() {
-            await fetchCategoryAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar);
+        async function fetchCategoryAndDishes() {
+            await Promise.all([await fetchCategoryAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar), await fetchDishesAPI(globalState.restaurantId, setState, enqueueSnackbar)]);
         }
         async function fetchDishes() {
             await fetchDishesAPI(globalState.restaurantId, setState, enqueueSnackbar);
         }
         if (match.params.id !== 'addCategory' && match.params.id !== 'newCategory') {
-            fetchDishes();
-            fetchCategory();
+            fetchCategoryAndDishes();
             setState({ type: 'setNewCategory', newCategory: false });
         } else {
             fetchDishes();
@@ -110,9 +140,10 @@ const CategoryDetails = (props) => {
         }
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newCategory) {
-            await addCategoryAPI(globalState.restaurantId, state, enqueueSnackbar);
+            const categoryId = randomNumber();
+            await addCategoryAPI(globalState.restaurantId, categoryId, createCategory(categoryId), enqueueSnackbar);
         } else {
-            await updateCategoryAPI(globalState.restaurantId, match.params.id, state, enqueueSnackbar);
+            await updateCategoryAPI(globalState.restaurantId, match.params.id, createCategory(match.params.id), enqueueSnackbar);
         }
         history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
@@ -125,62 +156,25 @@ const CategoryDetails = (props) => {
      * @param {*} event this tells if topic was checked or unchecked
      * @param {*} id this tells which dish was checked or unchecked
      */
-    const checkDishHandler = (event, id) => {
-        let newSelectedDishes = [...state.selectedDishes];
+    const checkDishHandler = (event, path) => {
+        let newSelectedDishesPath = [...state.selectedDishesPath];
         if (event.target.checked) {
-            newSelectedDishes.push(id);
+            newSelectedDishesPath.push(path);
         } else {
-            newSelectedDishes = newSelectedDishes.filter((dish) => {
-                return (dish !== id);
+            newSelectedDishesPath = newSelectedDishesPath.filter((dish) => {
+                return (dish !== path);
             });
         }
-        setState({ type: 'setSelectedDishes', selectedDishes: newSelectedDishes });
+        setState({ type: 'setSelectedDishesPath', selectedDishesPath: newSelectedDishesPath });
     };
 
     /**
-     * This function is used for moving a selected dish prior by changing the dishes array.
+     * This is used when dish's position is changed
      *
-     * @param {*} index of element which needs to be moved prior
+     * @param {*} dishes categories with updated order
      */
-    const moveDishPrior = (index) => {
-        if (index !== 0 && state.selectedDishes.length !== 0 && state.selectedDishes.length !== 1) {
-            const newSelectedDishes = [...state.selectedDishes];
-            const priorDish = newSelectedDishes[index - 1];
-            const currentDish = newSelectedDishes[index];
-            newSelectedDishes[index] = priorDish;
-            newSelectedDishes[index - 1] = currentDish;
-            setState({ type: 'setSelectedDishes', selectedDishes: newSelectedDishes });
-        }
-    };
-
-    /**
-     * This function is used for moving a selected dish next by changing the dishes array.
-     *
-     * @param {*} index of element which needs to be moved next
-     */
-    const moveDishNext = (index) => {
-        if (index !== (state.selectedDishes.length - 1) && state.selectedDishes.length !== 0 && state.selectedDishes.length !== 1) {
-            const newSelectedDishes = [...state.selectedDishes];
-            const nextDish = newSelectedDishes[index + 1];
-            const currentDish = newSelectedDishes[index];
-            newSelectedDishes[index] = nextDish;
-            newSelectedDishes[index + 1] = currentDish;
-            setState({ type: 'setSelectedDishes', selectedDishes: newSelectedDishes });
-        }
-    };
-
-    /**
-     * This function is used in case there is a dish that has been deleted but has not been deleted from this category.
-     * If such a dish is found in this category that actually does not exist in dishes because it was dishes, then this
-     * function updates the dishes of this categry with new dishes that does not include this new dish.
-     *
-     * @param {*} id of the dish that needs to be deleted
-     */
-    const updateDishesInCategory = (id) => {
-        const newSelectedDishes = state.selectedDishes.filter((dish) => {
-            return (dish !== id);
-        });
-        updateSelectedDishesInCategoryAPI(globalState.restaurantId, match.params.id, newSelectedDishes, enqueueSnackbar);
+    const changeDishPositionHandler = (dishes) => {
+        setState({ type: 'setSelectedDishesPath', selectedDishesPath: dishes });
     };
 
     /**
@@ -211,8 +205,8 @@ const CategoryDetails = (props) => {
                     <CategoryTitle checkFields={state.checkFields} name={state.name} setState={setState} />
                     <CategoryDays days={state.days} setState={setState} />
                     <CategoryTimes startTime={state.startTime} endTime={state.endTime} setState={setState} />
-                    <CategorySelectedDishes selectedDishes={state.selectedDishes} allDishes={state.allDishes} checkDishHandler={checkDishHandler} moveDishPrior={moveDishPrior} moveDishNext={moveDishNext} updateDishesInCategory={updateDishesInCategory} />
-                    <CategoryUnselectedDishes selectedDishes={state.selectedDishes} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
+                    <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} />
+                    <CategoryUnselectedDishes selectedDishesPath={state.selectedDishesPath} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
                     <CategoryDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newCategory={state.newCategory} deleteHandler={deleteHandler} />
                 </form>
             ) : null}

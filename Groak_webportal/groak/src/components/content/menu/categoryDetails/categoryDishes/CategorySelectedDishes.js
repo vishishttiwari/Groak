@@ -1,66 +1,72 @@
 /**
- * This components is used to represent the selected dishes in categories details
+ * This components is used to represent the selected dishes in qrcodes details
  */
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import arrayMove from 'array-move';
 import Dish from './Dish';
 
 import { CategoryDishesOrder } from '../../../../../catalog/Comments';
+import SortableList from '../../../../dnd/SortableList';
+import SortableItem from '../../../../dnd/SortableItem';
 
 const CategorySelectedDishes = (props) => {
-    const { selectedDishes, allDishes, checkDishHandler, moveDishPrior, moveDishNext, updateDishesInCategory } = props;
+    const { history, selectedDishesPath, allDishesMap, checkDishHandler, changeDishPositionHandler } = props;
 
     /**
-     * This function gets the whole dish item from the dish id.
-     * If lets say the dish id was not found then it deletes the
-     * dish in this category from the backend.
+     * This function is called when drag and drop has ended
      *
-     * @param {*} id of the dish for which dish item needs to be found
+     * @param {*} param0
      */
-    function getDish(id) {
-        let dishItem = null;
-        allDishes.forEach((dish) => {
-            if (dish.id === id) {
-                dishItem = dish;
-            }
-        });
-        if (dishItem == null) {
-            updateDishesInCategory(id);
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        if (oldIndex !== newIndex) {
+            changeDishPositionHandler(arrayMove(selectedDishesPath, oldIndex, newIndex));
         }
-        return dishItem;
+    };
+
+    /**
+     * This function is called when dish is pressed
+     *
+     * @param {*} id
+     */
+    function dishDetailHandler(id) {
+        history.push(`/dishes/${id}`);
     }
 
     return (
         <div className="category-dishes">
             <h2>Selected Dishes:</h2>
-            {selectedDishes && selectedDishes.length !== 0 ? <p>{CategoryDishesOrder}</p> : null}
-            <div className="dishes">
-                {selectedDishes.map((dish, index) => {
-                    return (
-                        <Dish
-                            key={dish}
-                            dishItem={getDish(dish)}
-                            index={index}
-                            alreadyChecked
-                            checkDishHandler={checkDishHandler}
-                            moveDishPrior={moveDishPrior}
-                            moveDishNext={moveDishNext}
-                            arrows
-                        />
-                    );
-                })}
-            </div>
+            {selectedDishesPath && selectedDishesPath.length !== 0 ? <p>{CategoryDishesOrder}</p> : null}
+            <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
+                <div className="dishes">
+                    {selectedDishesPath.map((dishPath, index) => {
+                        const dish = allDishesMap.get(dishPath);
+                        return (dish
+                            ? (
+                                <SortableItem key={dish.id} index={index}>
+                                    <Dish
+                                        dishItem={dish}
+                                        alreadyChecked
+                                        checkDishHandler={checkDishHandler}
+                                        clickHandler={() => { dishDetailHandler(dish.id); }}
+                                    />
+                                </SortableItem>
+                            ) : null
+                        );
+                    })}
+                </div>
+            </SortableList>
         </div>
     );
 };
 
 CategorySelectedDishes.propTypes = {
-    selectedDishes: PropTypes.array.isRequired,
-    allDishes: PropTypes.array.isRequired,
+    history: PropTypes.object.isRequired,
+    selectedDishesPath: PropTypes.array.isRequired,
+    allDishesMap: PropTypes.instanceOf(Map).isRequired,
     checkDishHandler: PropTypes.func.isRequired,
-    moveDishPrior: PropTypes.func.isRequired,
-    moveDishNext: PropTypes.func.isRequired,
-    updateDishesInCategory: PropTypes.func.isRequired,
+    changeDishPositionHandler: PropTypes.func.isRequired,
 };
 
-export default React.memo(CategorySelectedDishes);
+export default withRouter(React.memo(CategorySelectedDishes));

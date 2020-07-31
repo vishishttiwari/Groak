@@ -1,40 +1,11 @@
 /**
  * This class includes categories details related functions such as fetching category, updating category etc.
  */
-import { fetchCategoryFirestoreAPI, fetchCategoriesFirestoreAPI, addCategoryFirestoreAPI, updateCategoryFirestoreAPI, deleteCategoryFirestoreAPI, createCategoryReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
-import { fetchDishesFirestoreAPI, createDishReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
-import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
-import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { fetchCategoryFirestoreAPI, addCategoryFirestoreAPI, updateCategoryFirestoreAPI, deleteCategoryFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
+import { fetchDishesFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { DemoCategoryStartTime, DemoCategoryEndTime } from '../../../../catalog/Demo';
-import { randomNumber } from '../../../../catalog/Others';
-import { ErrorFetchingCategory, ErrorAddingCategory, ErrorUpdatingCategory, ErrorDeletingCategory, CategoryNotFound } from '../../../../catalog/NotificationsComments';
-
-/**
- * This function gets the information from the component's state and then converts it into
- * a format that the backend will understand. This includes converting numbers from strings to actual numbers,
- * converting extras and ingredients to objects without the keys as the keys are not required in the backend.
- *
- * @param {*} state this stores the information saved in the state of component
- */
-function preProcessData(restaurantId, state) {
-    const newDays = [];
-    Object.keys(state.days).forEach((day) => {
-        if (state.days[day]) {
-            newDays.push(day);
-        }
-    });
-    const newDishes = [];
-    state.selectedDishes.forEach((dish) => {
-        newDishes.push(createDishReference(restaurantId, dish));
-    });
-    return {
-        name: state.name,
-        startTime: state.startTime,
-        endTime: state.endTime,
-        days: newDays,
-        dishes: newDishes,
-    };
-}
+import { ErrorFetchingCategory, ErrorAddingCategory, ErrorUpdatingCategory, ErrorDeletingCategory, CategoryNotFound, CategoryUpdated, CategoryDeleted, CategoryAdded } from '../../../../catalog/NotificationsComments';
+import { fetchQRCodesFromCollectionFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
 /**
  * This is used for fetching the dishes
@@ -44,13 +15,15 @@ function preProcessData(restaurantId, state) {
  * @param {*} snackbar used for notifications
  */
 export const fetchDishesAPI = async (restaurantId, setState, snackbar) => {
+    const newDishesMap = new Map();
     const newDishes = [];
     try {
         const docs = await fetchDishesFirestoreAPI(restaurantId);
         docs.forEach((doc) => {
+            newDishesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
             newDishes.push({ id: doc.id, ...doc.data() });
         });
-        setState({ type: 'setAllDishes', allDishes: newDishes });
+        setState({ type: 'setAllDishes', allDishes: newDishes, allDishesMap: newDishesMap });
     } catch (error) {
         snackbar(ErrorFetchingCategory, { variant: 'error' });
         setState({ type: 'error' });
@@ -82,10 +55,10 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, setState, snack
                 });
             }
             // Get dishes in this category and add it to selected dishes
-            const newSelectedDishes = [];
+            let dishesPath = [];
             if (data.data().dishes) {
-                data.data().dishes.forEach((dish) => {
-                    newSelectedDishes.push(dish.path.split('/').pop());
+                dishesPath = data.data().dishes.map((dish) => {
+                    return dish.path;
                 });
             }
             setState({
@@ -94,7 +67,7 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, setState, snack
                 startTime: (data.data().startTime || data.data().startTime === 0) ? data.data().startTime : DemoCategoryStartTime,
                 endTime: data.data().endTime ? data.data().endTime : DemoCategoryEndTime,
                 days: newDays,
-                selectedDishes: newSelectedDishes,
+                selectedDishesPath: dishesPath,
             });
         } else {
             snackbar(CategoryNotFound, { variant: 'error' });
@@ -110,20 +83,14 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, setState, snack
  * This function is used for adding categories to the backend. This creates the categoryId as well
  *
  * @param {*} restaurantId id of the restaurant for which category needs to be fetched
- * @param {*} state this stores the information saved in the state of component
+ * @param {*} newCategoryId id of the category that needs to be added
+ * @param {*} newCategory this stores the information saved in the state of component
  * @param {*} snackbar this is used for notifications
  */
-export const addCategoryAPI = async (restaurantId, state, snackbar) => {
-    const categoryId = randomNumber();
+export const addCategoryAPI = async (restaurantId, newCategoryId, newCategory, snackbar) => {
     try {
-        let data = preProcessData(restaurantId, state);
-        const { docs } = await fetchCategoriesFirestoreAPI(restaurantId);
-        let order = -1;
-        if (docs.length !== 0) {
-            order = docs.slice(-1).pop().data().order;
-        }
-        data = { order: order + 1, restaurantReference: createRestaurantReference(restaurantId), reference: createCategoryReference(restaurantId, categoryId), available: true, created: getCurrentDateTime(), ...data };
-        await addCategoryFirestoreAPI(restaurantId, categoryId, data);
+        await addCategoryFirestoreAPI(restaurantId, newCategoryId, newCategory);
+        snackbar(CategoryAdded, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorAddingCategory, { variant: 'error' });
     }
@@ -134,35 +101,13 @@ export const addCategoryAPI = async (restaurantId, state, snackbar) => {
  *
  * @param {*} restaurantId id of the restaurant for which category needs to be fetched
  * @param {*} categoryId id of the category that needs to be fetched
- * @param {*} state this stores the information saved in the state of component
+ * @param {*} changedCategory this stores the information saved in the state of component
  * @param {*} snackbar this is used for notifications
  */
-export const updateCategoryAPI = async (restaurantId, categoryId, state, snackbar) => {
-    const data = preProcessData(restaurantId, state);
+export const updateCategoryAPI = async (restaurantId, categoryId, changedCategory, snackbar) => {
     try {
-        await updateCategoryFirestoreAPI(restaurantId, categoryId, data);
-    } catch (error) {
-        snackbar(ErrorUpdatingCategory, { variant: 'error' });
-    }
-};
-
-/**
- * This function updates a category specifically the selected dishes. If a selected dishes is found
- * that has actually been deleted then this function is called to delete the dish from selected dishes
- * of this category
- *
- * @param {*} restaurantId id of the restaurant for which category needs to be fetched
- * @param {*} categoryId id of the category that needs to be fetched
- * @param {*} selectedDishes these are the ids of the dishes that will become the new selected dishes in this category
- * @param {*} snackbar this is used for notifications
- */
-export const updateSelectedDishesInCategoryAPI = async (restaurantId, categoryId, selectedDishes, snackbar) => {
-    try {
-        const newSelectedDishes = [];
-        selectedDishes.forEach((dish) => {
-            newSelectedDishes.push(createDishReference(restaurantId, dish));
-        });
-        await updateCategoryFirestoreAPI(restaurantId, categoryId, { dishes: newSelectedDishes });
+        await updateCategoryFirestoreAPI(restaurantId, categoryId, changedCategory);
+        snackbar(CategoryUpdated, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorUpdatingCategory, { variant: 'error' });
     }
@@ -177,7 +122,9 @@ export const updateSelectedDishesInCategoryAPI = async (restaurantId, categoryId
  */
 export const deleteCategoryAPI = async (restaurantId, categoryId, snackbar) => {
     try {
-        await deleteCategoryFirestoreAPI(restaurantId, categoryId);
+        const qrCodes = await fetchQRCodesFromCollectionFirestoreAPI(restaurantId);
+        await deleteCategoryFirestoreAPI(restaurantId, categoryId, qrCodes);
+        snackbar(CategoryDeleted, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorDeletingCategory, { variant: 'error' });
     }

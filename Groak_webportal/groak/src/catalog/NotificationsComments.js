@@ -57,6 +57,11 @@ export const CategoryNotFound = 'Category not found';
 export const NoCategoryTitle = 'Category title not entered. Please enter a valid title';
 export const DeleteCategoryPopUpTitle = 'Delete Category?';
 export const DeleteCategoryPopUp = 'Are you sure you would like to delete this category?';
+export const CategoryAdded = 'Category added';
+export const CategoryUpdated = 'Category updated';
+export const CategoryDeleted = 'Category deleted';
+export const CategoryOrderChanged = 'Category order changed';
+export const ErrorChangingCategoryOrder = 'Error changing Category order';
 
 export const InvalidTableName = 'Invalid Table name. Please enter a valid table name';
 export const ErrorAddingTable = 'Error adding table';

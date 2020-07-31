@@ -25,6 +25,13 @@
             width: 25%;
             margin: 0 $margin;
 
+            p {
+                color: $primaryColor;
+                // font-weight: 900;
+                font-size: 25px;
+                margin-top: 50px;
+            }
+
             @media (max-width: $padMaxWidth) {
                 width: auto;
                 margin: $margin 0;
@@ -42,6 +49,26 @@
                 display: flex;
                 flex-flow: column;
                 align-items: center;
+            }
+
+            .qrcodes {
+                display: flex;
+                flex-flow: column;
+                flex-wrap: wrap;
+
+                .qrcode {
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .qrcode-name {
+                        color: black;
+                        font-weight: 500;
+                        font-size: 17px;
+                        margin-top: 0px;
+                    }
+                }
             }
         }
     }

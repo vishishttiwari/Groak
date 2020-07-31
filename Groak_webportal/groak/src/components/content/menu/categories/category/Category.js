@@ -4,16 +4,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardHeader, CardContent, Typography, CardActions, Button, IconButton } from '@material-ui/core';
-import { ArrowForwardRounded, ArrowBackRounded } from '@material-ui/icons';
+import { Card, CardHeader, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 
 import { getTimeInAMPMFromMinutesComplete } from '../../../../../catalog/TimesDates';
 
 const Category = (props) => {
-    const { categoryItem, availableCategoryHandler, clickHandler, index, movePrior, moveNext } = props;
+    const { categoryItem, availableCategoryHandler, clickHandler } = props;
 
     return (
-        <Card className="card" onClick={clickHandler}>
+        <Card className="card card-white" onClick={clickHandler}>
             <CardHeader
                 title={categoryItem.name}
                 subheader={`Includes ${categoryItem.dishes.length} ${categoryItem.dishes.length <= 1 ? 'dish' : 'dishes'} `}
@@ -23,7 +22,7 @@ const Category = (props) => {
                     Timings:
                 </Typography>
                 <Typography
-                    className="days-time"
+                    className="subtopics"
                     variant="body2"
                     color="textSecondary"
                     component="p"
@@ -37,7 +36,7 @@ const Category = (props) => {
                     return (
                         <Typography
                             key={day}
-                            className="days-time"
+                            className="subtopics"
                             variant="body2"
                             color="textSecondary"
                             component="p"
@@ -47,14 +46,9 @@ const Category = (props) => {
                     );
                 })}
             </CardContent>
-            <CardActions className="actions">
-                <IconButton
-                    onClick={(event) => { movePrior(event, categoryItem.order, index); }}
-                >
-                    <ArrowBackRounded />
-                </IconButton>
+            <CardActions className="actions actions-vertical">
                 <Button
-                    className={categoryItem.available ? 'normal-buttons' : 'cancel-buttons'}
+                    className={categoryItem.available ? 'normal-buttons buttons' : 'cancel-buttons buttons'}
                     variant="contained"
                     onClick={(event) => {
                         event.stopPropagation();
@@ -64,11 +58,6 @@ const Category = (props) => {
                 >
                     {categoryItem.available ? 'Available' : 'Unavailable'}
                 </Button>
-                <IconButton
-                    onClick={(event) => { moveNext(event, categoryItem.order, index); }}
-                >
-                    <ArrowForwardRounded />
-                </IconButton>
             </CardActions>
         </Card>
     );
@@ -77,10 +66,7 @@ const Category = (props) => {
 Category.propTypes = {
     categoryItem: PropTypes.object.isRequired,
     availableCategoryHandler: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
     clickHandler: PropTypes.func.isRequired,
-    movePrior: PropTypes.func.isRequired,
-    moveNext: PropTypes.func.isRequired,
 };
 
 export default React.memo(Category);

@@ -25,6 +25,8 @@ function localReducer(state, action) {
             return { ...state, restaurant: updatedRestaurant };
         case 'setLogo':
             return { ...state, logo: action.logo };
+        case 'setImage':
+            return { ...state, image: action.image };
         case 'setEmail':
             return { ...state, email: action.email };
         case 'setLoadingSpinner':
@@ -36,7 +38,7 @@ function localReducer(state, action) {
 
 const Settings = () => {
     const { globalState } = useContext(context);
-    const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurant, logo: { file: null, link: globalState.restaurant.logo }, email: globalState.email, loadingSpinner: false });
+    const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurant, logo: { file: null, link: globalState.restaurant.logo }, image: { file: null, link: globalState.restaurant.image }, email: globalState.email, loadingSpinner: false });
 
     return (
         <div className="settings">

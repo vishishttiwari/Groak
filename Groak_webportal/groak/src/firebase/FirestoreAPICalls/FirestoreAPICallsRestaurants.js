@@ -31,7 +31,31 @@ export const addRestaurantLogoFirestoreAPI = (restaurantId, restaurantName, file
     return { ref: imageRef, promise: imageRef.put(file, metadata) };
 };
 
+/**
+ * This function adds image to the firestore. It first adds the image, then gets
+ * the reference of the image as well. It also adds metadata with the image which
+ * says the name of the restaurant that is being added.
+ *
+ * @param {*} restaurantId restaurant for which logo needs to be deleted
+ * @param {*} restaurantName name of the restaurant
+ * @param {*} file of the image
+ */
+export const addRestaurantImageFirestoreAPI = (restaurantId, restaurantName, file) => {
+    const metadata = {
+        customMetadata: {
+            RestaurantId: restaurantId,
+            RestaurantName: restaurantName,
+        },
+    };
+    const refImage = storageRef.child(`restaurants/${restaurantId}/image.png`);
+    return { refImage, promiseImage: refImage.put(file, metadata) };
+};
+
 export const getRestaurantLogoURLFirestoreAPI = (ref) => {
+    return ref.getDownloadURL();
+};
+
+export const getRestaurantImageURLFirestoreAPI = (ref) => {
     return ref.getDownloadURL();
 };
 
@@ -57,7 +81,7 @@ export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, address)
     const tableId = randomNumber();
     const qrCodeId = randomNumber();
 
-    batch.set(db.collection('restaurants/').doc(restaurantId), createDemoRestaurant(restaurantId, restaurantName, address, qrCodeId, dishId));
+    batch.set(db.collection('restaurants/').doc(restaurantId), createDemoRestaurant(restaurantId, restaurantName, address, qrCodeId, dishId, categoryId));
     batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, restaurantName, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, restaurantName, categoryId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, restaurantName, tableId, qrCodeId));

@@ -6,6 +6,14 @@ export const createDishReference = (restaurantId, dishId) => {
     return db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId);
 };
 
+export const createDishReferenceFromPath = (dishPath) => {
+    return db.doc(dishPath);
+};
+
+export const fetchDishesFromCollectionFirestoreAPI = (restaurantId) => {
+    return db.collection(`restaurants/${restaurantId}/dishes`).get();
+};
+
 /**
  * Fetches from restaurant document
  *
@@ -16,13 +24,9 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
         const { dishes } = restaurantDoc.data();
-        const dishesItems = new Array(dishes.length);
-        Promise.allSettled(dishes.map(async (dish, index) => {
-            dishesItems[index] = await transaction.get(dish).then((dishDoc) => {
-                return dishDoc;
-            });
+        return Promise.all(dishes.map(async (dish) => {
+            return transaction.get(dish);
         }));
-        return dishesItems;
     });
 };
 
@@ -31,8 +35,6 @@ export const fetchDishFirestoreAPI = (restaurantId, dishId) => {
 };
 
 /**
- * This cannot be used anymore because it does not delete from restaurant document.
- *
  * This function does much more than adding a dish. It adds the dish document
  * in the dishes colletions and also adds it to the dishes array in restaurant document
  *
@@ -59,6 +61,8 @@ export const updateDishFirestoreAPI = (restaurantId, dishId, data) => {
 };
 
 /**
+ * This cannot be used anymore because it does not delete from restaurant document.
+ *
  * This function just deletes the dish
  *
  * @param {*} restaurantId restaurant for which dish needs to be deleted

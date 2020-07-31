@@ -36,33 +36,6 @@ $cardFullWidth: ($cardWidth + $cardMargin);
                         width: $i*$cardFullWidth;
                     }
                 }
-
-                .card {
-                    width: $cardWidth;
-                    margin-bottom: $cardMargin;
-                    margin-right: $cardMargin/2;
-                    margin-left: $cardMargin/2;
-                    display: flex;
-                    flex-flow: column;
-                    box-shadow: $cardShadow;
-                    background-color: $secondaryColor;
-                }
-
-                .media {
-                    background-color: white;
-                    height: 200px;
-                }
-
-                .actions {
-                    margin-top: auto;
-                    display: flex;
-                    flex-flow: 'row';
-                    justify-content: center;
-                }
-
-                .check-box {
-                    color: $primaryColor;
-                }
             }
         }
 

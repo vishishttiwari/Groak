@@ -1,7 +1,7 @@
 /**
  * This class includes restaurant related functions such as fetching a restaurant or updating a restaurant
  */
-import { updateRestaurantFirestoreAPI, addRestaurantLogoFirestoreAPI, getRestaurantLogoURLFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { updateRestaurantFirestoreAPI, addRestaurantLogoFirestoreAPI, getRestaurantLogoURLFirestoreAPI, addRestaurantImageFirestoreAPI, getRestaurantImageURLFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { ErrorUpdatingRestaurant } from '../../../catalog/NotificationsComments';
 
 /**
@@ -15,8 +15,9 @@ import { ErrorUpdatingRestaurant } from '../../../catalog/NotificationsComments'
  * @param {*} setState sets the state of the current page
  * @param {*} snackbar used for notifications
  */
-export const updateRestaurantAPI = async (restaurantId, data, logo, setState, setGlobalState, snackbar) => {
+export const updateRestaurantAPI = async (restaurantId, data, logo, image, setState, setGlobalState, snackbar) => {
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+
     try {
         let updatedData;
 
@@ -25,12 +26,26 @@ export const updateRestaurantAPI = async (restaurantId, data, logo, setState, se
             const { ref, promise } = addRestaurantLogoFirestoreAPI(restaurantId, data.name, logo.file);
             await promise;
             const url = await getRestaurantLogoURLFirestoreAPI(ref);
+
             updatedData = { ...data, logo: url };
         } else {
             updatedData = { ...data, logo: logo.link };
         }
+
+        // If image is updated then upload logo and add url to the data
+        if (image && image.file) {
+            const { refImage, promiseImage } = addRestaurantImageFirestoreAPI(restaurantId, data.name, image.file);
+            await promiseImage;
+            const urlImage = await getRestaurantImageURLFirestoreAPI(refImage);
+
+            updatedData = { ...data, image: urlImage };
+        } else {
+            updatedData = { ...data, image: image.link };
+        }
+
         await updateRestaurantFirestoreAPI(restaurantId, updatedData);
         setGlobalState({ type: 'setRestaurant', restaurant: updatedData });
+        snackbar('Changes Saved', { variant: 'success' });
     } catch (error) {
         snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
     }

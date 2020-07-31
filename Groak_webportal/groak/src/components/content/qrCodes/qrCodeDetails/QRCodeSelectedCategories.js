@@ -19,7 +19,9 @@ const QRCodeSelectedCategories = (props) => {
      * @param {*} param0
      */
     const onSortEnd = ({ oldIndex, newIndex }) => {
-        changeCategoryPositionHandler(arrayMove(selectedCategoriesPath, oldIndex, newIndex));
+        if (oldIndex !== newIndex) {
+            changeCategoryPositionHandler(arrayMove(selectedCategoriesPath, oldIndex, newIndex));
+        }
     };
 
     /**
@@ -35,7 +37,7 @@ const QRCodeSelectedCategories = (props) => {
         <div className="qrcode-categories">
             <h2>Selected Categories:</h2>
             {selectedCategoriesPath && selectedCategoriesPath.length !== 0 ? <p>{}</p> : null}
-            <SortableList axis="xy" onSortEnd={onSortEnd} distance={1}>
+            <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                 <div className="categories">
                     {selectedCategoriesPath.map((categoryPath, index) => {
                         const category = allCategoriesMap.get(categoryPath);

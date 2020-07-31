@@ -91,7 +91,7 @@ const Dishes = (props) => {
             <Heading heading="Dishes" buttonName="Add Dish" onClick={addDishHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1}>
+                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                     <div className="dish-items">
                         {state.dishes && state.dishes.length === 0 ? <p className="text-on-background">{NoDishes}</p> : null}
                         {state.dishes.map((dish, index) => {

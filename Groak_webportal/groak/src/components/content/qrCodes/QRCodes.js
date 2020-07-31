@@ -40,10 +40,10 @@ const QRCodes = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        async function fetchQRCodes() {
+        async function fetchQRCodesAndCategories() {
             await Promise.all([await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantId, setState, enqueueSnackbar)]);
         }
-        fetchQRCodes();
+        fetchQRCodesAndCategories();
     }, [globalState.restaurantId, enqueueSnackbar]);
 
     /**
@@ -114,7 +114,7 @@ const QRCodes = (props) => {
             <Spinner show={state.loadingSpinner} />
             {state.qrCodes && state.qrCodes.length !== 0 ? <p className="text-on-background">{}</p> : null}
             {!state.loadingSpinner ? (
-                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1}>
+                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                     <div className="qrcode-items">
                         {state.qrCodes && state.qrCodes.length === 0 ? <p className="text-on-background">{}</p> : null}
                         {state.qrCodes.map((qrCode, index) => {

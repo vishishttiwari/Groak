@@ -39,6 +39,22 @@ const RestaurantSettings = (props) => {
     };
 
     /**
+     * This function is used for adding image
+     *
+     * @param {*} event this is received from the input button
+     */
+    const addImage = (event) => {
+        setState({ type: 'setImage', image: { file: event.target.files[0], link: URL.createObjectURL(event.target.files[0]) } });
+    };
+
+    /**
+     * This function is used for removing image
+     */
+    const removeImage = () => {
+        setState({ type: 'setImage', image: { file: null, link: '' } });
+    };
+
+    /**
      * This function is used for saving restaurant information
      *
      * @param {*} event this is received from the submit button
@@ -49,7 +65,7 @@ const RestaurantSettings = (props) => {
             enqueueSnackbar(InvalidRestaurantName, { variant: 'error' });
             return;
         }
-        await updateRestaurantAPI(globalState.restaurantId, state.restaurant, state.logo, setState, setGlobalState, enqueueSnackbar);
+        await updateRestaurantAPI(globalState.restaurantId, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
     };
 
     return (
@@ -97,7 +113,7 @@ const RestaurantSettings = (props) => {
                 })}
             </Select>
             <TextField
-                label="Covid Message for customers:"
+                label="Covid Message for Customers:"
                 multiline
                 placeholder={`Ex: ${DemoRestaurantCovidMessage}`}
                 rows="5"
@@ -106,11 +122,10 @@ const RestaurantSettings = (props) => {
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                required
                 onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
-            <p>Logo:</p>
+            <p>Images:</p>
             <input
                 accept="image/*"
                 id="icon-button-photo"
@@ -133,7 +148,32 @@ const RestaurantSettings = (props) => {
                     <IconButton onClick={removeLogo}>
                         <CloseRounded />
                     </IconButton>
-                    <img src={state.logo.link} alt={state.restaurant.name || 'Restaurant Image'} />
+                    <img src={state.logo.link} alt={state.restaurant.name || 'Restaurant Logo'} />
+                </div>
+            ) : null}
+            <input
+                accept="image/*"
+                id="image-button-photo"
+                onChange={addImage}
+                type="file"
+                style={{ display: 'none', width: '200px' }}
+            />
+            <label className="upload-image-button-label" htmlFor="image-button-photo">
+                <Button
+                    className="normal-buttons"
+                    variant="contained"
+                    component="span"
+                >
+                    Upload Image
+                    <CloudUpload className={uploadButtonStyle().rightIcon} />
+                </Button>
+            </label>
+            {state.image && state.image.link ? (
+                <div className="image-container">
+                    <IconButton onClick={removeImage}>
+                        <CloseRounded />
+                    </IconButton>
+                    <img src={state.image.link} alt={state.restaurant.name || 'Restaurant Image'} />
                 </div>
             ) : null}
             <Button
