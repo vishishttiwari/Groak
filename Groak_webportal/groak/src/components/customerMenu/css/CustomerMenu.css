@@ -575,44 +575,4 @@
   margin: 0;
   font-size: 15px;
 }
-
-.customerMenu .restaurantNotFound {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  width: 100%;
-  max-width: 500px;
-  display: block;
-  margin: 0 auto;
-}
-
-@media (max-width: 700px) {
-  .customerMenu .restaurantNotFound {
-    width: 70%;
-  }
-}
-
-.customerMenu .restaurantNotFound .restaurantNotFound-text {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  font-weight: 100;
-  font-size: 90px;
-}
-
-@media (max-width: 700px) {
-  .customerMenu .restaurantNotFound .restaurantNotFound-text {
-    font-size: 30px;
-  }
-}
-
-.customerMenu .restaurantNotFound .restaurantNotFound-image {
-  width: 100%;
-}
 /*# sourceMappingURL=CustomerMenu.css.map */

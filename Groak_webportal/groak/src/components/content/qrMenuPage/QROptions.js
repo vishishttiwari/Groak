@@ -7,15 +7,16 @@ import PropTypes from 'prop-types';
 
 import { FormControlLabel, Checkbox, Select, OutlinedInput, Button, Slider } from '@material-ui/core';
 import { CheckBox } from '@material-ui/icons';
+import ColorPicker from 'material-ui-color-picker';
 
 import QRPage from './qrPage/QRPage';
-import { getFonts, getQRStyleImages } from '../../../catalog/Others';
+import { getFonts, getQRStyleImages, frontDoorQRMenuPageId } from '../../../catalog/Others';
 import { IncludeLogoMessage } from '../../../catalog/Comments';
 import Spinner from '../../ui/spinner/Spinner';
 
 const QROptions = (props) => {
     const { restaurantReference, tableReference, tableName, state, logo, image, restaurantName, setState, loadingSpinner, goBackHandler, submitHandler } = props;
-    const orientation = ['Potrait', 'Landscape'];
+    const formats = ['Format 1', 'Format 2', 'Format 3'];
     const pageSizeOptions = ['A2', 'A3', 'A4', 'A5', 'A6', 'LETTER', 'TABLOID'];
     const fontOptions = Object.keys(getFonts());
     const qrImages = Object.keys(getQRStyleImages());
@@ -41,25 +42,26 @@ const QROptions = (props) => {
 
     return (
         <form>
-            <p>Orientation</p>
+            <p>Format</p>
+            <p className="submessages">Rerender pdf whenever you change format to see any changes</p>
             <Select
                 native
                 fullWidth
-                value={state.qrStylePage.orientation}
-                onChange={(event) => { setState({ type: 'setOrientation', orientation: event.target.value }); }}
+                value={state.qrStylePage.format}
+                onChange={(event) => { setState({ type: 'setFormat', format: event.target.value }); }}
                 input={<OutlinedInput />}
             >
-                {orientation.map((option) => {
-                    return (<option key={option} value={option}>{option}</option>);
+                {formats.map((format) => {
+                    return (<option key={format} value={format}>{format}</option>);
                 })}
             </Select>
-            {!logo ? <p>{IncludeLogoMessage}</p> : null}
             <p>Logo Width</p>
+            {!logo ? <p className="submessages">{IncludeLogoMessage}</p> : null}
             <Slider
-                value={state.qrStylePage.width}
+                value={state.qrStylePage.logoWidth}
                 className="width-slider"
                 marks={[{ value: 0, label: '0%' }, { value: 100, label: '100°%' }]}
-                onChange={(event, value) => { setState({ type: 'setWidth', width: value }); }}
+                onChange={(event, value) => { setState({ type: 'setLogoWidth', logoWidth: value }); }}
             />
             <FormControlLabel
                 style={{ textTransform: 'capitalize' }}
@@ -71,7 +73,7 @@ const QROptions = (props) => {
                         onChange={(event) => { setState({ type: 'setIncludeTable', includeTable: event.target.checked }); }}
                     />
                 )}
-                label="Include Table Name"
+                label={tableReference === frontDoorQRMenuPageId ? 'Include instructions' : 'Include table Name'}
             />
             <p>Page Size</p>
             <Select
@@ -85,6 +87,13 @@ const QROptions = (props) => {
                     return (<option key={option} value={option}>{option}</option>);
                 })}
             </Select>
+            <p>Page Background Color</p>
+            <ColorPicker
+                name="Page Background Color"
+                defaultValue="Choose Color"
+                value={state.qrStylePage.pageBackgroundColor}
+                onChange={(color) => { setState({ type: 'setPageBackgroundColor', pageBackgroundColor: color }); }}
+            />
             <p>Font</p>
             <Select
                 native
@@ -97,21 +106,17 @@ const QROptions = (props) => {
                     return (<option key={option} value={option}>{option.replace(/_/g, ' ')}</option>);
                 })}
             </Select>
-            <FormControlLabel
-                style={{ textTransform: 'capitalize' }}
-                control={(
-                    <Checkbox
-                        className="check-box"
-                        checkedIcon={<CheckBox className="check-box" />}
-                        checked={state.qrStylePage.useRestaurantImage}
-                        onChange={(event) => { setState({ type: 'setUseRestaurantImage', useRestaurantImage: event.target.checked }); }}
-                    />
-                )}
-                label="Use Restaurant Image"
+            <p>Text Color</p>
+            <ColorPicker
+                name="Text Color"
+                defaultValue="Choose Color"
+                value={state.qrStylePage.textColor}
+                onChange={(color) => { setState({ type: 'setTextColor', textColor: color }); }}
             />
             {!state.qrStylePage.useRestaurantImage || !image ? (
                 <>
                     <p>Styles</p>
+                    <p className="submessages">To include your restaurant image, please upload your restaurany image in settings.</p>
                     <Select
                         native
                         fullWidth
@@ -124,7 +129,41 @@ const QROptions = (props) => {
                         })}
                     </Select>
                 </>
-            ) : null}
+            ) : (
+                <FormControlLabel
+                    style={{ textTransform: 'capitalize' }}
+                    control={(
+                        <Checkbox
+                            className="check-box"
+                            checkedIcon={<CheckBox className="check-box" />}
+                            checked={state.qrStylePage.useRestaurantImage}
+                            onChange={(event) => { setState({ type: 'setUseRestaurantImage', useRestaurantImage: event.target.checked }); }}
+                        />
+                    )}
+                    label="Use Restaurant Image"
+                />
+            )}
+            <p>Restaurant Image Height</p>
+            <Slider
+                value={state.qrStylePage.restaurantImageHeight}
+                className="width-slider"
+                marks={[{ value: 0, label: '0%' }, { value: 100, label: '100°%' }]}
+                onChange={(event, value) => { setState({ type: 'setRestaurantImageHeight', restaurantImageHeight: value }); }}
+            />
+            <p>Restaurant Image Width</p>
+            <Slider
+                value={state.qrStylePage.restaurantImageWidth}
+                className="width-slider"
+                marks={[{ value: 0, label: '0%' }, { value: 100, label: '100°%' }]}
+                onChange={(event, value) => { setState({ type: 'setRestaurantImageWidth', restaurantImageWidth: value }); }}
+            />
+            <p>Image Background Color</p>
+            <ColorPicker
+                name="Restaurant Image Background Color"
+                defaultValue="Choose Color"
+                value={state.qrStylePage.restaurantImageBackgroundColor}
+                onChange={(color) => { setState({ type: 'setRestaurantImageBackgroundColor', restaurantImageBackgroundColor: color }); }}
+            />
 
             <p>QR Codes</p>
             <div className="qrcodes">

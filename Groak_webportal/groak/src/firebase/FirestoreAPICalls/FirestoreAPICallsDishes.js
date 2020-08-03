@@ -30,6 +30,14 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
     });
 };
 
+export const fetchDishesInArrayFirestoreAPI = (dishReferences) => {
+    return db.runTransaction(async (transaction) => {
+        return Promise.all(dishReferences.map(async (dish) => {
+            return transaction.get(dish);
+        }));
+    });
+};
+
 export const fetchDishFirestoreAPI = (restaurantId, dishId) => {
     return db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId).get();
 };

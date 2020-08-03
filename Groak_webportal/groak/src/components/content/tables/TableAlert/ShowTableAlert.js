@@ -28,7 +28,7 @@ function reducer(state, action) {
 }
 
 const ShowTableAlert = (props) => {
-    const { classes, open, tableId, deleteHandler, updateHandler, closeHandler, history } = props;
+    const { history, classes, open, tableId, deleteHandler, updateHandler, closeHandler } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
     const { enqueueSnackbar } = useSnackbar();
@@ -105,13 +105,13 @@ const ShowTableAlert = (props) => {
 };
 
 ShowTableAlert.propTypes = {
+    history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     tableId: PropTypes.string.isRequired,
     deleteHandler: PropTypes.func.isRequired,
     updateHandler: PropTypes.func.isRequired,
     closeHandler: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default withRouter(React.memo(withStyles(TextFieldLabelStyles)(ShowTableAlert)));

@@ -14,11 +14,11 @@ import { context } from '../../../globalState/globalState';
 import './css/Settings.css';
 import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
-import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle } from '../../../catalog/Others';
+import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
 
 const RestaurantSettings = (props) => {
-    const { classes, state, setState } = props;
+    const { history, classes, state, setState } = props;
     const { globalState, setGlobalState } = useContext(context);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -52,6 +52,18 @@ const RestaurantSettings = (props) => {
      */
     const removeImage = () => {
         setState({ type: 'setImage', image: { file: null, link: '' } });
+    };
+
+    /**
+     * This function is used for saving restaurant information
+     *
+     * @param {*} event this is received from the submit button
+     */
+    const frontDoorQRPage = async (event) => {
+        event.preventDefault();
+        history.push({
+            pathname: `/qrmenupage/${frontDoorQRMenuPageId}`,
+        });
     };
 
     /**
@@ -125,6 +137,14 @@ const RestaurantSettings = (props) => {
                 onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
+            <p>Front Door QR Menu Page:</p>
+            <Button
+                className="normal-buttons"
+                type="submit"
+                onClick={frontDoorQRPage}
+            >
+                Get QR Menu Page
+            </Button>
             <p>Images:</p>
             <input
                 accept="image/*"
@@ -188,6 +208,7 @@ const RestaurantSettings = (props) => {
 };
 
 RestaurantSettings.propTypes = {
+    history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     setState: PropTypes.func.isRequired,

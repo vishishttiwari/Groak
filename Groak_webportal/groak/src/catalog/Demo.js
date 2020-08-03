@@ -16,23 +16,19 @@ import { createQRCodeReference } from '../firebase/FirestoreAPICalls/FirestoreAP
 export const DemoRestaurantType = ['Pizza'];
 export const DemoRestaurantSalesTax = 9;
 export const DemoRestaurantQRStylePage = {
+    format: 'Format 1',
     pageSize: 'A4',
-    qrStyleImage: 'Strawberries',
+    pageBackgroundColor: '#ffffff',
+    qrStyleImage: 'Fruits',
     font: 'Poiret_One',
-    width: 90,
+    textColor: '#000000',
+    logoWidth: 90,
     includeTable: true,
+    restaurantImageWidth: 50,
+    restaurantImageHeight: 100,
+    restaurantImageBackgroundColor: '#808080',
 };
-export const DemoRestaurantOccupancy = {
-    monday: 0,
-    tuesday: 0,
-    wednesday: 0,
-    thursday: 0,
-    friday: 0,
-    saturday: 0,
-    sunday: 0,
-};
-export const DemoRestaurantMaxOccupancy = 10;
-export const DemoRestaurantCurrentOccupancy = 0;
+
 export const DemoRestaurantCovidGuidelines = '';
 export const DemoRestaurantCovidMessage = 'We are using Groak to minimize your interaction with waiters and to avoid cross-contamination through menus';
 
@@ -94,11 +90,9 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
         qrStylePage: DemoRestaurantQRStylePage,
         reference: ref,
         logo: '',
+        image: '',
         type: DemoRestaurantType,
         salesTax: DemoRestaurantSalesTax,
-        occupancy: DemoRestaurantOccupancy,
-        maximumOccupancy: DemoRestaurantMaxOccupancy,
-        currentOccupancy: DemoRestaurantCurrentOccupancy,
         covidGuidelines: DemoRestaurantCovidGuidelines,
         covidMessage: DemoRestaurantCovidMessage,
         qrCodes: [createQRCodeReference(restaurantId, qrCodeId)],
@@ -174,8 +168,24 @@ export const createDemoCategory = (restaurantId, restaurantName, categoryId, dis
         days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
         dishes: [createDishReference(restaurantId, dishId)],
         created: getCurrentDateTime(),
-        startTime: DemoCategoryStartTime,
-        endTime: DemoCategoryEndTime,
+        startTime: {
+            sunday: DemoCategoryStartTime,
+            monday: DemoCategoryStartTime,
+            tuesday: DemoCategoryStartTime,
+            wednesday: DemoCategoryStartTime,
+            thursday: DemoCategoryStartTime,
+            friday: DemoCategoryStartTime,
+            saturday: DemoCategoryStartTime,
+        },
+        endTime: {
+            sunday: DemoCategoryEndTime,
+            monday: DemoCategoryEndTime,
+            tuesday: DemoCategoryEndTime,
+            wednesday: DemoCategoryEndTime,
+            thursday: DemoCategoryEndTime,
+            friday: DemoCategoryEndTime,
+            saturday: DemoCategoryEndTime,
+        },
         reference: createCategoryReference(restaurantId, categoryId),
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,

@@ -5,6 +5,7 @@
 import { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CSSVariables from '../globalCSS/_globalCSS.scss';
+import { getDay, getMinutesFromMidnight } from './TimesDates';
 
 export const restaurantName = 'The Yellow Chilli';
 export const androidAppLink = 'android';
@@ -33,6 +34,9 @@ export const TableStatusText = {
     payment: 'Ready for Payment',
 };
 
+export const frontDoorQRMenuPageId = 'front-door-qr-menupage';
+export const frontDoorInstructions = 'Scan to see the menu';
+
 export const TableStatusStyle = {
     available: { backgroundColor: CSSVariables.tableGreenColor },
     seated: { backgroundColor: CSSVariables.tableOrangeColor },
@@ -41,6 +45,25 @@ export const TableStatusStyle = {
     approved: { backgroundColor: CSSVariables.tableOrangeColor },
     served: { backgroundColor: CSSVariables.tableOrangeColor },
     payment: { backgroundColor: CSSVariables.tableRedColor },
+};
+
+export const checkQRCodeAvailability = (qrCode) => {
+    return qrCode.available;
+};
+
+export const checkCategoryAvailability = (category) => {
+    if (!category.available) return false;
+    const day = getDay();
+    if (!category.days.includes(day)) return false;
+    const startTime = category.startTime[day];
+    const endTime = category.endTime[day];
+    const currentTime = getMinutesFromMidnight();
+    if (currentTime >= startTime && currentTime < endTime) return true;
+    return false;
+};
+
+export const checkDishAvailability = (dish) => {
+    return dish.available;
 };
 
 /**
@@ -153,6 +176,7 @@ export const getQRStyleImages = () => {
         let image = item;
         image = image.replace('./', '');
         image = image.replace('.png', '');
+        image = image.replace('.jpg', '');
         images[image] = path(item);
     });
     return images;

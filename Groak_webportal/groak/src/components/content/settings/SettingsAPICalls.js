@@ -2,7 +2,7 @@
  * This class includes restaurant related functions such as fetching a restaurant or updating a restaurant
  */
 import { updateRestaurantFirestoreAPI, addRestaurantLogoFirestoreAPI, getRestaurantLogoURLFirestoreAPI, addRestaurantImageFirestoreAPI, getRestaurantImageURLFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
-import { ErrorUpdatingRestaurant } from '../../../catalog/NotificationsComments';
+import { ErrorUpdatingRestaurant, SettingsUpdated } from '../../../catalog/NotificationsComments';
 
 /**
  * This function first checks if an image needs to be uploaded. If yes then it uploads image, then gets the reference,
@@ -26,26 +26,25 @@ export const updateRestaurantAPI = async (restaurantId, data, logo, image, setSt
             const { ref, promise } = addRestaurantLogoFirestoreAPI(restaurantId, data.name, logo.file);
             await promise;
             const url = await getRestaurantLogoURLFirestoreAPI(ref);
-
             updatedData = { ...data, logo: url };
         } else {
             updatedData = { ...data, logo: logo.link };
         }
 
-        // If image is updated then upload logo and add url to the data
+        // If image is updated then upload image and add url to the data
         if (image && image.file) {
             const { refImage, promiseImage } = addRestaurantImageFirestoreAPI(restaurantId, data.name, image.file);
             await promiseImage;
             const urlImage = await getRestaurantImageURLFirestoreAPI(refImage);
 
-            updatedData = { ...data, image: urlImage };
+            updatedData = { ...updatedData, image: urlImage };
         } else {
-            updatedData = { ...data, image: image.link };
+            updatedData = { ...updatedData, image: image.link };
         }
 
         await updateRestaurantFirestoreAPI(restaurantId, updatedData);
         setGlobalState({ type: 'setRestaurant', restaurant: updatedData });
-        snackbar('Changes Saved', { variant: 'success' });
+        snackbar(SettingsUpdated, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
     }

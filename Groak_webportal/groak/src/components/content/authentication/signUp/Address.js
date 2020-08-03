@@ -83,6 +83,7 @@ const Address = (props) => {
                                         {...getSuggestionItemProps(suggestion, {
                                             className,
                                         })}
+                                        key={suggestion.placeId}
                                     >
                                         <span>{suggestion.description}</span>
                                     </div>

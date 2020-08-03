@@ -13,9 +13,10 @@ import { fetchCategoriesAPI, changeAvailabilityOfCategoryAPI, changeCategoryOrde
 import Category from './category/Category';
 import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
-import { NoCategories, CategoryOrder } from '../../../../catalog/Comments';
+import { NoCategories, CategoryOrder, CategoriesNotFound } from '../../../../catalog/Comments';
 import SortableList from '../../../dnd/SortableList';
 import SortableItem from '../../../dnd/SortableItem';
+import Empty from '../../../../assets/others/empty.png';
 
 const initialState = { categories: [], loadingSpinner: true };
 
@@ -90,11 +91,18 @@ const Categories = (props) => {
         <div className="categories">
             <Heading heading="Menu Categories" buttonName="Add Category" onClick={addCategoryHandler} />
             <Spinner show={state.loadingSpinner} />
-            {state.categories && state.categories.length !== 0 ? <p className="text-on-background">{CategoryOrder}</p> : null}
             {!state.loadingSpinner ? (
                 <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                     <div className="category-items">
-                        {state.categories && state.categories.length === 0 ? <p className="text-on-background">{NoCategories}</p> : null}
+                        {state.categories && state.categories.length === 0 ? (
+                            <>
+                                <p className="text-on-background">{NoCategories}</p>
+                                <div className="not-found">
+                                    <p className="not-found-text">{CategoriesNotFound}</p>
+                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                                </div>
+                            </>
+                        ) : <p className="text-on-background">{CategoryOrder}</p>}
                         {state.categories.map((category, index) => {
                             return (
                                 <SortableItem key={category.id} index={index}>

@@ -47,17 +47,21 @@
   margin: 0 20px;
 }
 
-.qr .qr-content form p {
-  color: #800000;
-  font-size: 25px;
-  margin-top: 50px;
-}
-
 @media (max-width: 1200px) {
   .qr .qr-content form {
     width: auto;
     margin: 20px 0;
   }
+}
+
+.qr .qr-content form p {
+  color: #800000;
+  font-size: 25px;
+}
+
+.qr .qr-content form .submessages {
+  color: gray;
+  font-size: 15px;
 }
 
 .qr .qr-content form .width-slider {

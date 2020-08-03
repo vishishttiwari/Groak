@@ -13,11 +13,17 @@
   margin: 20px;
 }
 
-.category-details form .days .check-box {
-  color: #800000;
+.category-details form .days {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
 }
 
-.category-details form .times {
+.category-details form .days .day {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -25,6 +31,22 @@
   -webkit-box-direction: normal;
       -ms-flex-flow: row;
           flex-flow: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 700px) {
+  .category-details form .days .day {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+  }
+}
+
+.category-details form .days .check-box {
+  color: #800000;
 }
 
 .category-details form .category-dishes p {

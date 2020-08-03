@@ -166,6 +166,36 @@ html {
             font-weight: 200;
             letter-spacing: 0.15px;
         }
+
+        .not-found {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+    
+            @media (max-width: $phoneMaxWidth) {
+                width: 70%;
+            }
+    
+            .not-found-text {
+                width: 100%;
+                margin: 0 auto;
+                text-align: center;
+                font-weight: 100;
+                font-size: 90px;
+    
+                @media (max-width: $phoneMaxWidth) {
+                    font-size: 30px;
+                }
+            }
+    
+            .not-found-image {
+                width: 100%;
+            }
+        }
     }
 
 

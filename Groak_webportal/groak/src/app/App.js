@@ -69,7 +69,7 @@ function App() {
                                     <Route path="/qrcodes/:id" exact render={() => { return <QRCodesDetails />; }} />
                                     <Route path="/settings" exact render={() => { return <Settings />; }} />
                                     <Route path="/qrmenupage/:id" exact render={() => { return <QRWindow />; }} />
-                                    <Route path="/customermenu/:id1/:id2" exact render={() => { return <CustomerMenu />; }} />
+                                    <Route path="/customermenu/:id1/:id2/:id3" exact render={() => { return <CustomerMenu />; }} />
                                     <Route path="/" exact render={() => { return <HomePage />; }} />
                                     <Redirect from="/qrmenupage" to="/tables" exact />
                                     <Redirect from="/menu" to="/dishes" exact />

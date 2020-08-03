@@ -14,7 +14,6 @@ import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
 import CategoryTitle from './CategoryTitle';
 import CategoryDays from './CategoryDays';
-import CategoryTimes from './CategoryTimes';
 import CategorySelectedDishes from './categoryDishes/CategorySelectedDishes';
 import CategoryUnselectedDishes from './categoryDishes/CategoryUnselectedDishes';
 import CategoryDetailsMainButtons from './CategoryDetailsMainButtons';
@@ -29,8 +28,24 @@ const initialState = {
     checkFields: false,
     newCategory: true,
     name: '',
-    startTime: DemoCategoryStartTime,
-    endTime: DemoCategoryEndTime,
+    startTime: {
+        sunday: DemoCategoryStartTime,
+        monday: DemoCategoryStartTime,
+        tuesday: DemoCategoryStartTime,
+        wednesday: DemoCategoryStartTime,
+        thursday: DemoCategoryStartTime,
+        friday: DemoCategoryStartTime,
+        saturday: DemoCategoryStartTime,
+    },
+    endTime: {
+        sunday: DemoCategoryEndTime,
+        monday: DemoCategoryEndTime,
+        tuesday: DemoCategoryEndTime,
+        wednesday: DemoCategoryEndTime,
+        thursday: DemoCategoryEndTime,
+        friday: DemoCategoryEndTime,
+        saturday: DemoCategoryEndTime,
+    },
     days: {
         sunday: false,
         monday: false,
@@ -203,8 +218,7 @@ const CategoryDetails = (props) => {
             {!state.loadingSpinner ? (
                 <form>
                     <CategoryTitle checkFields={state.checkFields} name={state.name} setState={setState} />
-                    <CategoryDays days={state.days} setState={setState} />
-                    <CategoryTimes startTime={state.startTime} endTime={state.endTime} setState={setState} />
+                    <CategoryDays days={state.days} startTime={state.startTime} endTime={state.endTime} setState={setState} />
                     <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} />
                     <CategoryUnselectedDishes selectedDishesPath={state.selectedDishesPath} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
                     <CategoryDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newCategory={state.newCategory} deleteHandler={deleteHandler} />

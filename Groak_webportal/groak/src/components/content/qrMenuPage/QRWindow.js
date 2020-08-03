@@ -15,6 +15,8 @@ import QROptions from './QROptions';
 import { context } from '../../../globalState/globalState';
 
 import { updateRestaurantAPI, fetchQRCodesAPI, fetchTableAPI, updateTableAPI } from './QRAPICalls';
+import { frontDoorQRMenuPageId, frontDoorInstructions } from '../../../catalog/Others';
+import { QRMenuPageUpdated } from '../../../catalog/NotificationsComments';
 
 function reducer(state, action) {
     let newQRStylePage;
@@ -25,9 +27,9 @@ function reducer(state, action) {
             return { ...state, table: action.table, loadingSpinner: false };
         case 'setQRCodesInTable':
             return { ...state, table: { ...state.table, qrCodes: action.qrCodes, saved: false } };
-        case 'setOrientation':
-            newQRStylePage = { ...state.qrStylePage, orientation: action.orientation };
-            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setFormat':
+            newQRStylePage = { ...state.qrStylePage, format: action.format };
+            return { ...state, qrStylePage: newQRStylePage, saved: false, showPDF: false };
         case 'setIncludeTable':
             newQRStylePage = { ...state.qrStylePage, includeTable: action.includeTable };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
@@ -37,14 +39,29 @@ function reducer(state, action) {
         case 'setPageSize':
             newQRStylePage = { ...state.qrStylePage, pageSize: action.pageSize };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setPageBackgroundColor':
+            newQRStylePage = { ...state.qrStylePage, pageBackgroundColor: action.pageBackgroundColor };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setQRStyleImage':
             newQRStylePage = { ...state.qrStylePage, qrStyleImage: action.qrStyleImage };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setFont':
             newQRStylePage = { ...state.qrStylePage, font: action.font };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
-        case 'setWidth':
-            newQRStylePage = { ...state.qrStylePage, width: action.width };
+        case 'setTextColor':
+            newQRStylePage = { ...state.qrStylePage, textColor: action.textColor };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setLogoWidth':
+            newQRStylePage = { ...state.qrStylePage, logoWidth: action.logoWidth };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setRestaurantImageWidth':
+            newQRStylePage = { ...state.qrStylePage, restaurantImageWidth: action.restaurantImageWidth };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setRestaurantImageHeight':
+            newQRStylePage = { ...state.qrStylePage, restaurantImageHeight: action.restaurantImageHeight };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setRestaurantImageBackgroundColor':
+            newQRStylePage = { ...state.qrStylePage, restaurantImageBackgroundColor: action.restaurantImageBackgroundColor };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setSaved':
             return { ...state, saved: action.saved };
@@ -71,7 +88,15 @@ const QRWindow = (props) => {
         async function fetchQRCodesAndTable() {
             await Promise.all([await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantId, match.params.id, setState, enqueueSnackbar)]);
         }
-        fetchQRCodesAndTable();
+        async function fetchQRCodes() {
+            await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            setState({ type: 'fetchTable', table: { qrCodes: [] } });
+        }
+        if (match.params.id === frontDoorQRMenuPageId) {
+            fetchQRCodes();
+        } else {
+            fetchQRCodesAndTable();
+        }
     }, []);
 
     /**
@@ -88,8 +113,13 @@ const QRWindow = (props) => {
      */
     async function submitHandler(event) {
         event.preventDefault();
-        await Promise.all([await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantId, match.params.id, state.table, setState, enqueueSnackbar)]);
-        enqueueSnackbar('Changes Saved', { variant: 'success' });
+        if (match.params.id === frontDoorQRMenuPageId) {
+            await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
+        } else {
+            await Promise.all([await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantId, match.params.id, state.table, setState, enqueueSnackbar)]);
+        }
+
+        enqueueSnackbar(QRMenuPageUpdated, { variant: 'success' });
         setState({ type: 'setSaved', saved: true });
     }
 
@@ -102,7 +132,7 @@ const QRWindow = (props) => {
                     <QRPage
                         restaurantReference={globalState.restaurantId}
                         tableReference={match.params.id}
-                        tableName={tableName}
+                        tableName={match.params.id === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                         qrStylePage={state.qrStylePage}
                         table={state.table}
                         qrCodesMap={state.qrCodesMap}
@@ -116,7 +146,7 @@ const QRWindow = (props) => {
                 <QROptions
                     restaurantReference={globalState.restaurantId}
                     tableReference={match.params.id}
-                    tableName={tableName}
+                    tableName={match.params.id === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                     state={state}
                     restaurantName={globalState.restaurant.name}
                     logo={globalState.restaurant.logo}

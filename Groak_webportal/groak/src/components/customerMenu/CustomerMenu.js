@@ -10,25 +10,28 @@ import CustomerMenuDish from './CustomerMenuDish';
 import { fetchCategoriesAPI } from './CustomerMenuAPICalls';
 import Heading from '../ui/heading/Heading';
 import Spinner from '../ui/spinner/Spinner';
-import { randomNumber } from '../../catalog/Others';
+import { randomNumber, frontDoorQRMenuPageId } from '../../catalog/Others';
 import Empty from '../../assets/others/empty.png';
 import Advertisement from '../../assets/others/advertisement_2.png';
 import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
 import DownArrow from '../../assets/icons/down_arrow.png';
+import { RestaurantNotFound, MenuNotFound } from '../../catalog/Comments';
 
-const initialState = { menuItems: new Map(), categoryNames: new Map(), restaurant: {}, loadingSpinner: true, tabValue: 0, error: false };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, loadingSpinner: true, tabValue: 0, restaurantNotFound: false, categoriesNotFound: false };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchMenuItems':
-            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, tabValue: 0 };
+            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false, tabValue: 0 };
         case 'changeTabValue':
             if (action.tabValue !== state.tabValue) {
                 return { ...state, tabValue: action.tabValue };
             }
             return { ...state };
-        case 'error':
-            return { ...state, error: true, loadingSpinner: false };
+        case 'restaurantNotFound':
+            return { ...state, restaurantNotFound: true, loadingSpinner: false };
+        case 'categoriesNotFound':
+            return { ...state, categoriesNotFound: true, loadingSpinner: false };
         default:
             return initialState;
     }
@@ -80,7 +83,7 @@ const CustomerMenu = (props) => {
             inline: 'start',
         });
         async function fetchDishes() {
-            await fetchCategoriesAPI(match.params.id1, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(match.params.id1, match.params.id2 === frontDoorQRMenuPageId, match.params.id3, setState, enqueueSnackbar);
         }
         fetchDishes();
     }, [enqueueSnackbar, match.params.id1]);
@@ -107,7 +110,14 @@ const CustomerMenu = (props) => {
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
-                    {!state.error ? (
+                    {state.restaurantNotFound || state.categoriesNotFound ? (
+                        <div className="not-found">
+                            {state.restaurantNotFound
+                                ? <p className="not-found-text">{RestaurantNotFound}</p>
+                                : <p className="not-found-text">{MenuNotFound}</p>}
+                            <img className="not-found-image" draggable="false" src={Empty} alt="RestaurantNotFound" />
+                        </div>
+                    ) : (
                         <>
                             <AppBar className="customerMenu-appbar" position="static" color="secondary">
                                 <Tabs
@@ -119,23 +129,23 @@ const CustomerMenu = (props) => {
                                     scrollButtons="on"
                                     aria-label="scrollable force tabs example"
                                 >
-                                    {Array.from(state.categoryNames.keys()).map((categoryId, index) => {
+                                    {Array.from(state.categoryNames).map((categoryName, index) => {
                                         return (
                                             <Tab
                                                 style={{ paddingLeft: '30px', paddingRight: '30px' }}
                                                 key={randomNumber()}
-                                                label={state.categoryNames.get(categoryId)}
+                                                label={categoryName}
                                                 {...a11yProps(index)}
                                             />
                                         );
                                     })}
                                 </Tabs>
                             </AppBar>
-                            {Array.from(state.menuItems.keys()).map((categoryName, index) => {
+                            {Array.from(state.menuItems.keys()).map((menuItem, index) => {
                                 return (
                                     <TabPanel key={randomNumber()} value={state.tabValue} index={index}>
                                         <div className="customerMenu-items">
-                                            {state.menuItems.get(categoryName).map((dish) => {
+                                            {state.menuItems.get(menuItem).map((dish) => {
                                                 return (
                                                     <CustomerMenuDish
                                                         key={randomNumber()}
@@ -148,11 +158,6 @@ const CustomerMenu = (props) => {
                                 );
                             })}
                         </>
-                    ) : (
-                        <div className="restaurantNotFound">
-                            <p className="restaurantNotFound-text">Restaurant Not Found</p>
-                            <img className="restaurantNotFound-image" draggable="false" src={Empty} alt="RestaurantNotFound" />
-                        </div>
                     )}
                 </>
             ) : null}

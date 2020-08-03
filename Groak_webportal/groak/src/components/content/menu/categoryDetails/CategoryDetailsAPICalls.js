@@ -3,7 +3,6 @@
  */
 import { fetchCategoryFirestoreAPI, addCategoryFirestoreAPI, updateCategoryFirestoreAPI, deleteCategoryFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { fetchDishesFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
-import { DemoCategoryStartTime, DemoCategoryEndTime } from '../../../../catalog/Demo';
 import { ErrorFetchingCategory, ErrorAddingCategory, ErrorUpdatingCategory, ErrorDeletingCategory, CategoryNotFound, CategoryUpdated, CategoryDeleted, CategoryAdded } from '../../../../catalog/NotificationsComments';
 import { fetchQRCodesFromCollectionFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
@@ -61,11 +60,12 @@ export const fetchCategoryAPI = async (restaurantId, categoryId, setState, snack
                     return dish.path;
                 });
             }
+
             setState({
                 type: 'fetchCategory',
                 name: data.data().name ? data.data().name : '',
-                startTime: (data.data().startTime || data.data().startTime === 0) ? data.data().startTime : DemoCategoryStartTime,
-                endTime: data.data().endTime ? data.data().endTime : DemoCategoryEndTime,
+                startTime: data.data().startTime,
+                endTime: data.data().endTime,
                 days: newDays,
                 selectedDishesPath: dishesPath,
             });

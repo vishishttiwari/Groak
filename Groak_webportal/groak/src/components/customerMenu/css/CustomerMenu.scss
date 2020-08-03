@@ -179,34 +179,4 @@ $cardFullWidth: ($cardWidth + $cardMargin);
             }
         }
     }
-
-    .restaurantNotFound {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        width: 100%;
-        max-width: 500px;
-        display: block;
-        margin: 0 auto;
-
-        @media (max-width: $phoneMaxWidth) {
-            width: 70%;
-        }
-
-        .restaurantNotFound-text {
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-            font-weight: 100;
-            font-size: 90px;
-
-            @media (max-width: $phoneMaxWidth) {
-                font-size: 30px;
-            }
-        }
-
-        .restaurantNotFound-image {
-            width: 100%;
-        }
-    }
 }

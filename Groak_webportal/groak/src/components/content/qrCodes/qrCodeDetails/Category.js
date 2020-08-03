@@ -20,17 +20,6 @@ const Category = (props) => {
             />
             <CardContent>
                 <Typography variant="body1" color="textPrimary" component="p">
-                    Timings:
-                </Typography>
-                <Typography
-                    className="subtopics"
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                >
-                    {`${getTimeInAMPMFromMinutesComplete(categoryItem.startTime)} - ${getTimeInAMPMFromMinutesComplete(categoryItem.endTime)}`}
-                </Typography>
-                <Typography variant="body1" color="textPrimary" component="p">
                     Days Active:
                 </Typography>
                 {categoryItem.days.map((day) => {
@@ -43,6 +32,7 @@ const Category = (props) => {
                             component="p"
                         >
                             {day}
+                            {`: ${getTimeInAMPMFromMinutesComplete(categoryItem.startTime[day])} - ${getTimeInAMPMFromMinutesComplete(categoryItem.endTime[day])}`}
                         </Typography>
                     );
                 })}

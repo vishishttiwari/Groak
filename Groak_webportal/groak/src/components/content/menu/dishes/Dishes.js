@@ -13,9 +13,10 @@ import { fetchDishesAPI, changeAvailabilityOfDishAPI, changeDishOrderAPI } from 
 import Dish from './dish/Dish';
 import Heading from '../../../ui/heading/Heading';
 import Spinner from '../../../ui/spinner/Spinner';
-import { NoDishes } from '../../../../catalog/Comments';
+import { NoDishes, DishOrder, DishesNotFound } from '../../../../catalog/Comments';
 import SortableList from '../../../dnd/SortableList';
 import SortableItem from '../../../dnd/SortableItem';
+import Empty from '../../../../assets/others/empty.png';
 
 const initialState = { dishes: [], loadingSpinner: true };
 
@@ -93,7 +94,15 @@ const Dishes = (props) => {
             {!state.loadingSpinner ? (
                 <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                     <div className="dish-items">
-                        {state.dishes && state.dishes.length === 0 ? <p className="text-on-background">{NoDishes}</p> : null}
+                        {state.dishes && state.dishes.length === 0 ? (
+                            <>
+                                <p className="text-on-background">{NoDishes}</p>
+                                <div className="not-found">
+                                    <p className="not-found-text">{DishesNotFound}</p>
+                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                                </div>
+                            </>
+                        ) : <p className="text-on-background">{DishOrder}</p>}
                         {state.dishes.map((dish, index) => {
                             return (
                                 <SortableItem key={dish.id} index={index}>

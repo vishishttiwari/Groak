@@ -8,14 +8,21 @@ $cardFullWidth: ($cardWidth + $cardMargin);
     
     form {
         .days {
+            display: flex;
+            flex-flow: column;
+            .day {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+
+                @media (max-width: $phoneMaxWidth) {
+                    flex-flow: column;
+                }
+            }
+
             .check-box {
                 color: $primaryColor;
             }
-        }
-
-        .times {
-            display: flex;
-            flex-flow: row;
         }
 
         .category-dishes {

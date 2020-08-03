@@ -11,6 +11,7 @@ export const DishImageDescription = 'Images will resized to 320x240. Please uplo
 
 export const NoDishes = 'You don\'t have any dishes in your menu. Use the add dish button to add dishes.';
 export const NoCategories = 'You don\'t have any categories in your menu. Use the add category button to add categories.';
+export const NoQRCodes = 'You don\'t have any QR codes in your menu. Use the add QR code button to add QR codes.';
 
 export const DishShortInfo = 'A short info of the dish that will be shown to customers along with the dish';
 export const DishDescription = 'Detailed information about the dish that will be shown to the customer if they would like to know more about the dish.';
@@ -20,8 +21,17 @@ export const DishVegan = 'Is this dish Vegan?';
 export const DishGlutenFree = 'Is this dish Gluten-free?';
 export const DishKosher = 'Is this dish Kosher?';
 
-export const CategoryOrder = 'Categories will be shown in the same order as below. To change order, use the arrows on each category card.';
-export const CategoryDishesOrder = 'Dishes in this category will be shown in the same order as below. To change order, use the arrows on each dish card.';
+export const QRCodesOrder = 'QR Codes will be shown in the same order as below. To change order, drag and drop each qr code card.';
+export const QRCodeCategoriesOrder = 'Categories in this QR Code will be shown in the same order as below. To change order, drag and drop each category card.';
+export const CategoryOrder = 'Categories will be shown in the same order as below. To change order, drag and drop each category card.';
+export const CategoryDishesOrder = 'Dishes in this category will be shown in the same order as below. To change order, drag and drop each dish card.';
+export const DishOrder = 'Dishes will be shown in the same order as below. To change order, drag and drop each dish card.';
+
+export const QRCodesNotFound = 'QR Codes Not Found';
+export const CategoriesNotFound = 'Categories Not Found';
+export const DishesNotFound = 'Dishes Not Found';
+export const RestaurantNotFound = 'Restaurant Not Found';
+export const MenuNotFound = 'Menu not available at the moment';
 
 export const ShowTableMessage = 'You can press the barcode button to get the barcode for this table.';
 export const AddTableMessage = 'Enter table name. You can press the barcode button to get the barcode for this table.';

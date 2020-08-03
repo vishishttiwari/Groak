@@ -15,6 +15,9 @@ import Heading from '../../ui/heading/Heading';
 import Spinner from '../../ui/spinner/Spinner';
 import SortableList from '../../dnd/SortableList';
 import SortableItem from '../../dnd/SortableItem';
+import Empty from '../../../assets/others/empty.png';
+import { MaximumQRCodeLimitReached } from '../../../catalog/NotificationsComments';
+import { QRCodesOrder, NoQRCodes, QRCodesNotFound } from '../../../catalog/Comments';
 
 const initialState = { qrCodes: [], categoriesMap: new Map(), categories: [], loadingSpinner: true };
 
@@ -79,7 +82,13 @@ const QRCodes = (props) => {
      * This function is called when add QR code button is pressed
      */
     function addQRCodeHandler() {
-        history.push('/qrcodes/addQRCode');
+        if (!state.loadingSpinner) {
+            if (state.qrCodes.length >= 5) {
+                enqueueSnackbar(MaximumQRCodeLimitReached, { variant: 'error' });
+            } else {
+                history.push('/qrcodes/addQRCode');
+            }
+        }
     }
 
     /**
@@ -112,11 +121,18 @@ const QRCodes = (props) => {
         <div className="qrcodes">
             <Heading heading="QR Codes" buttonName="Add QR Code" onClick={addQRCodeHandler} />
             <Spinner show={state.loadingSpinner} />
-            {state.qrCodes && state.qrCodes.length !== 0 ? <p className="text-on-background">{}</p> : null}
             {!state.loadingSpinner ? (
                 <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                     <div className="qrcode-items">
-                        {state.qrCodes && state.qrCodes.length === 0 ? <p className="text-on-background">{}</p> : null}
+                        {state.qrCodes && state.qrCodes.length === 0 ? (
+                            <>
+                                <p className="text-on-background">{NoQRCodes}</p>
+                                <div className="not-found">
+                                    <p className="not-found-text">{QRCodesNotFound}</p>
+                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                                </div>
+                            </>
+                        ) : <p className="text-on-background">{QRCodesOrder}</p>}
                         {state.qrCodes.map((qrCode, index) => {
                             return (
                                 <SortableItem key={qrCode.id} index={index}>

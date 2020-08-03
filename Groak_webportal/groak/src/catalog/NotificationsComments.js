@@ -79,6 +79,7 @@ export const ErrorFetchingQRCode = 'Error fetching QR code';
 export const ErrorUpdatingQRCode = 'Error updating QR code';
 export const ErrorDeletingQRCode = 'Error deleting QR code';
 export const QRCodeNotFound = 'QR code not found';
+export const MaximumQRCodeLimitReached = 'Maximum limit on QR codes reached';
 export const DeleteQRCodePopUpTitle = 'Delete QR Code?';
 export const DeleteQRCodePopUp = 'Are you sure you would like to delete this qr code?';
 export const QRCodeAdded = 'QR code added';
@@ -96,6 +97,10 @@ export const ErrorUnsubscribingOrder = 'Error unsubscribing order';
 export const ErrorFetchingRequest = 'Error fetching requests';
 export const ErrorUpdatingRequest = 'Error sending your response. Please try again.';
 export const ErrorUnsubscribingRequest = 'Error unsubscribing requests';
+
+export const QRMenuPageUpdated = 'Changes Saved';
+
+export const SettingsUpdated = 'Changes Saved';
 
 export const ErrorContactInfoFirstName = 'Please enter your first name';
 export const ErrorContactInfoLastName = 'Please enter your last name';
