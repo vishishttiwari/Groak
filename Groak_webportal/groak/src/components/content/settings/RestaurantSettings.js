@@ -14,7 +14,7 @@ import { context } from '../../../globalState/globalState';
 import './css/Settings.css';
 import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
-import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
 
 const RestaurantSettings = (props) => {
@@ -168,7 +168,7 @@ const RestaurantSettings = (props) => {
                     <IconButton onClick={removeLogo}>
                         <CloseRounded />
                     </IconButton>
-                    <img src={state.logo.link} alt={state.restaurant.name || 'Restaurant Logo'} />
+                    <img src={getImageLink(state.logo.link)} alt={state.restaurant.name || 'Restaurant Logo'} />
                 </div>
             ) : null}
             <input
@@ -193,7 +193,7 @@ const RestaurantSettings = (props) => {
                     <IconButton onClick={removeImage}>
                         <CloseRounded />
                     </IconButton>
-                    <img src={state.image.link} alt={state.restaurant.name || 'Restaurant Image'} />
+                    <img src={getImageLink(state.image.link)} alt={state.restaurant.name || 'Restaurant Image'} />
                 </div>
             ) : null}
             <Button

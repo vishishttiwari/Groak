@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { CloudUpload, CloseRounded } from '@material-ui/icons';
 import { Button, IconButton } from '@material-ui/core';
 
-import { uploadButtonStyle } from '../../../../catalog/Others';
+import { uploadButtonStyle, getImageLink } from '../../../../catalog/Others';
 import { DishImageDescription } from '../../../../catalog/Comments';
 
 const DishImage = (props) => {
@@ -53,7 +53,7 @@ const DishImage = (props) => {
             {image && image.link ? (
                 <div className="image-container">
                     <IconButton onClick={removeImage}><CloseRounded /></IconButton>
-                    <img src={image.link} alt={name || 'Dish Image'} />
+                    <img src={getImageLink(image.link)} alt={name || 'Dish Image'} />
                 </div>
             ) : null}
         </div>

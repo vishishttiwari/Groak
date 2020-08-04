@@ -226,3 +226,12 @@ export const uploadButtonStyle = makeStyles((theme) => {
         },
     };
 });
+
+/**
+     * Dummy is added in links with firebasestorage to disable caching.
+     * Otherwise images are not updated whenever the page appears.
+     */
+export const getImageLink = (link) => {
+    if (link.startsWith('http')) { return `${link}?dummy=${randomNumber()}`; }
+    return link;
+};

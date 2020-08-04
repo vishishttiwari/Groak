@@ -207,8 +207,8 @@ const DishDetails = (props) => {
         } else {
             await updateDishAPI(globalState.restaurantId, match.params.id, state, enqueueSnackbar);
         }
-        history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+        history.replace('/dishes');
     };
 
     /**
@@ -218,8 +218,8 @@ const DishDetails = (props) => {
         if (!state.newDish) {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
             await deleteDishAPI(globalState.restaurantId, match.params.id, enqueueSnackbar);
-            history.goBack();
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+            history.replace('/dishes');
         }
     };
 
