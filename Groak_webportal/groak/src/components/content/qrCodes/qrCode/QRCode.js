@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Card, CardHeader, Button, CardContent, Typography, CardActions, TextField, Select, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
 import { TextFieldLabelStyles, textFieldLabelProps } from '../../../../catalog/Others';
-import { createCategoryReferenceFromPath } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
+// import { createCategoryReferenceFromPath } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { InvalidQRCodeTitle } from '../../../../catalog/NotificationsComments';
 
 const initialState = { fieldsChanged: false };
@@ -28,26 +28,26 @@ const QRCode = (props) => {
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
 
-    function getSelectedCategoryPaths() {
-        return qrCodeItem.categories.map((category) => {
-            return (category.path);
-        });
-    }
+    // function getSelectedCategoryPaths() {
+    //     return qrCodeItem.categories.map((category) => {
+    //         return (category.path);
+    //     });
+    // }
 
-    function getAllCategoryPaths() {
-        return categories.map((category) => {
-            return (category.reference.path);
-        });
-    }
+    // function getAllCategoryPaths() {
+    //     return categories.map((category) => {
+    //         return (category.reference.path);
+    //     });
+    // }
 
-    function updateQRCodeCategoriesHandler(newCategories) {
-        updateQRCodeLocallyHandler({ ...qrCodeItem,
-            categories:
-            newCategories.map((category) => {
-                return createCategoryReferenceFromPath(category);
-            }),
-        });
-    }
+    // function updateQRCodeCategoriesHandler(newCategories) {
+    //     updateQRCodeLocallyHandler({ ...qrCodeItem,
+    //         categories:
+    //         newCategories.map((category) => {
+    //             return createCategoryReferenceFromPath(category);
+    //         }),
+    //     });
+    // }
 
     return (
         <Card className="card card-white" onClick={clickHandler}>
@@ -86,13 +86,14 @@ const QRCode = (props) => {
                     error={qrCodeItem.name.length <= 0}
                     shrink={(qrCodeItem.name.length > 0).toString()}
                     onChange={(event) => {
+                        event.stopPropagation();
                         setState({ type: 'setFieldsChanged', fieldsChanged: true });
                         updateQRCodeLocallyHandler({ ...qrCodeItem, name: event.target.value });
                     }}
                     InputLabelProps={textFieldLabelProps(classes)}
                     onClick={(event) => { event.stopPropagation(); }}
                 />
-                <Select
+                {/* <Select
                     className="action-items"
                     multiple
                     required
@@ -100,6 +101,7 @@ const QRCode = (props) => {
                     displayEmpty
                     value={getSelectedCategoryPaths()}
                     onChange={(event) => {
+                        event.stopPropagation();
                         setState({ type: 'setFieldsChanged', fieldsChanged: true });
                         updateQRCodeCategoriesHandler(event.target.value);
                     }}
@@ -109,13 +111,13 @@ const QRCode = (props) => {
                 >
                     {getAllCategoryPaths().map((categoryPath) => {
                         return (
-                            <MenuItem key={categoryPath} value={categoryPath}>
-                                <Checkbox style={{ color: '#800000' }} checked={getSelectedCategoryPaths().indexOf(categoryPath) > -1} />
-                                <ListItemText primary={categoriesMap.get(categoryPath).name} />
+                            <MenuItem key={categoryPath} value={categoryPath} onClick={(event) => { event.stopPropagation(); }}>
+                                <Checkbox style={{ color: '#800000' }} checked={getSelectedCategoryPaths().indexOf(categoryPath) > -1} onClick={(event) => { event.stopPropagation(); }} />
+                                <ListItemText primary={categoriesMap.get(categoryPath).name} onClick={(event) => { event.stopPropagation(); }} />
                             </MenuItem>
                         );
                     })}
-                </Select>
+                </Select> */}
                 <Button
                     className={qrCodeItem.available ? 'normal-buttons buttons' : 'cancel-buttons buttons'}
                     variant="contained"

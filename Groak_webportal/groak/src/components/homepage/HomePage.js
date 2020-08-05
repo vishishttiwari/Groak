@@ -44,7 +44,7 @@ const HomePage = (props) => {
             block: 'center',
             inline: 'start',
         });
-    }, []);
+    }, [top]);
 
     return (
         <div className="homepage">
@@ -105,7 +105,7 @@ const HomePage = (props) => {
                                         onClick={() => { history.push('/orders'); }}
                                         type="button"
                                     >
-                                    ORDERS
+                                        ORDERS
                                     </Button>
                                 </>
                             ) }

@@ -1,18 +1,33 @@
 /**
  * This components is used to represent the selected dishes in qrcodes details
  */
-import React from 'react';
+import React, { useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
+import SearchBar from 'material-ui-search-bar';
 import Dish from './Dish';
 
 import { CategoryDishesOrder } from '../../../../../catalog/Comments';
 import SortableList from '../../../../dnd/SortableList';
 import SortableItem from '../../../../dnd/SortableItem';
 
+const initialState = {
+    searchField: '',
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'setSearchField':
+            return { ...state, searchField: action.searchField };
+        default:
+            return initialState;
+    }
+}
+
 const CategorySelectedDishes = (props) => {
     const { history, selectedDishesPath, allDishesMap, checkDishHandler, changeDishPositionHandler } = props;
+    const [state, setState] = useReducer(reducer, initialState);
 
     /**
      * This function is called when drag and drop has ended
@@ -23,6 +38,13 @@ const CategorySelectedDishes = (props) => {
         if (oldIndex !== newIndex) {
             changeDishPositionHandler(arrayMove(selectedDishesPath, oldIndex, newIndex));
         }
+    };
+
+    const isDishVisible = (dish) => {
+        if (!dish) { return false; }
+        if (state.searchField.length <= 0) { return true; }
+        if (dish.name && dish.name.startsWith(state.searchField)) { return true; }
+        return false;
     };
 
     /**
@@ -38,11 +60,18 @@ const CategorySelectedDishes = (props) => {
         <div className="category-dishes">
             <h2>Selected Dishes:</h2>
             {selectedDishesPath && selectedDishesPath.length !== 0 ? <p>{CategoryDishesOrder}</p> : null}
+            <SearchBar
+                className="search-bar"
+                value={state.searchField}
+                onChange={(newValue) => {
+                    setState({ type: 'setSearchField', searchField: newValue });
+                }}
+            />
             <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                 <div className="dishes">
                     {selectedDishesPath.map((dishPath, index) => {
                         const dish = allDishesMap.get(dishPath);
-                        return (dish
+                        return (isDishVisible(dish)
                             ? (
                                 <SortableItem key={dish.id} index={index}>
                                     <Dish

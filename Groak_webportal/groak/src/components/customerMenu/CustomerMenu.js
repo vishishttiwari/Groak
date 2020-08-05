@@ -12,9 +12,9 @@ import Heading from '../ui/heading/Heading';
 import Spinner from '../ui/spinner/Spinner';
 import { randomNumber, frontDoorQRMenuPageId } from '../../catalog/Others';
 import Empty from '../../assets/others/empty.png';
-import Advertisement from '../../assets/others/advertisement_2.png';
-import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
-import DownArrow from '../../assets/icons/down_arrow.png';
+// import Advertisement from '../../assets/others/advertisement_2.png';
+// import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
+// import DownArrow from '../../assets/icons/down_arrow.png';
 import { RestaurantNotFound, MenuNotFound } from '../../catalog/Comments';
 
 const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, loadingSpinner: true, tabValue: 0, restaurantNotFound: false, categoriesNotFound: false };

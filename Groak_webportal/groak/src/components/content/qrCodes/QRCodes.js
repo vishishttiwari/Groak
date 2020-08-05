@@ -122,33 +122,36 @@ const QRCodes = (props) => {
             <Heading heading="QR Codes" buttonName="Add QR Code" onClick={addQRCodeHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
-                    <div className="qrcode-items">
-                        {state.qrCodes && state.qrCodes.length === 0 ? (
-                            <>
-                                <p className="text-on-background">{NoQRCodes}</p>
-                                <div className="not-found">
-                                    <p className="not-found-text">{QRCodesNotFound}</p>
-                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
-                                </div>
-                            </>
-                        ) : <p className="text-on-background">{QRCodesOrder}</p>}
-                        {state.qrCodes.map((qrCode, index) => {
-                            return (
-                                <SortableItem key={qrCode.id} index={index}>
-                                    <QRCode
-                                        qrCodeItem={qrCode}
-                                        categories={state.categories}
-                                        categoriesMap={state.categoriesMap}
-                                        updateQRCodeLocallyHandler={updateQRCodeLocallyHandler}
-                                        updateQRCodePermanentlyHandler={updateQRCodePermanentlyHandler}
-                                        clickHandler={() => { qrCodeDetailHandler(qrCode.id); }}
-                                    />
-                                </SortableItem>
-                            );
-                        })}
-                    </div>
-                </SortableList>
+                <>
+                    {state.qrCodes && state.qrCodes.length === 0 ? (
+                        <>
+                            <p className="text-on-background">{NoQRCodes}</p>
+                            <div className="not-found">
+                                <p className="not-found-text">{QRCodesNotFound}</p>
+                                <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                            </div>
+                        </>
+                    ) : <p className="text-on-background">{QRCodesOrder}</p>}
+                    <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
+                        <div className="qrcode-items">
+
+                            {state.qrCodes.map((qrCode, index) => {
+                                return (
+                                    <SortableItem key={qrCode.id} index={index} distance={1}>
+                                        <QRCode
+                                            qrCodeItem={qrCode}
+                                            categories={state.categories}
+                                            categoriesMap={state.categoriesMap}
+                                            updateQRCodeLocallyHandler={updateQRCodeLocallyHandler}
+                                            updateQRCodePermanentlyHandler={updateQRCodePermanentlyHandler}
+                                            clickHandler={() => { qrCodeDetailHandler(qrCode.id); }}
+                                        />
+                                    </SortableItem>
+                                );
+                            })}
+                        </div>
+                    </SortableList>
+                </>
             ) : null}
         </div>
     );

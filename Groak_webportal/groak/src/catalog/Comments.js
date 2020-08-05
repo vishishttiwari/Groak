@@ -22,9 +22,9 @@ export const DishGlutenFree = 'Is this dish Gluten-free?';
 export const DishKosher = 'Is this dish Kosher?';
 
 export const QRCodesOrder = 'QR Codes will be shown in the same order as below. To change order, drag and drop each qr code card.';
-export const QRCodeCategoriesOrder = 'Categories in this QR Code will be shown in the same order as below. To change order, drag and drop each category card.';
+export const QRCodeCategoriesOrder = 'Categories in this QR Code will be shown in the same order as below. To change order, drag and drop each category card and then save the changes.';
 export const CategoryOrder = 'Categories will be shown in the same order as below. To change order, drag and drop each category card.';
-export const CategoryDishesOrder = 'Dishes in this category will be shown in the same order as below. To change order, drag and drop each dish card.';
+export const CategoryDishesOrder = 'Dishes in this category will be shown in the same order as below. To change order, drag and drop each dish card and then save the changes.';
 export const DishOrder = 'Dishes will be shown in the same order as below. To change order, drag and drop each dish card.';
 
 export const QRCodesNotFound = 'QR Codes Not Found';

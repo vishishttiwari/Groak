@@ -92,30 +92,32 @@ const Dishes = (props) => {
             <Heading heading="Dishes" buttonName="Add Dish" onClick={addDishHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
-                    <div className="dish-items">
-                        {state.dishes && state.dishes.length === 0 ? (
-                            <>
-                                <p className="text-on-background">{NoDishes}</p>
-                                <div className="not-found">
-                                    <p className="not-found-text">{DishesNotFound}</p>
-                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
-                                </div>
-                            </>
-                        ) : <p className="text-on-background">{DishOrder}</p>}
-                        {state.dishes.map((dish, index) => {
-                            return (
-                                <SortableItem key={dish.id} index={index}>
-                                    <Dish
-                                        dishItem={dish}
-                                        availableDishHandler={availableDishHandler}
-                                        clickHandler={() => { dishDetailHandler(dish.id); }}
-                                    />
-                                </SortableItem>
-                            );
-                        })}
-                    </div>
-                </SortableList>
+                <>
+                    {state.dishes && state.dishes.length === 0 ? (
+                        <>
+                            <p className="text-on-background">{NoDishes}</p>
+                            <div className="not-found">
+                                <p className="not-found-text">{DishesNotFound}</p>
+                                <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                            </div>
+                        </>
+                    ) : <p className="text-on-background">{DishOrder}</p>}
+                    <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
+                        <div className="dish-items">
+                            {state.dishes.map((dish, index) => {
+                                return (
+                                    <SortableItem key={dish.id} index={index}>
+                                        <Dish
+                                            dishItem={dish}
+                                            availableDishHandler={availableDishHandler}
+                                            clickHandler={() => { dishDetailHandler(dish.id); }}
+                                        />
+                                    </SortableItem>
+                                );
+                            })}
+                        </div>
+                    </SortableList>
+                </>
             ) : null}
         </div>
     );

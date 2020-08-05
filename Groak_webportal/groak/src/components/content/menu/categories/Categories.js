@@ -92,30 +92,32 @@ const Categories = (props) => {
             <Heading heading="Menu Categories" buttonName="Add Category" onClick={addCategoryHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
-                <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
-                    <div className="category-items">
-                        {state.categories && state.categories.length === 0 ? (
-                            <>
-                                <p className="text-on-background">{NoCategories}</p>
-                                <div className="not-found">
-                                    <p className="not-found-text">{CategoriesNotFound}</p>
-                                    <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
-                                </div>
-                            </>
-                        ) : <p className="text-on-background">{CategoryOrder}</p>}
-                        {state.categories.map((category, index) => {
-                            return (
-                                <SortableItem key={category.id} index={index}>
-                                    <Category
-                                        categoryItem={category}
-                                        availableCategoryHandler={availableCategoryHandler}
-                                        clickHandler={() => { categoryDetailHandler(category.id); }}
-                                    />
-                                </SortableItem>
-                            );
-                        })}
-                    </div>
-                </SortableList>
+                <>
+                    {state.categories && state.categories.length === 0 ? (
+                        <>
+                            <p className="text-on-background">{NoCategories}</p>
+                            <div className="not-found">
+                                <p className="not-found-text">{CategoriesNotFound}</p>
+                                <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
+                            </div>
+                        </>
+                    ) : <p className="text-on-background">{CategoryOrder}</p>}
+                    <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
+                        <div className="category-items">
+                            {state.categories.map((category, index) => {
+                                return (
+                                    <SortableItem key={category.id} index={index}>
+                                        <Category
+                                            categoryItem={category}
+                                            availableCategoryHandler={availableCategoryHandler}
+                                            clickHandler={() => { categoryDetailHandler(category.id); }}
+                                        />
+                                    </SortableItem>
+                                );
+                            })}
+                        </div>
+                    </SortableList>
+                </>
             ) : null}
         </div>
     );

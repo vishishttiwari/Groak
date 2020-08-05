@@ -11,6 +11,7 @@
     "emailjs-com": "^2.4.1",
     "firebase": "^7.15.5",
     "material-ui-color-picker": "^3.5.0",
+    "material-ui-search-bar": "^1.0.0",
     "node-sass": "^4.14.1",
     "notistack": "^0.8.9",
     "prop-types": "^15.7.2",
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-auto-fix": "^1.0.3",
     "eslint-config-airbnb": "^18.2.0",

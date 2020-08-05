@@ -31,6 +31,10 @@ $cardFullWidth: ($cardWidth + $cardMargin);
                 margin-bottom: $margin;
             }
 
+            .search-bar {
+                margin-bottom: $margin;
+            }
+
             .dishes {
                 display: flex;
                 flex-flow: row;

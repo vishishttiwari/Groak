@@ -55,7 +55,7 @@ const ContactUs = (props) => {
             block: 'center',
             inline: 'start',
         });
-    }, []);
+    }, [top]);
 
     /**
      * This function is used for sending data to email using php script
