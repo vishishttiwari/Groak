@@ -25,6 +25,7 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
         const restaurantDoc = await transaction.get(restaurantReference);
         const { dishes } = restaurantDoc.data();
         return Promise.all(dishes.map(async (dish) => {
+            console.log(dish);
             return transaction.get(dish);
         }));
     });

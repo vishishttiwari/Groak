@@ -44,8 +44,10 @@ export const fetchQRCodesAPI = async (restaurantId, setState, snackbar) => {
     try {
         const docs = await fetchQRCodesFirestoreAPI(restaurantId);
         docs.forEach((doc) => {
-            newQRCodes.push({ id: doc.id, ...doc.data() });
-            newQRCodesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
+            if (doc.exists) {
+                newQRCodes.push({ id: doc.id, ...doc.data() });
+                newQRCodesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
+            }
         });
         setState({ type: 'fetchQRCodes', qrCodes: newQRCodes, qrCodesMap: newQRCodesMap });
     } catch (error) {

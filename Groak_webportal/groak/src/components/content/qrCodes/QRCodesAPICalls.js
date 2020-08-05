@@ -20,8 +20,10 @@ export const fetchCategoriesAPI = async (restaurantId, setState, snackbar) => {
     try {
         const docs = await fetchCategoriesFirestoreAPI(restaurantId);
         docs.forEach((doc) => {
-            newCategoriesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
-            newCategories.push({ id: doc.id, ...doc.data() });
+            if (doc.exists) {
+                newCategoriesMap.set(doc.data().reference.path, { id: doc.id, ...doc.data() });
+                newCategories.push({ id: doc.id, ...doc.data() });
+            }
         });
         setState({ type: 'fetchCategories', categoriesMap: newCategoriesMap, categories: newCategories });
     } catch (error) {
@@ -42,7 +44,9 @@ export const fetchQRCodesAPI = async (restaurantId, setState, snackbar) => {
     try {
         const docs = await fetchQRCodesFirestoreAPI(restaurantId);
         docs.forEach((doc) => {
-            newQRCodes.push({ id: doc.id, ...doc.data() });
+            if (doc.exists) {
+                newQRCodes.push({ id: doc.id, ...doc.data() });
+            }
         });
         setState({ type: 'fetchQRCodes', qrCodes: newQRCodes });
     } catch (error) {

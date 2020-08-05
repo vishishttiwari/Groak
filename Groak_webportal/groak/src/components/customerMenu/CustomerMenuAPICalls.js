@@ -50,11 +50,13 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
                 const docs = await fetchCategoriesInArrayFirestoreAPI(data.data().categories);
 
                 docs.forEach((doc) => {
-                    const category = { id: doc.id, ...doc.data() };
-                    if (dontCheckAvailability || checkCategoryAvailability(category)) {
-                        categories.push(category);
-                        categoryNames.push(category.name);
-                        menuItems.set(doc.id, []);
+                    if (doc.exists) {
+                        const category = { id: doc.id, ...doc.data() };
+                        if (dontCheckAvailability || checkCategoryAvailability(category)) {
+                            categories.push(category);
+                            categoryNames.push(category.name);
+                            menuItems.set(doc.id, []);
+                        }
                     }
                 });
 
@@ -62,9 +64,11 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
                     const docs1 = await fetchDishesInArrayFirestoreAPI(category.dishes);
                     const dishes = [];
                     docs1.forEach((doc) => {
-                        const dish = { id: doc.id, ...doc.data() };
-                        if (dontCheckAvailability || checkDishAvailability(dish)) {
-                            dishes.push(dish);
+                        if (doc.exists) {
+                            const dish = { id: doc.id, ...doc.data() };
+                            if (dontCheckAvailability || checkDishAvailability(dish)) {
+                                dishes.push(dish);
+                            }
                         }
                     });
                     menuItems.set(category.id, dishes);

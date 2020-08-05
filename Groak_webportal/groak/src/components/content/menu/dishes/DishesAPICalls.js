@@ -16,7 +16,9 @@ export const fetchDishesAPI = async (restaurantId, setState, snackbar) => {
     try {
         const docs = await fetchDishesFirestoreAPI(restaurantId);
         docs.forEach((doc) => {
-            newDishes.push({ id: doc.id, ...doc.data() });
+            if (doc.exists) {
+                newDishes.push({ id: doc.id, ...doc.data() });
+            }
         });
         setState({ type: 'fetchDishes', dishes: newDishes });
     } catch (error) {

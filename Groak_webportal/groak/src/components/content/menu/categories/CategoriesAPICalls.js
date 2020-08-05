@@ -12,12 +12,15 @@ import { ErrorFetchingCategories, ErrorChangingAvailability, ErrorChangingCatego
  * @param {*} snackbar used for notifications
  */
 export const fetchCategoriesAPI = async (restaurantId, setState, snackbar) => {
+    const newCategories = [];
     try {
         const docs = await fetchCategoriesFirestoreAPI(restaurantId);
-        setState({ type: 'fetchCategories',
-            categories: docs.map((doc) => {
-                return { id: doc.id, ...doc.data() };
-            }) });
+        docs.forEach((doc) => {
+            if (doc.exists) {
+                newCategories.push({ id: doc.id, ...doc.data() });
+            }
+        });
+        setState({ type: 'fetchCategories', categories: newCategories });
     } catch (error) {
         snackbar(ErrorFetchingCategories, { variant: 'error' });
         setState({ type: 'error' });
