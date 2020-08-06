@@ -28,7 +28,7 @@ const CategoryUnselectedDishes = (props) => {
         if (!dish || !dish.reference || !dish.reference.path) { return false; }
         if (selectedDishesPath.includes(dish.reference.path)) { return false; }
         if (state.searchField.length <= 0) { return true; }
-        if (dish.name && dish.name.startsWith(state.searchField)) { return true; }
+        if (dish.name && dish.name.toLowerCase().startsWith(state.searchField.toLowerCase())) { return true; }
         return false;
     };
 

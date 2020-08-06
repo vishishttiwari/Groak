@@ -113,22 +113,9 @@ const QROptions = (props) => {
                 value={state.qrStylePage.textColor}
                 onChange={(color) => { setState({ type: 'setTextColor', textColor: color }); }}
             />
-            {!state.qrStylePage.useRestaurantImage || !image ? (
-                <>
-                    <p>Styles</p>
-                    <p className="submessages">To include your restaurant image, please upload your restaurany image in settings.</p>
-                    <Select
-                        native
-                        fullWidth
-                        value={state.qrStylePage.qrStyleImage}
-                        onChange={(event) => { setState({ type: 'setQRStyleImage', qrStyleImage: event.target.value }); }}
-                        input={<OutlinedInput />}
-                    >
-                        {qrImages.map((qrImage) => {
-                            return (<option key={qrImage} value={qrImage}>{qrImage.replace(/_/g, ' ')}</option>);
-                        })}
-                    </Select>
-                </>
+            <p>Styles</p>
+            {!image ? (
+                <p className="submessages">To include your restaurant image, please upload your restaurant image in settings.</p>
             ) : (
                 <FormControlLabel
                     style={{ textTransform: 'capitalize' }}
@@ -143,6 +130,17 @@ const QROptions = (props) => {
                     label="Use Restaurant Image"
                 />
             )}
+            <Select
+                native
+                fullWidth
+                value={state.qrStylePage.qrStyleImage}
+                onChange={(event) => { setState({ type: 'setQRStyleImage', qrStyleImage: event.target.value }); }}
+                input={<OutlinedInput />}
+            >
+                {qrImages.map((qrImage) => {
+                    return (<option key={qrImage} value={qrImage}>{qrImage.replace(/_/g, ' ')}</option>);
+                })}
+            </Select>
             <p>Restaurant Image Height</p>
             <Slider
                 value={state.qrStylePage.restaurantImageHeight}

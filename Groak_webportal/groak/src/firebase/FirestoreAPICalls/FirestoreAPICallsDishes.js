@@ -23,11 +23,13 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
     const restaurantReference = createRestaurantReference(restaurantId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { dishes } = restaurantDoc.data();
-        return Promise.all(dishes.map(async (dish) => {
-            console.log(dish);
-            return transaction.get(dish);
-        }));
+        if (restaurantDoc.exists) {
+            const { dishes } = restaurantDoc.data();
+            return Promise.all(dishes.map(async (dish) => {
+                return transaction.get(dish);
+            }));
+        }
+        return Promise.resolve();
     });
 };
 
@@ -56,12 +58,14 @@ export const addDishFirestoreAPI = (restaurantId, dishId, data) => {
     const dishRef = createDishReference(restaurantId, dishId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { dishes } = restaurantDoc.data();
-        if (dishes) {
-            dishes.push(dishRef);
-            transaction.update(restaurantReference, { dishes });
+        if (restaurantDoc.exists) {
+            const { dishes } = restaurantDoc.data();
+            if (dishes) {
+                dishes.push(dishRef);
+                transaction.update(restaurantReference, { dishes });
+            }
+            transaction.set(createDishReference(restaurantId, dishId), data);
         }
-        transaction.set(createDishReference(restaurantId, dishId), data);
     });
 };
 
@@ -95,13 +99,13 @@ export const deleteDishFirestoreAPI = (restaurantId, dishId, categories) => {
     const dishRef = createDishReference(restaurantId, dishId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { dishes } = restaurantDoc.data();
+        if (restaurantDoc.exists) {
+            const { dishes } = restaurantDoc.data();
 
-        categories.forEach((doc) => {
-            const category = doc.data();
-            if (category.dishes) {
-                transaction.get(category.reference).then((categoryDoc) => {
-                    const dishes1 = categoryDoc.data().dishes;
+            categories.forEach((doc) => {
+                const category = doc.data();
+                if (category.dishes) {
+                    const dishes1 = category.dishes;
                     if (dishes1) {
                         const updatedDishes = dishes1.filter((dish) => {
                             if (dish.path === dishRef.path) return false;
@@ -109,19 +113,19 @@ export const deleteDishFirestoreAPI = (restaurantId, dishId, categories) => {
                         });
                         transaction.update(category.reference, { dishes: updatedDishes });
                     }
-                });
-            }
-        });
-
-        if (dishes) {
-            const updatedDishes = dishes.filter((dish) => {
-                if (dish.path === dishRef.path) return false;
-                return true;
+                }
             });
-            transaction.update(restaurantReference, { dishes: updatedDishes });
-        }
 
-        transaction.delete(dishRef);
+            if (dishes) {
+                const updatedDishes = dishes.filter((dish) => {
+                    if (dish.path === dishRef.path) return false;
+                    return true;
+                });
+                transaction.update(restaurantReference, { dishes: updatedDishes });
+            }
+
+            transaction.delete(dishRef);
+        }
     });
 };
 

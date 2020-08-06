@@ -31,9 +31,9 @@ export const unsubscribeFetchTablesAPI = (snackbar) => {
  * @param {*} setState this is used for setting the component with initial state
  * @param {*} snackbar this is used for notifications
  */
-export const addTableAPI = async (restaurantId, table, tables, setState, snackbar) => {
+export const addTableAPI = async (restaurantId, restaurantName, table, tables, setState, snackbar) => {
     try {
-        await addTableFirestoreAPI(restaurantId, table.id, table);
+        await addTableFirestoreAPI(restaurantId, restaurantName, table.id, table);
         tables.push(table);
         setState({ type: 'addTable', tables, addTableAlert: false });
     } catch (error) {

@@ -36,23 +36,26 @@ export const fetchTableFirestoreAPI = (restaurantId, tableId) => {
  * @param {*} tableId table being added
  * @param {*} data contains information about the table
  */
-export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
+export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data) => {
     const batch = db.batch();
 
     const tableData = {
         name: data.name,
         created: getCurrentDateTime(),
         restaurantId,
+        id: tableId,
         reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
+        restaurantName,
         status: TableStatus.available,
         newRequest: false,
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: data.x,
         y: data.y,
+        qrCodes: [],
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), tableData);
@@ -63,12 +66,13 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
         dishes: [],
         items: 0,
         updated: getCurrentDateTime(),
+        status: TableStatus.available,
+        serveTime: getCurrentDateTimePlusMinutes(30),
+        newRequest: false,
+        table: data.name,
         reference: createOrderReference(restaurantId, tableId),
         restaurantReference: createRestaurantReference(restaurantId),
-        status: TableStatus.available,
-        newRequest: false,
-        serveTime: getCurrentDateTimePlusMinutes(30),
-        table: data.name,
+        restaurantName,
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
         tableOriginalReference: createTableReferenceInTableCollections(tableId),
         requestReference: createRequestReference(restaurantId, tableId),
@@ -77,6 +81,8 @@ export const addTableFirestoreAPI = (restaurantId, tableId, data) => {
     const requestData = {
         reference: createRequestReference(restaurantId, tableId),
         requests: DemoRequest,
+        restaurantReference: createRestaurantReference(restaurantId),
+        restaurantName,
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), orderData);
@@ -115,6 +121,7 @@ export const deleteTableFirestoreAPI = (restaurantId, tableId) => {
     batch.delete(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId));
     batch.delete(db.collection('tables/').doc(tableId));
     batch.delete(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId));
+    batch.delete(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId));
 
     return batch.commit();
 };

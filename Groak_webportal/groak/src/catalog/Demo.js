@@ -200,10 +200,12 @@ export const createDemoCategory = (restaurantId, restaurantName, categoryId, dis
  * @param {*} tableId id of the item to be added
  */
 export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId) => {
+    // Whenever you change anything here, also change it in FirestoreAPICallsTables in addTableFirestoreAPI
     return {
         name: DemoTableName,
         created: getCurrentDateTime(),
         restaurantId,
+        id: tableId,
         reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
         originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
@@ -228,6 +230,7 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
  * @param {*} dishId id of the dish which is placed in the order
  */
 export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) => {
+    // Whenever you change anything here, also change it in FirestoreAPICallsTables in addTableFirestoreAPI
     return {
         comments: DemoOrderComments,
         dishes: createDemoOrderDishes(restaurantId, dishId),
@@ -254,6 +257,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
  * @param {*} requestId id of the request for which order is placed. This is same as order id
  */
 export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
+    // Whenever you change anything here, also change it in FirestoreAPICallsTables in addTableFirestoreAPI
     return {
         reference: createRequestReference(restaurantId, requestId),
         restaurantReference: createRestaurantReference(restaurantId),

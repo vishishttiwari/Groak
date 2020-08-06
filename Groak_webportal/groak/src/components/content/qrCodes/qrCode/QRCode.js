@@ -7,7 +7,8 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardHeader, Button, CardContent, Typography, CardActions, TextField, Select, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
+import { Card, CardHeader, Button, CardContent, Typography, CardActions, TextField } from '@material-ui/core';
+// import { Select, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
 import { TextFieldLabelStyles, textFieldLabelProps } from '../../../../catalog/Others';
 // import { createCategoryReferenceFromPath } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { InvalidQRCodeTitle } from '../../../../catalog/NotificationsComments';
@@ -24,7 +25,8 @@ function reducer(state, action) {
 }
 
 const QRCode = (props) => {
-    const { classes, qrCodeItem, categories, categoriesMap, updateQRCodeLocallyHandler, updateQRCodePermanentlyHandler, clickHandler } = props;
+    const { classes, qrCodeItem, categoriesMap, updateQRCodeLocallyHandler, updateQRCodePermanentlyHandler, clickHandler } = props;
+    // const { categories } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
 

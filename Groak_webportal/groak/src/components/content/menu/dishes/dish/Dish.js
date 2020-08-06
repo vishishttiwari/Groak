@@ -24,11 +24,6 @@ const Dish = (props) => {
                 src={(dishItem.image) ? getImageLink(dishItem.image) : NoImage}
                 title={dishItem.name}
                 component="img"
-                onError={(e) => {
-                    setTimeout(() => {
-                        e.target.src = (dishItem.image) ? dishItem.image : NoImage;
-                    }, 5000);
-                }}
             />
             <CardContent onClick={clickHandler}>
                 <Typography variant="body2" color="textSecondary" component="p">

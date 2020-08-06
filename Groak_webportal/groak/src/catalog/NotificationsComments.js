@@ -72,7 +72,7 @@ export const ErrorDeletingTable = 'Error deleting table';
 export const TableNotFound = 'Table not found';
 export const ErrorUnsubscribingTables = 'Error unsubscribing tables';
 
-export const InvalidQRCodeTitle = 'Invalid QR code title. Please enter a valid QR code table';
+export const InvalidQRCodeTitle = 'Invalid QR code title. Please enter a valid QR code title';
 export const ErrorAddingQRCode = 'Error adding QR code';
 export const ErrorFetchingQRCodes = 'Error fetching QR codes';
 export const ErrorFetchingQRCode = 'Error fetching QR code';

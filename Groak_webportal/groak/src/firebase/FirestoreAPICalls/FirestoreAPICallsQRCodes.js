@@ -22,10 +22,13 @@ export const fetchQRCodesFirestoreAPI = (restaurantId) => {
     const restaurantReference = createRestaurantReference(restaurantId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { qrCodes } = restaurantDoc.data();
-        return Promise.all(qrCodes.map(async (qrCode) => {
-            return transaction.get(qrCode);
-        }));
+        if (restaurantDoc.exists) {
+            const { qrCodes } = restaurantDoc.data();
+            return Promise.all(qrCodes.map(async (qrCode) => {
+                return transaction.get(qrCode);
+            }));
+        }
+        return Promise.resolve();
     });
 };
 
@@ -54,12 +57,14 @@ export const addQRCodeFirestoreAPI = (restaurantId, qrCodeId, data) => {
     const qrCodeRef = createQRCodeReference(restaurantId, qrCodeId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { qrCodes } = restaurantDoc.data();
-        if (qrCodes) {
-            qrCodes.push(qrCodeRef);
-            transaction.update(restaurantReference, { qrCodes });
+        if (restaurantDoc.exists) {
+            const { qrCodes } = restaurantDoc.data();
+            if (qrCodes) {
+                qrCodes.push(qrCodeRef);
+                transaction.update(restaurantReference, { qrCodes });
+            }
+            transaction.set(createQRCodeReference(restaurantId, qrCodeId), data);
         }
-        transaction.set(createQRCodeReference(restaurantId, qrCodeId), data);
     });
 };
 
@@ -75,34 +80,36 @@ export const addQRCodeFirestoreAPI = (restaurantId, qrCodeId, data) => {
 export const deleteQRCodeFirestoreAPI = (restaurantId, qrCodeId, tables) => {
     const restaurantReference = createRestaurantReference(restaurantId);
     const qrCodeRef = createQRCodeReference(restaurantId, qrCodeId);
+
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { qrCodes } = restaurantDoc.data();
+        if (restaurantDoc.exists) {
+            const { qrCodes } = restaurantDoc.data();
 
-        tables.forEach((doc) => {
-            const table = doc.data();
-            if (table.qrcodes) {
-                transaction.get(table.reference).then((tableDoc) => {
-                    const qrCodes1 = tableDoc.data().qrcodes;
+            tables.forEach((doc) => {
+                const table = doc.data();
+                if (table.qrCodes) {
+                    const qrCodes1 = table.qrCodes;
                     if (qrCodes1) {
                         const updatedQRCodes = qrCodes1.filter((qrCode) => {
                             if (qrCode.path === qrCodeRef.path) return false;
                             return true;
                         });
-                        transaction.update(table.reference, { qrcodes: updatedQRCodes });
+                        transaction.update(table.reference, { qrCodes: updatedQRCodes });
+                        transaction.update(table.originalReference, { qrCodes: updatedQRCodes });
                     }
-                });
-            }
-        });
-
-        if (qrCodes) {
-            const updatedQRCodes = qrCodes.filter((qrCode) => {
-                if (qrCode.path === qrCodeRef.path) return false;
-                return true;
+                }
             });
-            transaction.update(restaurantReference, { qrCodes: updatedQRCodes });
-        }
 
-        transaction.delete(qrCodeRef);
+            if (qrCodes) {
+                const updatedQRCodes = qrCodes.filter((qrCode) => {
+                    if (qrCode.path === qrCodeRef.path) return false;
+                    return true;
+                });
+                transaction.update(restaurantReference, { qrCodes: updatedQRCodes });
+            }
+
+            transaction.delete(qrCodeRef);
+        }
     });
 };

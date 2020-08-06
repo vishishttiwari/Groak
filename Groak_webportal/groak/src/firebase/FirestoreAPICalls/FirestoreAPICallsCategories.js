@@ -22,10 +22,13 @@ export const fetchCategoriesFirestoreAPI = (restaurantId) => {
     const restaurantReference = createRestaurantReference(restaurantId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { categories } = restaurantDoc.data();
-        return Promise.all(categories.map(async (category) => {
-            return transaction.get(category);
-        }));
+        if (restaurantDoc.exists) {
+            const { categories } = restaurantDoc.data();
+            return Promise.all(categories.map(async (category) => {
+                return transaction.get(category);
+            }));
+        }
+        return Promise.resolve();
     });
 };
 
@@ -54,12 +57,14 @@ export const addCategoryFirestoreAPI = (restaurantId, categoryId, data) => {
     const categoryRef = createCategoryReference(restaurantId, categoryId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { categories } = restaurantDoc.data();
-        if (categories) {
-            categories.push(categoryRef);
-            transaction.update(restaurantReference, { categories });
+        if (restaurantDoc.exists) {
+            const { categories } = restaurantDoc.data();
+            if (categories) {
+                categories.push(categoryRef);
+                transaction.update(restaurantReference, { categories });
+            }
+            transaction.set(createCategoryReference(restaurantId, categoryId), data);
         }
-        transaction.set(createCategoryReference(restaurantId, categoryId), data);
     });
 };
 
@@ -85,13 +90,13 @@ export const deleteCategoryFirestoreAPI = (restaurantId, categoryId, qrCodes) =>
     const categoryRef = createCategoryReference(restaurantId, categoryId);
     return db.runTransaction(async (transaction) => {
         const restaurantDoc = await transaction.get(restaurantReference);
-        const { categories } = restaurantDoc.data();
+        if (restaurantDoc.exists) {
+            const { categories } = restaurantDoc.data();
 
-        qrCodes.forEach((doc) => {
-            const qrCode = doc.data();
-            if (qrCode.categories) {
-                transaction.get(qrCode.reference).then((qrCodeDoc) => {
-                    const categories1 = qrCodeDoc.data().categories;
+            qrCodes.forEach((doc) => {
+                const qrCode = doc.data();
+                if (qrCode.categories) {
+                    const categories1 = qrCode.categories;
                     if (categories1) {
                         const updatedCategories = categories1.filter((category) => {
                             if (category.path === categoryRef.path) return false;
@@ -99,19 +104,19 @@ export const deleteCategoryFirestoreAPI = (restaurantId, categoryId, qrCodes) =>
                         });
                         transaction.update(qrCode.reference, { categories: updatedCategories });
                     }
-                });
-            }
-        });
-
-        if (categories) {
-            const updatedCategories = categories.filter((category) => {
-                if (category.path === categoryRef.path) return false;
-                return true;
+                }
             });
-            transaction.update(restaurantReference, { categories: updatedCategories });
-        }
 
-        transaction.delete(categoryRef);
+            if (categories) {
+                const updatedCategories = categories.filter((category) => {
+                    if (category.path === categoryRef.path) return false;
+                    return true;
+                });
+                transaction.update(restaurantReference, { categories: updatedCategories });
+            }
+
+            transaction.delete(categoryRef);
+        }
     });
 };
 

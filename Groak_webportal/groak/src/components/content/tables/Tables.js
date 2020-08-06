@@ -74,7 +74,7 @@ const Tables = () => {
             x: 0,
             y: 0,
         };
-        await addTableAPI(globalState.restaurantId, newTable, newTables, setState, enqueueSnackbar);
+        await addTableAPI(globalState.restaurantId, globalState.restaurant.name, newTable, newTables, setState, enqueueSnackbar);
     };
 
     /**

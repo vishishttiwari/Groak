@@ -126,6 +126,7 @@ export const addQRCodeAPI = async (restaurantId, newQRCodeId, newQRCode, snackba
 
 /**
  * Used for deleting QR Code
+ *
  * @param {*} restaurantId id of the restaurant
  * @param {*} qrCodeId id of the qr code that needs to be deleted
  * @param {*} snackbar used for notifications

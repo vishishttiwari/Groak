@@ -83,10 +83,10 @@ const CustomerMenu = (props) => {
             inline: 'start',
         });
         async function fetchDishes() {
-            await fetchCategoriesAPI(match.params.id1, match.params.id2 === frontDoorQRMenuPageId, match.params.id3, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(match.params.id1, match.params.id3, match.params.id2 === frontDoorQRMenuPageId, setState, enqueueSnackbar);
         }
         fetchDishes();
-    }, [enqueueSnackbar, match.params.id1]);
+    }, [enqueueSnackbar]);
 
     return (
         <div className="customerMenu">

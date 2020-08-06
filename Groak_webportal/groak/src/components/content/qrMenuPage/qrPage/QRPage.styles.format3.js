@@ -25,8 +25,8 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             color: `${textColor}`,
         },
         titleView: {
-            height: includeTable ? '20%' : '30%',
-            maxHeight: includeTable ? '20%' : '30%',
+            height: '20%',
+            maxHeight: '20%',
             width: '100%',
         },
         restaurantTitle: {
@@ -51,14 +51,15 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             height: '100%',
             width: `${width}%`,
             objectFit: 'cover',
-            objectPosition: '0% 100%',
+            objectPosition: '50% 100%',
             margin: 0,
             marginLeft: 'auto',
             marginRight: 'auto',
             padding: 0,
         },
         qrCodes: {
-            height: `${70 - height}%`,
+            height: includeTable ? `${68 - height}%` : `${78 - height}%`,
+            maxHeight: includeTable ? `${68 - height}%` : `${78 - height}%`,
             width: '100%',
             display: 'flex',
             flexDirection: 'row',

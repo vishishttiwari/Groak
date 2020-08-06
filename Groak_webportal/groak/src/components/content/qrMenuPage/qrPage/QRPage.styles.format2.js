@@ -50,7 +50,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             height: '100%',
             width: `${width}%`,
             objectFit: 'cover',
-            objectPosition: '0% 100%',
+            objectPosition: '50% 100%',
             margin: 0,
             marginLeft: 'auto',
             marginRight: 'auto',

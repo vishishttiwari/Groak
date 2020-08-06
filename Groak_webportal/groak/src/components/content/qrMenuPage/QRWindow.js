@@ -26,7 +26,7 @@ function reducer(state, action) {
         case 'fetchTable':
             return { ...state, table: action.table, loadingSpinner: false };
         case 'setQRCodesInTable':
-            return { ...state, table: { ...state.table, qrCodes: action.qrCodes, saved: false } };
+            return { ...state, table: { ...state.table, qrCodes: action.qrCodes }, saved: false };
         case 'setFormat':
             newQRStylePage = { ...state.qrStylePage, format: action.format };
             return { ...state, qrStylePage: newQRStylePage, saved: false, showPDF: false };
@@ -97,7 +97,7 @@ const QRWindow = (props) => {
         } else {
             fetchQRCodesAndTable();
         }
-    }, []);
+    }, [globalState.restaurantId, match.params.id, enqueueSnackbar]);
 
     /**
      * This function is called for going back
