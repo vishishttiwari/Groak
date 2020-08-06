@@ -51,4 +51,10 @@
 .heading .button:hover {
   background-color: #00631e;
 }
+
+@media (max-width: 700px) {
+  .heading .button {
+    margin: auto;
+  }
+}
 /*# sourceMappingURL=Heading.css.map */

@@ -11,7 +11,7 @@ import ColorPicker from 'material-ui-color-picker';
 
 import QRPage from './qrPage/QRPage';
 import { getFonts, getQRStyleImages, frontDoorQRMenuPageId } from '../../../catalog/Others';
-import { IncludeLogoMessage } from '../../../catalog/Comments';
+import { IncludeLogoMessage, RerenderPDF, IncludeRestaurantImage } from '../../../catalog/Comments';
 import Spinner from '../../ui/spinner/Spinner';
 
 const QROptions = (props) => {
@@ -43,7 +43,7 @@ const QROptions = (props) => {
     return (
         <form>
             <p>Format</p>
-            <p className="submessages">Rerender pdf whenever you change format to see any changes</p>
+            <p className="submessages">{RerenderPDF}</p>
             <Select
                 native
                 fullWidth
@@ -115,7 +115,7 @@ const QROptions = (props) => {
             />
             <p>Styles</p>
             {!image ? (
-                <p className="submessages">To include your restaurant image, please upload your restaurant image in settings.</p>
+                <p className="submessages">{IncludeRestaurantImage}</p>
             ) : (
                 <FormControlLabel
                     style={{ textTransform: 'capitalize' }}

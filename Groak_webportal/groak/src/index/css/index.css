@@ -63,6 +63,13 @@ html body .card {
   cursor: pointer;
 }
 
+@media (max-width: 700px) {
+  html body .card {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+}
+
 html body .card .subtopics {
   margin-left: 20px;
   text-transform: capitalize;
@@ -145,6 +152,7 @@ html body form p {
 
 html body h1 {
   margin: 0px;
+  text-align: center;
   padding: 20px;
   font-size: 40px;
   font-weight: 500;

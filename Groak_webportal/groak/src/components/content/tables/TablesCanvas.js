@@ -74,15 +74,20 @@ const TablesCanvas = (props) => {
         <div className="tables-canvas">
             {tables.map((table) => {
                 return (
-                    <div key={table.id} onClick={() => { clickHandler(table.status, table.id); }}>
+                    <div
+                        key={table.id}
+                        onTouchEnd={() => { clickHandler(table.status, table.id); }}
+                        onClick={() => { clickHandler(table.status, table.id); }}
+                    >
                         <Draggable
+                            enableUserSelectHack={false}
                             bounds={{ top: 0, left: 0, right: 1130, bottom: 700 }}
                             position={{ x: table.x, y: table.y }}
                             onDrag={(event, move) => { dragHandler(move, table.id); }}
                             onStop={(event) => { dragLeaveHandler(event, table.id); }}
                             grid={[10, 10]}
                         >
-                            <div><Table table={table} /></div>
+                            <div onMouseDown={(event) => { event.stopPropagation(); }}><Table table={table} /></div>
                         </Draggable>
                     </div>
                 );

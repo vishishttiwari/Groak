@@ -26,7 +26,7 @@
 .settings form .restaurant-settings .upload-image-button-label {
   height: 0;
   width: 0;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .settings form .restaurant-settings .image-container {
@@ -42,6 +42,12 @@
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+@media (max-width: 700px) {
+  .settings form .restaurant-settings .image-container {
+    width: 90%;
+  }
 }
 
 .settings form .restaurant-settings img {

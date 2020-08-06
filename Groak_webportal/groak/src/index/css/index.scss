@@ -40,6 +40,11 @@ html {
             user-select: none;
             cursor: pointer;
 
+            @media (max-width: $phoneMaxWidth) {
+                margin: auto;
+                margin-bottom: $cardMargin;
+            }
+
             .subtopics {
                 margin-left: $commentMarginLeft;
                 text-transform: capitalize;
@@ -102,6 +107,7 @@ html {
 
         h1 {
             margin: 0px;
+            text-align: center;
             padding: $padding;
             font-size: 40px;
             font-weight: 500;

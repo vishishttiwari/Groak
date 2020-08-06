@@ -5,7 +5,6 @@ import { SnackbarProvider } from 'notistack';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-const Layout = lazy(() => { return import('../components/layout/Layout'); });
 const HomePage = lazy(() => { return import('../components/homepage/HomePage'); });
 const PrivacyPolicy = lazy(() => { return import('../components/homepage/PrivacyPolicy'); });
 const ContactUs = lazy(() => { return import('../components/contactus/ContactUs'); });
@@ -27,6 +26,7 @@ const QRCodes = lazy(() => { return import('../components/content/qrCodes/QRCode
 const QRCodesDetails = lazy(() => { return import('../components/content/qrCodes/qrCodeDetails/QRCodeDetails'); });
 
 import { defaultState, reducer, Provider } from '../globalState/globalState';
+import Layout from '../components/layout/Layout';
 import BottomSection from '../components/homepage/BottomSection';
 import Spinner from '../components/ui/spinner/Spinner';
 
@@ -51,8 +51,8 @@ function App() {
                 <SnackbarProvider maxSnack={10}>
                     <ThemeProvider theme={theme}>
                         <Provider value={{ globalState, setGlobalState }}>
-                            <Suspense fallback={<Spinner show />}>
-                                <Layout allowedURLSegments={['privacypolicy', 'customermenu', 'signin', 'signup', 'contactus', 'requestademo']}>
+                            <Layout allowedURLSegments={['privacypolicy', 'customermenu', 'signin', 'signup', 'contactus', 'requestademo']}>
+                                <Suspense fallback={<Spinner show />}>
                                     <Switch>
                                         <Route path="/privacypolicy" exact render={() => { return <PrivacyPolicy />; }} />
                                         <Route path="/contactus" exact render={() => { return <ContactUs />; }} />
@@ -79,8 +79,8 @@ function App() {
                                         <Route render={() => { return <Redirect to={{ pathname: '/' }} />; }} />
                                     </Switch>
                                     <BottomSection />
-                                </Layout>
-                            </Suspense>
+                                </Suspense>
+                            </Layout>
                         </Provider>
                     </ThemeProvider>
                 </SnackbarProvider>

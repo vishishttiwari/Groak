@@ -37,6 +37,8 @@ export const ShowTableMessage = 'You can press the barcode button to get the bar
 export const AddTableMessage = 'Enter table name. You can press the barcode button to get the barcode for this table.';
 
 export const IncludeLogoMessage = 'To include your logo, please upload your logo in settings.';
+export const RerenderPDF = 'Rerender pdf whenever you change format to see any changes.';
+export const IncludeRestaurantImage = 'To include your restaurant image, please upload your restaurant image in settings.';
 
 export const TablesDesc = 'Tables that are currently in use cannot be updated. Wait for the tables to be available to edit them. Click available tables to edit them and non-available tables to see orders at that table.';
 export const TableAvailable = 'Table is available for customers';
