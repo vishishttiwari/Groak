@@ -1,6 +1,10 @@
 package com.groak.groak.catalog;
 
+import com.google.firebase.Timestamp;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TimeCatalog {
     public static String getDay() {
@@ -27,11 +31,21 @@ public class TimeCatalog {
         return "";
     }
 
+    public static String getTimeFromTimestamp(Timestamp timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+        Date dt = timestamp.toDate();
+        return sdf.format(dt);
+    }
+
     public static int getTimeInMinutes() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
 
         return 60*hour + minute;
+    }
+
+    public static Timestamp addThirtyMinutesToTimestamp() {
+        return Timestamp.now();
     }
 }

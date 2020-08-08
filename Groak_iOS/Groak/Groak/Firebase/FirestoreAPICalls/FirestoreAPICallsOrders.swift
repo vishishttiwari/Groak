@@ -159,7 +159,6 @@ internal class FirestoreAPICallsOrders {
                 return nil
             }
             
-            
             var newComments: [[String: Any]] = []
             for comment in savedOrder.comments {
                 newComments.append(comment.dictionary)

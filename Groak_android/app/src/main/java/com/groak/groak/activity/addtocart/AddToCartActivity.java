@@ -3,12 +3,8 @@ package com.groak.groak.activity.addtocart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -33,9 +29,9 @@ import com.groak.groak.catalog.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.DishDeserializer;
-import com.groak.groak.restaurantobject.dish.cart.CartDish;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtra;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtraOption;
+import com.groak.groak.restaurantobject.cart.CartDish;
+import com.groak.groak.restaurantobject.cart.CartDishExtra;
+import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
 import com.groak.groak.restaurantobject.dish.dishextra.DishExtra;
 
 import java.util.ArrayList;
@@ -108,7 +104,6 @@ public class AddToCartActivity extends Activity {
                     cartDish.addExtra(cartDishExtra);
                 }
                 if (specialInstructions != null && specialInstructions.getSpecialInstructions().getText() != null && specialInstructions.getSpecialInstructions().getText().toString() != null && specialInstructions.getSpecialInstructions().getText().toString().length() != 0) {
-                    System.out.println(specialInstructions.getSpecialInstructions().getText().toString());
                     CartDishExtraOption specialInstructionsOption = new CartDishExtraOption(specialInstructions.getSpecialInstructions().getText().toString(), 0, 0);
                     ArrayList<CartDishExtraOption> optionList = new ArrayList<>();
                     optionList.add(specialInstructionsOption);

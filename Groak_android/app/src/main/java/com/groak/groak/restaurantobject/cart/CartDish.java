@@ -1,4 +1,4 @@
-package com.groak.groak.restaurantobject.dish.cart;
+package com.groak.groak.restaurantobject.cart;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.gson.Gson;
@@ -10,7 +10,6 @@ import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.dishextra.DishExtra;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CartDish {
     private String name;
@@ -55,7 +54,6 @@ public class CartDish {
             this.pricePerItem = json.get("priceperitem").getAsDouble();
         if (json.get("extras") != null)
             this.extras = gson.fromJson(json.get("extras").getAsJsonArray(), new TypeToken<ArrayList<CartDishExtra>>(){}.getType());
-        System.out.println(this.pricePerItem);
     }
 
     public CartDish(String name, DocumentReference dishReference, int quantity, double pricePerItem, ArrayList<CartDishExtra> extras) {

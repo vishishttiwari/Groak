@@ -14,7 +14,7 @@ import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakheader.GroakFragmentHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.dish.cart.Cart;
+import com.groak.groak.restaurantobject.cart.Cart;
 
 public class CartHeader extends GroakFragmentHeader {
 
@@ -39,7 +39,6 @@ public class CartHeader extends GroakFragmentHeader {
             @Override
             public void onClick(View view) {
                 if (LocalRestaurant.cart.getDishes().size() > 0 || LocalRestaurant.cart.getComment().length() > 0) {
-                    LocalRestaurant.cart = new Cart();
                     Catalog.alert(getContext(), "Delete Cart", "Would you like to empty the cart?", new GroakCallback() {
                         @Override
                         public void onSuccess(Object object) {

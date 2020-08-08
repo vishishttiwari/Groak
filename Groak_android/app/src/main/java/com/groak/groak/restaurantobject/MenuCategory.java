@@ -35,8 +35,8 @@ public class MenuCategory {
         this.name = (String)map.get("name");
         this.dishesReference = (ArrayList<DocumentReference>)map.get("dishes");
         this.daysAvailable = (ArrayList<String>)map.get("days");
-        this.startTime = (long)map.get("startTime");
-        this.endTime = (long)map.get("endTime");
+//        this.startTime = (long)map.get("startTime");
+//        this.endTime = (long)map.get("endTime");
         this.available = (boolean)map.get("available");
         downloadDishes(callback);
     }

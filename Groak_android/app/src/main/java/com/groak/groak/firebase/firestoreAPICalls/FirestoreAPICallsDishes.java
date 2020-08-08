@@ -14,16 +14,16 @@ public class FirestoreAPICallsDishes {
         dishRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        callback.onSuccess(new Dish(document.getData()));
-                    } else {
-                        callback.onFailure(new Exception("No such document"));
-                    }
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    callback.onSuccess(new Dish(document.getData()));
                 } else {
-                    callback.onFailure(new Exception(task.getException()));
+                    callback.onFailure(new Exception("No such document"));
                 }
+            } else {
+                callback.onFailure(new Exception(task.getException()));
+            }
             }
         });
     }

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtra;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtraOption;
+import com.groak.groak.restaurantobject.cart.CartDishExtra;
+import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
 import com.groak.groak.restaurantobject.dish.dishextra.DishExtra;
 import com.groak.groak.restaurantobject.dish.dishextra.dishextraoption.DishExtraOption;
 

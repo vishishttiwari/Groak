@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtra;
-import com.groak.groak.restaurantobject.dish.cart.CartDishExtraOption;
+import com.groak.groak.restaurantobject.cart.CartDishExtra;
+import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
+import com.groak.groak.restaurantobject.order.OrderDishExtra;
+import com.groak.groak.restaurantobject.order.OrderDishExtraOption;
 
 import java.util.ArrayList;
 
@@ -77,7 +76,7 @@ public class Catalog {
         return String.format( "%.0fkCal", price );
     }
 
-    // This function is used to show all the xtras selected for a dish in cart and in order
+    // This function is used to show all the extras selected for a dish in cart and in order
     public static String showExtras(ArrayList<CartDishExtra> dishExtras, boolean showSpecialInstructions) {
         String str = "";
         for (CartDishExtra extra: dishExtras) {
@@ -91,6 +90,35 @@ public class Catalog {
                     if (showSpecialInstructions) {
                         str += "Special Instructions:\n";
                         for (CartDishExtraOption option: extra.getOptions()) {
+                            str += "\t\t\t-" + option.getTitle() + ": " + Catalog.priceInString(option.getPrice()) + "\n";
+                        }
+                    }
+                }
+            }
+        }
+
+        if (str.length() > 2) {
+            if (str.endsWith("\n"))
+                return str.substring(0, str.length() - 1);
+            else
+                return str;
+        } else {
+            return str;
+        }
+    }
+    public static String showExtras(ArrayList<OrderDishExtra> dishExtras, boolean showSpecialInstructions, boolean order) {
+        String str = "";
+        for (OrderDishExtra extra: dishExtras) {
+            if (extra.getOptions().size() > 0) {
+                if (!extra.getTitle().equals(Catalog.specialInstructionsId)) {
+                    str += extra.getTitle() + ":\n";
+                    for (OrderDishExtraOption option: extra.getOptions()) {
+                        str += "\t\t\t-" + option.getTitle() + ": " + Catalog.priceInString(option.getPrice()) + "\n";
+                    }
+                } else {
+                    if (showSpecialInstructions) {
+                        str += "Special Instructions:\n";
+                        for (OrderDishExtraOption option: extra.getOptions()) {
                             str += "\t\t\t-" + option.getTitle() + ": " + Catalog.priceInString(option.getPrice()) + "\n";
                         }
                     }

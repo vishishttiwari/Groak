@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.dish.DishActivity" />
+        <activity android:name=".activity.receipt.ReceiptActivity" />
         <activity
             android:name=".activity.addtocart.AddToCartActivity"
             android:clickable="true"
@@ -38,6 +39,7 @@
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <dist:module dist:instant="true" />
 

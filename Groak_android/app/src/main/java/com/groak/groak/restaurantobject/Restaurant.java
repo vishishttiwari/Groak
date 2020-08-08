@@ -30,8 +30,8 @@ public class Restaurant {
         this.address = (HashMap<String, Object>)map.get("address");
         this.latitude = (double)address.get("latitude");
         this.longitude = (double)address.get("longitude");
-        this.maximumOccupancy = (long)map.get("maximumOccupancy");
-        this.currentOccupancy = (long)map.get("currentOccupancy");
+//        this.maximumOccupancy = (long)map.get("maximumOccupancy");
+//        this.currentOccupancy = (long)map.get("currentOccupancy");
         this.occupancy = (HashMap<String, Integer>)map.get("occupancy");
         this.covidGuidelines = (String)map.get("covidGuidelines");
         this.covidMessage = (String)map.get("covidMessage");
@@ -77,15 +77,22 @@ public class Restaurant {
         return covidMessage;
     }
 
+    @Override
     public String toString() {
-        String str = "";
-        str += "Reference: " + reference + "\n";
-        str += "Name: " + name + "\n";
-        str += "Address: " + address + "\n";
-        str += "Latitude: " + latitude + "\n";
-        str += "Longitude: " + longitude + "\n";
-        str += "Occupancy: " + occupancy + "\n";
-        str += "Sales Tax: " + salesTax + "\n";
-        return str;
+        return "Restaurant{" +
+                "reference=" + reference +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", logo='" + logo + '\'' +
+                ", salesTax=" + salesTax +
+                ", address=" + address +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", maximumOccupancy=" + maximumOccupancy +
+                ", currentOccupancy=" + currentOccupancy +
+                ", occupancy=" + occupancy +
+                ", covidGuidelines='" + covidGuidelines + '\'' +
+                ", covidMessage='" + covidMessage + '\'' +
+                '}';
     }
 }

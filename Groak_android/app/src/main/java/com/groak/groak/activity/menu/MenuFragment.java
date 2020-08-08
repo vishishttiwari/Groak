@@ -20,8 +20,11 @@ import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.RecyclerViewHeader;
 import com.groak.groak.catalog.groakheader.GroakFragmentHeader;
-import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurant;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.restaurantobject.Restaurant;
+import com.groak.groak.restaurantobject.Table;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.MenuCategory;
 
@@ -50,10 +53,11 @@ public class MenuFragment extends Fragment {
     }
 
     private void getCategories() {
-        FirestoreAPICallsRestaurant.fetchRestaurantFirestoreAPI("qEjskvc26YXGs2DUyZ5Me8yWBUD3", new GroakCallback() {
+        FirestoreAPICallsRestaurants.fetchRestaurantFirestoreAPI("oTuolY9ebBObRgxhmxRYboyGifv1", new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                FirestoreAPICallsRestaurant.fetchRestaurantCategoriesAndDishesFirestoreAPI(new GroakCallback() {
+                LocalRestaurant.restaurant = (Restaurant)object;
+                FirestoreAPICallsRestaurants.fetchRestaurantCategoriesAndDishesFirestoreAPI(new GroakCallback() {
                     @Override
                     public void onSuccess(Object object) {
                         categories = (ArrayList<MenuCategory>) object;
@@ -68,6 +72,16 @@ public class MenuFragment extends Fragment {
                     public void onFailure(Exception e) {
                     }
                 });
+            }
+            @Override
+            public void onFailure(Exception e) {
+            }
+        });
+
+        FirestoreAPICallsTables.fetchTableFirestoreAPI("r18cb7350q82598q0cczmo", new GroakCallback() {
+            @Override
+            public void onSuccess(Object object) {
+                LocalRestaurant.setTable((Table)object);
             }
             @Override
             public void onFailure(Exception e) {

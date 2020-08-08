@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.groak.groak.activity.cart.CartFragment;
+import com.groak.groak.activity.covid.CovidFragment;
 import com.groak.groak.activity.menu.MenuFragment;
+import com.groak.groak.activity.order.OrderFragment;
 
 public class TabbarViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -23,15 +25,15 @@ public class TabbarViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new CartFragment();
             case 2:
-                return new CartFragment();
+                return new OrderFragment();
             case 3:
-                return new CartFragment();
+                return new CovidFragment();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

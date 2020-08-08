@@ -13,8 +13,8 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 public class SpecialInstructions extends ConstraintLayout {
 
-    private RecyclerViewHeader specialInstructionsHeader;
-    private EditText specialInstructions;
+    protected RecyclerViewHeader specialInstructionsHeader;
+    protected EditText specialInstructions;
 
     public SpecialInstructions(Context context) {
         super(context);
@@ -67,5 +67,9 @@ public class SpecialInstructions extends ConstraintLayout {
         set1.constrainHeight(specialInstructions.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.applyTo(this);
+    }
+
+    public String getText() {
+        return specialInstructions.getText().toString();
     }
 }

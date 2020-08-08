@@ -1,4 +1,4 @@
-package com.groak.groak.restaurantobject.dish.cart;
+package com.groak.groak.restaurantobject.cart;
 
 import com.groak.groak.restaurantobject.dish.dishextra.dishextraoption.DishExtraOption;
 

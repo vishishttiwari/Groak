@@ -1,4 +1,4 @@
-package com.groak.groak.restaurantobject.dish.cart;
+package com.groak.groak.restaurantobject.cart;
 
 import java.util.ArrayList;
 
@@ -23,6 +23,9 @@ public class Cart {
 
     public String getComment() {
         return comment;
+    }
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void addDish(CartDish cartDish) {

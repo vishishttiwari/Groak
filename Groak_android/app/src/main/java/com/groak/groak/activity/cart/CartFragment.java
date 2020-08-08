@@ -15,13 +15,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.RecyclerViewHeader;
 import com.groak.groak.catalog.SpecialInstructions;
 import com.groak.groak.catalog.groakfooter.GroakFooterWithPrice;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.restaurantobject.cart.Cart;
 
 public class CartFragment extends Fragment {
 
@@ -36,6 +39,7 @@ public class CartFragment extends Fragment {
     private RecyclerView cartView;
 
     private SpecialInstructions specialInstructions;
+    private RecyclerView specialInstructionsView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class CartFragment extends Fragment {
 
     public void refresh() {
         ((CartRecyclerViewAdapter)cartView.getAdapter()).refresh();
-        if (LocalRestaurant.cart.getDishes().size() == 0) {
+        if (LocalRestaurant.cart != null && LocalRestaurant.cart.getDishes().size() == 0) {
             cartViewHeader.setVisibility(View.GONE);
             cartView.setVisibility(View.GONE);
             specialInstructions.setVisibility(View.GONE);
@@ -77,7 +81,10 @@ public class CartFragment extends Fragment {
         cartHeader = new CartHeader(getContext(), "Your Cart", new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                refresh();
+                if (((String)object).equals("delete")) {
+                    LocalRestaurant.cart = new Cart();
+                    refresh();
+                }
             }
             @Override
             public void onFailure(Exception e) {
@@ -89,6 +96,19 @@ public class CartFragment extends Fragment {
         cartFooter = new GroakFooterWithPrice(getContext(), "Order", LocalRestaurant.calculateCartTotalPrice(), new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
+                LocalRestaurant.cart.setComment(specialInstructions.getText());
+                FirestoreAPICallsOrders.addOrdersFirestoreAPI(getContext(), new GroakCallback() {
+                    @Override
+                    public void onSuccess(Object object) {
+                        LocalRestaurant.cart = new Cart();
+                        refresh();
+                        Catalog.toast(getContext(), "Order placed successfully");
+                    }
+                    @Override
+                    public void onFailure(Exception e) {
+                        Catalog.toast(getContext(), "Error placing order. Please try again");
+                    }
+                });
             }
             @Override
             public void onFailure(Exception e) {
@@ -96,6 +116,7 @@ public class CartFragment extends Fragment {
         });
         cartFooter.setId(View.generateViewId());
         cartFooter.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        cartFooter.setVisibility(View.GONE);
 
         scrollView = new NestedScrollView(getContext());
         scrollView.setId(View.generateViewId());
@@ -111,6 +132,7 @@ public class CartFragment extends Fragment {
         cartViewHeader = new RecyclerViewHeader(getContext(), "Cart", "");
         cartViewHeader.setId(View.generateViewId());
         cartViewHeader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        cartViewHeader.setVisibility(View.GONE);
 
         cartView = new RecyclerView(getContext());
         cartView.setId(View.generateViewId());
@@ -120,10 +142,12 @@ public class CartFragment extends Fragment {
         cartView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         cartView.setNestedScrollingEnabled(false);
         cartView.setBackgroundColor(ColorsCatalog.whiteColor);
+        cartView.setVisibility(View.GONE);
 
         specialInstructions = new SpecialInstructions(getContext());
         specialInstructions.setId(View.generateViewId());
         specialInstructions.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        specialInstructions.setVisibility(View.GONE);
 
         scrollViewLayout.addView(cartViewHeader);
         scrollViewLayout.addView(cartView);

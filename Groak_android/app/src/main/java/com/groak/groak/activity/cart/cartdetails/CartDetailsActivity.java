@@ -3,12 +3,9 @@ package com.groak.groak.activity.cart.cartdetails;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -28,7 +25,7 @@ import com.groak.groak.catalog.SpecialInstructions;
 import com.groak.groak.catalog.groakfooter.GroakFooterWithPriceAndQuantity;
 import com.groak.groak.catalog.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.dish.cart.CartDish;
+import com.groak.groak.restaurantobject.cart.CartDish;
 
 import java.util.ArrayList;
 
@@ -56,7 +53,6 @@ public class CartDetailsActivity extends Activity {
         Intent i = getIntent();
         position = i.getIntExtra("position", 0);
         dish = LocalRestaurant.cart.getDishes().get(position);
-        System.out.println(dish.getPricePerItem());
 
         setupViews();
 

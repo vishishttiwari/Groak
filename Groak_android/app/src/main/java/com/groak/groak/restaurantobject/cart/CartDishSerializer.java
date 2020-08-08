@@ -1,4 +1,4 @@
-package com.groak.groak.restaurantobject.dish.cart;
+package com.groak.groak.restaurantobject.cart;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

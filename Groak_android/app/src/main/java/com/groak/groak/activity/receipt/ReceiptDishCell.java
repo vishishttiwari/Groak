@@ -1,4 +1,4 @@
-package com.groak.groak.activity.cart;
+package com.groak.groak.activity.receipt;
 
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -15,21 +15,23 @@ import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
-import com.groak.groak.restaurantobject.cart.CartDish;
+import com.groak.groak.catalog.LocalBadgeView;
+import com.groak.groak.catalog.TimeCatalog;
+import com.groak.groak.restaurantobject.order.OrderDish;
 
-public class CartDishCell extends RecyclerView.ViewHolder {
+public class ReceiptDishCell extends RecyclerView.ViewHolder {
     private ConstraintLayout layout;
 
     private TextView dishQuantity;
     private TextView dishName;
     private TextView dishPrice;
-    private TextView dishDetails;
+    private TextView created;
+    private LocalBadgeView localBadgeView;
 
     private int titleDimensions = 20;
-    private int otherDimensions = 20;
     private int infoDimensions = 15;
 
-    public CartDishCell(ConstraintLayout layout) {
+    public ReceiptDishCell(ConstraintLayout layout) {
         super(layout);
 
         this.layout = layout;
@@ -38,11 +40,13 @@ public class CartDishCell extends RecyclerView.ViewHolder {
         setupInitialLayout();
     }
 
-    public void setDish(CartDish dish) {
-        dishQuantity.setText(Integer.toString(dish.getQuantity()));
+    public void setDish(OrderDish dish) {
+        dishQuantity.setText(Long.toString(dish.getQuantity()));
         dishName.setText(dish.getName());
         dishPrice.setText(Catalog.priceInString(dish.getPrice()));
-        dishDetails.setText(Catalog.showExtras(dish.getExtras(), true));
+        if (dish.isLocal()) localBadgeView.setVisibility(View.VISIBLE);
+        else localBadgeView.setVisibility(View.GONE);
+        created.setText(TimeCatalog.getTimeFromTimestamp(dish.getCreated()));
     }
 
     private void setupViews() {
@@ -72,18 +76,24 @@ public class CartDishCell extends RecyclerView.ViewHolder {
         dishPrice.setTextColor(ColorsCatalog.blackColor);
         dishPrice.setGravity(Gravity.RIGHT);
 
-        dishDetails = new TextView(layout.getContext());
-        dishDetails.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        dishDetails.setId(View.generateViewId());
-        dishDetails.setTextSize(infoDimensions);
-        dishDetails.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
-        dishDetails.setTextColor(ColorsCatalog.blackColor);
-        dishDetails.setGravity(Gravity.LEFT);
+        localBadgeView = new LocalBadgeView(layout.getContext(), true);
+        localBadgeView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        localBadgeView.setId(View.generateViewId());
+
+        created = new TextView(layout.getContext());
+        created.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        created.setId(View.generateViewId());
+        created.setTextSize(infoDimensions);
+        created.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
+        created.setTextColor(ColorsCatalog.blackColor);
+        created.setGravity(Gravity.RIGHT);
+        created.setGravity(Gravity.CENTER_VERTICAL);
 
         layout.addView(dishQuantity);
         layout.addView(dishName);
         layout.addView(dishPrice);
-        layout.addView(dishDetails);
+        layout.addView(localBadgeView);
+        layout.addView(created);
     }
 
     private void setupInitialLayout() {
@@ -105,11 +115,16 @@ public class CartDishCell extends RecyclerView.ViewHolder {
         set.centerVertically(dishPrice.getId(), dishQuantity.getId());
         set.constrainHeight(dishPrice.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishDetails.getId(), ConstraintSet.TOP, dishQuantity.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishDetails.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishDetails.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishDetails.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
-        set.constrainHeight(dishDetails.getId(), ConstraintSet.WRAP_CONTENT);
+        set.connect(localBadgeView.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(localBadgeView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(localBadgeView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.constrainHeight(localBadgeView.getId(), 100);
+        set.constrainWidth(localBadgeView.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(created.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(created.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(created.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.constrainWidth(created.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);
     }
