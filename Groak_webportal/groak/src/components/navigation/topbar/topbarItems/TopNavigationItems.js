@@ -11,7 +11,7 @@ import DropDownNavigationItems from './DropDownNavigationItems';
 const TopNavigationItems = () => {
     const { globalState } = useContext(context);
 
-    const NAV_OPTIONS_IF_AUTHENTICATED = ['Orders', 'Tables', 'Menu', 'QR codes', 'Settings'];
+    const NAV_OPTIONS_IF_AUTHENTICATED = ['Orders', 'Tables', 'Menu', 'Settings'];
     const NAV_OPTIONS_IF_NOT_AUTHENTICATED = ['Sign in', 'Contact us'];
 
     return (

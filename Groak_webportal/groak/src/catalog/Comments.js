@@ -21,11 +21,11 @@ export const DishVegan = 'Is this dish Vegan?';
 export const DishGlutenFree = 'Is this dish Gluten-free?';
 export const DishKosher = 'Is this dish Kosher?';
 
-export const QRCodesOrder = 'QR Codes will be shown in the same order as below. To change order, drag and drop each qr code card.';
+export const QRCodesOrder = 'QR Codes will be shown in the same order as below. To change order, toggle the change order switch and then drag and drop each qr code card.';
 export const QRCodeCategoriesOrder = 'Categories in this QR Code will be shown in the same order as below. To change order, drag and drop each category card and then save the changes.';
-export const CategoryOrder = 'Categories will be shown in the same order as below. To change order, drag and drop each category card.';
+export const CategoryOrder = 'Categories will be shown in the same order as below. To change order, toggle the change order switch and then drag and drop each category card.';
 export const CategoryDishesOrder = 'Dishes in this category will be shown in the same order as below. To change order, drag and drop each dish card and then save the changes.';
-export const DishOrder = 'Dishes will be shown in the same order as below. To change order, drag and drop each dish card.';
+export const DishOrder = 'Dishes will be shown in the same order as below. To change order, toggle the change order switch and then drag and drop each dish card.';
 
 export const QRCodesNotFound = 'QR Codes Not Found';
 export const CategoriesNotFound = 'Categories Not Found';
@@ -39,6 +39,7 @@ export const AddTableMessage = 'Enter table name. You can press the barcode butt
 export const IncludeLogoMessage = 'To include your logo, please upload your logo in settings.';
 export const RerenderPDF = 'Rerender pdf whenever you change format to see any changes.';
 export const IncludeRestaurantImage = 'To include your restaurant image, please upload your restaurant image in settings.';
+export const RenderPDF = "To view the pdf, click 'Render PDF' button at the bottom";
 
 export const TablesDesc = 'Tables that are currently in use cannot be updated. Wait for the tables to be available to edit them. Click available tables to edit them and non-available tables to see orders at that table.';
 export const TableAvailable = 'Table is available for customers';
@@ -47,3 +48,5 @@ export const TableUpdated = 'Customers have updates their order';
 export const TableApproved = 'Customers are waiting for the order';
 export const TableServed = 'Order has been served';
 export const TablePayment = 'Customers are ready for the payment';
+
+export const FrontDoorQRMenuPage = 'Front door menu page will show the whole menu regardless of availability and timings. You can use this menu on the front door to help your customers view the full menu.';

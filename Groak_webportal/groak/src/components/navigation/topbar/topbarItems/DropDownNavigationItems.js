@@ -86,6 +86,13 @@ const DropDownNavigationItems = (props) => {
                                                     >
                                                         <MenuItem onClick={handleClose}>Categories</MenuItem>
                                                     </NavLink>
+                                                    <NavLink
+                                                        style={{ textDecoration: 'none', color: 'black' }}
+                                                        to="/qrcodes"
+                                                        exact
+                                                    >
+                                                        <MenuItem onClick={handleClose}>QR Codes</MenuItem>
+                                                    </NavLink>
                                                 </div>
                                             ));
                                     })}

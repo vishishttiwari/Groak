@@ -13,6 +13,12 @@
   margin: 20px;
 }
 
+.qrcodes .normal-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .qrcodes .qrcode-items {
   display: -webkit-box;
   display: -ms-flexbox;

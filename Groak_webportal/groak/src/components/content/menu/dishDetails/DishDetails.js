@@ -204,12 +204,13 @@ const DishDetails = (props) => {
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newDish) {
             await addDishAPI(globalState.restaurantId, state, enqueueSnackbar);
-            setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         } else {
             await updateDishAPI(globalState.restaurantId, match.params.id, state, enqueueSnackbar);
+        }
+        setTimeout(() => {
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
             history.replace('/dishes');
-        }
+        }, 3000);
     };
 
     /**

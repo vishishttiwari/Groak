@@ -6,6 +6,10 @@ $cardFullWidth: ($cardWidth + $cardMargin);
 .qrcodes {
     margin: $margin;
 
+    .normal-buttons {
+        display: flex;
+    }
+
     .qrcode-items {
         display: flex;
         flex-flow: row;

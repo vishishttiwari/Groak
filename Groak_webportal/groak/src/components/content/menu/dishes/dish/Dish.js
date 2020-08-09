@@ -8,7 +8,6 @@ import { Card, CardHeader, CardMedia, CardContent, CardActions, Button } from '@
 import Typography from '@material-ui/core/Typography';
 
 import NoImage from '../../../../../assets/icons/camera.png';
-import { getImageLink } from '../../../../../catalog/Others';
 
 const Dish = (props) => {
     const { dishItem, availableDishHandler, clickHandler } = props;
@@ -21,9 +20,10 @@ const Dish = (props) => {
             />
             <CardMedia
                 className="media"
-                src={(dishItem.image) ? getImageLink(dishItem.image) : NoImage}
+                src={(dishItem.image) ? dishItem.image : NoImage}
                 title={dishItem.name}
                 component="img"
+                draggable="false"
             />
             <CardContent onClick={clickHandler}>
                 <Typography variant="body2" color="textSecondary" component="p">

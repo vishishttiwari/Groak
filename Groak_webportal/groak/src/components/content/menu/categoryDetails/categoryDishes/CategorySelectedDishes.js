@@ -40,10 +40,23 @@ const CategorySelectedDishes = (props) => {
         }
     };
 
+    /**
+     * This function decides if dish is visble after writing something up in the search bar
+     *
+     * @param {*} dish
+     */
     const isDishVisible = (dish) => {
         if (!dish) { return false; }
         if (state.searchField.length <= 0) { return true; }
         if (dish.name && dish.name.toLowerCase().startsWith(state.searchField.toLowerCase())) { return true; }
+        if (dish.name) {
+            const dishName = dish.name.split(' ');
+            for (let i = 0; i < dishName.length; i += 1) {
+                if (dishName[i] && dishName[i].toLowerCase().startsWith(state.searchField.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
         return false;
     };
 

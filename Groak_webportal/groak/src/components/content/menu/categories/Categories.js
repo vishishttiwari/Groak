@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import arrayMove from 'array-move';
+import SearchBar from 'material-ui-search-bar';
+import Switch from '@material-ui/core/Switch';
 import { context } from '../../../../globalState/globalState';
 
 import './css/Categories.css';
@@ -18,14 +20,18 @@ import SortableList from '../../../dnd/SortableList';
 import SortableItem from '../../../dnd/SortableItem';
 import Empty from '../../../../assets/others/empty.png';
 
-const initialState = { categories: [], loadingSpinner: true };
+const initialState = { categories: [], searchField: '', changeOrder: false, loadingSpinner: true };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchCategories':
-            return { categories: action.categories, loadingSpinner: false };
+            return { ...state, categories: action.categories, loadingSpinner: false };
         case 'setCategories':
-            return { categories: action.categories, loadingSpinner: false };
+            return { ...state, categories: action.categories, loadingSpinner: false };
+        case 'setSearchField':
+            return { ...state, searchField: action.searchField };
+        case 'setChangeOrder':
+            return { ...state, changeOrder: action.changeOrder };
         default:
             return state;
     }
@@ -87,12 +93,48 @@ const Categories = (props) => {
         }
     };
 
+    /**
+     * This function decides if dish is visble after writing something up in the search bar
+     *
+     * @param {*} dish
+     */
+    const isCategoryVisible = (category) => {
+        if (!category) { return false; }
+        if (state.searchField.length <= 0) { return true; }
+        if (category.name && category.name.toLowerCase().startsWith(state.searchField.toLowerCase())) { return true; }
+        if (category.name) {
+            const categoryName = category.name.split(' ');
+            for (let i = 0; i < categoryName.length; i += 1) {
+                if (categoryName[i] && categoryName[i].toLowerCase().startsWith(state.searchField.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    /**
+     * This function is called when order toggle is pressed
+     *
+     * @param {*} checked
+     */
+    const orderToggle = (checked) => {
+        setState({ type: 'setChangeOrder', changeOrder: checked });
+    };
+
     return (
         <div className="categories">
             <Heading heading="Menu Categories" buttonName="Add Category" onClick={addCategoryHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
+                    <SearchBar
+                        className="search-bar"
+                        value={state.searchField}
+                        onChange={(newValue) => {
+                            setState({ type: 'setSearchField', searchField: newValue });
+                        }}
+                    />
                     {state.categories && state.categories.length === 0 ? (
                         <>
                             <p className="text-on-background">{NoCategories}</p>
@@ -101,18 +143,36 @@ const Categories = (props) => {
                                 <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
                             </div>
                         </>
-                    ) : <p className="text-on-background">{CategoryOrder}</p>}
+                    )
+                        : (
+                            <>
+                                <p className="text-on-background">{CategoryOrder}</p>
+                                <div className="order-change-toggle">
+                                    <Switch
+                                        checked={state.changeOrder}
+                                        size="medium"
+                                        onChange={(event) => { orderToggle(event.target.checked); }}
+                                        name="changeOrder"
+                                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                                        color="primary"
+                                    />
+                                    <p className="toggle-label">Change Order</p>
+                                </div>
+                            </>
+                        )}
                     <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                         <div className="category-items">
                             {state.categories.map((category, index) => {
-                                return (
-                                    <SortableItem key={category.id} index={index}>
-                                        <Category
-                                            categoryItem={category}
-                                            availableCategoryHandler={availableCategoryHandler}
-                                            clickHandler={() => { categoryDetailHandler(category.id); }}
-                                        />
-                                    </SortableItem>
+                                return (isCategoryVisible(category)
+                                    ? (
+                                        <SortableItem key={category.id} index={index} disabled={!state.changeOrder}>
+                                            <Category
+                                                categoryItem={category}
+                                                availableCategoryHandler={availableCategoryHandler}
+                                                clickHandler={() => { categoryDetailHandler(category.id); }}
+                                            />
+                                        </SortableItem>
+                                    ) : null
                                 );
                             })}
                         </div>

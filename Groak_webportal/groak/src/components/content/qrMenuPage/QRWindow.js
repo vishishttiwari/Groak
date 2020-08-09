@@ -17,6 +17,7 @@ import { context } from '../../../globalState/globalState';
 import { updateRestaurantAPI, fetchQRCodesAPI, fetchTableAPI, updateTableAPI } from './QRAPICalls';
 import { frontDoorQRMenuPageId, frontDoorInstructions } from '../../../catalog/Others';
 import { QRMenuPageUpdated } from '../../../catalog/NotificationsComments';
+import { RenderPDF } from '../../../catalog/Comments';
 
 function reducer(state, action) {
     let newQRStylePage;
@@ -103,7 +104,7 @@ const QRWindow = (props) => {
      * This function is called for going back
      */
     const goBackHandler = () => {
-        history.goBack();
+        history.replace('/tables');
     };
 
     /**
@@ -126,8 +127,8 @@ const QRWindow = (props) => {
     return (
         <div className="qr">
             <Heading heading="QR Menu Page" />
+            <p className="text-on-background">{RenderPDF}</p>
             <div className="qr-content">
-
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
                     <QRPage
                         restaurantReference={globalState.restaurantId}

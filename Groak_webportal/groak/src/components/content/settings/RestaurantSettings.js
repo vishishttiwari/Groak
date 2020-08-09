@@ -16,6 +16,7 @@ import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
 import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
+import { FrontDoorQRMenuPage } from '../../../catalog/Comments';
 
 const RestaurantSettings = (props) => {
     const { history, classes, state, setState } = props;
@@ -137,7 +138,11 @@ const RestaurantSettings = (props) => {
                 onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
-            <p>Front Door QR Menu Page:</p>
+            <p>
+                Front Door QR Menu Page (
+                {FrontDoorQRMenuPage}
+                ):
+            </p>
             <Button
                 className="normal-buttons"
                 type="submit"

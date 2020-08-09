@@ -48,8 +48,8 @@ export const DemoDishExtraOptions2 = { price: 0.5, title: 'Medium' };
 export const DemoDishExtraOptions3 = { price: 0, title: 'Mild' };
 
 export const DemoCategoryName = 'Starters';
-export const DemoCategoryStartTime = 540;
-export const DemoCategoryEndTime = 1320;
+export const DemoCategoryStartTime = 0;
+export const DemoCategoryEndTime = 1439;
 
 export const DemoTableName = 'Demo Table 1';
 

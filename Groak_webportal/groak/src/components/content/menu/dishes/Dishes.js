@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import arrayMove from 'array-move';
+import SearchBar from 'material-ui-search-bar';
+import Switch from '@material-ui/core/Switch';
 import { context } from '../../../../globalState/globalState';
 
 import './css/Dishes.css';
@@ -18,14 +20,18 @@ import SortableList from '../../../dnd/SortableList';
 import SortableItem from '../../../dnd/SortableItem';
 import Empty from '../../../../assets/others/empty.png';
 
-const initialState = { dishes: [], loadingSpinner: true };
+const initialState = { dishes: [], searchField: '', changeOrder: false, loadingSpinner: true };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchDishes':
-            return { dishes: action.dishes, loadingSpinner: false };
+            return { ...state, dishes: action.dishes, loadingSpinner: false };
         case 'setDishes':
-            return { dishes: action.dishes, loadingSpinner: false };
+            return { ...state, dishes: action.dishes, loadingSpinner: false };
+        case 'setSearchField':
+            return { ...state, searchField: action.searchField };
+        case 'setChangeOrder':
+            return { ...state, changeOrder: action.changeOrder };
         default:
             return initialState;
     }
@@ -87,12 +93,48 @@ const Dishes = (props) => {
         }
     };
 
+    /**
+     * This function decides if dish is visble after writing something up in the search bar
+     *
+     * @param {*} dish
+     */
+    const isDishVisible = (dish) => {
+        if (!dish) { return false; }
+        if (state.searchField.length <= 0) { return true; }
+        if (dish.name && dish.name.toLowerCase().startsWith(state.searchField.toLowerCase())) { return true; }
+        if (dish.name) {
+            const dishName = dish.name.split(' ');
+            for (let i = 0; i < dishName.length; i += 1) {
+                if (dishName[i] && dishName[i].toLowerCase().startsWith(state.searchField.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    /**
+     * This function is called when order toggle is pressed
+     *
+     * @param {*} checked
+     */
+    const orderToggle = (checked) => {
+        setState({ type: 'setChangeOrder', changeOrder: checked });
+    };
+
     return (
         <div className="dishes">
             <Heading heading="Dishes" buttonName="Add Dish" onClick={addDishHandler} />
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
+                    <SearchBar
+                        className="search-bar"
+                        value={state.searchField}
+                        onChange={(newValue) => {
+                            setState({ type: 'setSearchField', searchField: newValue });
+                        }}
+                    />
                     {state.dishes && state.dishes.length === 0 ? (
                         <>
                             <p className="text-on-background">{NoDishes}</p>
@@ -101,18 +143,35 @@ const Dishes = (props) => {
                                 <img className="not-found-image" draggable="false" src={Empty} alt="No Categories" />
                             </div>
                         </>
-                    ) : <p className="text-on-background">{DishOrder}</p>}
+                    ) : (
+                        <>
+                            <p className="text-on-background">{DishOrder}</p>
+                            <div className="order-change-toggle">
+                                <Switch
+                                    checked={state.changeOrder}
+                                    size="medium"
+                                    onChange={(event) => { orderToggle(event.target.checked); }}
+                                    name="changeOrder"
+                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                    color="primary"
+                                />
+                                <p className="toggle-label">Change Order</p>
+                            </div>
+                        </>
+                    )}
                     <SortableList axis="xy" onSortEnd={onSortEnd} distance={1} useWindowAsScrollContainer>
                         <div className="dish-items">
                             {state.dishes.map((dish, index) => {
-                                return (
-                                    <SortableItem key={dish.id} index={index}>
-                                        <Dish
-                                            dishItem={dish}
-                                            availableDishHandler={availableDishHandler}
-                                            clickHandler={() => { dishDetailHandler(dish.id); }}
-                                        />
-                                    </SortableItem>
+                                return (isDishVisible(dish)
+                                    ? (
+                                        <SortableItem key={dish.id} index={index} disabled={!state.changeOrder}>
+                                            <Dish
+                                                dishItem={dish}
+                                                availableDishHandler={availableDishHandler}
+                                                clickHandler={() => { dishDetailHandler(dish.id); }}
+                                            />
+                                        </SortableItem>
+                                    ) : null
                                 );
                             })}
                         </div>

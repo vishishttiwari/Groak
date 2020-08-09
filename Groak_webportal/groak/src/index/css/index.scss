@@ -211,6 +211,23 @@ html {
                 width: 100%;
             }
         }
+
+        .order-change-toggle {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: $margin;
+    
+            .toggle-label {
+                color: #555555;
+                padding: 0;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 200;
+                letter-spacing: 0.15px;
+                text-align: center;
+            }
+        }
     }
 
 
