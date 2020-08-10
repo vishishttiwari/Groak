@@ -21,8 +21,10 @@ const CustomerMenuDishItem = (props) => {
             {dishItem.image ? (
                 <CardMedia
                     className="media"
-                    image={(dishItem.image) ? dishItem.image : NoImage}
+                    src={(dishItem.image) ? dishItem.image : NoImage}
                     title={dishItem.name}
+                    component="img"
+                    draggable="false"
                 />
             ) : null}
             <CardContent>

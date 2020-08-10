@@ -58,7 +58,7 @@ export const checkCategoryAvailability = (category) => {
     const startTime = category.startTime[day];
     const endTime = category.endTime[day];
     const currentTime = getMinutesFromMidnight();
-    if (currentTime >= startTime && currentTime < endTime) return true;
+    if (currentTime >= startTime && currentTime <= endTime) return true;
     return false;
 };
 
