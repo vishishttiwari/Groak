@@ -1,8 +1,10 @@
 package com.groak.groak.activity.dish;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -20,14 +22,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
 import com.groak.groak.activity.addtocart.AddToCartActivity;
+import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.RecyclerViewHeader;
-import com.groak.groak.catalog.groakfooter.GroakFooter;
-import com.groak.groak.catalog.groakheader.GroakOtherHeaderWithPrice;
+import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
+import com.groak.groak.catalog.groakUIClasses.RequestButton;
+import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
+import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeaderWithPrice;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.DishDeserializer;
 import com.groak.groak.restaurantobject.dish.DishSerializer;
@@ -55,7 +59,11 @@ public class DishActivity extends Activity {
     private RecyclerViewHeader descriptionHeaderView;
     private TextView descriptionView;
 
+    private RequestButton requestButton;
+
     private Dish dish;
+
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,8 @@ public class DishActivity extends Activity {
         setupViews();
 
         setupInitialLayout();
+
+        initBroadcast();
     }
 
     private void setupViews() {
@@ -102,6 +112,7 @@ public class DishActivity extends Activity {
 
                     intent.putExtra("dish", gson.toJson(dish));
                     context.startActivity(intent);
+                    registerBroadcast();
                     ((Activity)context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
@@ -147,6 +158,9 @@ public class DishActivity extends Activity {
         if (dish == null || dish.getRestrictions() == null || dish.getRestrictions().size() == 0) {
             infoHeaderView.setVisibility(View.GONE);
             infoView.setVisibility(View.GONE);
+        } else if (dish.getRestrictions().get("vegan").equals("Not Sure") && dish.getRestrictions().get("vegetarian").equals("Not Sure") && dish.getRestrictions().get("kosher").equals("Not Sure") && dish.getRestrictions().get("glutenFree").equals("Not Sure")) {
+            infoHeaderView.setVisibility(View.GONE);
+            infoView.setVisibility(View.GONE);
         } else {
             infoHeaderView.setVisibility(View.VISIBLE);
             infoView.setVisibility(View.VISIBLE);
@@ -190,14 +204,42 @@ public class DishActivity extends Activity {
         contentView.setBackgroundColor(ColorsCatalog.whiteColor);
         contentView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
         String content = "";
-        if ((Double)dish.getNutrition().get("calories") > 0)
-            content += "<b>Calories:</b> " + Math.round((Double)dish.getNutrition().get("calories")) + "kCal&#160&#160";
-        if ((Double)dish.getNutrition().get("fats") > 0)
-            content += "<b>Fats:</b> " + (Double)dish.getNutrition().get("fats") + "g&#160&#160";
-        if ((Double)dish.getNutrition().get("carbs") > 0)
-            content += "<b>Carbs:</b> " + (Double)dish.getNutrition().get("carbs") + "g&#160&#160";
-        if ((Double)dish.getNutrition().get("protein") > 0)
-            content += "<b>Protein:</b> " + (Double)dish.getNutrition().get("protein") + "g";
+        try {
+            if ((Double) dish.getNutrition().get("calories") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Double)dish.getNutrition().get("calories")) + "kCal&#160&#160";
+            }
+        } catch (Exception e) {
+            if ((Long) dish.getNutrition().get("calories") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Long)dish.getNutrition().get("calories")) + "kCal&#160&#160";
+            }
+        }
+        try {
+            if ((Double) dish.getNutrition().get("fats") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Double)dish.getNutrition().get("fats")) + "g&#160&#160";
+            }
+        } catch (Exception e) {
+            if ((Long) dish.getNutrition().get("fats") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Long)dish.getNutrition().get("fats")) + "g&#160&#160";
+            }
+        }
+        try {
+            if ((Double) dish.getNutrition().get("carbs") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Double)dish.getNutrition().get("carbs")) + "g&#160&#160";
+            }
+        } catch (Exception e) {
+            if ((Long) dish.getNutrition().get("carbs") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Long)dish.getNutrition().get("carbs")) + "g&#160&#160";
+            }
+        }
+        try {
+            if ((Double) dish.getNutrition().get("protein") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Double)dish.getNutrition().get("protein")) + "g";
+            }
+        } catch (Exception e) {
+            if ((Long) dish.getNutrition().get("protein") > 0) {
+                content += "<b>Calories:</b> " + Math.round((Long)dish.getNutrition().get("protein")) + "g";
+            }
+        }
         if (dish == null || content == null || content.length() == 0) {
             contentHeaderView.setVisibility(View.GONE);
             contentView.setVisibility(View.GONE);
@@ -249,9 +291,21 @@ public class DishActivity extends Activity {
             descriptionView.setText(dish.getDescription());
         }
 
+        requestButton = new RequestButton(this);
+        requestButton.setId(View.generateViewId());
+        requestButton.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getContext(), RequestActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         layout.addView(dishHeader);
         layout.addView(scrollView);
         layout.addView(dishFooter);
+        layout.addView(requestButton);
         scrollView.addView(scrollViewLayout);
         scrollViewLayout.addView(imageView);
         scrollViewLayout.addView(infoHeaderView);
@@ -373,6 +427,11 @@ public class DishActivity extends Activity {
         set.connect(dishFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(dishFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+
         set.applyTo(layout);
     }
 
@@ -384,5 +443,31 @@ public class DishActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("finish_activity")) {
+                    finish();
+                    unRegisterBroadcast();
+                }
+            }
+        };
+    }
+
+    private void registerBroadcast() {
+        if (broadcastReceiver != null) {
+            registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
+        }
+    }
+
+    private void unRegisterBroadcast() {
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 }

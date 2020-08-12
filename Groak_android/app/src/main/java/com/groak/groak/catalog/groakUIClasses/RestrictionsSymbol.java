@@ -1,4 +1,4 @@
-package com.groak.groak.catalog;
+package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+
+import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.FontCatalog;
 
 public class RestrictionsSymbol extends ConstraintLayout {
 

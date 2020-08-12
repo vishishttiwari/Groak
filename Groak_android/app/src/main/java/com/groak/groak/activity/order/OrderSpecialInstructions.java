@@ -13,8 +13,8 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.RecyclerViewHeader;
-import com.groak.groak.catalog.SpecialInstructions;
+import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
+import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.restaurantobject.order.OrderComment;
 

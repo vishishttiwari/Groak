@@ -1,6 +1,7 @@
 package com.groak.groak.activity.addtocart;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,14 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
+import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.RecyclerViewHeader;
-import com.groak.groak.catalog.SpecialInstructions;
-import com.groak.groak.catalog.groakfooter.GroakFooterWithPriceAndQuantity;
-import com.groak.groak.catalog.groakheader.GroakOtherHeader;
+import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
+import com.groak.groak.catalog.groakUIClasses.RequestButton;
+import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
+import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPriceAndQuantity;
+import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.DishDeserializer;
@@ -48,6 +51,8 @@ public class AddToCartActivity extends Activity {
     private ArrayList<RecyclerView> optionViews = new ArrayList<>();
 
     private SpecialInstructions specialInstructions;
+
+    private RequestButton requestButton;
 
     private Dish dish;
 
@@ -112,6 +117,8 @@ public class AddToCartActivity extends Activity {
                 if (success) {
                     LocalRestaurant.cart.addDish(cartDish);
                     finish();
+                    Intent intent = new Intent("finish_activity");
+                    sendBroadcast(intent);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
             }
@@ -140,9 +147,21 @@ public class AddToCartActivity extends Activity {
         specialInstructions.setId(View.generateViewId());
         specialInstructions.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 
+        requestButton = new RequestButton(this);
+        requestButton.setId(View.generateViewId());
+        requestButton.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getContext(), RequestActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         layout.addView(addToCartHeader);
         layout.addView(scrollView);
         layout.addView(addToCartFooter);
+        layout.addView(requestButton);
         scrollView.addView(scrollViewLayout);
         scrollViewLayout.addView(specialInstructions);
         setContentView(layout);
@@ -248,7 +267,16 @@ public class AddToCartActivity extends Activity {
         set.connect(addToCartFooter.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(addToCartFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+
         set.applyTo(layout);
+    }
+
+    private Context getContext() {
+        return this;
     }
 
     @Override

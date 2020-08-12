@@ -12,9 +12,8 @@ import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.groakheader.GroakFragmentHeader;
+import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.cart.Cart;
 
 public class CartHeader extends GroakFragmentHeader {
 

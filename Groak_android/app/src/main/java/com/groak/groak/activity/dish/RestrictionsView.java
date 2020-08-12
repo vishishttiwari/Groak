@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
-import com.groak.groak.catalog.RestrictionsSymbol;
+import com.groak.groak.catalog.groakUIClasses.RestrictionsSymbol;
 
 public class RestrictionsView extends ConstraintLayout {
     private int height = 80;

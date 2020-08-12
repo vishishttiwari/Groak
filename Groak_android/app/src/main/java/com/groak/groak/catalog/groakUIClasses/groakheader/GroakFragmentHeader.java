@@ -1,4 +1,4 @@
-package com.groak.groak.catalog.groakheader;
+package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -30,7 +30,7 @@ public class GroakFragmentHeader extends GroakHeader {
 
     private void setupViews() {
         back = new TextView(getContext());
-        back.setId(View.generateViewId());
+        back.setId(generateViewId());
         back.setText("Leave");
         back.setTextSize(DimensionsCatalog.headerTextSize - 12);
         back.setGravity(Gravity.CENTER);
@@ -60,7 +60,8 @@ public class GroakFragmentHeader extends GroakHeader {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.centerVertically(header.getId(), ConstraintSet.PARENT_ID);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+        set.connect(header.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
         set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements + leaveHeight);
         set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements + leaveHeight);
         set.constrainHeight(header.getId(), headerHeight);

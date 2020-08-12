@@ -41,8 +41,6 @@ public class FirestoreAPICallsOrders {
                     return;
                 }
 
-                System.out.println("Thissss");
-
                 if (snapshot != null && snapshot.exists()) {
                     Order order = new Order(snapshot.getData());
                     RealmWrapper.downloadDishesAndComments(context, order);

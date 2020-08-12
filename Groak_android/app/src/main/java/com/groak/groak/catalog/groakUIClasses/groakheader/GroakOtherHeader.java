@@ -1,4 +1,4 @@
-package com.groak.groak.catalog.groakheader;
+package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.groak.groak.R;
-import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 

@@ -20,10 +20,10 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.RecyclerViewHeader;
-import com.groak.groak.catalog.SpecialInstructions;
-import com.groak.groak.catalog.groakfooter.GroakFooterWithPriceAndQuantity;
-import com.groak.groak.catalog.groakheader.GroakOtherHeader;
+import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
+import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
+import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPriceAndQuantity;
+import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.cart.CartDish;
 

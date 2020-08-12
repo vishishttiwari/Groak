@@ -1,9 +1,8 @@
-package com.groak.groak.catalog.groakheader;
+package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +28,7 @@ public class GroakOtherHeaderWithPrice extends GroakOtherHeader {
 
     private void setupViews() {
         subheader = new TextView(getContext());
-        subheader.setId(View.generateViewId());
+        subheader.setId(generateViewId());
         subheader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         subheader.setTextSize(DimensionsCatalog.headerTextSize - 5);
         subheader.setTypeface(FontCatalog.fontLevels(getContext(), 1));
@@ -44,7 +43,7 @@ public class GroakOtherHeaderWithPrice extends GroakOtherHeader {
     private void setupInitialLayout() {
         ConstraintSet set = new ConstraintSet();
 
-        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
         set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
         set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
         set.constrainHeight(header.getId(), headerHeight);

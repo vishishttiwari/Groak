@@ -1,9 +1,12 @@
 package com.groak.groak.activity.tabbar;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -11,8 +14,12 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.groak.groak.R;
+import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.groakUIClasses.RequestButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +32,10 @@ public class TabbarActivity extends AppCompatActivity {
 
     private ConstraintLayout layout;
 
-    private ViewPager mainContent;
+    private NonSwipeableViewPager mainContent;
     private BottomNavigationView tabbar;
+
+    private RequestButton requestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +56,7 @@ public class TabbarActivity extends AppCompatActivity {
 
         setContentView(layout);
 
-        mainContent = new ViewPager(this);
+        mainContent = new NonSwipeableViewPager(this);
         TabbarViewPagerAdapter adapter = new TabbarViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mainContent.setAdapter(adapter);
         mainContent.setId(View.generateViewId());
@@ -83,10 +92,22 @@ public class TabbarActivity extends AppCompatActivity {
                 return false;
             }
         });
-        tabbar.setElevation(20);
+        tabbar.setElevation(DimensionsCatalog.elevation);
+
+        requestButton = new RequestButton(this);
+        requestButton.setId(View.generateViewId());
+        requestButton.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getContext(), RequestActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         layout.addView(mainContent);
         layout.addView(tabbar);
+        layout.addView(requestButton);
     }
 
     private void setupInitialLayout() {
@@ -104,8 +125,16 @@ public class TabbarActivity extends AppCompatActivity {
         set.connect(tabbar.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
         set.constrainHeight(tabbar.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.applyTo(layout);
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 
+        set.applyTo(layout);
+    }
+
+    private Context getContext() {
+        return this;
     }
 
     @Override

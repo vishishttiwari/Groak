@@ -4,6 +4,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
+import com.groak.groak.restaurantobject.MenuCategory;
 import com.groak.groak.restaurantobject.Restaurant;
 import com.groak.groak.restaurantobject.Table;
 import com.groak.groak.restaurantobject.cart.Cart;
@@ -11,14 +12,19 @@ import com.groak.groak.restaurantobject.cart.CartDish;
 import com.groak.groak.restaurantobject.order.Order;
 import com.groak.groak.restaurantobject.order.OrderComment;
 import com.groak.groak.restaurantobject.order.OrderDish;
+import com.groak.groak.restaurantobject.request.Requests;
 
 import java.util.ArrayList;
 
 public class LocalRestaurant {
     public static Restaurant restaurant = null;
+    public static ArrayList<MenuCategory> categories = new ArrayList();
     public static Table table = null;
     public static DocumentReference orderReference = null;
     public static DocumentReference requestReference = null;
+    public static Cart cart = new Cart();
+    public static Order order = new Order();
+    public static Requests requests = new Requests();
 
 //    static {
 //        Restaurant restaurant;
@@ -56,9 +62,6 @@ public class LocalRestaurant {
         LocalRestaurant.orderReference = table.getOrderReference();
         LocalRestaurant.requestReference = table.getRequestReference();
     }
-
-    public static Cart cart = new Cart();
-    public static Order order = new Order();
 
     public static double calculateCartTotalPrice() {
         double price = 0;

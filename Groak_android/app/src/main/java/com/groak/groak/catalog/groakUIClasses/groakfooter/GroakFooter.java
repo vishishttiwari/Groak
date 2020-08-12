@@ -1,4 +1,4 @@
-package com.groak.groak.catalog.groakfooter;
+package com.groak.groak.catalog.groakUIClasses.groakfooter;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -75,6 +75,5 @@ public class GroakFooter extends ConstraintLayout {
         set.constrainHeight(button.getId(), footerButtonHeight);
 
         set.applyTo(this);
-
     }
 }

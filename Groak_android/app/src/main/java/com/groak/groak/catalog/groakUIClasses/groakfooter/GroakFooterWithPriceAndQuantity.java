@@ -1,4 +1,4 @@
-package com.groak.groak.catalog.groakfooter;
+package com.groak.groak.catalog.groakUIClasses.groakfooter;
 
 import android.content.Context;
 import android.view.View;
@@ -53,7 +53,7 @@ public class GroakFooterWithPriceAndQuantity extends GroakFooterWithPrice {
         });
 
         addDish = new ImageView(getContext());
-        addDish.setId(View.generateViewId());
+        addDish.setId(generateViewId());
         addDish.setImageResource(R.drawable.plus);
         addDish.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         addDish.setOnClickListener(new OnClickListener() {
@@ -65,7 +65,7 @@ public class GroakFooterWithPriceAndQuantity extends GroakFooterWithPrice {
         });
 
         reduceDish = new ImageView(getContext());
-        reduceDish.setId(View.generateViewId());
+        reduceDish.setId(generateViewId());
         reduceDish.setImageResource(R.drawable.minus);
         reduceDish.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         reduceDish.setOnClickListener(new OnClickListener() {

@@ -1,4 +1,4 @@
-package com.groak.groak.catalog;
+package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+
+import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.FontCatalog;
 
 public class RecyclerViewHeader extends ConstraintLayout {
 

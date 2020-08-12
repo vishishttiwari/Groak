@@ -18,14 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.groak.groak.R;
-import com.groak.groak.activity.dish.DishActivity;
 import com.groak.groak.activity.receipt.ReceiptActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.RecyclerViewHeader;
-import com.groak.groak.catalog.groakfooter.GroakFooterWithPrice;
+import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
+import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPrice;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.order.Order;

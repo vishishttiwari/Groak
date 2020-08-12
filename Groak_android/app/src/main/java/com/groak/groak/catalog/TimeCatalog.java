@@ -46,6 +46,8 @@ public class TimeCatalog {
     }
 
     public static Timestamp addThirtyMinutesToTimestamp() {
-        return Timestamp.now();
+        Timestamp timestamp = new Timestamp(Timestamp.now().getSeconds() + 30*60, 0);
+
+        return timestamp;
     }
 }

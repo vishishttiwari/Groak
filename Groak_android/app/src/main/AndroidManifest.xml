@@ -23,7 +23,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.dish.DishActivity" />
-        <activity android:name=".activity.receipt.ReceiptActivity" />
+        <activity android:name=".activity.search.SearchActivity" />
+        <activity
+            android:name=".activity.receipt.ReceiptActivity"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.request.RequestActivity" />
         <activity
             android:name=".activity.addtocart.AddToCartActivity"
             android:clickable="true"

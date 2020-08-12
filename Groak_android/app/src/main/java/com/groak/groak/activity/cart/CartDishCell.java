@@ -1,5 +1,6 @@
 package com.groak.groak.activity.cart;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -50,22 +51,20 @@ public class CartDishCell extends RecyclerView.ViewHolder {
         dishQuantity.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         dishQuantity.setId(View.generateViewId());
         dishQuantity.setTextSize(titleDimensions);
-        dishQuantity.setTypeface(FontCatalog.fontLevels(layout.getContext(), 3));
+        dishQuantity.setTypeface(FontCatalog.fontLevels(layout.getContext(), 2));
         dishQuantity.setTextColor(ColorsCatalog.blackColor);
         dishQuantity.setGravity(Gravity.LEFT);
 
         dishName = new TextView(layout.getContext());
-        dishName.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        dishName.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         dishName.setId(View.generateViewId());
         dishName.setTextSize(titleDimensions);
         dishName.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
         dishName.setTextColor(ColorsCatalog.blackColor);
-        dishName.setMaxLines(1);
-        dishName.setEllipsize(TextUtils.TruncateAt.END);
         dishName.setGravity(Gravity.LEFT);
 
         dishPrice = new TextView(layout.getContext());
-        dishPrice.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        dishPrice.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         dishPrice.setId(View.generateViewId());
         dishPrice.setTextSize(titleDimensions);
         dishPrice.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
@@ -90,22 +89,23 @@ public class CartDishCell extends RecyclerView.ViewHolder {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(dishQuantity.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishQuantity.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainPercentWidth(dishQuantity.getId(), 20);
-        set.constrainHeight(dishQuantity.getId(), ConstraintSet.WRAP_CONTENT);
-
+        set.connect(dishName.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishName.getId(), ConstraintSet.LEFT, dishQuantity.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainPercentWidth(dishName.getId(), 60);
-        set.centerVertically(dishName.getId(), dishQuantity.getId());
+        set.constrainWidth(dishName.getId(), 3*DimensionsCatalog.screenWidth/5);
         set.constrainHeight(dishName.getId(), ConstraintSet.WRAP_CONTENT);
 
+        set.connect(dishQuantity.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishQuantity.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishQuantity.getId(), ConstraintSet.RIGHT, dishName.getId(), ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.constrainWidth(dishQuantity.getId(), 80);
+        set.constrainHeight(dishQuantity.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(dishPrice.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainPercentWidth(dishPrice.getId(), 25);
-        set.centerVertically(dishPrice.getId(), dishQuantity.getId());
         set.constrainHeight(dishPrice.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishDetails.getId(), ConstraintSet.TOP, dishQuantity.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishDetails.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishDetails.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishDetails.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishDetails.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);

@@ -14,7 +14,7 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.groakheader.GroakFragmentHeader;
+import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
 
 public class OrderHeader extends GroakFragmentHeader {
 
@@ -111,7 +111,7 @@ public class OrderHeader extends GroakFragmentHeader {
 
         ConstraintSet set = new ConstraintSet();
 
-        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
         set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
         set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
         set.constrainHeight(header.getId(), headerHeight);

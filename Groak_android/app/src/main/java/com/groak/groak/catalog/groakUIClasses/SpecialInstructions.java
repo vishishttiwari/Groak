@@ -1,4 +1,4 @@
-package com.groak.groak.catalog;
+package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;
 import android.text.InputType;
@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+
+import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.DimensionsCatalog;
 
 public class SpecialInstructions extends ConstraintLayout {
 

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
-import com.groak.groak.catalog.LocalBadgeView;
+import com.groak.groak.catalog.groakUIClasses.LocalBadgeView;
 import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.restaurantobject.order.OrderComment;
 

@@ -1,9 +1,8 @@
-package com.groak.groak.catalog.groakfooter;
+package com.groak.groak.catalog.groakUIClasses.groakfooter;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,7 +29,7 @@ public class GroakFooterWithPrice extends GroakFooter {
 
     private void setupViews() {
         subheader = new TextView(getContext());
-        subheader.setId(View.generateViewId());
+        subheader.setId(generateViewId());
         subheader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         subheader.setTextSize(DimensionsCatalog.headerTextSize + 5);
         subheader.setTypeface(FontCatalog.fontLevels(getContext(), 1));

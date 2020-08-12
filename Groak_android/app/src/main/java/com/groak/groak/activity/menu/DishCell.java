@@ -1,5 +1,12 @@
 package com.groak.groak.activity.menu;
 
+import android.graphics.Color;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +23,11 @@ import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
-import com.groak.groak.catalog.RestrictionsSymbol;
+import com.groak.groak.catalog.groakUIClasses.RestrictionsSymbol;
 import com.groak.groak.restaurantobject.dish.Dish;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DishCell extends RecyclerView.ViewHolder {
 
@@ -48,7 +58,7 @@ public class DishCell extends RecyclerView.ViewHolder {
         setupInitialLayout();
     }
 
-    public void setDish(Dish dish) {
+    public void setDish(Dish dish, String searchTerm) {
         if (dish == null || dish.getImageLink() == null || dish.getImageLink().length() == 0)
             imageView.setVisibility(View.GONE);
         else {
@@ -56,7 +66,18 @@ public class DishCell extends RecyclerView.ViewHolder {
             Glide.with(layout.getContext()).load(dish.getImageLink()).override(320, 240).into(imageView);
         }
 
-        dishName.setText(dish.getName());
+        if (searchTerm != null) {
+            SpannableStringBuilder sb = new SpannableStringBuilder(dish.getName());
+            Pattern p = Pattern.compile("\\b"+searchTerm, Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(dish.getName());
+            while (m.find())
+                sb.setSpan(new ForegroundColorSpan(ColorsCatalog.themeColor), m.start(), m.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            dishName.setTextColor(ColorsCatalog.shadesOfGray[8]);
+            dishName.setText(sb);
+        } else {
+            dishName.setTextColor(ColorsCatalog.themeColor);
+            dishName.setText(dish.getName());
+        }
         dishPrice.setText(Catalog.priceInString(dish.getPrice()));
 
         if (dish == null || dish.getShortInfo() == null || dish.getShortInfo().length() == 0)
@@ -212,12 +233,12 @@ public class DishCell extends RecyclerView.ViewHolder {
 
         set.connect(dishName.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishName.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainPercentWidth(dishName.getId(), 70);
-        set.constrainHeight(dishName.getId(), 90);
+        set.constrainWidth(dishName.getId(), 3*DimensionsCatalog.screenWidth/4);
+        set.constrainHeight(dishName.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.connect(dishPrice.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
         set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainPercentWidth(dishPrice.getId(), 25);
         set.constrainHeight(dishPrice.getId(), 90);
 
         set.connect(restrictionsLayout.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM);
@@ -266,5 +287,21 @@ public class DishCell extends RecyclerView.ViewHolder {
         set1.constrainWidth(vegIcon.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.applyTo(restrictionsLayout);
+    }
+
+    public void setHighLightedText(TextView tv, String textToHighlight) {
+        String tvt = tv.getText().toString();
+        int ofe = tvt.indexOf(textToHighlight, 0);
+        Spannable wordToSpan = new SpannableString(tv.getText());
+        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
+            ofe = tvt.indexOf(textToHighlight, ofs);
+            if (ofe == -1)
+                break;
+            else {
+                // set color here
+                wordToSpan.setSpan(new BackgroundColorSpan(0x800000), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+            }
+        }
     }
 }

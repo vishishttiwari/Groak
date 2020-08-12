@@ -2,10 +2,10 @@ package com.groak.groak.activity.receipt;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,15 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.groak.groak.R;
+import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.groakfooter.GroakFooter;
+import com.groak.groak.catalog.groakUIClasses.RequestButton;
+import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
 import com.groak.groak.localstorage.LocalRestaurant;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class ReceiptActivity extends Activity {
     private ConstraintLayout layout;
@@ -40,6 +38,8 @@ public class ReceiptActivity extends Activity {
     private ReceiptRestaurantCell receiptRestaurantCell;
     private ReceiptTotalCell receiptTotalCell;
     private RecyclerView reciptView;
+
+    private RequestButton requestButton;
 
     boolean tableOrder = true;
 
@@ -134,12 +134,24 @@ public class ReceiptActivity extends Activity {
         reciptView.setBackgroundColor(ColorsCatalog.whiteColor);
         reciptView.setVisibility(View.GONE);
 
+        requestButton = new RequestButton(this);
+        requestButton.setId(View.generateViewId());
+        requestButton.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getContext(), RequestActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         scrollViewLayout.addView(receiptRestaurantCell);
         scrollViewLayout.addView(receiptTotalCell);
         scrollViewLayout.addView(reciptView);
         layout.addView(receiptHeader);
         layout.addView(scrollView);
         layout.addView(receiptFooter);
+        layout.addView(requestButton);
         scrollView.addView(scrollViewLayout);
         setContentView(layout);
     }
@@ -185,7 +197,16 @@ public class ReceiptActivity extends Activity {
         set.connect(receiptFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(receiptFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
+
         set.applyTo(layout);
+    }
+
+    private Context getContext() {
+        return this;
     }
 
     @Override

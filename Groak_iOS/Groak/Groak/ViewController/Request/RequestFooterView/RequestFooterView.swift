@@ -20,7 +20,7 @@ internal class RequestFooterView: UIView {
     private let requestTextInput: UITextView = UITextView()
     private let requestSendButton: UIButton = UIButton()
     
-    private let placeholder: String! = "Anything we can do?"
+    private let placeholder: String! = "Anything we can help you with?"
     
     private let suggestions: [Int: [String]] =
         [0: ["💧", "Can we have some water please?"],
