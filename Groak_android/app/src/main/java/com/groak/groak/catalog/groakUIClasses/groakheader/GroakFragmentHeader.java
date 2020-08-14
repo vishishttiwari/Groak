@@ -1,5 +1,6 @@
 package com.groak.groak.catalog.groakUIClasses.groakheader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.localstorage.LocalRestaurant;
 
 public class GroakFragmentHeader extends GroakHeader {
 
@@ -41,15 +43,7 @@ public class GroakFragmentHeader extends GroakHeader {
         back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Catalog.alert(getContext(), "Leaving restaurant?", "Are you sure you would like to leave the restaurant?. Your cart will be lost.", new GroakCallback() {
-                    @Override
-                    public void onSuccess(Object object) {
-                        groakCallback.onSuccess("back");
-                    }
-                    @Override
-                    public void onFailure(Exception e) {
-                    }
-                });
+                LocalRestaurant.leaveRestaurant(getContext());
             }
         });
 

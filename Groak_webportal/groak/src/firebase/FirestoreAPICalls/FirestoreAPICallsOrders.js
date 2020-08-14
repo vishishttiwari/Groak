@@ -18,9 +18,9 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
     const batch = db.batch();
 
     if (data.status === TableStatus.available) {
-        batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newRequest: false });
-        batch.update(db.collection('tables').doc(orderId), { status: data.status, newRequest: false });
-        const newData = { ...data, updated: getCurrentDateTime(), comments: [], dishes: [], items: 0, newRequest: false };
+        batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true });
+        batch.update(db.collection('tables').doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true });
+        const newData = { ...data, updated: getCurrentDateTime(), comments: [], dishes: [], items: 0, newRequest: false, newRequestForUser: true };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
         batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(orderId), { requests: DemoRequest });
     } else if (data.status === TableStatus.approved) {

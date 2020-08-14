@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
 
 import './css/CustomerMenu.css';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CustomerMenuDish from './CustomerMenuDish';
 import { fetchCategoriesAPI } from './CustomerMenuAPICalls';
 import Heading from '../ui/heading/Heading';
@@ -15,7 +16,7 @@ import Empty from '../../assets/others/empty.png';
 // import Advertisement from '../../assets/others/advertisement_2.png';
 // import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
 // import DownArrow from '../../assets/icons/down_arrow.png';
-import { RestaurantNotFound, MenuNotFound } from '../../catalog/Comments';
+import { RestaurantNotFound, MenuNotFound, ImageSubjectToChange } from '../../catalog/Comments';
 
 const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, loadingSpinner: true, tabValue: 0, restaurantNotFound: false, categoriesNotFound: false };
 
@@ -159,6 +160,12 @@ const CustomerMenu = (props) => {
                             })}
                         </>
                     )}
+                    <div className="image-change">
+                        <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
+                        <p>
+                            {ImageSubjectToChange}
+                        </p>
+                    </div>
                 </>
             ) : null}
         </div>

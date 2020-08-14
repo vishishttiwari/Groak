@@ -1,32 +1,42 @@
 package com.groak.groak.activity.tabbar;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
 import com.groak.groak.activity.request.RequestActivity;
+import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.catalog.groakUIClasses.CartBadgeView;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
+import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.restaurantobject.restaurant.Restaurant;
+import com.groak.groak.restaurantobject.restaurant.RestaurantDeserializer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 public class TabbarActivity extends AppCompatActivity {
 
@@ -37,15 +47,24 @@ public class TabbarActivity extends AppCompatActivity {
 
     private RequestButton requestButton;
 
+    private CartBadgeView cartBadgeView;
+
+    private BroadcastReceiver broadcastReceiver;
+
+    private ProgressDialog loadingSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().hide();
 
-        setupViews();
+        setupRestaurant();
 
+        setupViews();
         setupInitialLayout();
+        initBroadcast();
+        registerBroadcast();
     }
 
     private void setupViews() {
@@ -53,8 +72,6 @@ public class TabbarActivity extends AppCompatActivity {
         layout.setId(View.generateViewId());
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         layout.setBackgroundColor(ColorsCatalog.headerGrayShade);
-
-        setContentView(layout);
 
         mainContent = new NonSwipeableViewPager(this);
         TabbarViewPagerAdapter adapter = new TabbarViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -72,6 +89,12 @@ public class TabbarActivity extends AppCompatActivity {
         menu.add(0, 4, 0, "Covid").setIcon(R.drawable.covid);
         tabbar.setBackgroundColor(ColorsCatalog.headerGrayShade);
         tabbar.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) tabbar.getChildAt(0);
+        View v = bottomNavigationMenuView.getChildAt(1);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) v;
+
+
         tabbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -93,6 +116,7 @@ public class TabbarActivity extends AppCompatActivity {
             }
         });
         tabbar.setElevation(DimensionsCatalog.elevation);
+        initBadge();
 
         requestButton = new RequestButton(this);
         requestButton.setId(View.generateViewId());
@@ -108,6 +132,8 @@ public class TabbarActivity extends AppCompatActivity {
         layout.addView(mainContent);
         layout.addView(tabbar);
         layout.addView(requestButton);
+
+        setContentView(layout);
     }
 
     private void setupInitialLayout() {
@@ -133,6 +159,49 @@ public class TabbarActivity extends AppCompatActivity {
         set.applyTo(layout);
     }
 
+    private void setupRestaurant() {
+        loadingSpinner = new ProgressDialog(this);
+        loadingSpinner.setMessage("Loading..");
+        loadingSpinner.setTitle("Fetching Menu");
+        loadingSpinner.setIndeterminate(false);
+        loadingSpinner.setCancelable(true);
+        loadingSpinner.show();
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Restaurant.class, new RestaurantDeserializer());
+        final Gson gson = builder.create();
+
+        Intent i = getIntent();
+        Restaurant restaurant = gson.fromJson(i.getStringExtra("restaurant"), Restaurant.class);
+
+        LocalRestaurant.enterRestaurant(this, restaurant, "r18cb7350q82598q0cczmo", new GroakCallback() {
+            @Override
+            public void onSuccess(Object object) {
+                loadingSpinner.dismiss();
+                Intent intent = new Intent("refresh_menu");
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                loadingSpinner.dismiss();
+                Catalog.toast(getContext(), "Error fetching menu");
+            }
+        });
+    }
+
+    private void initBadge() {
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) tabbar.getChildAt(0);
+        View v = bottomNavigationMenuView.getChildAt(1);
+        BottomNavigationItemView cartIconView = (BottomNavigationItemView) v;
+
+        cartBadgeView = new CartBadgeView(this);
+        cartBadgeView.setId(View.generateViewId());
+        cartBadgeView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        cartIconView.addView(cartBadgeView);
+    }
+
     private Context getContext() {
         return this;
     }
@@ -143,5 +212,44 @@ public class TabbarActivity extends AppCompatActivity {
             InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("change_tab_to_order")) {
+                    BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) tabbar.getChildAt(0);
+                    View v = bottomNavigationMenuView.getChildAt(2);
+                    BottomNavigationItemView cartIconView = (BottomNavigationItemView) v;
+
+                    tabbar.setSelectedItemId(cartIconView.getId());
+                }
+            }
+        };
+    }
+
+    private void registerBroadcast() {
+        if (broadcastReceiver != null) {
+            registerReceiver(broadcastReceiver, new IntentFilter("change_tab_to_order"));
+            cartBadgeView.registerBroadcast();
+            requestButton.registerBroadcast();
+        }
+    }
+
+    private void unRegisterBroadcast() {
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            cartBadgeView.unRegisterBroadcast();
+            requestButton.unRegisterBroadcast();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unRegisterBroadcast();
+        super.onDestroy();
     }
 }

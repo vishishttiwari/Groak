@@ -51,6 +51,8 @@ public class ReceiptActivity extends Activity {
 
         setupInitialLayout();
 
+        requestButton.registerBroadcast();
+
         refresh(tableOrder);
     }
 
@@ -73,10 +75,13 @@ public class ReceiptActivity extends Activity {
         receiptHeader = new ReceiptHeader(this, "Receipt", new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                if (((String) object).equals("Your Order")) {
+                String str = (String)object;
+                if (str.equals("back"))
+                    requestButton.unRegisterBroadcast();
+                else if (str.equals("Your Order")) {
                     tableOrder = true;
                     refresh(false);
-                } else if (((String) object).equals("Your Order")) {
+                } else if (str.equals("Your Order")) {
                     tableOrder = false;
                     refresh(true);
                 }

@@ -13,7 +13,7 @@ import Firebase
 internal class DistanceCatalog {
     
     // Distance around user till which restaurant is allowed in feet. This will most probably be 200 feet
-    private static let distanceBufferInFeet: Double = 2000000
+    private static let distanceBufferInFeet: Double = 200
     // Each latitude and longitude change in feet
     private static let feetLatitude: Double = 0.000002747252747
     private static let feetLongitude: Double = 0.00000346981263
@@ -64,10 +64,10 @@ internal class DistanceCatalog {
     static func getRestaurantsNearCurrentLocation(restaurants: [Restaurant], minGeoPoint: GeoPoint, maxGeoPoint: GeoPoint, currentUserLocation: CLLocation) -> [Restaurant] {
         var selectedRestaurants: [Restaurant] = []
         for restaurant in restaurants {
-            if restaurant.latitude > minGeoPoint.latitude &&
-                restaurant.latitude < maxGeoPoint.latitude &&
-                restaurant.longitude > minGeoPoint.longitude &&
-                restaurant.longitude < maxGeoPoint.longitude {
+            if restaurant.latitude >= minGeoPoint.latitude &&
+                restaurant.latitude <= maxGeoPoint.latitude &&
+                restaurant.longitude >= minGeoPoint.longitude &&
+                restaurant.longitude <= maxGeoPoint.longitude {
                 selectedRestaurants.append(restaurant)
             }
         }

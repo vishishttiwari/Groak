@@ -1,7 +1,10 @@
 package com.groak.groak.activity.request;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeader;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.request.Request;
-import com.groak.groak.restaurantobject.request.Requests;
 
 public class RequestActivity extends Activity {
     private ConstraintLayout layout;
@@ -28,32 +30,37 @@ public class RequestActivity extends Activity {
     private RecyclerView requestView;
     private RequestFooter requestFooter;
 
+    private BroadcastReceiver broadcastReceiver;
+
     private boolean refreshedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        downloadRequests();
-
         setupViews();
 
         setupInitialLayout();
+
+        initBroadcast();
     }
 
-    public void downloadRequests() {
-        FirestoreAPICallsRequests.fetchRequestFirestoreAPI(new GroakCallback() {
-            @Override
-            public void onSuccess(Object object) {
-                LocalRestaurant.requests = (Requests)object;
-                refresh();
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-            @Override
-            public void onFailure(Exception e) {
-                Catalog.toast(getContext(), "Error getting requests from restaurant");
-            }
-        });
+        registerBroadcast();
+
+        refresh();
+
+        LocalRestaurant.requestNotifications = false;
+        FirestoreAPICallsOrders.newRequestForUserSeen();
+    }
+
+    @Override
+    protected void onPause() {
+        unRegisterBroadcast();
+        super.onPause();
     }
 
     public void refresh() {
@@ -77,7 +84,7 @@ public class RequestActivity extends Activity {
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         layout.setBackgroundColor(ColorsCatalog.headerGrayShade);
 
-        requestHeader = new RequestHeader(this, "", new GroakCallback() {
+        requestHeader = new RequestHeader(this, LocalRestaurant.restaurant.getName(), new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
             }
@@ -146,6 +153,33 @@ public class RequestActivity extends Activity {
         set.constrainHeight(requestFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("refresh_request")) {
+                    refresh();
+                    LocalRestaurant.requestNotifications = false;
+                    FirestoreAPICallsOrders.newRequestForUserSeen();
+                }
+            }
+        };
+    }
+
+    private void registerBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().registerReceiver(broadcastReceiver, new IntentFilter("refresh_request"));
+        }
+    }
+
+    private void unRegisterBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().unregisterReceiver(broadcastReceiver);
+        }
     }
 
     private Context getContext() {

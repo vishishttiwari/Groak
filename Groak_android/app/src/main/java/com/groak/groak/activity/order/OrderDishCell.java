@@ -1,9 +1,7 @@
 package com.groak.groak.activity.order;
 
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 

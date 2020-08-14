@@ -15,6 +15,7 @@ import com.groak.groak.R;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
+import com.groak.groak.localstorage.LocalRestaurant;
 
 public class MenuHeader extends GroakFragmentHeader {
 
@@ -95,6 +96,7 @@ public class MenuHeader extends GroakFragmentHeader {
 
     public void refresh() {
         ((CategoriesRecyclerViewAdapter) categoriesView.getAdapter()).refresh();
+        setHeader(LocalRestaurant.restaurant.getName());
     }
 
     public void scrollTo(int position) {

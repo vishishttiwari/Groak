@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
 import com.groak.groak.activity.request.RequestActivity;
+import com.groak.groak.activity.tabbar.TabbarActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
@@ -70,6 +71,8 @@ public class AddToCartActivity extends Activity {
         setupViews();
 
         setupOptions();
+
+        requestButton.registerBroadcast();
     }
 
     private void setupViews() {
@@ -84,6 +87,9 @@ public class AddToCartActivity extends Activity {
         addToCartHeader = new GroakOtherHeader(this, dish.getName(), new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
+                String str = (String)object;
+                if (str.equals("back"))
+                    requestButton.unRegisterBroadcast();
             }
 
             @Override
@@ -119,6 +125,12 @@ public class AddToCartActivity extends Activity {
                     finish();
                     Intent intent = new Intent("finish_activity");
                     sendBroadcast(intent);
+
+                    Intent intent1 = new Intent("change_cart_badge");
+                    sendBroadcast(intent1);
+
+                    requestButton.unRegisterBroadcast();
+
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
             }

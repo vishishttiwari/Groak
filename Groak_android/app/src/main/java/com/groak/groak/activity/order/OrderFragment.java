@@ -1,13 +1,18 @@
 package com.groak.groak.activity.order;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -22,12 +27,13 @@ import com.groak.groak.activity.receipt.ReceiptActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPrice;
-import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.order.Order;
+import com.groak.groak.restaurantobject.TableStatus;
 
 public class OrderFragment extends Fragment {
     private ConstraintLayout layout;
@@ -37,57 +43,72 @@ public class OrderFragment extends Fragment {
     private ConstraintLayout scrollViewLayout;
     private GroakFooterWithPrice orderFooter;
 
+    private RecyclerViewHeader orderStatusViewHeader;
+    private TextView orderStatusView;
+
     private RecyclerViewHeader orderViewHeader;
     private RecyclerView orderView;
 
     private OrderSpecialInstructions specialInstructions;
     private RecyclerView specialInstructionsView;
 
+    private BroadcastReceiver broadcastReceiver;
+
     boolean tableOrder = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        downloadOrder();
-
         setupViews();
 
         setupInitialLayout();
 
+        initBroadcast();
+
         return layout;
-    }
-
-    public void downloadOrder() {
-        FirestoreAPICallsOrders.fetchOrderFirestoreAPI(getContext(), new GroakCallback() {
-            @Override
-            public void onSuccess(Object object) {
-                LocalRestaurant.order = (Order)object;
-                refresh(tableOrder);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Catalog.toast(getContext(), "Error fetching orders");
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        registerBroadcast();
         refresh(true);
+    }
+
+    @Override
+    public void onPause() {
+        unRegisterBroadcast();
+        super.onPause();
     }
 
     public void refresh(boolean tableOrder) {
         ((OrderRecyclerViewAdapter) orderView.getAdapter()).refresh(tableOrder);
         ((InstructionsRecyclerViewAdapter) specialInstructionsView.getAdapter()).refresh(tableOrder);
         orderFooter.changePrice(LocalRestaurant.calculateOrderTotalPrice(tableOrder));
+
+        if (LocalRestaurant.order.getStatus() == TableStatus.ordered)
+            orderStatusView.setText("Your order has been requested. Pending for approval.");
+        else if (LocalRestaurant.order.getStatus() == TableStatus.served)
+            orderStatusView.setText("Your order has been served. Enjoy!");
+        else if (LocalRestaurant.order.getStatus() == TableStatus.payment)
+            orderStatusView.setText("You have requested for payment. Someone will be at your table soon.");
+        else if (LocalRestaurant.order.getStatus() == TableStatus.available)
+            orderStatusView.setText("You can start ordering. Your orders will appear below.");
+        else if (LocalRestaurant.order.getStatus() == TableStatus.approved)
+            orderStatusView.setText("Your order will be served at " + TimeCatalog.getTimeFromTimestamp(LocalRestaurant.order.getServeTime()));
+        else
+            orderStatusView.setText("");
+
         if (LocalRestaurant.order == null || LocalRestaurant.order.getDishes().size() == 0) {
+            orderStatusViewHeader.setVisibility(View.GONE);
+            orderStatusView.setVisibility(View.GONE);
             orderViewHeader.setVisibility(View.GONE);
             orderView.setVisibility(View.GONE);
             specialInstructions.setVisibility(View.GONE);
             specialInstructionsView.setVisibility(View.GONE);
             orderFooter.setVisibility(View.GONE);
         } else {
+            orderStatusViewHeader.setVisibility(View.VISIBLE);
+            orderStatusView.setVisibility(View.VISIBLE);
             orderViewHeader.setVisibility(View.VISIBLE);
             orderView.setVisibility(View.VISIBLE);
             specialInstructions.setVisibility(View.VISIBLE);
@@ -145,6 +166,23 @@ public class OrderFragment extends Fragment {
         scrollViewLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         scrollViewLayout.setBackgroundColor(ColorsCatalog.headerGrayShade);
 
+        orderStatusViewHeader = new RecyclerViewHeader(getContext(), "Order Status", "");
+        orderStatusViewHeader.setId(View.generateViewId());
+        orderStatusViewHeader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        orderStatusViewHeader.setVisibility(View.GONE);
+
+        orderStatusView = new TextView(getContext());
+        orderStatusView.setId(View.generateViewId());
+        orderStatusView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        orderStatusView.setBackgroundColor(ColorsCatalog.whiteColor);
+        orderStatusView.setTextSize(20);
+        orderStatusView.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
+        orderStatusView.setTextColor(ColorsCatalog.blackColor);
+        orderStatusView.setGravity(Gravity.CENTER);
+        orderStatusView.setPadding(0, 0, 0, 10);
+        orderStatusView.setText("Your order has been requested. Pending for approval.");
+        orderStatusView.setVisibility(View.GONE);
+
         orderViewHeader = new RecyclerViewHeader(getContext(), "Order", "");
         orderViewHeader.setId(View.generateViewId());
         orderViewHeader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
@@ -184,6 +222,8 @@ public class OrderFragment extends Fragment {
         specialInstructionsView.setBackgroundColor(ColorsCatalog.whiteColor);
         specialInstructionsView.setVisibility(View.GONE);
 
+        scrollViewLayout.addView(orderStatusViewHeader);
+        scrollViewLayout.addView(orderStatusView);
         scrollViewLayout.addView(orderViewHeader);
         scrollViewLayout.addView(orderView);
         scrollViewLayout.addView(specialInstructions);
@@ -198,7 +238,17 @@ public class OrderFragment extends Fragment {
         ConstraintSet set1 = new ConstraintSet();
         set1.clone(scrollViewLayout);
 
-        set1.connect(orderViewHeader.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        set1.connect(orderStatusViewHeader.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        set1.connect(orderStatusViewHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
+        set1.connect(orderStatusViewHeader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
+        set1.constrainHeight(orderStatusViewHeader.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set1.connect(orderStatusView.getId(), ConstraintSet.TOP, orderStatusViewHeader.getId(), ConstraintSet.BOTTOM);
+        set1.connect(orderStatusView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
+        set1.connect(orderStatusView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
+        set1.constrainHeight(orderStatusView.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set1.connect(orderViewHeader.getId(), ConstraintSet.TOP, orderStatusView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
         set1.connect(orderViewHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(orderViewHeader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(orderViewHeader.getId(), ConstraintSet.WRAP_CONTENT);
@@ -240,5 +290,30 @@ public class OrderFragment extends Fragment {
         set.constrainHeight(orderFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("refresh_order")) {
+                    refresh(tableOrder);
+                }
+            }
+        };
+    }
+
+    private void registerBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().registerReceiver(broadcastReceiver, new IntentFilter("refresh_order"));
+        }
+    }
+
+    private void unRegisterBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().unregisterReceiver(broadcastReceiver);
+        }
     }
 }

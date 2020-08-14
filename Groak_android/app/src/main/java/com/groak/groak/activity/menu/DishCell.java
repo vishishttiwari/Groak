@@ -1,7 +1,5 @@
 package com.groak.groak.activity.menu;
 
-import android.graphics.Color;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;

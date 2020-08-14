@@ -1,6 +1,7 @@
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,11 @@ public class FirestoreAPICallsOrders {
 
                 if (snapshot != null && snapshot.exists()) {
                     Order order = new Order(snapshot.getData());
+                    LocalRestaurant.requestNotifications = order.isNewRequestForUser();
+                    Intent intent = new Intent("refresh_order");
+                    context.sendBroadcast(intent);
+                    Intent intent1 = new Intent("change_request_badge");
+                    context.sendBroadcast(intent1);
                     RealmWrapper.downloadDishesAndComments(context, order);
                     callback.onSuccess(order);
                 }
@@ -203,6 +209,35 @@ public class FirestoreAPICallsOrders {
             @Override
             public void onFailure(@NonNull Exception e) {
                 callback.onFailure(null);
+            }
+        });
+    }
+
+    public static void newRequestForUserSeen() {
+        final DocumentReference orderReference = LocalRestaurant.orderReference;
+        final DocumentReference tableReference = LocalRestaurant.table.getReference();
+        final DocumentReference tableOriginalReference = LocalRestaurant.table.getOriginalReference();
+
+        Firebase.firebase.db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                HashMap<String, Object> updatedMap = new HashMap<>();
+                updatedMap.put("newRequestForUser", false);
+
+                transaction.update(orderReference, updatedMap);
+                transaction.update(tableReference, updatedMap);
+                transaction.update(tableOriginalReference, updatedMap);
+
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
             }
         });
     }

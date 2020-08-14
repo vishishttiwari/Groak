@@ -77,9 +77,7 @@ public class DishActivity extends Activity {
         dish = gson.fromJson(i.getStringExtra("dish"), Dish.class);
 
         setupViews();
-
         setupInitialLayout();
-
         initBroadcast();
     }
 
@@ -91,7 +89,11 @@ public class DishActivity extends Activity {
 
         dishHeader = new GroakOtherHeaderWithPrice(this, dish.getName(), Catalog.priceInString(dish.getPrice()), new GroakCallback() {
             @Override
-            public void onSuccess(Object object) { }
+            public void onSuccess(Object object) {
+                String str = (String)object;
+                if (str.equals("back"))
+                    requestButton.unRegisterBroadcast();
+            }
             @Override
             public void onFailure(Exception e) { }
         });
@@ -454,6 +456,7 @@ public class DishActivity extends Activity {
                 if (action.equals("finish_activity")) {
                     finish();
                     unRegisterBroadcast();
+                    requestButton.unRegisterBroadcast();
                 }
             }
         };
@@ -462,6 +465,7 @@ public class DishActivity extends Activity {
     private void registerBroadcast() {
         if (broadcastReceiver != null) {
             registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
+            requestButton.registerBroadcast();
         }
     }
 

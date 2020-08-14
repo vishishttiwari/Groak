@@ -50,3 +50,5 @@ export const TableServed = 'Order has been served';
 export const TablePayment = 'Customers are ready for the payment';
 
 export const FrontDoorQRMenuPage = 'Front door menu page will show the whole menu regardless of availability and timings. You can use this menu on the front door to help your customers view the full menu.';
+
+export const ImageSubjectToChange = 'Disclaimer: The images depicted are not representative of the services offered. Food images are subject to change';

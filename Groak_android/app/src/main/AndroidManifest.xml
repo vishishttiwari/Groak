@@ -11,40 +11,87 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/chat" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
         <activity
-            android:name=".activity.tabbar.TabbarActivity"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".activity.restaurant.RestaurantListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.dish.DishActivity" />
-        <activity android:name=".activity.search.SearchActivity" />
+        <activity
+            android:name=".activity.camera.CameraActivity"
+            android:parentActivityName=".activity.restaurant.RestaurantListActivity">
+        </activity>
+        <activity
+            android:name=".activity.tabbar.TabbarActivity"
+            android:parentActivityName=".activity.camera.CameraActivity"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".activity.dish.DishActivity"
+            android:parentActivityName=".activity.tabbar.TabbarActivity" />
+        <activity
+            android:name=".activity.search.SearchActivity"
+            android:parentActivityName=".activity.tabbar.TabbarActivity" />
         <activity
             android:name=".activity.receipt.ReceiptActivity"
+            android:parentActivityName=".activity.tabbar.TabbarActivity"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.request.RequestActivity" />
+        <activity
+            android:name=".activity.request.RequestActivity"
+            android:parentActivityName=".activity.tabbar.TabbarActivity" />
         <activity
             android:name=".activity.addtocart.AddToCartActivity"
+            android:parentActivityName=".activity.dish.DishActivity"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.cart.cartdetails.CartDetailsActivity"
+            android:parentActivityName=".activity.tabbar.TabbarActivity"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:windowSoftInputMode="adjustPan" />
+
+        <service
+            android:name=".notification.UserNotification"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

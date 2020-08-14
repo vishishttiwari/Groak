@@ -1,6 +1,7 @@
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Transaction;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.firebase.Firebase;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.localstorage.RealmWrapper;
-import com.groak.groak.restaurantobject.TableStatus;
-import com.groak.groak.restaurantobject.order.Order;
-import com.groak.groak.restaurantobject.order.OrderComment;
-import com.groak.groak.restaurantobject.order.OrderDish;
 import com.groak.groak.restaurantobject.request.Request;
 import com.groak.groak.restaurantobject.request.Requests;
 
@@ -32,7 +27,7 @@ import java.util.HashMap;
 public class FirestoreAPICallsRequests {
     static ListenerRegistration registration;
 
-    public static void fetchRequestFirestoreAPI(final GroakCallback callback) {
+    public static void fetchRequestFirestoreAPI(Context context, final GroakCallback callback) {
         registration = LocalRestaurant.requestReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -44,6 +39,8 @@ public class FirestoreAPICallsRequests {
 
                 if (snapshot != null && snapshot.exists()) {
                     Requests requests = new Requests(snapshot.getData());
+                    Intent intent = new Intent("refresh_request");
+                    context.sendBroadcast(intent);
                     callback.onSuccess(requests);
                 }
                 else

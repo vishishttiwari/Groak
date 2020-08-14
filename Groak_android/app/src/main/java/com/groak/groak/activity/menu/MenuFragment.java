@@ -6,12 +6,12 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,19 +20,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.groak.groak.R;
-import com.groak.groak.activity.dish.DishActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.groak.groak.activity.search.SearchActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
-import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.Restaurant;
+import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.Table;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.MenuCategory;
@@ -49,54 +48,38 @@ public class MenuFragment extends Fragment {
     private ArrayList<RecyclerView> menuViews = new ArrayList<>();
     private ArrayList<RecyclerViewHeader> menuViewHeaders = new ArrayList<>();
 
+    private BroadcastReceiver broadcastReceiver;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setupViews();
 
         getCategories();
 
+        initBroadcast();
+
         return layout;
     }
 
-    private void getCategories() {
-        FirestoreAPICallsRestaurants.fetchRestaurantFirestoreAPI("oTuolY9ebBObRgxhmxRYboyGifv1", new GroakCallback() {
-            @Override
-            public void onSuccess(Object object) {
-                LocalRestaurant.restaurant = (Restaurant)object;
-                FirestoreAPICallsRestaurants.fetchRestaurantCategoriesAndDishesFirestoreAPI(new GroakCallback() {
-                    @Override
-                    public void onSuccess(Object object) {
-                        LocalRestaurant.categories = (ArrayList<MenuCategory>) object;
-                        for (MenuCategory category: LocalRestaurant.categories) {
-                            setupRecyclerViewHeader(category);
-                            setupRecyclerViewViews(category.getDishes());
-                        }
-                        menuHeader.refresh();
-                        setupInitialLayout();
-                        menuHeader.setHeader(LocalRestaurant.restaurant.getName());
-                    }
-                    @Override
-                    public void onFailure(Exception e) {
-                        Catalog.toast(getContext(), "Error fetching menu");
-                    }
-                });
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Catalog.toast(getContext(), "Error fetching restaurant");
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerBroadcast();
+    }
 
-        FirestoreAPICallsTables.fetchTableFirestoreAPI("r18cb7350q82598q0cczmo", new GroakCallback() {
-            @Override
-            public void onSuccess(Object object) {
-                LocalRestaurant.setTable((Table)object);
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Catalog.toast(getContext(), "Error fetching table");
-            }
-        });
+    @Override
+    public void onPause() {
+        unRegisterBroadcast();
+        super.onPause();
+    }
+
+    private void getCategories() {
+        for (MenuCategory category: LocalRestaurant.categories) {
+            setupRecyclerViewHeader(category);
+            setupRecyclerViewViews(category.getDishes());
+        }
+        menuHeader.refresh();
+        setupInitialLayout();
     }
 
     private void setupViews() {
@@ -229,5 +212,30 @@ public class MenuFragment extends Fragment {
         set.connect(scrollView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
 
         set.applyTo(layout);
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("refresh_menu")) {
+                    getCategories();
+                }
+            }
+        };
+    }
+
+    private void registerBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().registerReceiver(broadcastReceiver, new IntentFilter("refresh_menu"));
+        }
+    }
+
+    private void unRegisterBroadcast() {
+        if (broadcastReceiver != null) {
+            getContext().unregisterReceiver(broadcastReceiver);
+        }
     }
 }

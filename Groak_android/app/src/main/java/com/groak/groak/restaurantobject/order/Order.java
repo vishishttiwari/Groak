@@ -21,6 +21,7 @@ public class Order {
     private Timestamp updated;
     private TableStatus status;
     private boolean newRequest;
+    private boolean newRequestForUser;
     private Timestamp serveTime;
 
     public Order() {
@@ -35,6 +36,7 @@ public class Order {
         this.updated = null;
         this.status = TableStatus.available;
         this.newRequest = false;
+        this.newRequestForUser = false;
         this.serveTime = null;
     }
 
@@ -58,6 +60,7 @@ public class Order {
         this.updated = (Timestamp)map.get("updated");
         this.status = TableStatus.fromString((String)map.get("status"));
         this.newRequest = (boolean)map.get("newRequest");
+        this.newRequestForUser = (boolean)map.get("newRequestForUser");
         this.serveTime = (Timestamp)map.get("serveTime");
     }
 
@@ -70,6 +73,7 @@ public class Order {
         this.updated = null;
         this.status = TableStatus.available;
         this.newRequest = false;
+        this.newRequestForUser = false;
         this.serveTime = null;
 
         this.comments = new ArrayList<>();
@@ -127,6 +131,9 @@ public class Order {
     public Timestamp getServeTime() {
         return serveTime;
     }
+    public boolean isNewRequestForUser() {
+        return newRequestForUser;
+    }
 
     @Override
     public String toString() {
@@ -142,6 +149,7 @@ public class Order {
                 ", updated=" + updated +
                 ", status=" + status +
                 ", newRequest=" + newRequest +
+                ", newRequestForUser=" + newRequestForUser +
                 ", serveTime=" + serveTime +
                 '}';
     }

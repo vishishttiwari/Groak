@@ -1,5 +1,6 @@
 package com.groak.groak.activity.cart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +84,10 @@ public class CartFragment extends Fragment {
             public void onSuccess(Object object) {
                 if (((String)object).equals("delete")) {
                     LocalRestaurant.cart = new Cart();
+
+                    Intent intent1 = new Intent("change_cart_badge");
+                    getContext().sendBroadcast(intent1);
+
                     refresh();
                 }
             }
@@ -102,6 +107,13 @@ public class CartFragment extends Fragment {
                     public void onSuccess(Object object) {
                         LocalRestaurant.cart = new Cart();
                         refresh();
+
+                        Intent intent1 = new Intent("change_cart_badge");
+                        getContext().sendBroadcast(intent1);
+
+                        Intent intent2 = new Intent("change_tab_to_order");
+                        getContext().sendBroadcast(intent2);
+
                         Catalog.toast(getContext(), "Order placed successfully");
                     }
                     @Override
