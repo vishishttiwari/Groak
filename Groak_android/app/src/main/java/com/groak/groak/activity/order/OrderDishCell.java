@@ -107,36 +107,37 @@ public class OrderDishCell extends RecyclerView.ViewHolder {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(dishName.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishName.getId(), ConstraintSet.LEFT, dishQuantity.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishName.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishName.getId(), ConstraintSet.LEFT, dishQuantity.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainWidth(dishName.getId(), 3*DimensionsCatalog.screenWidth/5);
         set.constrainHeight(dishName.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishQuantity.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishQuantity.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishQuantity.getId(), ConstraintSet.RIGHT, dishName.getId(), ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishQuantity.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishQuantity.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishQuantity.getId(), ConstraintSet.RIGHT, dishName.getId(), ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainWidth(dishQuantity.getId(), 80);
         set.constrainHeight(dishQuantity.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishPrice.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishPrice.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(dishPrice.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishDetails.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishDetails.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishDetails.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishDetails.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishDetails.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishDetails.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(dishDetails.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(localBadgeView.getId(), ConstraintSet.TOP, dishDetails.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(localBadgeView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(localBadgeView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.constrainHeight(localBadgeView.getId(), 100);
+        set.connect(localBadgeView.getId(), ConstraintSet.TOP, dishDetails.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(localBadgeView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(localBadgeView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.constrainHeight(localBadgeView.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(localBadgeView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(created.getId(), ConstraintSet.TOP, dishDetails.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(created.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(created.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(created.getId(), ConstraintSet.TOP, dishDetails.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(created.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(created.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.constrainHeight(created.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(created.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);

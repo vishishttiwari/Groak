@@ -248,7 +248,7 @@ public class OrderFragment extends Fragment {
         set1.connect(orderStatusView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(orderStatusView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(orderViewHeader.getId(), ConstraintSet.TOP, orderStatusView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set1.connect(orderViewHeader.getId(), ConstraintSet.TOP, orderStatusView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set1.connect(orderViewHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(orderViewHeader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(orderViewHeader.getId(), ConstraintSet.WRAP_CONTENT);
@@ -258,7 +258,7 @@ public class OrderFragment extends Fragment {
         set1.connect(orderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(orderView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, orderView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, orderView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set1.connect(specialInstructions.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(specialInstructions.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(specialInstructions.getId(), ConstraintSet.WRAP_CONTENT);

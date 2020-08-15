@@ -9,7 +9,7 @@ import java.util.Collections;
 
 public class DistanceCatalog {
     // Distance around user till which restaurant is allowed in feet. This will most probably be 200 feet
-    private static double distanceBufferInFeet = 2000;
+    private static double distanceBufferInFeet = 500;
     private static double feetLatitude = 0.000002747252747;
     private static double feetLongitude= 0.00000346981263;
 

@@ -229,30 +229,30 @@ public class DishCell extends RecyclerView.ViewHolder {
         set.connect(imageView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
         set.constrainHeight(imageView.getId(), DimensionsCatalog.imageHeights);
 
-        set.connect(dishName.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishName.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishName.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishName.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainWidth(dishName.getId(), 3*DimensionsCatalog.screenWidth/4);
         set.constrainHeight(dishName.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishPrice.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainHeight(dishPrice.getId(), 90);
+        set.connect(dishPrice.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishPrice.getId(), ConstraintSet.LEFT, dishName.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishPrice.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.constrainHeight(dishPrice.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.connect(restrictionsLayout.getId(), ConstraintSet.TOP, dishName.getId(), ConstraintSet.BOTTOM);
         set.connect(restrictionsLayout.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.constrainPercentWidth(restrictionsLayout.getId(), 70);
-        set.constrainHeight(restrictionsLayout.getId(), 90);
+        set.constrainHeight(restrictionsLayout.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishCalories.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishCalories.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.centerVertically(dishCalories.getId(), restrictionsLayout.getId());
         set.constrainPercentWidth(dishCalories.getId(), 25);
-        set.constrainHeight(dishCalories.getId(), 90);
+        set.constrainHeight(dishCalories.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(dishInfo.getId(), ConstraintSet.TOP, restrictionsLayout.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishInfo.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishInfo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(dishInfo.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(dishInfo.getId(), ConstraintSet.TOP, restrictionsLayout.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishInfo.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishInfo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(dishInfo.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
 
         set.applyTo(layout);
 
@@ -260,27 +260,27 @@ public class DishCell extends RecyclerView.ViewHolder {
         set1.clone(restrictionsLayout);
 
         set1.connect(vegIcon.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set1.connect(vegIcon.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(vegIcon.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.constrainHeight(vegIcon.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(vegIcon.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.connect(veganIcon.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set1.connect(veganIcon.getId(), ConstraintSet.LEFT, vegIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(veganIcon.getId(), ConstraintSet.LEFT, vegIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.constrainHeight(veganIcon.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(veganIcon.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.connect(nonvegIcon.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set1.connect(nonvegIcon.getId(), ConstraintSet.LEFT, veganIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(nonvegIcon.getId(), ConstraintSet.LEFT, veganIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.constrainHeight(nonvegIcon.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(nonvegIcon.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.connect(gfIcon.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set1.connect(gfIcon.getId(), ConstraintSet.LEFT, nonvegIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(gfIcon.getId(), ConstraintSet.LEFT, nonvegIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.constrainHeight(gfIcon.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(gfIcon.getId(), ConstraintSet.WRAP_CONTENT);
 
         set1.connect(kosherIcon.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set1.connect(kosherIcon.getId(), ConstraintSet.LEFT, gfIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(kosherIcon.getId(), ConstraintSet.LEFT, gfIcon.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.constrainHeight(kosherIcon.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(vegIcon.getId(), ConstraintSet.WRAP_CONTENT);
 

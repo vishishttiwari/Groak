@@ -26,11 +26,14 @@ public class SearchHeader extends ConstraintLayout {
     private ImageView back;
     private GroakCallback groakCallback;
 
-    protected int headerHeight = DimensionsCatalog.headerHeight;
-    protected int iconHeight = DimensionsCatalog.headerIconHeight;
+    protected int headerHeight;
+    protected int iconHeight;
 
     public SearchHeader(Context context, GroakCallback groakCallback) {
         super(context);
+
+        headerHeight = DimensionsCatalog.getHeaderHeight(context);
+        iconHeight = DimensionsCatalog.getHeaderIconHeight(context);
 
         this.groakCallback = groakCallback;
 
@@ -90,14 +93,14 @@ public class SearchHeader extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.LEFT, back.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.LEFT, back.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(header.getId(), headerHeight);
 
         set.centerVertically(back.getId(), header.getId());
-        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(back.getId(), iconHeight);
         set.constrainHeight(back.getId(), iconHeight);
 

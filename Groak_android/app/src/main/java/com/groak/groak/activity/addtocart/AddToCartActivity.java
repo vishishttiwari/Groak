@@ -236,7 +236,7 @@ public class AddToCartActivity extends Activity {
             if (i == 0) {
                 set1.connect(optionViewHeader.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
             } else {
-                set1.connect(optionViewHeader.getId(), ConstraintSet.TOP, optionViews.get(i - 1).getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+                set1.connect(optionViewHeader.getId(), ConstraintSet.TOP, optionViews.get(i - 1).getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(this));
             }
 
             set1.connect(optionViewHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
@@ -252,7 +252,7 @@ public class AddToCartActivity extends Activity {
         if (optionViewHeaders.size() <= 0)
             set1.connect(specialInstructions.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         else
-            set1.connect(specialInstructions.getId(), ConstraintSet.TOP, optionViews.get(optionViews.size() - 1).getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+            set1.connect(specialInstructions.getId(), ConstraintSet.TOP, optionViews.get(optionViews.size() - 1).getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(this));
 
         set1.connect(specialInstructions.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(specialInstructions.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
@@ -279,8 +279,8 @@ public class AddToCartActivity extends Activity {
         set.connect(addToCartFooter.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(addToCartFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
-        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getRequestButtonMarginFromBottom(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getRequestButtonMarginFromRight(getContext()));
         set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 

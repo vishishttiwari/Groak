@@ -43,7 +43,7 @@ public class SpecialInstructions extends ConstraintLayout {
         specialInstructions.setId(View.generateViewId());
         specialInstructions.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         specialInstructions.setBackgroundColor(ColorsCatalog.whiteColor);
-        specialInstructions.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        specialInstructions.setPadding(DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, DimensionsCatalog.getDistanceBetweenElements(getContext()), DimensionsCatalog.getDistanceBetweenElements(getContext()));
         specialInstructions.setLines(5);
         specialInstructions.setGravity(Gravity.TOP);
         specialInstructions.setTextSize(18);

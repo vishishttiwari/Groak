@@ -60,7 +60,7 @@ public class CartHeader extends GroakFragmentHeader {
         set.clone(this);
 
         set.centerVertically(delete.getId(), ConstraintSet.PARENT_ID);
-        set.connect(delete.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(delete.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(delete.getId(), iconHeight);
         set.constrainHeight(delete.getId(), iconHeight);
 

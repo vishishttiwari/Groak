@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,12 +22,14 @@ public class CartBadgeView extends ConstraintLayout {
 
     private TextView badgeView;
 
-    private int height = 50;
+    private int height;
 
     private BroadcastReceiver broadcastReceiver;
 
     public CartBadgeView(Context context) {
         super(context);
+
+        height = DimensionsCatalog.getValueInDP(30, context);
 
         setupViews();
         setupInitialLayout();

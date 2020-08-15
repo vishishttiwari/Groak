@@ -48,7 +48,7 @@ public class GroakOtherHeader extends GroakHeader {
         set.clone(this);
 
         set.centerVertically(back.getId(), header.getId());
-        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(back.getId(), iconHeight);
         set.constrainHeight(back.getId(), iconHeight);
 

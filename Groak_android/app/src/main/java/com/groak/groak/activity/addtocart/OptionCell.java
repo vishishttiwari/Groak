@@ -73,19 +73,19 @@ public class OptionCell extends RecyclerView.ViewHolder {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(option.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(option.getId(), ConstraintSet.LEFT, selectBox.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(option.getId(), ConstraintSet.RIGHT, price.getId(), ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(option.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(option.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(option.getId(), ConstraintSet.LEFT, selectBox.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(option.getId(), ConstraintSet.RIGHT, price.getId(), ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(option.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(option.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(price.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(price.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(price.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(price.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(price.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(price.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(price.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.centerVertically(selectBox.getId(), option.getId());
-        set.connect(selectBox.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(selectBox.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainWidth(selectBox.getId(), 60);
         set.constrainHeight(selectBox.getId(), 60);
 

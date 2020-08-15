@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import com.groak.groak.R;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
@@ -18,12 +19,16 @@ public class GroakHeader extends ConstraintLayout {
 
     protected TextView header;
 
-    protected int headerHeight = DimensionsCatalog.headerHeight;
-    protected int iconHeight = DimensionsCatalog.headerIconHeight;
-    protected int leaveHeight = DimensionsCatalog.headerIconHeight + 50;
+    protected int headerHeight;
+    protected int iconHeight;
+    protected int leaveHeight;
 
     public GroakHeader(Context context, String header) {
         super(context);
+
+        headerHeight = DimensionsCatalog.getHeaderHeight(context);
+        iconHeight = DimensionsCatalog.getHeaderIconHeight(context);
+        leaveHeight = DimensionsCatalog.getHeaderLeaveHeight(context);
 
         setupViews();
         setupInitialLayout();
@@ -53,10 +58,10 @@ public class GroakHeader extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
-        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()) + iconHeight);
+        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()) + iconHeight);
         set.constrainHeight(header.getId(), headerHeight);
 
         set.applyTo(this);

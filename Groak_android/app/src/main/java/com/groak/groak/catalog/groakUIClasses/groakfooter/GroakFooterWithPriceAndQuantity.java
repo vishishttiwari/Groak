@@ -24,10 +24,12 @@ public class GroakFooterWithPriceAndQuantity extends GroakFooterWithPrice {
     private int quantity = 1;
     private double totalPrice = 0;
 
-    protected int iconHeight = DimensionsCatalog.headerIconHeight;
+    protected int iconHeight;
 
     public GroakFooterWithPriceAndQuantity(Context context, String firstPart, String secondPart, int quantity, double pricePerItem, GroakCallback callback) {
         super(context, firstPart + quantity + secondPart, Catalog.calculateTotalPriceOfDish(pricePerItem, quantity), callback);
+
+        iconHeight = DimensionsCatalog.getHeaderIconHeight(context);;
 
         this.firstPart = firstPart;
         this.secondPart = secondPart;
@@ -86,15 +88,15 @@ public class GroakFooterWithPriceAndQuantity extends GroakFooterWithPrice {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(subheader.getId(), ConstraintSet.LEFT, reduceDish.getId(), ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(subheader.getId(), ConstraintSet.RIGHT, addDish.getId(), ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(subheader.getId(), ConstraintSet.LEFT, reduceDish.getId(), ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(subheader.getId(), ConstraintSet.RIGHT, addDish.getId(), ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
 
-        set.connect(addDish.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(addDish.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.centerVertically(addDish.getId(), subheader.getId());
         set.constrainHeight(addDish.getId(), iconHeight + 30);
         set.constrainWidth(addDish.getId(), iconHeight + 30);
 
-        set.connect(reduceDish.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(reduceDish.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.centerVertically(reduceDish.getId(), subheader.getId());
         set.constrainHeight(reduceDish.getId(), iconHeight + 30);
         set.constrainWidth(reduceDish.getId(), iconHeight + 30);

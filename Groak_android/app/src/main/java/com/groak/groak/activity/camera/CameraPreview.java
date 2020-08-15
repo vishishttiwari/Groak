@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -12,6 +13,8 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.media.Image;
+import android.media.ImageReader;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -27,13 +30,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.groak.groak.catalog.Catalog;
+import com.groak.groak.catalog.GroakCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static android.content.Context.CAMERA_SERVICE;
 
 public class CameraPreview extends ConstraintLayout {
     private TextureView cameraPreview;
@@ -46,6 +53,10 @@ public class CameraPreview extends ConstraintLayout {
     private CaptureRequest.Builder captureRequestBuilder;
     private HandlerThread cameraBackgroundThread;
     private Handler cameraBackgroundHandler;
+    private Size captureFrameSize;
+    private ImageReader imageReader;
+    private ImageReader.OnImageAvailableListener onImageAvailableListener;
+    private QRScanner qrScanner = new QRScanner();
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 0);
@@ -63,10 +74,10 @@ public class CameraPreview extends ConstraintLayout {
     private String cameraError = "Error occurred while switching the camera on";
     private String cameraRequest = "Please allow camera for scanning the QR Code";
 
-    public CameraPreview(Context context) {
+    public CameraPreview(Context context, String restaurantId, GroakCallback groakCallback) {
         super(context);
 
-        setupViews();
+        setupViews(restaurantId, groakCallback);
 
         setupInitialLayout();
     }
@@ -107,10 +118,17 @@ public class CameraPreview extends ConstraintLayout {
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+
+            try {
+                setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
+                connectCamera();
+            } catch (Exception e) {
+                Catalog.toast(getContext(), cameraError);
+            }
         }
     }
 
-    private void setupViews() {
+    private void setupViews(String restaurantId, GroakCallback groakCallback) {
         cameraPreview = new TextureView(getContext());
         cameraPreview.setId(View.generateViewId());
         cameraPreview.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
@@ -128,7 +146,6 @@ public class CameraPreview extends ConstraintLayout {
 
             @Override
             public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
             }
 
             @Override
@@ -167,6 +184,34 @@ public class CameraPreview extends ConstraintLayout {
             }
         };
 
+        onImageAvailableListener = new ImageReader.OnImageAvailableListener() {
+            @Override
+            public void onImageAvailable(ImageReader reader) {
+                Image image = reader.acquireLatestImage();
+
+                if (image != null) {
+                    try {
+                        FirebaseVisionImage inputImage = FirebaseVisionImage.fromMediaImage(image, Surface.ROTATION_90);
+                        qrScanner.scanQR(inputImage, restaurantId, new GroakCallback() {
+
+                            @Override
+                            public void onSuccess(Object object) {
+                                groakCallback.onSuccess(object);
+                                closeCamera();
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Catalog.toast(getContext(), "Error reading QR code");
+                            }
+                        });
+                    } catch (Exception e) {
+                        Catalog.toast(getContext(), "Error reading QR code");
+                    }
+                    image.close();
+                }
+            }};
+
         addView(cameraPreview);
     }
 
@@ -183,17 +228,23 @@ public class CameraPreview extends ConstraintLayout {
     }
 
     private void startPreview() throws CameraAccessException {
+        imageReader = ImageReader.newInstance(captureFrameSize.getWidth(), captureFrameSize.getHeight(), ImageFormat.YUV_420_888, 3);
+        imageReader.setOnImageAvailableListener(onImageAvailableListener, null);
+
         SurfaceTexture surfaceTexture = cameraPreview.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
 
         captureRequestBuilder = cameraDev.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
         captureRequestBuilder.addTarget(previewSurface);
+        captureRequestBuilder.addTarget(imageReader.getSurface());
 
-        cameraDev.createCaptureSession(Arrays.asList(previewSurface), new CameraCaptureSession.StateCallback() {
+        cameraDev.createCaptureSession(Arrays.asList(previewSurface, imageReader.getSurface()), new CameraCaptureSession.StateCallback() {
             @Override
             public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
                 try {
+                    captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+                    captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, 90);
                     cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, cameraBackgroundHandler);
                 } catch (CameraAccessException e) {
                     Catalog.toast(getContext(), cameraError);
@@ -208,7 +259,7 @@ public class CameraPreview extends ConstraintLayout {
     }
 
     private void setupCamera(int width, int height) throws CameraAccessException {
-        CameraManager cameraManager = (CameraManager) getContext().getSystemService(Context.CAMERA_SERVICE);
+        CameraManager cameraManager = (CameraManager) getContext().getSystemService(CAMERA_SERVICE);
         for (String cameraId: cameraManager.getCameraIdList()) {
             CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
             if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK) {
@@ -223,6 +274,7 @@ public class CameraPreview extends ConstraintLayout {
                     rotatedHeight = width;
                 }
                 previewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class), rotatedWidth, rotatedHeight);
+                captureFrameSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.YUV_420_888), rotatedWidth, rotatedHeight);
                 this.cameraId = cameraId;
                 return;
             }
@@ -230,7 +282,7 @@ public class CameraPreview extends ConstraintLayout {
     }
 
     private void connectCamera() throws CameraAccessException {
-        CameraManager cameraManager = (CameraManager) getContext().getSystemService(Context.CAMERA_SERVICE);
+        CameraManager cameraManager = (CameraManager) getContext().getSystemService(CAMERA_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 cameraManager.openCamera(cameraId, cameraDeviceStateCallback, cameraBackgroundHandler);
@@ -246,6 +298,9 @@ public class CameraPreview extends ConstraintLayout {
         if (cameraDev != null) {
             cameraDev.close();
             cameraDev = null;
+        }
+        if (imageReader != null) {
+            imageReader.close();
         }
     }
 
@@ -271,15 +326,81 @@ public class CameraPreview extends ConstraintLayout {
     private static Size chooseOptimalSize(Size[] choices, int width, int height) {
         List<Size> bigEnough = new ArrayList<>();
         for (Size option: choices) {
-            if (option.getHeight() == option.getWidth() * height / width
-                    && option.getWidth() >= width && option.getHeight() >= height) {
+            if (option.getHeight() == option.getWidth() * height / width &&
+                    option.getWidth() >= width &&
+                    option.getHeight() >= height) {
                 bigEnough.add(option);
             }
         }
-        if (bigEnough.size() > 0) {
+        if (bigEnough.size() > 0)
             return Collections.min(bigEnough, new CompareSizeByArea());
-        } else {
-            return choices[0];
+        else {
+            bigEnough.clear();
+            for (Size option: choices) {
+                if (option.getHeight() < option.getWidth() * height / width + 50 &&
+                        option.getHeight() > option.getWidth() * height / width - 50 &&
+                        option.getWidth() >= width &&
+                        option.getHeight() >= height) {
+                    bigEnough.add(option);
+                }
+            }
+            if (bigEnough.size() > 0)
+                return Collections.min(bigEnough, new CompareSizeByArea());
+            else {
+                bigEnough.clear();
+                for (Size option: choices) {
+                    if (option.getHeight() < option.getWidth() * height / width + 100 &&
+                            option.getHeight() > option.getWidth() * height / width - 100 &&
+                            option.getWidth() >= width &&
+                            option.getHeight() >= height) {
+                        bigEnough.add(option);
+                    }
+                }
+                if (bigEnough.size() > 0)
+                    return Collections.min(bigEnough, new CompareSizeByArea());
+                else {
+                    bigEnough.clear();
+                    for (Size option: choices) {
+                        if (option.getHeight() < option.getWidth() * height / width + 200 &&
+                                option.getHeight() > option.getWidth() * height / width - 200 &&
+                                option.getWidth() >= width &&
+                                option.getHeight() >= height) {
+                            bigEnough.add(option);
+                        }
+                    }
+                    if (bigEnough.size() > 0)
+                        return Collections.min(bigEnough, new CompareSizeByArea());
+                    else {
+                        bigEnough.clear();
+                        for (Size option: choices) {
+                            if (option.getHeight() < option.getWidth() * height / width + 300 &&
+                                    option.getHeight() > option.getWidth() * height / width - 300 &&
+                                    option.getWidth() >= width &&
+                                    option.getHeight() >= height) {
+                                bigEnough.add(option);
+                            }
+                        }
+                        if (bigEnough.size() > 0)
+                            return Collections.min(bigEnough, new CompareSizeByArea());
+                        else {
+                            bigEnough.clear();
+                            for (Size option: choices) {
+                                if (option.getHeight() < option.getWidth() * height / width + 400 &&
+                                        option.getHeight() > option.getWidth() * height / width - 400 &&
+                                        option.getWidth() >= width &&
+                                        option.getHeight() >= height) {
+                                    bigEnough.add(option);
+                                }
+                            }
+                            if (bigEnough.size() > 0)
+                                return Collections.min(bigEnough, new CompareSizeByArea());
+                            else {
+                                return choices[0];
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

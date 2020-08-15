@@ -3,6 +3,7 @@ package com.groak.groak.catalog.groakUIClasses;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -12,17 +13,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 
 public class RestrictionsSymbol extends ConstraintLayout {
 
-    private int height = 80;
-    private int textSize = 12;
+    private int height;
+    private int textSize = 15;
 
     private Button view;
 
     public RestrictionsSymbol(Context context, String str, int color) {
         super(context);
+
+        height = DimensionsCatalog.getValueInDP(40, context);
 
         setupViews(str, color);
 
@@ -34,12 +38,13 @@ public class RestrictionsSymbol extends ConstraintLayout {
         view.setId(View.generateViewId());
         view.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         view.setTextSize(textSize);
-        view.setTypeface(FontCatalog.fontLevels(getContext(), 1));
+        view.setTypeface(FontCatalog.fontLevels(getContext(), 3));
         view.setTextColor(ColorsCatalog.whiteColor);
         view.setGravity(Gravity.CENTER);
         view.setMaxLines(1);
         view.setText(str);
         view.setEllipsize(TextUtils.TruncateAt.END);
+        view.setElevation(0);
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.RECTANGLE);
         shape.setColor(color);

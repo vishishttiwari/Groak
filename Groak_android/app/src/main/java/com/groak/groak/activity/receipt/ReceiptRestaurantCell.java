@@ -94,24 +94,24 @@ public class ReceiptRestaurantCell extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(restaurantLogo.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2* DimensionsCatalog.distanceBetweenElements);
-        set.connect(restaurantLogo.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(restaurantLogo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantLogo.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(restaurantLogo.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(restaurantLogo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
 
-        set.connect(restaurantName.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2* DimensionsCatalog.distanceBetweenElements);
-        set.connect(restaurantName.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(restaurantName.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantName.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(restaurantName.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(restaurantName.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(restaurantName.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(address.getId(), ConstraintSet.TOP, (restaurantName.getVisibility() == View.VISIBLE ? restaurantName.getId() : restaurantLogo.getId()), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(address.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(address.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(address.getId(), ConstraintSet.TOP, (restaurantName.getVisibility() == View.VISIBLE ? restaurantName.getId() : restaurantLogo.getId()), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(address.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(address.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(address.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(time.getId(), ConstraintSet.TOP, address.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(time.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(time.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(time.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set.connect(time.getId(), ConstraintSet.TOP, address.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(time.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(time.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(time.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(time.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(this);

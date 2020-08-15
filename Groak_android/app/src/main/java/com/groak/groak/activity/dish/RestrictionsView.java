@@ -14,8 +14,6 @@ import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.groakUIClasses.RestrictionsSymbol;
 
 public class RestrictionsView extends ConstraintLayout {
-    private int height = 80;
-    private int textSize = 12;
 
     private RestrictionsSymbol symbol;
     private TextView textView;
@@ -54,12 +52,12 @@ public class RestrictionsView extends ConstraintLayout {
 
         set.connect(symbol.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         set.connect(symbol.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
-        set.constrainHeight(symbol.getId(), height);
-        set.constrainWidth(symbol.getId(), height);
+        set.constrainHeight(symbol.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(symbol.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.centerVertically(textView.getId(), symbol.getId());
-        set.connect(textView.getId(), ConstraintSet.LEFT, symbol.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(textView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(textView.getId(), ConstraintSet.LEFT, symbol.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(textView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(textView.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(this);

@@ -22,6 +22,7 @@ import com.groak.groak.R;
 import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
@@ -202,8 +203,8 @@ public class ReceiptActivity extends Activity {
         set.connect(receiptFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(receiptFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
-        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getRequestButtonMarginFromBottom(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getRequestButtonMarginFromRight(getContext()));
         set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 

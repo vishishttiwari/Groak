@@ -30,7 +30,7 @@ public class GroakOtherHeaderWithPrice extends GroakOtherHeader {
         subheader = new TextView(getContext());
         subheader.setId(generateViewId());
         subheader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        subheader.setTextSize(DimensionsCatalog.headerTextSize - 5);
+        subheader.setTextSize(DimensionsCatalog.headerTextSize);
         subheader.setTypeface(FontCatalog.fontLevels(getContext(), 1));
         subheader.setTextColor(ColorsCatalog.themeColor);
         subheader.setGravity(Gravity.CENTER);
@@ -43,20 +43,21 @@ public class GroakOtherHeaderWithPrice extends GroakOtherHeader {
     private void setupInitialLayout() {
         ConstraintSet set = new ConstraintSet();
 
-        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
-        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements + iconHeight);
+        set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()) + iconHeight);
+        set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()) + iconHeight);
         set.constrainHeight(header.getId(), headerHeight);
 
         set.centerVertically(back.getId(), header.getId());
-        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(back.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(back.getId(), iconHeight);
         set.constrainHeight(back.getId(), iconHeight);
 
         set.connect(subheader.getId(), ConstraintSet.TOP, header.getId(), ConstraintSet.BOTTOM);
-        set.connect(subheader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(subheader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.constrainHeight(subheader.getId(), headerHeight - 50);
+        set.connect(subheader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(subheader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(subheader.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+        set.constrainHeight(subheader.getId(), DimensionsCatalog.getHeaderOtherHeight(getContext()));
 
         set.applyTo(this);
     }

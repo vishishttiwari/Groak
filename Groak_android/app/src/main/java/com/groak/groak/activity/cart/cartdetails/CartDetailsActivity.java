@@ -121,7 +121,7 @@ public class CartDetailsActivity extends Activity {
         orderDetails.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
         orderDetails.setTextColor(ColorsCatalog.blackColor);
         orderDetails.setGravity(Gravity.LEFT);
-        orderDetails.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        orderDetails.setPadding(DimensionsCatalog.getDistanceBetweenElements(this), 0, DimensionsCatalog.getDistanceBetweenElements(this), DimensionsCatalog.getDistanceBetweenElements(this));
         orderDetails.setText(Catalog.showExtras(dish.getExtras(), false));
 
         specialInstructions = new SpecialInstructions(this);
@@ -152,7 +152,7 @@ public class CartDetailsActivity extends Activity {
         set1.connect(orderDetails.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 0);
         set1.connect(orderDetails.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
 
-        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, orderDetails.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, orderDetails.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(this));
         set1.connect(specialInstructions.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 0);
         set1.connect(specialInstructions.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
 

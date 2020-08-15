@@ -1,5 +1,6 @@
 package com.groak.groak.activity.restaurant;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.groak.groak.R;
 import com.groak.groak.activity.camera.CameraActivity;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.restaurant.RestaurantSerializer;
@@ -59,6 +61,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
 
                 intent.putExtra("restaurant", gson.toJson(restaurants.get(position)));
                 context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             }
         });
     }

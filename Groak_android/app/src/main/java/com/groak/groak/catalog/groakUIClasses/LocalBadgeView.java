@@ -40,7 +40,7 @@ public class LocalBadgeView extends ConstraintLayout {
         text.setId(View.generateViewId());
         text.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         text.setTextSize(textSize);
-        text.setTypeface(FontCatalog.fontLevels(getContext(), 1));
+        text.setTypeface(FontCatalog.fontLevels(getContext(), 2));
         text.setTextColor(ColorsCatalog.greenColor);
         text.setMaxLines(1);
         text.setBackgroundColor(Color.TRANSPARENT);
@@ -59,8 +59,8 @@ public class LocalBadgeView extends ConstraintLayout {
         set.clone(this);
 
         set.connect(text.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set.connect(text.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(text.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(text.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(text.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(text.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(text.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(text.getId(), ConstraintSet.WRAP_CONTENT);

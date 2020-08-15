@@ -3,8 +3,19 @@ package com.groak.groak.catalog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.media.Image;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +27,11 @@ import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
 import com.groak.groak.restaurantobject.order.OrderDishExtra;
 import com.groak.groak.restaurantobject.order.OrderDishExtraOption;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class Catalog {
@@ -158,6 +174,29 @@ public class Catalog {
                     extra.getOptions().add(option);
                 }
             }
+        }
+    }
+
+    public static void saveImageToInternalStorage(Context context, Bitmap bm) throws IOException {
+        File path = Environment.getExternalStorageDirectory();
+        File dir = new File(path + "/Demo/");
+        dir.mkdir();
+        File file = new File(dir, System.currentTimeMillis() + ".png");
+
+        FileOutputStream out = new FileOutputStream(file);
+        try{
+            bm.compress(Bitmap.CompressFormat.PNG, 100, out); // Compress Image
+            out.flush();
+            out.close();
+
+            MediaScannerConnection.scanFile(context, new String[] { file.getAbsolutePath() }, null,new MediaScannerConnection.OnScanCompletedListener() {
+                public void onScanCompleted(String path, Uri uri) {
+                    Log.i("ExternalStorage", "Scanned " + path + ":");
+                    Log.i("ExternalStorage", "-> uri=" + uri);
+                }
+            });
+        } catch(Exception e) {
+            throw new IOException();
         }
     }
 }

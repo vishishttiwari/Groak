@@ -87,7 +87,7 @@ public class CovidFragment extends Fragment {
         guidelineView.setTypeface(FontCatalog.fontLevels(getContext(), 1));
         guidelineView.setTextSize(18);
         guidelineView.setBackgroundColor(ColorsCatalog.whiteColor);
-        guidelineView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        guidelineView.setPadding(DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, DimensionsCatalog.getDistanceBetweenElements(getContext()), DimensionsCatalog.getDistanceBetweenElements(getContext()));
         if (LocalRestaurant.restaurant == null || LocalRestaurant.restaurant.getCovidGuidelines() == null) {
             guidelineHeaderView.setVisibility(View.GONE);
             guidelineView.setVisibility(View.GONE);
@@ -108,7 +108,7 @@ public class CovidFragment extends Fragment {
         messageView.setTypeface(FontCatalog.fontLevels(getContext(), 1));
         messageView.setTextSize(18);
         messageView.setBackgroundColor(ColorsCatalog.whiteColor);
-        messageView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        messageView.setPadding(DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, DimensionsCatalog.getDistanceBetweenElements(getContext()), DimensionsCatalog.getDistanceBetweenElements(getContext()));
         if (LocalRestaurant.restaurant == null || LocalRestaurant.restaurant.getCovidMessage() == null) {
             messageHeaderView.setVisibility(View.GONE);
             messageView.setVisibility(View.GONE);
@@ -141,7 +141,7 @@ public class CovidFragment extends Fragment {
         set.connect(guidelineView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(guidelineView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(messageView.getId(), ConstraintSet.TOP, guidelineView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set.connect(messageView.getId(), ConstraintSet.TOP, guidelineView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(messageHeaderView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(messageHeaderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(messageHeaderView.getId(), ConstraintSet.WRAP_CONTENT);

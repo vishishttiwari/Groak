@@ -3,7 +3,6 @@ package com.groak.groak.activity.restaurant;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,17 +20,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
-import com.groak.groak.activity.camera.CameraActivity;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakHeader;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
-import com.groak.groak.restaurantobject.restaurant.RestaurantSerializer;
 
 import java.util.ArrayList;
 
@@ -67,6 +62,7 @@ public class RestaurantListActivity extends Activity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                System.out.println(location);
                 FirestoreAPICallsRestaurants.fetchClosestRestaurantFirestoreAPI(location, new GroakCallback() {
                     @Override
                     public void onSuccess(Object object) {
@@ -74,18 +70,6 @@ public class RestaurantListActivity extends Activity {
                         if (restaurants.size() == 0) {
                             restaurantView.setVisibility(View.GONE);
                             noRestaurantFound.setVisibility(View.VISIBLE);
-                        } else if (restaurants.size() == 1) {
-                            restaurantView.setVisibility(View.VISIBLE);
-                            noRestaurantFound.setVisibility(View.GONE);
-
-                            GsonBuilder builder = new GsonBuilder();
-                            builder.registerTypeAdapter(Restaurant.class, new RestaurantSerializer());
-                            final Gson gson = builder.create();
-
-                            Intent intent = new Intent(getContext(), CameraActivity.class);
-
-                            intent.putExtra("restaurant", gson.toJson(restaurants.get(0)));
-                            getContext().startActivity(intent);
                         } else {
                             restaurantView.setVisibility(View.VISIBLE);
                             noRestaurantFound.setVisibility(View.GONE);
@@ -116,7 +100,7 @@ public class RestaurantListActivity extends Activity {
             }
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 10, locationListener);
     }
 
     @Override
@@ -179,9 +163,9 @@ public class RestaurantListActivity extends Activity {
         set.connect(restaurantView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(restaurantView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
 
-        set.connect(noRestaurantFound.getId(), ConstraintSet.TOP, restaurantHeader.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
-        set.connect(noRestaurantFound.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2* DimensionsCatalog.distanceBetweenElements);
-        set.connect(noRestaurantFound.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2* DimensionsCatalog.distanceBetweenElements);
+        set.connect(noRestaurantFound.getId(), ConstraintSet.TOP, restaurantHeader.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(this));
+        set.connect(noRestaurantFound.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2* DimensionsCatalog.getDistanceBetweenElements(this));
+        set.connect(noRestaurantFound.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2* DimensionsCatalog.getDistanceBetweenElements(this));
         set.constrainHeight(noRestaurantFound.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);

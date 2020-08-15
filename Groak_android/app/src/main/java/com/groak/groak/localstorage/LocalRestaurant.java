@@ -2,8 +2,11 @@ package com.groak.groak.localstorage;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.groak.groak.R;
+import com.groak.groak.activity.restaurant.RestaurantListActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
@@ -97,7 +100,11 @@ public class LocalRestaurant {
                 FirestoreAPICallsOrders.unsubscribe();
                 FirestoreAPICallsRequests.unsubscribe();
 
-                ((Activity)context).finish();
+                Intent intent = new Intent(context, RestaurantListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("EXIT", true);
+                context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             }
 
             @Override

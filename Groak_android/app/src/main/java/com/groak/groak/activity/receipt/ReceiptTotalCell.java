@@ -98,34 +98,34 @@ public class ReceiptTotalCell extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(total.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(total.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(total.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(total.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(total.getId(), 60);
         set.constrainHeight(total.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.centerVertically(totalValue.getId(), total.getId());
-        set.connect(totalValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(totalValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(totalValue.getId(), 30);
         set.constrainHeight(totalValue.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(subtotal.getId(), ConstraintSet.TOP, total.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(subtotal.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(subtotal.getId(), ConstraintSet.TOP, total.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(subtotal.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(subtotal.getId(), 60);
         set.constrainHeight(subtotal.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.centerVertically(subtotalValue.getId(), subtotal.getId());
-        set.connect(subtotalValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(subtotalValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(subtotalValue.getId(), 30);
         set.constrainHeight(subtotalValue.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(tax.getId(), ConstraintSet.TOP, subtotal.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(tax.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(tax.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(tax.getId(), ConstraintSet.TOP, subtotal.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(tax.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(tax.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(tax.getId(), 60);
         set.constrainHeight(tax.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.centerVertically(taxValue.getId(), tax.getId());
-        set.connect(taxValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(taxValue.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainPercentWidth(taxValue.getId(), 30);
         set.constrainHeight(taxValue.getId(), ConstraintSet.WRAP_CONTENT);
 

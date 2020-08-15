@@ -151,8 +151,8 @@ public class TabbarActivity extends AppCompatActivity {
         set.connect(tabbar.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
         set.constrainHeight(tabbar.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
-        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getRequestButtonMarginFromBottom(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getRequestButtonMarginFromRight(getContext()));
         set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 
@@ -173,8 +173,9 @@ public class TabbarActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         Restaurant restaurant = gson.fromJson(i.getStringExtra("restaurant"), Restaurant.class);
+        String tableId = i.getStringExtra("tableId");
 
-        LocalRestaurant.enterRestaurant(this, restaurant, "r18cb7350q82598q0cczmo", new GroakCallback() {
+        LocalRestaurant.enterRestaurant(this, restaurant, tableId, new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
                 loadingSpinner.dismiss();

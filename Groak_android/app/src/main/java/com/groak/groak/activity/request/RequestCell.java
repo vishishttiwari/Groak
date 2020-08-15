@@ -134,7 +134,7 @@ public class RequestCell  extends RecyclerView.ViewHolder {
         set1.constrainHeight(requestByUser.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(requestByUser.getId(), ConstraintSet.MATCH_CONSTRAINT);
 
-        set1.connect(timeByUser.getId(), ConstraintSet.TOP, requestByUser.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set1.connect(timeByUser.getId(), ConstraintSet.TOP, requestByUser.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.connect(timeByUser.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(timeByUser.getId(), ConstraintSet.WRAP_CONTENT);
         set1.constrainWidth(timeByUser.getId(), ConstraintSet.WRAP_CONTENT);
@@ -150,7 +150,7 @@ public class RequestCell  extends RecyclerView.ViewHolder {
         set2.constrainHeight(requestByRestaurant.getId(), ConstraintSet.WRAP_CONTENT);
         set2.constrainWidth(requestByRestaurant.getId(), ConstraintSet.MATCH_CONSTRAINT);
 
-        set2.connect(timeByRestaurant.getId(), ConstraintSet.TOP, requestByRestaurant.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set2.connect(timeByRestaurant.getId(), ConstraintSet.TOP, requestByRestaurant.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set2.connect(timeByRestaurant.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set2.constrainHeight(timeByRestaurant.getId(), ConstraintSet.WRAP_CONTENT);
         set2.constrainWidth(timeByRestaurant.getId(), ConstraintSet.WRAP_CONTENT);
@@ -160,15 +160,15 @@ public class RequestCell  extends RecyclerView.ViewHolder {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(backgroundByRestaurant.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(backgroundByRestaurant.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(backgroundByRestaurant.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(backgroundByRestaurant.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(backgroundByRestaurant.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(backgroundByRestaurant.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(backgroundByRestaurant.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(backgroundByRestaurant.getId(), 3*DimensionsCatalog.screenWidth/4);
 
-        set.connect(backgroundByUser.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(backgroundByUser.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(backgroundByUser.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(backgroundByUser.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(backgroundByUser.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
+        set.connect(backgroundByUser.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(backgroundByUser.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(backgroundByUser.getId(), 3*DimensionsCatalog.screenWidth/4);
 

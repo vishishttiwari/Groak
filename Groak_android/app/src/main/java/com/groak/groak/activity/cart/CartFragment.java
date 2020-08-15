@@ -184,7 +184,7 @@ public class CartFragment extends Fragment {
         set1.connect(cartView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(cartView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, cartView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.distanceBetweenElements);
+        set1.connect(specialInstructions.getId(), ConstraintSet.TOP, cartView.getId(), ConstraintSet.BOTTOM, 2* DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set1.connect(specialInstructions.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(specialInstructions.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(specialInstructions.getId(), ConstraintSet.WRAP_CONTENT);

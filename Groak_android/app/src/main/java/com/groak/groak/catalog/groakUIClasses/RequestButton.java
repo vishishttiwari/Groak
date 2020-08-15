@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -27,10 +28,12 @@ public class RequestButton extends ConstraintLayout {
 
     private BroadcastReceiver broadcastReceiver;
 
-    private int height = 50;
+    private int height;
 
     public RequestButton(Context context) {
         super(context);
+
+        height = DimensionsCatalog.getValueInDP(20, context);
 
         setupViews();
         setupInitialLayout();
@@ -54,6 +57,7 @@ public class RequestButton extends ConstraintLayout {
         requestButton.setImageResource(R.drawable.chat);
         requestButton.setBackgroundTintList(ColorStateList.valueOf(ColorsCatalog.headerGrayShade));
         requestButton.setElevation(DimensionsCatalog.elevation);
+        requestButton.setSize(FloatingActionButton.SIZE_NORMAL);
 
         badgeView = new TextView(getContext());
         badgeView.setId(View.generateViewId());
@@ -84,15 +88,15 @@ public class RequestButton extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(requestButton.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestButton.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(requestButton.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(badgeView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
-        set.connect(badgeView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(badgeView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(badgeView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainWidth(badgeView.getId(), height);
         set.constrainHeight(badgeView.getId(), height);
 

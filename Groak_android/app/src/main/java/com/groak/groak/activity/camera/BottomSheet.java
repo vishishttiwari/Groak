@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.bumptech.glide.Glide;
+import com.groak.groak.R;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
@@ -73,12 +74,13 @@ public class BottomSheet extends ConstraintLayout {
         restaurantNameSmall.setTextSize(DimensionsCatalog.headerTextSize - 5);
         restaurantNameSmall.setBackgroundColor(ColorsCatalog.whiteColor);
         restaurantNameSmall.setGravity(Gravity.CENTER);
+        restaurantNameSmall.setPadding(0, DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, 0);
         restaurantNameSmall.setVisibility(GONE);
 
         restaurantLogo = new ImageView(getContext());
         restaurantLogo.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         restaurantLogo.setId(View.generateViewId());
-        restaurantLogo.setScaleType(ImageView.ScaleType.FIT_XY);
+        restaurantLogo.setScaleType(ImageView.ScaleType.FIT_CENTER);
         restaurantLogo.setBackgroundColor(ColorsCatalog.whiteColor);
         restaurantLogo.setVisibility(GONE);
 
@@ -95,7 +97,7 @@ public class BottomSheet extends ConstraintLayout {
         differentRestaurant = new Button(getContext());
         differentRestaurant.setId(View.generateViewId());
         differentRestaurant.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        differentRestaurant.setTextSize(DimensionsCatalog.headerTextSize);
+        differentRestaurant.setTextSize(DimensionsCatalog.headerTextSize - 10);
         differentRestaurant.setTypeface(FontCatalog.fontLevels(getContext(), 1));
         differentRestaurant.setTextColor(ColorsCatalog.whiteColor);
         differentRestaurant.setGravity(Gravity.CENTER);
@@ -111,6 +113,7 @@ public class BottomSheet extends ConstraintLayout {
             @Override
             public void onClick(View view) {
                 ((Activity)getContext()).finish();
+                ((Activity)getContext()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             }
         });
 
@@ -130,12 +133,12 @@ public class BottomSheet extends ConstraintLayout {
         set.connect(welcome.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(welcome.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(restaurantNameSmall.getId(), ConstraintSet.TOP, welcome.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantNameSmall.getId(), ConstraintSet.TOP, welcome.getId(), ConstraintSet.BOTTOM);
         set.connect(restaurantNameSmall.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(restaurantNameSmall.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(restaurantNameSmall.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(restaurantNameBig.getId(), ConstraintSet.TOP, welcome.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantNameBig.getId(), ConstraintSet.TOP, welcome.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(restaurantNameBig.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(restaurantNameBig.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(restaurantNameBig.getId(), ConstraintSet.BOTTOM, differentRestaurant.getId(), ConstraintSet.TOP);
@@ -145,10 +148,10 @@ public class BottomSheet extends ConstraintLayout {
         set.connect(restaurantLogo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(restaurantLogo.getId(), ConstraintSet.BOTTOM, differentRestaurant.getId(), ConstraintSet.TOP);
 
-        set.connect(differentRestaurant.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(differentRestaurant.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.distanceBetweenElements);
-        set.connect(differentRestaurant.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
-        set.constrainHeight(differentRestaurant.getId(), DimensionsCatalog.headerHeight);
+        set.connect(differentRestaurant.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(differentRestaurant.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(differentRestaurant.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()) + DimensionsCatalog.getSoftButtonsBarSizePort((Activity)getContext()));
+        set.constrainHeight(differentRestaurant.getId(), DimensionsCatalog.getValueInDP(40, getContext()));
 
         set.applyTo(this);
     }

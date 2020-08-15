@@ -79,6 +79,7 @@ public class DishActivity extends Activity {
         setupViews();
         setupInitialLayout();
         initBroadcast();
+        requestButton.registerBroadcast();
     }
 
     private void setupViews() {
@@ -114,7 +115,7 @@ public class DishActivity extends Activity {
 
                     intent.putExtra("dish", gson.toJson(dish));
                     context.startActivity(intent);
-                    registerBroadcast();
+                    registerFinishActivityBroadcast();
                     ((Activity)context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
@@ -156,7 +157,7 @@ public class DishActivity extends Activity {
         infoView.setId(View.generateViewId());
         infoView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         infoView.setBackgroundColor(ColorsCatalog.whiteColor);
-        infoView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        infoView.setPadding(DimensionsCatalog.getDistanceBetweenElements(this), 0, DimensionsCatalog.getDistanceBetweenElements(this), DimensionsCatalog.getDistanceBetweenElements(this));
         if (dish == null || dish.getRestrictions() == null || dish.getRestrictions().size() == 0) {
             infoHeaderView.setVisibility(View.GONE);
             infoView.setVisibility(View.GONE);
@@ -204,7 +205,7 @@ public class DishActivity extends Activity {
         contentView.setTypeface(FontCatalog.fontLevels(this, 1));
         contentView.setTextSize(18);
         contentView.setBackgroundColor(ColorsCatalog.whiteColor);
-        contentView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        contentView.setPadding(DimensionsCatalog.getDistanceBetweenElements(this), 0, DimensionsCatalog.getDistanceBetweenElements(this), DimensionsCatalog.getDistanceBetweenElements(this));
         String content = "";
         try {
             if ((Double) dish.getNutrition().get("calories") > 0) {
@@ -262,7 +263,7 @@ public class DishActivity extends Activity {
         shortInfoView.setTypeface(FontCatalog.fontLevels(this, 1));
         shortInfoView.setTextSize(18);
         shortInfoView.setBackgroundColor(ColorsCatalog.whiteColor);
-        shortInfoView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        shortInfoView.setPadding(DimensionsCatalog.getDistanceBetweenElements(this), 0, DimensionsCatalog.getDistanceBetweenElements(this), DimensionsCatalog.getDistanceBetweenElements(this));
         if (dish == null || dish.getShortInfo() == null || dish.getShortInfo().length() == 0) {
             shortInfoHeaderView.setVisibility(View.GONE);
             shortInfoView.setVisibility(View.GONE);
@@ -283,7 +284,7 @@ public class DishActivity extends Activity {
         descriptionView.setTypeface(FontCatalog.fontLevels(this, 1));
         descriptionView.setTextSize(18);
         descriptionView.setBackgroundColor(ColorsCatalog.whiteColor);
-        descriptionView.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        descriptionView.setPadding(DimensionsCatalog.getDistanceBetweenElements(this), 0, DimensionsCatalog.getDistanceBetweenElements(this), DimensionsCatalog.getDistanceBetweenElements(this));
         if (dish == null || dish.getDescription() == null || dish.getDescription().length() == 0) {
             descriptionHeaderView.setVisibility(View.GONE);
             descriptionView.setVisibility(View.GONE);
@@ -341,19 +342,19 @@ public class DishActivity extends Activity {
         set2.constrainHeight(nonVegRestriction.getId(), ConstraintSet.WRAP_CONTENT);
 
         if (veganRestriction.getVisibility() == View.VISIBLE)
-            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, veganRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, veganRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(this));
         else if (vegRestriction.getVisibility() == View.VISIBLE)
-            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, vegRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, vegRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(this));
         else if (nonVegRestriction.getVisibility() == View.VISIBLE)
-            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, nonVegRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, nonVegRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(this));
         else
-            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+            set2.connect(kosherRestriction.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(this));
 
         set2.connect(kosherRestriction.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set2.connect(kosherRestriction.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set2.constrainHeight(kosherRestriction.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set2.connect(glutenFreeRestriction.getId(), ConstraintSet.TOP, kosherRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
+        set2.connect(glutenFreeRestriction.getId(), ConstraintSet.TOP, kosherRestriction.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(this));
         set2.connect(glutenFreeRestriction.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set2.connect(glutenFreeRestriction.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set2.constrainHeight(glutenFreeRestriction.getId(), ConstraintSet.WRAP_CONTENT);
@@ -368,7 +369,7 @@ public class DishActivity extends Activity {
         set1.connect(imageView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(imageView.getId(), DimensionsCatalog.imageHeights);
 
-        set1.connect(infoHeaderView.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, (imageView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.distanceBetweenElements : 0);
+        set1.connect(infoHeaderView.getId(), ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, (imageView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.getDistanceBetweenElements(this) : 0);
         set1.connect(infoHeaderView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(infoHeaderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(infoHeaderView.getId(), ConstraintSet.WRAP_CONTENT);
@@ -378,7 +379,7 @@ public class DishActivity extends Activity {
         set1.connect(infoView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(infoView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(contentHeaderView.getId(), ConstraintSet.TOP, infoView.getId(), ConstraintSet.BOTTOM, (infoView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.distanceBetweenElements : 0);
+        set1.connect(contentHeaderView.getId(), ConstraintSet.TOP, infoView.getId(), ConstraintSet.BOTTOM, (infoView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.getDistanceBetweenElements(this) : 0);
         set1.connect(contentHeaderView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(contentHeaderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(contentHeaderView.getId(), ConstraintSet.WRAP_CONTENT);
@@ -388,7 +389,7 @@ public class DishActivity extends Activity {
         set1.connect(contentView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(contentView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(shortInfoHeaderView.getId(), ConstraintSet.TOP, contentView.getId(), ConstraintSet.BOTTOM, (contentView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.distanceBetweenElements : 0);
+        set1.connect(shortInfoHeaderView.getId(), ConstraintSet.TOP, contentView.getId(), ConstraintSet.BOTTOM, (contentView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.getDistanceBetweenElements(this) : 0);
         set1.connect(shortInfoHeaderView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(shortInfoHeaderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(shortInfoHeaderView.getId(), ConstraintSet.WRAP_CONTENT);
@@ -398,7 +399,7 @@ public class DishActivity extends Activity {
         set1.connect(shortInfoView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(shortInfoView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set1.connect(descriptionHeaderView.getId(), ConstraintSet.TOP, shortInfoView.getId(), ConstraintSet.BOTTOM, (shortInfoView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.distanceBetweenElements : 0);
+        set1.connect(descriptionHeaderView.getId(), ConstraintSet.TOP, shortInfoView.getId(), ConstraintSet.BOTTOM, (shortInfoView.getVisibility() == View.VISIBLE) ? 2*DimensionsCatalog.getDistanceBetweenElements(this) : 0);
         set1.connect(descriptionHeaderView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set1.connect(descriptionHeaderView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set1.constrainHeight(descriptionHeaderView.getId(), ConstraintSet.WRAP_CONTENT);
@@ -429,8 +430,8 @@ public class DishActivity extends Activity {
         set.connect(dishFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(dishFooter.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 400);
-        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 100);
+        set.connect(requestButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getRequestButtonMarginFromBottom(getContext()));
+        set.connect(requestButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getRequestButtonMarginFromRight(getContext()));
         set.constrainHeight(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(requestButton.getId(), ConstraintSet.WRAP_CONTENT);
 
@@ -454,22 +455,21 @@ public class DishActivity extends Activity {
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
                 if (action.equals("finish_activity")) {
-                    finish();
-                    unRegisterBroadcast();
+                    unRegisterFinishActivityBroadcast();
                     requestButton.unRegisterBroadcast();
+                    finish();
                 }
             }
         };
     }
 
-    private void registerBroadcast() {
+    private void registerFinishActivityBroadcast() {
         if (broadcastReceiver != null) {
             registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
-            requestButton.registerBroadcast();
         }
     }
 
-    private void unRegisterBroadcast() {
+    private void unRegisterFinishActivityBroadcast() {
         if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver);
         }

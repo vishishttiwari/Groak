@@ -61,7 +61,7 @@ public class RestaurantCell extends RecyclerView.ViewHolder {
         restaurantLogo = new ImageView(layout.getContext());
         restaurantLogo.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         restaurantLogo.setId(View.generateViewId());
-        restaurantLogo.setScaleType(ImageView.ScaleType.FIT_XY);
+        restaurantLogo.setScaleType(ImageView.ScaleType.FIT_CENTER);
         restaurantLogo.setBackgroundColor(ColorsCatalog.whiteColor);
         restaurantLogo.setVisibility(GONE);
 
@@ -92,21 +92,21 @@ public class RestaurantCell extends RecyclerView.ViewHolder {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(restaurantLogo.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantLogo.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.connect(restaurantLogo.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(restaurantLogo.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
-        set.connect(restaurantLogo.getId(), ConstraintSet.BOTTOM, restaurantNameSmall.getId(), ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantLogo.getId(), ConstraintSet.BOTTOM, restaurantNameSmall.getId(), ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(restaurantLogo.getId(), DimensionsCatalog.imageHeights);
 
-        set.connect(restaurantNameBig.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantNameBig.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.connect(restaurantNameBig.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(restaurantNameBig.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
-        set.connect(restaurantNameBig.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantNameBig.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(restaurantNameBig.getId(), DimensionsCatalog.imageHeights);
 
         set.connect(restaurantNameSmall.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(restaurantNameSmall.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
-        set.connect(restaurantNameSmall.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(restaurantNameSmall.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(layout.getContext()));
         set.constrainHeight(restaurantNameSmall.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);

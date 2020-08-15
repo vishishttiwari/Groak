@@ -65,7 +65,7 @@ public class RequestFooter extends ConstraintLayout {
         requestTextInput.setId(View.generateViewId());
         requestTextInput.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         requestTextInput.setBackgroundColor(ColorsCatalog.headerGrayShade);
-        requestTextInput.setPadding(DimensionsCatalog.distanceBetweenElements, 0, DimensionsCatalog.distanceBetweenElements, DimensionsCatalog.distanceBetweenElements);
+        requestTextInput.setPadding(DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, DimensionsCatalog.getDistanceBetweenElements(getContext()), DimensionsCatalog.getDistanceBetweenElements(getContext()));
         requestTextInput.setLines(5);
         requestTextInput.setGravity(Gravity.TOP);
         requestTextInput.setTextSize(18);
@@ -107,21 +107,21 @@ public class RequestFooter extends ConstraintLayout {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
 
-        set.connect(suggestionsView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(suggestionsView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(suggestionsView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(suggestionsView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
-        set.connect(suggestionsView.getId(), ConstraintSet.BOTTOM, requestTextInput.getId(), ConstraintSet.TOP, DimensionsCatalog.distanceBetweenElements);
+        set.connect(suggestionsView.getId(), ConstraintSet.BOTTOM, requestTextInput.getId(), ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(suggestionsView.getId(), ConstraintSet.WRAP_CONTENT);
 
-        set.connect(requestTextInput.getId(), ConstraintSet.TOP, suggestionsView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestTextInput.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestTextInput.getId(), ConstraintSet.RIGHT, sendButton.getId(), ConstraintSet.LEFT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(requestTextInput.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.distanceBetweenElements);
+        set.connect(requestTextInput.getId(), ConstraintSet.TOP, suggestionsView.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestTextInput.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestTextInput.getId(), ConstraintSet.RIGHT, sendButton.getId(), ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(requestTextInput.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(requestTextInput.getId(), 200);
 
         set.connect(sendButton.getId(), ConstraintSet.TOP, requestTextInput.getId(), ConstraintSet.TOP);
-        set.connect(sendButton.getId(), ConstraintSet.LEFT, requestTextInput.getId(), ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
-        set.connect(sendButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.distanceBetweenElements);
+        set.connect(sendButton.getId(), ConstraintSet.LEFT, requestTextInput.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(sendButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(sendButton.getId(), ConstraintSet.WRAP_CONTENT);
         set.constrainWidth(sendButton.getId(), 150);
 
