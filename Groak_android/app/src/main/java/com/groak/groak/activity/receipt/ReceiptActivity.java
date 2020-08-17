@@ -79,12 +79,12 @@ public class ReceiptActivity extends Activity {
                 String str = (String)object;
                 if (str.equals("back"))
                     requestButton.unRegisterBroadcast();
-                else if (str.equals("Your Order")) {
+                else if (((String)object).equals("Table Order")) {
                     tableOrder = true;
-                    refresh(false);
-                } else if (str.equals("Your Order")) {
+                    refresh(tableOrder);
+                } else if (((String)object).equals("Your Order")) {
                     tableOrder = false;
-                    refresh(true);
+                    refresh(tableOrder);
                 }
             }
 
@@ -222,7 +222,7 @@ public class ReceiptActivity extends Activity {
     }
 
     public Bitmap viewToBitmap(View view) {
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), ((NestedScrollView)view).getChildAt(0).getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;

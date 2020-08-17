@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,6 +52,9 @@ public class OrderFragment extends Fragment {
 
     private OrderSpecialInstructions specialInstructions;
     private RecyclerView specialInstructionsView;
+
+    private TextView noOrderText;
+    private ImageView noOrderImage;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -99,6 +103,8 @@ public class OrderFragment extends Fragment {
             orderStatusView.setText("");
 
         if (LocalRestaurant.order == null || LocalRestaurant.order.getDishes().size() == 0) {
+            scrollView.setVisibility(View.GONE);
+            orderFooter.setVisibility(View.GONE);
             orderStatusViewHeader.setVisibility(View.GONE);
             orderStatusView.setVisibility(View.GONE);
             orderViewHeader.setVisibility(View.GONE);
@@ -106,7 +112,11 @@ public class OrderFragment extends Fragment {
             specialInstructions.setVisibility(View.GONE);
             specialInstructionsView.setVisibility(View.GONE);
             orderFooter.setVisibility(View.GONE);
+            noOrderImage.setVisibility(View.VISIBLE);
+            noOrderText.setVisibility(View.VISIBLE);
         } else {
+            scrollView.setVisibility(View.VISIBLE);
+            orderFooter.setVisibility(View.VISIBLE);
             orderStatusViewHeader.setVisibility(View.VISIBLE);
             orderStatusView.setVisibility(View.VISIBLE);
             orderViewHeader.setVisibility(View.VISIBLE);
@@ -114,6 +124,8 @@ public class OrderFragment extends Fragment {
             specialInstructions.setVisibility(View.VISIBLE);
             specialInstructionsView.setVisibility(View.VISIBLE);
             orderFooter.setVisibility(View.VISIBLE);
+            noOrderImage.setVisibility(View.GONE);
+            noOrderText.setVisibility(View.GONE);
         }
     }
 
@@ -126,13 +138,11 @@ public class OrderFragment extends Fragment {
         orderHeader = new OrderHeader(getContext(), "Order", new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                if (((String)object).equals("Your Order")) {
+                if (((String)object).equals("Table Order"))
                     tableOrder = true;
-                    refresh(false);
-                } else if (((String)object).equals("Your Order")) {
+                else if (((String)object).equals("Your Order"))
                     tableOrder = false;
-                    refresh(true);
-                }
+                refresh(tableOrder);
             }
             @Override
             public void onFailure(Exception e) {
@@ -222,12 +232,30 @@ public class OrderFragment extends Fragment {
         specialInstructionsView.setBackgroundColor(ColorsCatalog.whiteColor);
         specialInstructionsView.setVisibility(View.GONE);
 
+        noOrderText = new TextView(getContext());
+        noOrderText.setId(View.generateViewId());
+        noOrderText.setTextSize(DimensionsCatalog.headerTextSize);
+        noOrderText.setTypeface(FontCatalog.fontLevels(getContext(), 1));
+        noOrderText.setTextColor(ColorsCatalog.blackColor);
+        noOrderText.setGravity(Gravity.CENTER);
+        noOrderText.setText("You can place your orders from the cart tab");
+        noOrderText.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noOrderText.setVisibility(View.GONE);
+
+        noOrderImage = new ImageView(getContext());
+        noOrderImage.setId(View.generateViewId());
+        noOrderImage.setImageResource(R.drawable.waiter);
+        noOrderImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noOrderImage.setVisibility(View.GONE);
+
         scrollViewLayout.addView(orderStatusViewHeader);
         scrollViewLayout.addView(orderStatusView);
         scrollViewLayout.addView(orderViewHeader);
         scrollViewLayout.addView(orderView);
         scrollViewLayout.addView(specialInstructions);
         scrollViewLayout.addView(specialInstructionsView);
+        layout.addView(noOrderImage);
+        layout.addView(noOrderText);
         layout.addView(orderHeader);
         layout.addView(scrollView);
         layout.addView(orderFooter);
@@ -288,6 +316,17 @@ public class OrderFragment extends Fragment {
         set.connect(orderFooter.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(orderFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(orderFooter.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noOrderText.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noOrderText.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noOrderText.getId(), ConstraintSet.BOTTOM, noOrderImage.getId(), ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.constrainHeight(noOrderText.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noOrderImage.getId(), ConstraintSet.TOP, noOrderText.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noOrderImage.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noOrderImage.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.centerVertically(noOrderImage.getId(), ConstraintSet.PARENT_ID);
+        set.constrainHeight(noOrderImage.getId(), DimensionsCatalog.screenHeight/4);
 
         set.applyTo(layout);
     }

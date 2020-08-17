@@ -75,13 +75,13 @@ exports.userReceivesRequest = functions.firestore
 
 function sendNotification(title, body, orderId, category) {
     let payload = {
-        notification: {
+        data: {
             title,
             body,
             sound: 'default',
             content_available: 'true',
             category,
-			channel_id: "default_notification_channel_id",
+			android_channel_id: "groak_channel_id",
 			tag: category,
         }
     }

@@ -85,11 +85,12 @@ public class MenuHeader extends GroakFragmentHeader {
         set.constrainWidth(search.getId(), iconHeight);
         set.constrainHeight(search.getId(), iconHeight);
 
-        set.connect(categoriesView.getId(), ConstraintSet.TOP, header.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(categoriesView.getId(), ConstraintSet.TOP, header.getId(), ConstraintSet.BOTTOM);
         set.connect(categoriesView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(categoriesView.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(categoriesView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(categoriesView.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(categoriesView.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(this);
     }

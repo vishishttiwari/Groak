@@ -37,9 +37,6 @@ public class RequestFooter extends ConstraintLayout {
         setupViews();
         setupInitialLayout();
 
-//        suggestionsView.requestLayout();
-//        suggestionsView.invalidate();
-
         requestLayout();
     }
 
@@ -68,7 +65,7 @@ public class RequestFooter extends ConstraintLayout {
         requestTextInput.setPadding(DimensionsCatalog.getDistanceBetweenElements(getContext()), 0, DimensionsCatalog.getDistanceBetweenElements(getContext()), DimensionsCatalog.getDistanceBetweenElements(getContext()));
         requestTextInput.setLines(5);
         requestTextInput.setGravity(Gravity.TOP);
-        requestTextInput.setTextSize(18);
+        requestTextInput.setTextSize(15);
         requestTextInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
         requestTextInput.setRawInputType(InputType.TYPE_CLASS_TEXT);
         requestTextInput.setHint("Anything we can help you with?");
@@ -92,7 +89,8 @@ public class RequestFooter extends ConstraintLayout {
         sendButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                groakCallback.onSuccess(requestTextInput.getText().toString());
+                if (requestTextInput.getText().length() != 0)
+                    groakCallback.onSuccess(requestTextInput.getText().toString());
             }
         });
 
@@ -117,18 +115,22 @@ public class RequestFooter extends ConstraintLayout {
         set.connect(requestTextInput.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(requestTextInput.getId(), ConstraintSet.RIGHT, sendButton.getId(), ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(requestTextInput.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
-        set.constrainHeight(requestTextInput.getId(), 200);
+        set.constrainHeight(requestTextInput.getId(), DimensionsCatalog.getValueInDP(80, getContext()));
 
         set.connect(sendButton.getId(), ConstraintSet.TOP, requestTextInput.getId(), ConstraintSet.TOP);
         set.connect(sendButton.getId(), ConstraintSet.LEFT, requestTextInput.getId(), ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(sendButton.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.constrainHeight(sendButton.getId(), ConstraintSet.WRAP_CONTENT);
-        set.constrainWidth(sendButton.getId(), 150);
+        set.constrainWidth(sendButton.getId(), DimensionsCatalog.getValueInDP(50, getContext()));
 
         set.applyTo(this);
     }
 
     public void setText(String str) {
         requestTextInput.setText(str);
+    }
+
+    public EditText getRequestTextInput() {
+        return requestTextInput;
     }
 }

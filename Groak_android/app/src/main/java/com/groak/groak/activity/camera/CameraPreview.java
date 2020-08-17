@@ -90,6 +90,7 @@ public class CameraPreview extends ConstraintLayout {
                 setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                 connectCamera();
             } catch (Exception e) {
+                System.out.println("11");
                 Catalog.toast(getContext(), cameraError);
             }
         } else {
@@ -123,6 +124,7 @@ public class CameraPreview extends ConstraintLayout {
                 setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                 connectCamera();
             } catch (Exception e) {
+                System.out.println("12");
                 Catalog.toast(getContext(), cameraError);
             }
         }
@@ -140,6 +142,7 @@ public class CameraPreview extends ConstraintLayout {
                     setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                     connectCamera();
                 } catch (Exception e) {
+                    System.out.println("13");
                     Catalog.toast(getContext(), cameraError);
                 }
             }
@@ -166,6 +169,7 @@ public class CameraPreview extends ConstraintLayout {
                 try {
                     startPreview();
                 } catch (CameraAccessException e) {
+                    System.out.println("14");
                     Catalog.toast(getContext(), cameraError);
                 }
             }
@@ -180,6 +184,7 @@ public class CameraPreview extends ConstraintLayout {
             public void onError(@NonNull CameraDevice cameraDevice, int i) {
                 cameraDevice.close();
                 cameraDev = null;
+                System.out.println("15");
                 Catalog.toast(getContext(), cameraError);
             }
         };
@@ -247,12 +252,12 @@ public class CameraPreview extends ConstraintLayout {
                     captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, 90);
                     cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), null, cameraBackgroundHandler);
                 } catch (CameraAccessException e) {
-                    Catalog.toast(getContext(), cameraError);
                 }
             }
 
             @Override
             public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                System.out.println("17");
                 Catalog.toast(getContext(), cameraError);
             }
         }, null);

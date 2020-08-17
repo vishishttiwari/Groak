@@ -10,12 +10,14 @@ import com.groak.groak.activity.restaurant.RestaurantListActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsQRCodes;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
-import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
+import com.groak.groak.notification.UserNotification;
 import com.groak.groak.restaurantobject.MenuCategory;
+import com.groak.groak.restaurantobject.QRCode;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
-import com.groak.groak.restaurantobject.Table;
+import com.groak.groak.restaurantobject.table.Table;
 import com.groak.groak.restaurantobject.cart.Cart;
 import com.groak.groak.restaurantobject.cart.CartDish;
 import com.groak.groak.restaurantobject.order.Order;
@@ -29,6 +31,7 @@ public class LocalRestaurant {
     public static Restaurant restaurant = null;
     public static ArrayList<MenuCategory> categories = new ArrayList();
     public static Table table = null;
+    public static QRCode qrCode = null;
     public static DocumentReference orderReference = null;
     public static DocumentReference requestReference = null;
     public static Cart cart = new Cart();
@@ -36,34 +39,48 @@ public class LocalRestaurant {
     public static Requests requests = new Requests();
     public static boolean requestNotifications = false;
 
-    public static void enterRestaurant(Context context, Restaurant restaurant, String table, GroakCallback groakCallback) {
+    public static void enterRestaurant(Context context, Restaurant restaurant, String tableId, String qrCodeId, GroakCallback groakCallback) {
+        cart = new Cart();
         LocalRestaurant.restaurant = restaurant;
-        FirestoreAPICallsRestaurants.fetchRestaurantCategoriesAndDishesFirestoreAPI(new GroakCallback() {
+        FirestoreAPICallsQRCodes.fetchQRCodeFirestoreAPI(restaurant.getReference().getId(), qrCodeId, new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                LocalRestaurant.categories = (ArrayList<MenuCategory>) object;
-                FirestoreAPICallsTables.fetchTableFirestoreAPI(table, new GroakCallback() {
+                LocalRestaurant.qrCode = (QRCode) object;
+                LocalRestaurant.qrCode.downloadCategories(new GroakCallback() {
                     @Override
                     public void onSuccess(Object object) {
-                        LocalRestaurant.setTable((Table)object);
-                        FirestoreAPICallsOrders.fetchOrderFirestoreAPI(context, new GroakCallback() {
+                        if (qrCode.isAvailable() && qrCode.getCategories() != null) {
+                            for (MenuCategory category: qrCode.getCategories()) {
+                                if (category.checkIfCategoryIsAvailable())
+                                    LocalRestaurant.categories.add(category);
+                            }
+                        }
+                        FirestoreAPICallsTables.fetchTableFirestoreAPI(tableId, new GroakCallback() {
                             @Override
                             public void onSuccess(Object object) {
-                                LocalRestaurant.order = (Order)object;
-                                FirestoreAPICallsRequests.fetchRequestFirestoreAPI(context, new GroakCallback() {
+                                LocalRestaurant.setTable((Table)object);
+                                FirestoreAPICallsOrders.fetchOrderFirestoreAPI(context, new GroakCallback() {
                                     @Override
                                     public void onSuccess(Object object) {
-                                        LocalRestaurant.requests = (Requests)object;
-                                        groakCallback.onSuccess(null);
+                                        LocalRestaurant.order = (Order)object;
+                                        FirestoreAPICallsRequests.fetchRequestFirestoreAPI(context, new GroakCallback() {
+                                            @Override
+                                            public void onSuccess(Object object) {
+                                                LocalRestaurant.requests = (Requests)object;
+                                                groakCallback.onSuccess(null);
+                                            }
+                                            @Override
+                                            public void onFailure(Exception e) {
+                                                groakCallback.onFailure(e);
+                                            }
+                                        });
                                     }
-
                                     @Override
                                     public void onFailure(Exception e) {
                                         groakCallback.onFailure(e);
                                     }
                                 });
                             }
-
                             @Override
                             public void onFailure(Exception e) {
                                 groakCallback.onFailure(e);
@@ -87,34 +104,34 @@ public class LocalRestaurant {
         Catalog.alert(context, "Leaving restaurant?", "Are you sure you would like to leave the restaurant?. Your cart will be lost", new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                restaurant = null;
-                categories = new ArrayList();
-                table = null;
-                orderReference = null;
-                requestReference = null;
-                cart = new Cart();
-                order = new Order();
-                requests = new Requests();
-                requestNotifications = false;
-
-                FirestoreAPICallsOrders.unsubscribe();
-                FirestoreAPICallsRequests.unsubscribe();
-
-                Intent intent = new Intent(context, RestaurantListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("EXIT", true);
-                context.startActivity(intent);
-                ((Activity)context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+                leaveRestaurantWithoutNotice(context);
             }
-
             @Override
             public void onFailure(Exception e) {
-
             }
         });
     }
 
     public static void leaveRestaurantWithoutAsking(Context context) {
+        Catalog.toast(context, "It seems you have left the restaurant. Please scan again to see the menu if you have not.");
+
+        leaveRestaurantWithoutNotice(context);
+    }
+
+    public static void leaveRestaurantWithoutNotice(Context context) {
+        resetRestaurant();
+
+        Intent intent = new Intent(context, RestaurantListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        context.startActivity(intent);
+        ((Activity)context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+    }
+
+    public static void resetRestaurant() {
+        if (table != null && table.getReference() != null)
+            UserNotification.unsubscribe(table.getReference().getId());
+
         restaurant = null;
         categories = new ArrayList();
         table = null;
@@ -127,11 +144,10 @@ public class LocalRestaurant {
 
         FirestoreAPICallsOrders.unsubscribe();
         FirestoreAPICallsRequests.unsubscribe();
-
-        ((Activity)context).finish();
     }
 
     private static void setTable(Table table) {
+        UserNotification.subscribe(table.getReference().getId());
         LocalRestaurant.table = table;
         LocalRestaurant.orderReference = table.getOrderReference();
         LocalRestaurant.requestReference = table.getRequestReference();

@@ -7,6 +7,8 @@ import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsDishes;
 import com.groak.groak.restaurantobject.dish.Dish;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -16,8 +18,8 @@ public class MenuCategory {
     private Dish[] dishes;
     private ArrayList<DocumentReference> dishesReference;
     private ArrayList<String> daysAvailable;
-    private long startTime;
-    private long endTime;
+    private HashMap<String, Long> startTime;
+    private HashMap<String, Long> endTime;
     private boolean available;
 
     public MenuCategory(Map<String, Object> map) {
@@ -25,8 +27,8 @@ public class MenuCategory {
         this.name = (String)map.get("name");
         this.dishesReference = (ArrayList<DocumentReference>)map.get("dishes");
         this.daysAvailable = (ArrayList<String>)map.get("days");
-        this.startTime = (long)map.get("startTime");
-        this.endTime = (long)map.get("endTime");
+        this.startTime = (HashMap<String, Long>)map.get("startTime");
+        this.endTime = (HashMap<String, Long>)map.get("endTime");
         this.available = (boolean)map.get("available");
     }
 
@@ -35,8 +37,8 @@ public class MenuCategory {
         this.name = (String)map.get("name");
         this.dishesReference = (ArrayList<DocumentReference>)map.get("dishes");
         this.daysAvailable = (ArrayList<String>)map.get("days");
-//        this.startTime = (long)map.get("startTime");
-//        this.endTime = (long)map.get("endTime");
+        this.startTime = (HashMap<String, Long>)map.get("startTime");
+        this.endTime = (HashMap<String, Long>)map.get("endTime");
         this.available = (boolean)map.get("available");
         downloadDishes(callback);
     }
@@ -79,10 +81,10 @@ public class MenuCategory {
     public ArrayList<String> getDaysAvailable() {
         return daysAvailable;
     }
-    public long getStartTime() {
+    public HashMap<String, Long> getStartTime() {
         return startTime;
     }
-    public long getEndTime() {
+    public HashMap<String, Long> getEndTime() {
         return endTime;
     }
     public boolean isAvailable() {
@@ -90,23 +92,28 @@ public class MenuCategory {
     }
 
     public boolean checkIfCategoryIsAvailable() {
-        if (!daysAvailable.contains(TimeCatalog.getDay()))
-            return false;
-        if (startTime > TimeCatalog.getTimeInMinutes())
-            return false;
-        if (endTime <= TimeCatalog.getTimeInMinutes())
-            return false;
+        String day = TimeCatalog.getDay();
+        int time = TimeCatalog.getTimeInMinutes();
+        long startTimeForDay = startTime.get(day);
+        long endTimeForDay = endTime.get(day);
+
+        if (!daysAvailable.contains(day)) return false;
+        if (time < startTimeForDay) return false;
+        if (time > endTimeForDay) return false;
         return available;
     }
 
+    @Override
     public String toString() {
-        String str = "";
-        str += "Reference: " + reference + "\n";
-        str += "Name: " + name + "\n";
-        str += "Dishes: " + dishes + "\n";
-        str += "DishReferences: " + dishesReference + "\n";
-        str += "Start Time: " + startTime + "\n";
-        str += "Available: " + available + "\n";
-        return str;
+        return "MenuCategory{" +
+                "reference=" + reference +
+                ", name='" + name + '\'' +
+                ", dishes=" + Arrays.toString(dishes) +
+                ", dishesReference=" + dishesReference +
+                ", daysAvailable=" + daysAvailable +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", available=" + available +
+                '}';
     }
 }

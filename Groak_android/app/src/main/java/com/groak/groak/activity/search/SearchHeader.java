@@ -55,6 +55,7 @@ public class SearchHeader extends ConstraintLayout {
         header.setRawInputType(InputType.TYPE_CLASS_TEXT);
         header.setHint("Search");
         header.setBackgroundResource(android.R.color.transparent);
+        header.requestFocus();
         header.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

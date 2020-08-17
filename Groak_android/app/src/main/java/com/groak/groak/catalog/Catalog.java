@@ -16,12 +16,14 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.groak.groak.catalog.groakUIClasses.LoadingView;
 import com.groak.groak.restaurantobject.cart.CartDishExtra;
 import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
 import com.groak.groak.restaurantobject.order.OrderDishExtra;
@@ -56,12 +58,13 @@ public class Catalog {
 
         TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
         v.setTextColor(ColorsCatalog.whiteColor);
+        v.setGravity(Gravity.CENTER);
 
         toast.show();
     }
 
     public static void alert(Context context, String title, String message, final GroakCallback callback) {
-        new AlertDialog.Builder(context)
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
 
@@ -76,8 +79,25 @@ public class Catalog {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         callback.onFailure(null);
                     }
-                })
-                .show();
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    public static AlertDialog loading(Context context, String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = new LoadingView(context, title);
+        builder.setView(view);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+        return alertDialog;
     }
 
     public static String priceInString(double price) {

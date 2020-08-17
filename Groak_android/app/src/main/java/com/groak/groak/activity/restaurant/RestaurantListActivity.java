@@ -1,12 +1,9 @@
 package com.groak.groak.activity.restaurant;
 
-import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,17 +12,19 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.groak.groak.R;
+import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakHeader;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
+import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 
 import java.util.ArrayList;
@@ -37,10 +36,11 @@ public class RestaurantListActivity extends Activity {
     private RecyclerView restaurantView;
     private ImageView noRestaurantFound;
 
-    private LocationManager locationManager;
-    private LocationListener locationListener;
+    private AlertDialog loadingSpinner;
 
     private ArrayList<Restaurant> restaurants = new ArrayList<>();
+
+    private GooglePlayServicesLocationListener locationListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,70 +50,19 @@ public class RestaurantListActivity extends Activity {
 
         setupInitialLayout();
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    }
-
-    private void startLocationListening() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                System.out.println(location);
-                FirestoreAPICallsRestaurants.fetchClosestRestaurantFirestoreAPI(location, new GroakCallback() {
-                    @Override
-                    public void onSuccess(Object object) {
-                        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>)object;
-                        if (restaurants.size() == 0) {
-                            restaurantView.setVisibility(View.GONE);
-                            noRestaurantFound.setVisibility(View.VISIBLE);
-                        } else {
-                            restaurantView.setVisibility(View.VISIBLE);
-                            noRestaurantFound.setVisibility(View.GONE);
-
-                            ((RestaurantRecyclerViewAdapter) restaurantView.getAdapter()).refresh(restaurants);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                    }
-                });
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-            }
-        };
-
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 10, locationListener);
+        setupLocation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startLocationListening();
+        LocalRestaurant.resetRestaurant();
+        locationListener.startLocationUpdates();
     }
 
     @Override
     protected void onPause() {
-        if (locationManager != null && locationListener != null) {
-            locationManager.removeUpdates(locationListener);
-        }
+        locationListener.stopLocationUpdates();
         super.onPause();
     }
 
@@ -122,6 +71,8 @@ public class RestaurantListActivity extends Activity {
         layout.setId(View.generateViewId());
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         layout.setBackgroundColor(ColorsCatalog.headerGrayShade);
+
+        loadingSpinner = Catalog.loading(getContext(), "Fetching restaurants around you");
 
         restaurantHeader = new GroakHeader(this, "Restaurants around you");
         restaurantHeader.setId(View.generateViewId());
@@ -169,6 +120,48 @@ public class RestaurantListActivity extends Activity {
         set.constrainHeight(noRestaurantFound.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.applyTo(layout);
+    }
+
+    private void setupLocation() {
+        locationListener = new GooglePlayServicesLocationListener(this, new GroakCallback() {
+            @Override
+            public void onSuccess(Object object) {
+                Location location = (Location) object;
+
+                FirestoreAPICallsRestaurants.fetchClosestRestaurantFirestoreAPI(location, new GroakCallback() {
+                    @Override
+                    public void onSuccess(Object object) {
+                        loadingSpinner.dismiss();
+                        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) object;
+                        if (restaurants.size() == 0) {
+                            restaurantView.setVisibility(View.GONE);
+                            noRestaurantFound.setVisibility(View.VISIBLE);
+                            restaurantHeader.setHeader("Groak");
+                        } else {
+                            restaurantView.setVisibility(View.VISIBLE);
+                            noRestaurantFound.setVisibility(View.GONE);
+                            restaurantHeader.setHeader("Restaurants around you");
+
+                            ((RestaurantRecyclerViewAdapter) restaurantView.getAdapter()).refresh(restaurants);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Exception e) {
+                        loadingSpinner.dismiss();
+                        restaurantView.setVisibility(View.GONE);
+                        noRestaurantFound.setVisibility(View.VISIBLE);
+                        restaurantHeader.setHeader("Groak");
+                    }
+                });
+            }
+            @Override
+            public void onFailure(Exception e) {
+                loadingSpinner.dismiss();
+                restaurantView.setVisibility(View.GONE);
+                noRestaurantFound.setVisibility(View.VISIBLE);
+                restaurantHeader.setHeader("Groak");
+            }
+        });
     }
 
     private Context getContext() {

@@ -3,10 +3,13 @@ package com.groak.groak.activity.camera;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -17,8 +20,9 @@ import com.groak.groak.R;
 import com.groak.groak.activity.tabbar.TabbarActivity;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.DistanceCatalog;
+import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.restaurant.RestaurantDeserializer;
 import com.groak.groak.restaurantobject.restaurant.RestaurantSerializer;
@@ -26,6 +30,7 @@ import com.groak.groak.restaurantobject.restaurant.RestaurantSerializer;
 public class CameraActivity extends Activity {
     private ConstraintLayout layout;
 
+    private TextView scanQR;
     private CameraPreview cameraPreview;
     private BottomSheet bottomSheet;
 
@@ -47,15 +52,15 @@ public class CameraActivity extends Activity {
         setupViews();
         setupInitialLayout();
         updateRestaurant();
-//        new java.util.Timer().schedule(
-//                new java.util.TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        enterRestaurant("r18cb7350q82598q0cczmo");
-//                    }
-//                },
-//                10000
-//        );
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        enterRestaurant("r18cb7350q82598q0cczmo", "uhp40oq9w8ifsl5xeax13p");
+                    }
+                },
+                1000
+        );
     }
 
     @Override
@@ -83,8 +88,23 @@ public class CameraActivity extends Activity {
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         layout.setBackgroundColor(ColorsCatalog.headerGrayShade);
 
-        cameraPreview = new CameraPreview(this, restaurant.getReference().getId(), new GroakCallback() {
+        scanQR = new TextView(this);
+        scanQR.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        scanQR.setId(View.generateViewId());
+        scanQR.setTextSize(15);
+        scanQR.setTypeface(FontCatalog.fontLevels(layout.getContext(), 1));
+        scanQR.setTextColor(ColorsCatalog.whiteColor);
+        scanQR.setGravity(Gravity.CENTER);
+        scanQR.setPadding(50, 20, 50, 20);
+        scanQR.setText("Scan QR Code");
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setColor(ColorsCatalog.grayColor);
+        shape.setCornerRadius(50);
+        scanQR.setBackground(shape);
+        scanQR.setElevation(100);
 
+        cameraPreview = new CameraPreview(this, restaurant.getReference().getId(), new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
                 String url = (String)object;
@@ -98,13 +118,14 @@ public class CameraActivity extends Activity {
         });
         cameraPreview.setId(View.generateViewId());
         cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        cameraPreview.setBackgroundColor(ColorsCatalog.headerGrayShade);
+        cameraPreview.setBackgroundColor(ColorsCatalog.blackColor);
 
         bottomSheet = new BottomSheet(this);
         bottomSheet.setId(View.generateViewId());
         bottomSheet.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         bottomSheet.setBackgroundColor(ColorsCatalog.headerGrayShade);
 
+        layout.addView(scanQR);
         layout.addView(cameraPreview);
         layout.addView(bottomSheet);
         setContentView(layout);
@@ -113,6 +134,12 @@ public class CameraActivity extends Activity {
     private void setupInitialLayout() {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
+
+        set.connect(scanQR.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(this));
+        set.connect(scanQR.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(this));
+        set.connect(scanQR.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(this));
+        set.constrainHeight(scanQR.getId(), ConstraintSet.WRAP_CONTENT);
+        set.constrainWidth(scanQR.getId(), ConstraintSet.WRAP_CONTENT);
 
         set.connect(cameraPreview.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         set.connect(cameraPreview.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
@@ -127,7 +154,7 @@ public class CameraActivity extends Activity {
         set.applyTo(layout);
     }
 
-    private void enterRestaurant(String tableId) {
+    private void enterRestaurant(String tableId, String qrCodeId) {
         if (!initiatedEnterRestaurant) {
             initiatedEnterRestaurant = true;
             GsonBuilder builder = new GsonBuilder();
@@ -137,7 +164,7 @@ public class CameraActivity extends Activity {
             Intent intent = new Intent(getContext(), TabbarActivity.class);
             intent.putExtra("restaurant", gson.toJson(restaurant));
             intent.putExtra("tableId", tableId);
-            System.out.println("Here");
+            intent.putExtra("qrCodeId", qrCodeId);
             getContext().startActivity(intent);
         }
     }
@@ -149,7 +176,7 @@ public class CameraActivity extends Activity {
         String tableId = urlElements[3];
         String qrCodeId = urlElements[4];
 
-        enterRestaurant(tableId);
+        enterRestaurant(tableId, qrCodeId);
     }
 
     private Context getContext() {

@@ -1,7 +1,8 @@
-package com.groak.groak.restaurantobject;
+package com.groak.groak.restaurantobject.table;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.groak.groak.restaurantobject.TableStatus;
 
 import java.util.Map;
 

@@ -16,7 +16,7 @@ public class FirestoreAPICallsDishes {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (document.exists() && document.getData() != null) {
                     callback.onSuccess(new Dish(document.getData()));
                 } else {
                     callback.onFailure(new Exception("No such document"));

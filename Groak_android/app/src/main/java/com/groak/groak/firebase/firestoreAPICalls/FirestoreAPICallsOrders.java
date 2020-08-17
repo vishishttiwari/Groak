@@ -35,15 +35,15 @@ public class FirestoreAPICallsOrders {
     public static void fetchOrderFirestoreAPI(final Context context, final GroakCallback callback) {
         registration = LocalRestaurant.orderReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
+            public void onEvent(@Nullable DocumentSnapshot document,
                                 @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
                     callback.onFailure(e);
                     return;
                 }
 
-                if (snapshot != null && snapshot.exists()) {
-                    Order order = new Order(snapshot.getData());
+                if (document != null && document.exists() && document.getData() != null) {
+                    Order order = new Order(document.getData());
                     LocalRestaurant.requestNotifications = order.isNewRequestForUser();
                     Intent intent = new Intent("refresh_order");
                     context.sendBroadcast(intent);

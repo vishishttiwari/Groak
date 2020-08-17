@@ -1,15 +1,21 @@
 package com.groak.groak.activity.request;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +27,7 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.notification.UserNotification;
 import com.groak.groak.restaurantobject.request.Request;
 
 public class RequestActivity extends Activity {
@@ -49,6 +56,8 @@ public class RequestActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        UserNotification.isRequestShowing = true;
+
         registerBroadcast();
 
         refresh();
@@ -59,6 +68,7 @@ public class RequestActivity extends Activity {
 
     @Override
     protected void onPause() {
+        UserNotification.isRequestShowing = false;
         unRegisterBroadcast();
         super.onPause();
     }
@@ -78,6 +88,7 @@ public class RequestActivity extends Activity {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupViews() {
         layout = new ConstraintLayout(this);
         layout.setId(View.generateViewId());
@@ -101,6 +112,23 @@ public class RequestActivity extends Activity {
         requestView.setLayoutManager(new LinearLayoutManager(getContext()));
         requestView.setAdapter(new RequestRecyclerViewAdapter(getContext()));
         requestView.setBackgroundColor(ColorsCatalog.whiteColor);
+        requestView.setOnTouchListener(new View.OnTouchListener() {
+            private long startClickTime;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    startClickTime = System.currentTimeMillis();
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (System.currentTimeMillis() - startClickTime < ViewConfiguration.getTapTimeout()) {
+                        // This is simple tap
+                        ((InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((((Activity)getContext()).getWindow().getDecorView().getApplicationWindowToken()), 0);
+                    } else {
+                        ((InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((((Activity)getContext()).getWindow().getDecorView().getApplicationWindowToken()), 0);
+                    }
+                }
+                return false;
+            }
+        });
         requestView.setVisibility(View.GONE);
 
         requestFooter = new RequestFooter(this, new GroakCallback() {
@@ -184,13 +212,5 @@ public class RequestActivity extends Activity {
 
     private Context getContext() {
         return this;
-    }
-
-    @Override
-    public void onUserInteraction() {
-        if (getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
     }
 }

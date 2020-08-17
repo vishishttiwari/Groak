@@ -13,26 +13,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.groak.groak.R;
 import com.groak.groak.activity.search.SearchActivity;
-import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
-import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
-import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.restaurant.Restaurant;
-import com.groak.groak.restaurantobject.Table;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.MenuCategory;
 
@@ -48,13 +46,16 @@ public class MenuFragment extends Fragment {
     private ArrayList<RecyclerView> menuViews = new ArrayList<>();
     private ArrayList<RecyclerViewHeader> menuViewHeaders = new ArrayList<>();
 
+    private TextView noMenuText;
+    private ImageView noMenuImage;
+
     private BroadcastReceiver broadcastReceiver;
+
+    private boolean loaded = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setupViews();
-
-        getCategories();
 
         initBroadcast();
 
@@ -64,6 +65,17 @@ public class MenuFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (loaded) getCategories();
+        else {
+            for (MenuCategory category : LocalRestaurant.categories) {
+                setupRecyclerViewHeader(category);
+                setupRecyclerViewViews(category.getDishes());
+            }
+            if (LocalRestaurant.restaurant != null && LocalRestaurant.restaurant.getName() != null)
+                menuHeader.setHeader(LocalRestaurant.restaurant.getName());
+            setupInitialLayout();
+            loaded = true;
+        }
         registerBroadcast();
     }
 
@@ -74,11 +86,21 @@ public class MenuFragment extends Fragment {
     }
 
     private void getCategories() {
-        for (MenuCategory category: LocalRestaurant.categories) {
-            setupRecyclerViewHeader(category);
-            setupRecyclerViewViews(category.getDishes());
+        if (LocalRestaurant.categories != null && LocalRestaurant.categories.size() != 0) {
+            for (MenuCategory category : LocalRestaurant.categories) {
+                setupRecyclerViewHeader(category);
+                setupRecyclerViewViews(category.getDishes());
+            }
+            noMenuText.setVisibility(View.GONE);
+            noMenuImage.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+            menuHeader.refresh();
+        } else {
+            noMenuText.setVisibility(View.VISIBLE);
+            noMenuImage.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+            menuHeader.setHeader(LocalRestaurant.restaurant.getName());
         }
-        menuHeader.refresh();
         setupInitialLayout();
     }
 
@@ -138,8 +160,26 @@ public class MenuFragment extends Fragment {
         scrollViewLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         scrollViewLayout.setBackgroundColor(ColorsCatalog.headerGrayShade);
 
+        noMenuText = new TextView(getContext());
+        noMenuText.setId(View.generateViewId());
+        noMenuText.setTextSize(DimensionsCatalog.headerTextSize);
+        noMenuText.setTypeface(FontCatalog.fontLevels(getContext(), 1));
+        noMenuText.setTextColor(ColorsCatalog.blackColor);
+        noMenuText.setGravity(Gravity.CENTER);
+        noMenuText.setText("Menu not available right now");
+        noMenuText.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noMenuText.setVisibility(View.GONE);
+
+        noMenuImage = new ImageView(getContext());
+        noMenuImage.setId(View.generateViewId());
+        noMenuImage.setImageResource(R.drawable.waiter);
+        noMenuImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noMenuImage.setVisibility(View.GONE);
+
         layout.addView(menuHeader);
         layout.addView(scrollView);
+        layout.addView(noMenuImage);
+        layout.addView(noMenuText);
         scrollView.addView(scrollViewLayout);
     }
 
@@ -205,6 +245,17 @@ public class MenuFragment extends Fragment {
         set.connect(menuHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);
         set.connect(menuHeader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.constrainHeight(menuHeader.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noMenuText.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noMenuText.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noMenuText.getId(), ConstraintSet.BOTTOM, noMenuImage.getId(), ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.constrainHeight(noMenuText.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noMenuImage.getId(), ConstraintSet.TOP, noMenuText.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noMenuImage.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noMenuImage.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.centerVertically(noMenuImage.getId(), ConstraintSet.PARENT_ID);
+        set.constrainHeight(noMenuImage.getId(), DimensionsCatalog.screenHeight/4);
 
         set.connect(scrollView.getId(), ConstraintSet.TOP, menuHeader.getId(), ConstraintSet.BOTTOM);
         set.connect(scrollView.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT);

@@ -1,5 +1,7 @@
 package com.groak.groak.activity.menu;
 
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -62,6 +64,13 @@ public class DishCell extends RecyclerView.ViewHolder {
         else {
             imageView.setVisibility(View.VISIBLE);
             Glide.with(layout.getContext()).load(dish.getImageLink()).override(320, 240).into(imageView);
+            if (!dish.isAvailable()) {
+                ColorMatrix matrix = new ColorMatrix();
+                matrix.setSaturation(0);
+
+                ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                imageView.setColorFilter(filter);
+            }
         }
 
         if (searchTerm != null) {
@@ -72,17 +81,28 @@ public class DishCell extends RecyclerView.ViewHolder {
                 sb.setSpan(new ForegroundColorSpan(ColorsCatalog.themeColor), m.start(), m.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             dishName.setTextColor(ColorsCatalog.shadesOfGray[8]);
             dishName.setText(sb);
+            if (!dish.isAvailable()) dishName.setText(sb + "(Unavailable)");
+            else dishName.setText(sb);
         } else {
             dishName.setTextColor(ColorsCatalog.themeColor);
-            dishName.setText(dish.getName());
+            if (!dish.isAvailable()) dishName.setText(dish.getName() + "(Unavailable)");
+            else dishName.setText(dish.getName());
         }
         dishPrice.setText(Catalog.priceInString(dish.getPrice()));
 
-        if (dish == null || dish.getShortInfo() == null || dish.getShortInfo().length() == 0)
-            dishInfo.setVisibility(View.GONE);
-        else {
+        if (dish == null || dish.getShortInfo() == null || dish.getShortInfo().length() == 0) {
+            if (!dish.isAvailable()) {
+                dishInfo.setVisibility(View.VISIBLE);
+                dishInfo.setText("This dish is currently unavailable");
+            } else {
+                dishInfo.setVisibility(View.GONE);
+            }
+        } else {
             dishInfo.setVisibility(View.VISIBLE);
-            dishInfo.setText(dish.getShortInfo());
+            if (!dish.isAvailable())
+                dishInfo.setText("This dish is currently unavailable");
+            else
+                dishInfo.setText(dish.getShortInfo());
         }
 
         if (dish != null && dish.getRestrictions() != null && dish.getRestrictions().get("vegan") != null && dish.getRestrictions().get("vegan").equals("Yes")) {

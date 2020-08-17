@@ -74,7 +74,7 @@ public class RequestCell  extends RecyclerView.ViewHolder {
         requestByUser.setTextColor(ColorsCatalog.whiteColor);
         requestByUser.setGravity(Gravity.LEFT);
         requestByUser.setSingleLine(false);
-        requestByUser.setPadding(20, 20, 20, 20);
+        requestByUser.setPadding(20, 20, 20, 0);
 
         timeByUser = new TextView(layout.getContext());
         timeByUser.setLayoutParams(new LinearLayout.LayoutParams(0, 0));

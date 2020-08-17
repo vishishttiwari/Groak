@@ -2,11 +2,14 @@ package com.groak.groak.activity.cart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -16,9 +19,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.groak.groak.R;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
+import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
 import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
@@ -40,7 +45,9 @@ public class CartFragment extends Fragment {
     private RecyclerView cartView;
 
     private SpecialInstructions specialInstructions;
-    private RecyclerView specialInstructionsView;
+
+    private TextView noCartText;
+    private ImageView noCartImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,15 +67,21 @@ public class CartFragment extends Fragment {
     public void refresh() {
         ((CartRecyclerViewAdapter)cartView.getAdapter()).refresh();
         if (LocalRestaurant.cart != null && LocalRestaurant.cart.getDishes().size() == 0) {
+            scrollView.setVisibility(View.GONE);
             cartViewHeader.setVisibility(View.GONE);
             cartView.setVisibility(View.GONE);
             specialInstructions.setVisibility(View.GONE);
             cartFooter.setVisibility(View.GONE);
+            noCartImage.setVisibility(View.VISIBLE);
+            noCartText.setVisibility(View.VISIBLE);
         } else {
+            scrollView.setVisibility(View.VISIBLE);
             cartViewHeader.setVisibility(View.VISIBLE);
             cartView.setVisibility(View.VISIBLE);
             specialInstructions.setVisibility(View.VISIBLE);
             cartFooter.setVisibility(View.VISIBLE);
+            noCartImage.setVisibility(View.GONE);
+            noCartText.setVisibility(View.GONE);
             cartFooter.changePrice(LocalRestaurant.calculateCartTotalPrice());
         }
     }
@@ -161,9 +174,27 @@ public class CartFragment extends Fragment {
         specialInstructions.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         specialInstructions.setVisibility(View.GONE);
 
+        noCartText = new TextView(getContext());
+        noCartText.setId(View.generateViewId());
+        noCartText.setTextSize(DimensionsCatalog.headerTextSize);
+        noCartText.setTypeface(FontCatalog.fontLevels(getContext(), 1));
+        noCartText.setTextColor(ColorsCatalog.blackColor);
+        noCartText.setGravity(Gravity.CENTER);
+        noCartText.setText("You can add dishes from the menu tab");
+        noCartText.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noCartText.setVisibility(View.GONE);
+
+        noCartImage = new ImageView(getContext());
+        noCartImage.setId(View.generateViewId());
+        noCartImage.setImageResource(R.drawable.waiter);
+        noCartImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        noCartImage.setVisibility(View.GONE);
+
         scrollViewLayout.addView(cartViewHeader);
         scrollViewLayout.addView(cartView);
         scrollViewLayout.addView(specialInstructions);
+        layout.addView(noCartImage);
+        layout.addView(noCartText);
         layout.addView(cartHeader);
         layout.addView(scrollView);
         layout.addView(cartFooter);
@@ -209,6 +240,17 @@ public class CartFragment extends Fragment {
         set.connect(cartFooter.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT);
         set.connect(cartFooter.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
         set.constrainHeight(cartFooter.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noCartText.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noCartText.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noCartText.getId(), ConstraintSet.BOTTOM, noCartImage.getId(), ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.constrainHeight(noCartText.getId(), ConstraintSet.WRAP_CONTENT);
+
+        set.connect(noCartImage.getId(), ConstraintSet.TOP, noCartText.getId(), ConstraintSet.BOTTOM, DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noCartImage.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.connect(noCartImage.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 2*DimensionsCatalog.getDistanceBetweenElements(getContext()));
+        set.centerVertically(noCartImage.getId(), ConstraintSet.PARENT_ID);
+        set.constrainHeight(noCartImage.getId(), DimensionsCatalog.screenHeight/4);
 
         set.applyTo(layout);
     }

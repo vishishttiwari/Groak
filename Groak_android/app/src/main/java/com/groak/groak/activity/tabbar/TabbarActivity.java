@@ -1,6 +1,7 @@
 package com.groak.groak.activity.tabbar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,9 +10,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -27,6 +30,7 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.CartBadgeView;
+import com.groak.groak.catalog.groakUIClasses.LoadingView;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
@@ -51,7 +55,7 @@ public class TabbarActivity extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
-    private ProgressDialog loadingSpinner;
+    private AlertDialog loadingSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,8 @@ public class TabbarActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        setupRestaurant();
+        if (LocalRestaurant.restaurant == null)
+            setupRestaurant();
 
         setupViews();
         setupInitialLayout();
@@ -160,12 +165,7 @@ public class TabbarActivity extends AppCompatActivity {
     }
 
     private void setupRestaurant() {
-        loadingSpinner = new ProgressDialog(this);
-        loadingSpinner.setMessage("Loading..");
-        loadingSpinner.setTitle("Fetching Menu");
-        loadingSpinner.setIndeterminate(false);
-        loadingSpinner.setCancelable(true);
-        loadingSpinner.show();
+        loadingSpinner = Catalog.loading(getContext(), "Fetching menus");
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Restaurant.class, new RestaurantDeserializer());
@@ -174,8 +174,9 @@ public class TabbarActivity extends AppCompatActivity {
         Intent i = getIntent();
         Restaurant restaurant = gson.fromJson(i.getStringExtra("restaurant"), Restaurant.class);
         String tableId = i.getStringExtra("tableId");
+        String qrCodeId = i.getStringExtra("qrCodeId");
 
-        LocalRestaurant.enterRestaurant(this, restaurant, tableId, new GroakCallback() {
+        LocalRestaurant.enterRestaurant(this, restaurant, tableId, qrCodeId, new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
                 loadingSpinner.dismiss();
@@ -208,11 +209,17 @@ public class TabbarActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onUserInteraction() {
-        if (getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        if (view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            view.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view.getTop() - scrcoords[1];
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
+                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
         }
+        return super.dispatchTouchEvent(ev);
     }
 
     private void initBroadcast() {

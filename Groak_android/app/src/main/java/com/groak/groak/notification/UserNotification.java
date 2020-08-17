@@ -1,38 +1,129 @@
 package com.groak.groak.notification;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.groak.groak.R;
+import com.groak.groak.activity.request.RequestActivity;
+import com.groak.groak.activity.restaurant.RestaurantListActivity;
+import com.groak.groak.activity.tabbar.TabbarActivity;
 import com.groak.groak.catalog.Catalog;
+import com.groak.groak.catalog.ColorsCatalog;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
+import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.restaurantobject.cart.Cart;
+import com.groak.groak.restaurantobject.order.Order;
+import com.groak.groak.restaurantobject.request.Requests;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class UserNotification extends FirebaseMessagingService {
 
+    public static boolean isRequestShowing = false;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        final RemoteMessage.Notification notification = remoteMessage.getNotification();
+        final Map<String, String> notification = remoteMessage.getData();
 
-        if (notification != null) {
+//        if (LocalRestaurant.restaurant == null) return;
+
+        if (notification != null && notification.get("title") != null && notification.get("body") != null && notification.get("tag") != null) {
+            String title = notification.get("title");
+            String body = notification.get("body");
+            String tag = notification.get("tag");
+
+            sendNotification(title, body, tag);
+
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 public void run() {
-                    if (notification.getTag().equals("request")) {
-                        Catalog.toast(getApplicationContext(), notification.getTitle() + ": \"" + notification.getBody() + "\"");
-                    } else if (notification.getTag().equals("order")) {
-                        Catalog.toast(getApplicationContext(),   notification.getTitle() + ".  " + notification.getBody());
-                    } else if (notification.getTag().equals("reset")) {
-                        Catalog.toast(getApplicationContext(), notification.getBody());
-                    }
+//                    if (tag.equals("request")) {
+//                        if (!isRequestShowing)
+//                            Catalog.toast(getApplicationContext(), title + ": \"" + body + "\"");
+//                    } else if (tag.equals("order")) {
+//                        Catalog.toast(getApplicationContext(),   title + ".  " + body);
+//                    } else if (tag.equals("reset")) {
+//                        Catalog.toast(getApplicationContext(), body);
+//
+//                        LocalRestaurant.resetRestaurant();
+//
+//                        Intent intent = new Intent(getApplicationContext(), RestaurantListActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        intent.putExtra("EXIT", true);
+//                        getApplicationContext().startActivity(intent);
+//                    }
                 }
             });
         }
+    }
+
+    private void sendNotification(String title, String body, String tag) {
+        NotificationManager manager;
+
+        Intent intent;
+        if (tag.equals("request"))
+            intent = new Intent(getApplicationContext(), RequestActivity.class);
+        else if (tag.equals("order"))
+            intent = new Intent(getApplicationContext(), TabbarActivity.class);
+        else if (tag.equals("reset"))
+            intent = new Intent(getApplicationContext(), RestaurantListActivity.class);
+        else
+            intent = new Intent(getApplicationContext(), RestaurantListActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default_notification_channel_id");
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.setBigContentTitle(title);
+        bigText.bigText(body);
+        bigText.setSummaryText(body);
+
+        builder.setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.drawable.chat_white);
+        builder.setColor(ColorsCatalog.themeColor);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setContentTitle(title);
+        builder.setContentText(body);
+        builder.setStyle(bigText);
+
+        manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "default_notification_channel_id";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Groak Channel Id",
+                    NotificationManager.IMPORTANCE_MAX);
+            channel.setDescription("Waah waah");
+            channel.setShowBadge(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            manager.createNotificationChannel(channel);
+            builder.setChannelId(channelId);
+        }
+
+        manager.notify(0 /*ID of notification*/, builder.build());
     }
 
     public static void subscribe(String topic) {
