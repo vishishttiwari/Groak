@@ -28,6 +28,7 @@ import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPriceAndQuantity;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.cart.CartDish;
 
 import java.util.ArrayList;
@@ -60,6 +61,13 @@ public class CartDetailsActivity extends Activity {
         setupViews();
 
         setupInitialLayout();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     private void setupViews() {
@@ -202,4 +210,6 @@ public class CartDetailsActivity extends Activity {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
+    private Context getContext() { return this; }
 }

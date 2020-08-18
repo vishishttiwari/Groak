@@ -17,6 +17,9 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MenuHeader extends GroakFragmentHeader {
 
     private ImageView search;

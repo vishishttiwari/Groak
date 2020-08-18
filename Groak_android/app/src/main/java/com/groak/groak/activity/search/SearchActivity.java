@@ -28,6 +28,7 @@ import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.MenuCategory;
 import com.groak.groak.restaurantobject.dish.Dish;
 
@@ -52,6 +53,13 @@ public class SearchActivity extends Activity {
         setupViews();
 
         setupInitialLayout();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     private void setupViews() {

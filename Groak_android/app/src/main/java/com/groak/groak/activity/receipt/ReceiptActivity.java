@@ -27,6 +27,7 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 
 public class ReceiptActivity extends Activity {
     private ConstraintLayout layout;
@@ -55,6 +56,13 @@ public class ReceiptActivity extends Activity {
         requestButton.registerBroadcast();
 
         refresh(tableOrder);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     public void refresh(boolean tableOrder) {

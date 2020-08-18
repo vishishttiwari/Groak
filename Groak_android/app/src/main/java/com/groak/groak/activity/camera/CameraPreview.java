@@ -24,6 +24,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,7 +49,7 @@ public class CameraPreview extends ConstraintLayout {
     private CameraDevice cameraDev;
     private CameraDevice.StateCallback cameraDeviceStateCallback;
     private String cameraId;
-    private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
+    private static int REQUEST_CAMERA_PERMISSION_RESULT;
     private Size previewSize;
     private CaptureRequest.Builder captureRequestBuilder;
     private HandlerThread cameraBackgroundThread;
@@ -74,8 +75,10 @@ public class CameraPreview extends ConstraintLayout {
     private String cameraError = "Error occurred while switching the camera on";
     private String cameraRequest = "Please allow camera for scanning the QR Code";
 
-    public CameraPreview(Context context, String restaurantId, GroakCallback groakCallback) {
+    public CameraPreview(Context context, String restaurantId, int REQUEST_CAMERA_PERMISSION_RESULT, GroakCallback groakCallback) {
         super(context);
+
+        this.REQUEST_CAMERA_PERMISSION_RESULT = REQUEST_CAMERA_PERMISSION_RESULT;
 
         setupViews(restaurantId, groakCallback);
 
@@ -90,7 +93,6 @@ public class CameraPreview extends ConstraintLayout {
                 setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                 connectCamera();
             } catch (Exception e) {
-                System.out.println("11");
                 Catalog.toast(getContext(), cameraError);
             }
         } else {
@@ -124,7 +126,6 @@ public class CameraPreview extends ConstraintLayout {
                 setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                 connectCamera();
             } catch (Exception e) {
-                System.out.println("12");
                 Catalog.toast(getContext(), cameraError);
             }
         }
@@ -142,7 +143,6 @@ public class CameraPreview extends ConstraintLayout {
                     setupCamera(cameraPreview.getWidth(), cameraPreview.getHeight());
                     connectCamera();
                 } catch (Exception e) {
-                    System.out.println("13");
                     Catalog.toast(getContext(), cameraError);
                 }
             }
@@ -169,7 +169,6 @@ public class CameraPreview extends ConstraintLayout {
                 try {
                     startPreview();
                 } catch (CameraAccessException e) {
-                    System.out.println("14");
                     Catalog.toast(getContext(), cameraError);
                 }
             }
@@ -184,7 +183,6 @@ public class CameraPreview extends ConstraintLayout {
             public void onError(@NonNull CameraDevice cameraDevice, int i) {
                 cameraDevice.close();
                 cameraDev = null;
-                System.out.println("15");
                 Catalog.toast(getContext(), cameraError);
             }
         };
@@ -257,7 +255,6 @@ public class CameraPreview extends ConstraintLayout {
 
             @Override
             public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                System.out.println("17");
                 Catalog.toast(getContext(), cameraError);
             }
         }, null);
@@ -292,6 +289,8 @@ public class CameraPreview extends ConstraintLayout {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 cameraManager.openCamera(cameraId, cameraDeviceStateCallback, cameraBackgroundHandler);
             } else {
+                if (((Activity)getContext()).shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                }
                 ((Activity)getContext()).requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION_RESULT);
             }
         } else {

@@ -3,6 +3,7 @@ package com.groak.groak.activity.camera;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,24 +12,31 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
+import com.groak.groak.activity.restaurant.RestaurantListActivity;
 import com.groak.groak.activity.tabbar.TabbarActivity;
+import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.DistanceCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
+import com.groak.groak.permissions.CameraPermissionsActivity;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.restaurant.RestaurantDeserializer;
 import com.groak.groak.restaurantobject.restaurant.RestaurantSerializer;
 
 public class CameraActivity extends Activity {
     private ConstraintLayout layout;
+
+    private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
 
     private TextView scanQR;
     private CameraPreview cameraPreview;
@@ -66,6 +74,7 @@ public class CameraActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
         cameraPreview.onResume();
         initiatedEnterRestaurant = false;
     }
@@ -74,6 +83,18 @@ public class CameraActivity extends Activity {
     protected void onPause() {
         cameraPreview.onPause();
         super.onPause();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION_RESULT) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(getContext(), CameraPermissionsActivity.class);
+                getContext().startActivity(intent);
+                ((Activity)getContext()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+            }
+        }
     }
 
     private void updateRestaurant() {
@@ -104,7 +125,7 @@ public class CameraActivity extends Activity {
         scanQR.setBackground(shape);
         scanQR.setElevation(100);
 
-        cameraPreview = new CameraPreview(this, restaurant.getReference().getId(), new GroakCallback() {
+        cameraPreview = new CameraPreview(this, restaurant.getReference().getId(), REQUEST_CAMERA_PERMISSION_RESULT, new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
                 String url = (String)object;

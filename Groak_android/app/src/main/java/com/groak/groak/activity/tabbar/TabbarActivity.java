@@ -33,6 +33,7 @@ import com.groak.groak.catalog.groakUIClasses.CartBadgeView;
 import com.groak.groak.catalog.groakUIClasses.LoadingView;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.restaurant.RestaurantDeserializer;
 
@@ -70,6 +71,13 @@ public class TabbarActivity extends AppCompatActivity {
         setupInitialLayout();
         initBroadcast();
         registerBroadcast();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     private void setupViews() {

@@ -32,6 +32,7 @@ import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeaderWithPrice;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.DishDeserializer;
 import com.groak.groak.restaurantobject.dish.DishSerializer;
@@ -80,6 +81,13 @@ public class DishActivity extends Activity {
         setupInitialLayout();
         initBroadcast();
         requestButton.registerBroadcast();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     private void setupViews() {

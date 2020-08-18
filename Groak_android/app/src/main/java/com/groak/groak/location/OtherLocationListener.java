@@ -18,9 +18,6 @@ public class OtherLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        System.out.println("#####");
-        System.out.println(location);
-        System.out.println("#####");
         if (LocalRestaurant.restaurant == null) {
             return;
         }

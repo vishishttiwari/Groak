@@ -29,6 +29,7 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.catalog.groakUIClasses.CustomNestedScrollView;
 import com.groak.groak.catalog.groakUIClasses.RecyclerViewHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.restaurantobject.dish.Dish;
@@ -40,7 +41,7 @@ public class MenuFragment extends Fragment {
     private ConstraintLayout layout;
 
     private MenuHeader menuHeader;
-    private NestedScrollView scrollView;
+    private CustomNestedScrollView scrollView;
     private ConstraintLayout scrollViewLayout;
 
     private ArrayList<RecyclerView> menuViews = new ArrayList<>();
@@ -67,15 +68,18 @@ public class MenuFragment extends Fragment {
         super.onResume();
         if (loaded) getCategories();
         else {
+            menuViewHeaders.clear();
+            menuViews.clear();
             for (MenuCategory category : LocalRestaurant.categories) {
                 setupRecyclerViewHeader(category);
                 setupRecyclerViewViews(category.getDishes());
             }
             if (LocalRestaurant.restaurant != null && LocalRestaurant.restaurant.getName() != null)
-                menuHeader.setHeader(LocalRestaurant.restaurant.getName());
+                menuHeader.refresh();
             setupInitialLayout();
             loaded = true;
         }
+        menuHeader.disableScrolling = false;
         registerBroadcast();
     }
 
@@ -86,6 +90,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void getCategories() {
+        menuViewHeaders.clear();
+        menuViews.clear();
         if (LocalRestaurant.categories != null && LocalRestaurant.categories.size() != 0) {
             for (MenuCategory category : LocalRestaurant.categories) {
                 setupRecyclerViewHeader(category);
@@ -131,23 +137,23 @@ public class MenuFragment extends Fragment {
         menuHeader.setId(View.generateViewId());
         menuHeader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 
-        scrollView = new NestedScrollView(getContext());
+        scrollView = new CustomNestedScrollView(getContext());
         scrollView.setId(View.generateViewId());
         scrollView.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
         scrollView.setNestedScrollingEnabled(false);
         scrollView.setBackgroundColor(ColorsCatalog.headerGrayShade);
         scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                menuHeader.disableScrolling = false;
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP)
+                    scrollView.startScrollerTask();
                 return false;
             }
         });
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        scrollView.setOnScrollStoppedListener(new CustomNestedScrollView.OnScrollStoppedListener() {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStopped(int scrollY) {
                 for (int i = menuViewHeaders.size() - 1; i >= 0; i--) {
-                    if (scrollY > menuViewHeaders.get(i).getTop()) {
+                    if (scrollY >= menuViewHeaders.get(i).getTop()) {
                         menuHeader.scrollTo(i);
                         break;
                     }

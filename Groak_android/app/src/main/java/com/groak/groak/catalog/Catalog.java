@@ -52,7 +52,7 @@ public class Catalog {
     }
 
     public static void toast(Context context, String text) {
-        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         View view = toast.getView();
         view.getBackground().setColorFilter(ColorsCatalog.grayColor, PorterDuff.Mode.SRC_IN);
 

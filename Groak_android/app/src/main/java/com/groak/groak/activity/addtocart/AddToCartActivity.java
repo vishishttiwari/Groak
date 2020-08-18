@@ -33,6 +33,7 @@ import com.groak.groak.catalog.groakUIClasses.SpecialInstructions;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooterWithPriceAndQuantity;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakOtherHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.restaurantobject.dish.Dish;
 import com.groak.groak.restaurantobject.dish.DishDeserializer;
 import com.groak.groak.restaurantobject.cart.CartDish;
@@ -75,6 +76,13 @@ public class AddToCartActivity extends Activity {
         setupOptions();
 
         requestButton.registerBroadcast();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
     }
 
     private void setupViews() {
@@ -175,7 +183,7 @@ public class AddToCartActivity extends Activity {
         layout.addView(addToCartHeader);
         layout.addView(scrollView);
         layout.addView(addToCartFooter);
-        layout.addView(requestButton);
+//        layout.addView(requestButton);
         scrollView.addView(scrollViewLayout);
         scrollViewLayout.addView(specialInstructions);
         setContentView(layout);

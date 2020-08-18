@@ -70,12 +70,12 @@ public class RecyclerViewHeader extends ConstraintLayout {
         set.connect(header.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(header.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(header.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
-        set.constrainHeight(header.getId(), 110);
+        set.constrainHeight(header.getId(), DimensionsCatalog.getValueInDP(50, getContext()));
 
         set.connect(subHeader.getId(), ConstraintSet.TOP, header.getId(), ConstraintSet.BOTTOM);
         set.connect(subHeader.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
         set.connect(subHeader.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, DimensionsCatalog.getDistanceBetweenElements(getContext()));
-        set.constrainHeight(subHeader.getId(), 70);
+        set.constrainHeight(subHeader.getId(), DimensionsCatalog.getValueInDP(30, getContext()));
 
         set.applyTo(this);
     }

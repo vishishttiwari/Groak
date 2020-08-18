@@ -41,6 +41,7 @@ public class LocalRestaurant {
 
     public static void enterRestaurant(Context context, Restaurant restaurant, String tableId, String qrCodeId, GroakCallback groakCallback) {
         cart = new Cart();
+        RealmWrapper.deleteOldDishesAndComments(context);
         LocalRestaurant.restaurant = restaurant;
         FirestoreAPICallsQRCodes.fetchQRCodeFirestoreAPI(restaurant.getReference().getId(), qrCodeId, new GroakCallback() {
             @Override

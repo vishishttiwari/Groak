@@ -26,7 +26,7 @@ public class GroakFooter extends ConstraintLayout {
     public GroakFooter(Context context, String footerButtonText, GroakCallback callback) {
         super(context);
 
-        footerButtonHeight = DimensionsCatalog.getHeaderHeight(context);;
+        footerButtonHeight = DimensionsCatalog.getHeaderHeight(context);
 
         this.groakCallback = callback;
 

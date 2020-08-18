@@ -3,12 +3,15 @@ package com.groak.groak.activity.restaurant;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -25,6 +28,8 @@ import com.groak.groak.catalog.groakUIClasses.groakheader.GroakHeader;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
+import com.groak.groak.permissions.CameraPermissionsActivity;
+import com.groak.groak.permissions.LocationPermissionsActivity;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 
 import java.util.ArrayList;
@@ -42,6 +47,8 @@ public class RestaurantListActivity extends Activity {
 
     private GooglePlayServicesLocationListener locationListener;
 
+    private static final int REQUEST_LOCATION_PERMISSION_RESULT = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +64,27 @@ public class RestaurantListActivity extends Activity {
     protected void onResume() {
         super.onResume();
         LocalRestaurant.resetRestaurant();
-        locationListener.startLocationUpdates();
+        locationListener.startLocationUpdates(REQUEST_LOCATION_PERMISSION_RESULT);
     }
 
     @Override
     protected void onPause() {
         locationListener.stopLocationUpdates();
         super.onPause();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_LOCATION_PERMISSION_RESULT) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(getContext(), LocationPermissionsActivity.class);
+                getContext().startActivity(intent);
+                ((Activity)getContext()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+                return;
+            }
+        }
     }
 
     private void setupViews() {

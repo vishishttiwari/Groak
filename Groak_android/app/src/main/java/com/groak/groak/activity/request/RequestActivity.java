@@ -27,6 +27,7 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
 import com.groak.groak.localstorage.LocalRestaurant;
+import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.notification.UserNotification;
 import com.groak.groak.restaurantobject.request.Request;
 
@@ -55,6 +56,8 @@ public class RequestActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
 
         UserNotification.isRequestShowing = true;
 
