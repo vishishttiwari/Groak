@@ -9,6 +9,9 @@
 *.p12
 *.txt
 *.plist
+*.pepk
+**/Groak_Key
+Groak_Key
 
 # Compiled source #
 ###################

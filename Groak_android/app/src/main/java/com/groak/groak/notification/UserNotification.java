@@ -88,8 +88,6 @@ public class UserNotification extends FirebaseMessagingService {
 
         count++;
 
-        System.out.println(count);
-
         Intent intent;
         if (tag.equals("request")) {
             intent = new Intent(getApplicationContext(), RequestActivity.class);
