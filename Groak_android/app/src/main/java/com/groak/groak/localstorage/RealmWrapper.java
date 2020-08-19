@@ -4,14 +4,15 @@ import android.content.Context;
 
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.restaurantobject.order.Order;
 import com.groak.groak.restaurantobject.order.OrderComment;
 import com.groak.groak.restaurantobject.order.OrderCommentSavedInRealm;
 import com.groak.groak.restaurantobject.order.OrderDish;
 import com.groak.groak.restaurantobject.order.OrderDishSavedInRealm;
+import com.groak.groak.restaurantobject.session.SessionId;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -134,17 +135,83 @@ public class RealmWrapper {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                Date yesterday = new Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
                 RealmResults<OrderDishSavedInRealm> oldDishes = bgRealm.where(OrderDishSavedInRealm.class)
-                        .lessThan("created", yesterday)
+                        .lessThan("created", TimeCatalog.getYesterdayDate())
                         .findAll();
 
                 RealmResults<OrderCommentSavedInRealm> oldComments = bgRealm.where(OrderCommentSavedInRealm.class)
-                        .lessThan("created", new Date())
+                        .lessThan("created", TimeCatalog.getYesterdayDate())
                         .findAll();
 
                 oldDishes.deleteAllFromRealm();
                 oldComments.deleteAllFromRealm();
+            }
+        });
+    }
+
+    public static void addSessionId(final Context context, SessionId sessionId) {
+        Realm.init(context);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+        Realm realm = Realm.getInstance(config);
+
+        final List<SessionId> sessionIds = new ArrayList<>();
+
+        sessionIds.add(sessionId);
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                bgRealm.insert(sessionIds);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+            }
+        });
+    }
+
+    public static ArrayList<SessionId> downloadOldSessionIds(Context context) {
+        Realm.init(context);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+        Realm realm = Realm.getInstance(config);
+
+        RealmResults<SessionId> savedSessionIds = realm.where(SessionId.class)
+                .lessThan("created", TimeCatalog.getYesterdayDate())
+                .findAll();
+
+        ArrayList<SessionId> savedSessionIdsArrayList = new ArrayList<>();
+        for (int i = 0; i < savedSessionIds.size(); i++)
+            savedSessionIdsArrayList.add(savedSessionIds.get(i));
+
+        return savedSessionIdsArrayList;
+    }
+
+    public static void deleteOldSessionIds(Context context) {
+        Realm.init(context);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+        Realm realm = Realm.getInstance(config);
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                RealmResults<SessionId> oldSessionIds = bgRealm.where(SessionId.class)
+                        .lessThan("created", TimeCatalog.getYesterdayDate())
+                        .findAll();
+
+                oldSessionIds.deleteAllFromRealm();
             }
         });
     }

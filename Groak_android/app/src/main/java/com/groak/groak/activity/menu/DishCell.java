@@ -95,7 +95,7 @@ public class DishCell extends RecyclerView.ViewHolder {
                 dishInfo.setVisibility(View.VISIBLE);
                 dishInfo.setText("This dish is currently unavailable");
             } else {
-                dishInfo.setVisibility(View.GONE);
+//                dishInfo.setVisibility(View.GONE);
             }
         } else {
             dishInfo.setVisibility(View.VISIBLE);

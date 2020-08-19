@@ -27,6 +27,7 @@ import com.groak.groak.restaurantobject.order.OrderDish;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class FirestoreAPICallsOrders {
 
@@ -213,7 +214,7 @@ public class FirestoreAPICallsOrders {
         });
     }
 
-    public static void newRequestForUserSeen() {
+    public static void newRequestForUserSeenFirestoreAPI() {
         final DocumentReference orderReference = LocalRestaurant.orderReference;
         final DocumentReference tableReference = LocalRestaurant.table.getReference();
         final DocumentReference tableOriginalReference = LocalRestaurant.table.getOriginalReference();
@@ -223,6 +224,82 @@ public class FirestoreAPICallsOrders {
             public Void apply(Transaction transaction) throws FirebaseFirestoreException {
                 HashMap<String, Object> updatedMap = new HashMap<>();
                 updatedMap.put("newRequestForUser", false);
+
+                transaction.update(orderReference, updatedMap);
+                transaction.update(tableReference, updatedMap);
+                transaction.update(tableOriginalReference, updatedMap);
+
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+
+    public static void seatedFirestoreAPI() {
+        final DocumentReference orderReference = LocalRestaurant.orderReference;
+        final DocumentReference requestReference = LocalRestaurant.requestReference;
+        final DocumentReference tableReference = LocalRestaurant.table.getReference();
+        final DocumentReference tableOriginalReference = LocalRestaurant.table.getOriginalReference();
+
+        Firebase.firebase.db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot orderDocument = transaction.get(orderReference);
+
+                Order savedOrder = new Order(orderDocument.getData());
+
+                ArrayList<String> newSessionIds;
+                if (savedOrder.getSessionIds() != null)
+                    newSessionIds = savedOrder.getSessionIds();
+                else
+                    newSessionIds = new ArrayList<>();
+                newSessionIds.add(LocalRestaurant.sessionId.getSessionId());
+
+                HashMap<String, Object> updatedAllMap = new HashMap<>();
+                updatedAllMap.put("sessionIds", newSessionIds);
+                if (savedOrder.getStatus() == TableStatus.available)
+                    updatedAllMap.put("status", TableStatus.seated);
+
+                HashMap<String, Object> updatedRequestMap = new HashMap<>();
+                updatedRequestMap.put("sessionIds", newSessionIds);
+
+                transaction.update(orderReference, updatedAllMap);
+                transaction.update(tableReference, updatedAllMap);
+                transaction.update(tableOriginalReference, updatedAllMap);
+                transaction.update(requestReference, updatedRequestMap);
+
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+
+    public static void readyForPaymentFirestoreAPI() {
+        final DocumentReference orderReference = LocalRestaurant.orderReference;
+        final DocumentReference tableReference = LocalRestaurant.table.getReference();
+        final DocumentReference tableOriginalReference = LocalRestaurant.table.getOriginalReference();
+
+        Firebase.firebase.db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                HashMap<String, Object> updatedMap = new HashMap<>();
+                updatedMap.put("status", TableStatus.payment);
 
                 transaction.update(orderReference, updatedMap);
                 transaction.update(tableReference, updatedMap);

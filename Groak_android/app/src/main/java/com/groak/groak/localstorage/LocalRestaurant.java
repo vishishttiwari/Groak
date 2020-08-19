@@ -14,9 +14,11 @@ import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsQRCodes;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
 import com.groak.groak.notification.UserNotification;
+import com.groak.groak.permissions.LocationPermissionsActivity;
 import com.groak.groak.restaurantobject.MenuCategory;
 import com.groak.groak.restaurantobject.QRCode;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
+import com.groak.groak.restaurantobject.session.SessionId;
 import com.groak.groak.restaurantobject.table.Table;
 import com.groak.groak.restaurantobject.cart.Cart;
 import com.groak.groak.restaurantobject.cart.CartDish;
@@ -26,6 +28,7 @@ import com.groak.groak.restaurantobject.order.OrderDish;
 import com.groak.groak.restaurantobject.request.Requests;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class LocalRestaurant {
     public static Restaurant restaurant = null;
@@ -38,6 +41,7 @@ public class LocalRestaurant {
     public static Order order = new Order();
     public static Requests requests = new Requests();
     public static boolean requestNotifications = false;
+    public static SessionId sessionId = null;
 
     public static void enterRestaurant(Context context, Restaurant restaurant, String tableId, String qrCodeId, GroakCallback groakCallback) {
         cart = new Cart();
@@ -60,6 +64,7 @@ public class LocalRestaurant {
                             @Override
                             public void onSuccess(Object object) {
                                 LocalRestaurant.setTable((Table)object);
+                                LocalRestaurant.setSessionId(context);
                                 FirestoreAPICallsOrders.fetchOrderFirestoreAPI(context, new GroakCallback() {
                                     @Override
                                     public void onSuccess(Object object) {
@@ -130,8 +135,8 @@ public class LocalRestaurant {
     }
 
     public static void resetRestaurant() {
-        if (table != null && table.getReference() != null)
-            UserNotification.unsubscribe(table.getReference().getId());
+        if (sessionId != null && sessionId.getSessionId() != null)
+            UserNotification.unsubscribe(sessionId.getSessionId());
 
         restaurant = null;
         categories = new ArrayList();
@@ -142,16 +147,29 @@ public class LocalRestaurant {
         order = new Order();
         requests = new Requests();
         requestNotifications = false;
+        sessionId = null;
+
+        UserNotification.count = 0;
 
         FirestoreAPICallsOrders.unsubscribe();
         FirestoreAPICallsRequests.unsubscribe();
     }
 
     private static void setTable(Table table) {
-        UserNotification.subscribe(table.getReference().getId());
         LocalRestaurant.table = table;
         LocalRestaurant.orderReference = table.getOrderReference();
         LocalRestaurant.requestReference = table.getRequestReference();
+    }
+
+    private static void setSessionId(Context context) {
+        LocalRestaurant.sessionId = new SessionId();
+        FirestoreAPICallsOrders.seatedFirestoreAPI();
+        RealmWrapper.addSessionId(context, LocalRestaurant.sessionId);
+        UserNotification.subscribe(sessionId.getSessionId());
+        ArrayList<SessionId> oldSessionIds = RealmWrapper.downloadOldSessionIds(context);
+        for (SessionId sessionId: oldSessionIds)
+            UserNotification.unsubscribe(sessionId.getSessionId());
+        RealmWrapper.deleteOldSessionIds(context);
     }
 
     public static double calculateCartTotalPrice() {

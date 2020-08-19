@@ -38,6 +38,14 @@ public class QRScanner {
                                         }
                                     }
                                     break;
+                                case FirebaseVisionBarcode.TYPE_URL:
+                                    if (barcode != null && barcode.getRawValue() != null) {
+                                        String finalStr = barcode.getUrl().getUrl().replace("https://", "");
+                                        finalStr = finalStr.replace("http://", "");
+                                        if (checkGroakElements(finalStr, restaurantId)) {
+                                            groakCallback.onSuccess(barcode.getRawValue());
+                                        }
+                                    }
                             }
                         }
                     }
@@ -53,7 +61,7 @@ public class QRScanner {
     public boolean checkGroakElements(String url, String restaurantId) {
         String[] urlElements = url.split("/");
         if (urlElements.length != 5) return false;
-        if (!urlElements[0].equals("groakapp.com")) return false;
+        if (!urlElements[0].equals("groakapp.com") && !urlElements[0].equals("www.groakapp.com")) return false;
         return urlElements[2].equals(restaurantId);
     }
 }

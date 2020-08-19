@@ -27,6 +27,7 @@ import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.DistanceCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
 import com.groak.groak.permissions.CameraPermissionsActivity;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
@@ -60,21 +61,22 @@ public class CameraActivity extends Activity {
         setupViews();
         setupInitialLayout();
         updateRestaurant();
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        enterRestaurant("r18cb7350q82598q0cczmo", "uhp40oq9w8ifsl5xeax13p");
-                    }
-                },
-                1000
-        );
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        enterRestaurant("r18cb7350q82598q0cczmo", "uhp40oq9w8ifsl5xeax13p");
+//                    }
+//                },
+//                1000
+//        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
+        LocalRestaurant.resetRestaurant();
         cameraPreview.onResume();
         initiatedEnterRestaurant = false;
     }

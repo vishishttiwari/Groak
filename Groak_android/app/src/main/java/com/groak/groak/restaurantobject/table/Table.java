@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.groak.groak.restaurantobject.TableStatus;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Table {
@@ -14,6 +15,7 @@ public class Table {
     private DocumentReference requestReference;
     private DocumentReference restaurantReference;
     private TableStatus status;
+    private ArrayList<String> sessionIds;
     private boolean newRequest;
     private Timestamp serveTime;
 
@@ -25,6 +27,7 @@ public class Table {
         this.requestReference = null;
         this.restaurantReference = null;
         this.status = TableStatus.available;
+        this.sessionIds = new ArrayList<>();
         this.newRequest = false;
         this.serveTime = null;
     }
@@ -37,6 +40,7 @@ public class Table {
         this.requestReference = (DocumentReference)map.get("requestReference");
         this.restaurantReference = (DocumentReference)map.get("restaurantReference");
         this.status = TableStatus.fromString((String)map.get("status"));
+        this.sessionIds = (ArrayList<String>)map.get("sessionIds");
         this.newRequest = (Boolean)map.get("newRequest");
         this.serveTime = (Timestamp)map.get("serveTime");
     }
@@ -68,6 +72,9 @@ public class Table {
     public Timestamp getServeTime() {
         return serveTime;
     }
+    public ArrayList<String> getSessionIds() {
+        return sessionIds;
+    }
 
     @Override
     public String toString() {
@@ -79,6 +86,7 @@ public class Table {
                 ", requestReference=" + requestReference +
                 ", restaurantReference=" + restaurantReference +
                 ", status=" + status +
+                ", sessionIds=" + sessionIds +
                 ", newRequest=" + newRequest +
                 ", serveTime=" + serveTime +
                 '}';

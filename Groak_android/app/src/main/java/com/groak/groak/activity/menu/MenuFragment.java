@@ -68,15 +68,15 @@ public class MenuFragment extends Fragment {
         super.onResume();
         if (loaded) getCategories();
         else {
-            menuViewHeaders.clear();
-            menuViews.clear();
-            for (MenuCategory category : LocalRestaurant.categories) {
-                setupRecyclerViewHeader(category);
-                setupRecyclerViewViews(category.getDishes());
-            }
-            if (LocalRestaurant.restaurant != null && LocalRestaurant.restaurant.getName() != null)
-                menuHeader.refresh();
-            setupInitialLayout();
+//            menuViewHeaders.clear();
+//            menuViews.clear();
+//            for (MenuCategory category : LocalRestaurant.categories) {
+//                setupRecyclerViewHeader(category);
+//                setupRecyclerViewViews(category.getDishes());
+//            }
+//            if (LocalRestaurant.restaurant != null && LocalRestaurant.restaurant.getName() != null)
+//                menuHeader.refresh();
+//            setupInitialLayout();
             loaded = true;
         }
         menuHeader.disableScrolling = false;

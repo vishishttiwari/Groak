@@ -20,6 +20,7 @@ public class Order {
     private DocumentReference requestReference;
     private Timestamp updated;
     private TableStatus status;
+    private ArrayList<String> sessionIds;
     private boolean newRequest;
     private boolean newRequestForUser;
     private Timestamp serveTime;
@@ -35,6 +36,7 @@ public class Order {
         this.requestReference = null;
         this.updated = null;
         this.status = TableStatus.available;
+        this.sessionIds = new ArrayList<>();
         this.newRequest = false;
         this.newRequestForUser = false;
         this.serveTime = null;
@@ -59,6 +61,7 @@ public class Order {
         this.requestReference = (DocumentReference)map.get("requestReference");
         this.updated = (Timestamp)map.get("updated");
         this.status = TableStatus.fromString((String)map.get("status"));
+        this.sessionIds = (ArrayList<String>)map.get("sessionIds");
         this.newRequest = (boolean)map.get("newRequest");
         this.newRequestForUser = (boolean)map.get("newRequestForUser");
         this.serveTime = (Timestamp)map.get("serveTime");
@@ -72,6 +75,7 @@ public class Order {
         this.requestReference = null;
         this.updated = null;
         this.status = TableStatus.available;
+        this.sessionIds = null;
         this.newRequest = false;
         this.newRequestForUser = false;
         this.serveTime = null;
@@ -134,6 +138,9 @@ public class Order {
     public boolean isNewRequestForUser() {
         return newRequestForUser;
     }
+    public ArrayList<String> getSessionIds() {
+        return sessionIds;
+    }
 
     @Override
     public String toString() {
@@ -148,6 +155,7 @@ public class Order {
                 ", requestReference=" + requestReference +
                 ", updated=" + updated +
                 ", status=" + status +
+                ", sessionIds=" + sessionIds +
                 ", newRequest=" + newRequest +
                 ", newRequestForUser=" + newRequestForUser +
                 ", serveTime=" + serveTime +

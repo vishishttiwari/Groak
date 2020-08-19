@@ -34,6 +34,7 @@ import com.groak.groak.catalog.groakUIClasses.LoadingView;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
+import com.groak.groak.notification.UserNotification;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 import com.groak.groak.restaurantobject.restaurant.RestaurantDeserializer;
 
@@ -78,6 +79,8 @@ public class TabbarActivity extends AppCompatActivity {
         super.onResume();
 
         GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
+
+        UserNotification.count = 0;
     }
 
     private void setupViews() {

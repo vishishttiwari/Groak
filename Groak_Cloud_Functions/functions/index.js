@@ -25,13 +25,19 @@ exports.orderServeTimeChanged = functions.firestore
 
         if (change.before.exists) {
             if (before.status === TableStatus.ordered && after.status === TableStatus.approved) {
-                sendNotification(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
+				before.sessionIds.forEach((sessionId) => {
+					sendNotification(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, sessionId, 'order')
+				})
             }
             if (before.status === TableStatus.approved && after.status === TableStatus.approved && getDifferenceInMinutes(before.serveTime) !== getDifferenceInMinutes(after.serveTime)) {
-                sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, orderId, 'order')
+				before.sessionIds.forEach((sessionId) => {
+					sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, sessionId, 'order')
+				})
             }
 			if (before.status !== TableStatus.available && after.status === TableStatus.available) {
-				sendNotification(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, orderId, 'reset')
+				before.sessionIds.forEach((sessionId) => {
+					sendNotification(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, sessionId, 'reset')
+				})
 			}
         }
 		
@@ -47,7 +53,9 @@ exports.orderServed = functions.firestore
 
         if (change.before.exists) {
             if (before.status !== TableStatus.served && after.status === TableStatus.served) {
-                sendNotification('Your order has been served', 'Enjoy', orderId, 'order')
+				before.sessionIds.forEach((sessionId) => {
+					sendNotification('Your order has been served', 'Enjoy', sessionId, 'order')
+				})
             }
         }
 
@@ -57,15 +65,18 @@ exports.orderServed = functions.firestore
 exports.userReceivesRequest = functions.firestore
     .document('restaurants/{restaurantId}/requests/{requestId}')
     .onUpdate((change, context) => {
-        const beforeRequests = change.before.data().requests
+		const before = change.before.data();
+        const beforeRequests = before.requests
         const afterRequests = change.after.data().requests
         const orderId = context.params.requestId
-		const restaurantName = change.before.data().restaurantName
+		const restaurantName = before.restaurantName
 
         if (change.before.exists && afterRequests.length > 1) {
             if (beforeRequests.length !== afterRequests.length) {
                 if (!afterRequests[afterRequests.length - 1].createdByUser) {
-                    sendNotification(`From ${restaurantName}`, `${afterRequests[afterRequests.length - 1].request}`, orderId, 'request')
+					before.sessionIds.forEach((sessionId) => {
+						sendNotification(`From ${restaurantName}`, `${afterRequests[afterRequests.length - 1].request}`, sessionId, 'request')
+					})
                 }
             }
         }

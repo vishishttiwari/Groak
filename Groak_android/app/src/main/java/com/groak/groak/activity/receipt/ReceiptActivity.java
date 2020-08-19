@@ -24,8 +24,10 @@ import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
+import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
+import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
 
@@ -35,7 +37,7 @@ public class ReceiptActivity extends Activity {
     private ReceiptHeader receiptHeader;
     private NestedScrollView scrollView;
     private ConstraintLayout scrollViewLayout;
-    private GroakFooter receiptFooter;
+    private ReceiptFooter receiptFooter;
 
     private ReceiptRestaurantCell receiptRestaurantCell;
     private ReceiptTotalCell receiptTotalCell;
@@ -104,11 +106,19 @@ public class ReceiptActivity extends Activity {
         receiptHeader.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
 
         final Context contextFinal = this;
-        receiptFooter = new GroakFooter(this, "Save Receipt", new GroakCallback() {
+        receiptFooter = new ReceiptFooter(this, new GroakCallback() {
             @Override
             public void onSuccess(Object object) {
-                MediaStore.Images.Media.insertImage(getContentResolver(), viewToBitmap(scrollView), "Receipt at " + LocalRestaurant.restaurant.getName() , "Receipt");  // Saves the image.
-                Catalog.toast(contextFinal, "Receipt saved in the camera roll");
+                String str = (String) object;
+                if (str.equals("save")) {
+                    MediaStore.Images.Media.insertImage(getContentResolver(), viewToBitmap(scrollView), "Receipt at " + LocalRestaurant.restaurant.getName() + " on " + TimeCatalog.getCurrentDate(), "Receipt at " + LocalRestaurant.restaurant.getName() + " on " + TimeCatalog.getCurrentDate());  // Saves the image.
+                    Catalog.toast(contextFinal, "Receipt saved in the camera roll");
+                } else if (str.equals("pay")) {
+                    FirestoreAPICallsOrders.readyForPaymentFirestoreAPI();
+                    requestButton.unRegisterBroadcast();
+                    ((Activity)getContext()).finish();
+                    ((Activity)getContext()).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                }
             }
             @Override
             public void onFailure(Exception e) {

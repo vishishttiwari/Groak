@@ -9,15 +9,18 @@ import java.util.Map;
 public class Requests {
     private ArrayList<Request> requests;
     private DocumentReference reference;
+    private ArrayList<String> sessionIds;
 
     public Requests() {
         this.reference = null;
         this.requests = new ArrayList<>();
+        this.sessionIds = new ArrayList<>();
     }
 
     public Requests(Map<String, Object> map) {
         this.reference = (DocumentReference)map.get("reference");
         this.requests = new ArrayList<>();
+        this.sessionIds = (ArrayList<String>)map.get("sessionIds");
 
         ArrayList<Map<String, Object>> tempRequests = (ArrayList<Map<String, Object>>)map.get("requests");
         for (Map<String, Object> request: tempRequests) {
@@ -28,9 +31,11 @@ public class Requests {
     public ArrayList<Request> getRequests() {
         return requests;
     }
-
     public DocumentReference getReference() {
         return reference;
+    }
+    public ArrayList<String> getSessionIds() {
+        return sessionIds;
     }
 
     @Override
@@ -38,6 +43,7 @@ public class Requests {
         return "Requests{" +
                 "requests=" + requests +
                 ", reference=" + reference +
+                ", sessionIds=" + sessionIds +
                 '}';
     }
 }

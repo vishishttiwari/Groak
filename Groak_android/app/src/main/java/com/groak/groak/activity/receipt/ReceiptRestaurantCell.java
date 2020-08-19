@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
+import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.localstorage.LocalRestaurant;
 
 import java.text.DateFormat;
@@ -33,12 +34,6 @@ public class ReceiptRestaurantCell extends ConstraintLayout {
         setupViews();
 
         setupInitialLayout();
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa MMMM dd, yyyy");
-        Date date = new Date();
-        return dateFormat.format(date);
     }
 
     private void setupViews() {
@@ -81,7 +76,7 @@ public class ReceiptRestaurantCell extends ConstraintLayout {
         time.setTextSize(18);
         time.setTypeface(FontCatalog.fontLevels(getContext(), 2));
         time.setTextColor(ColorsCatalog.blackColor);
-        time.setText(getCurrentDate());
+        time.setText(TimeCatalog.getCurrentDate());
         time.setGravity(Gravity.CENTER);
 
         addView(restaurantLogo);

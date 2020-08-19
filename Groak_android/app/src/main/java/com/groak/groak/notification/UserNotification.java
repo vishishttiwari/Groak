@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,8 +23,6 @@ import com.groak.groak.R;
 import com.groak.groak.activity.request.RequestActivity;
 import com.groak.groak.activity.restaurant.RestaurantListActivity;
 import com.groak.groak.activity.tabbar.TabbarActivity;
-import com.groak.groak.catalog.Catalog;
-import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.localstorage.LocalRestaurant;
 
 import java.util.Map;
@@ -31,6 +30,8 @@ import java.util.Map;
 public class UserNotification extends FirebaseMessagingService {
 
     public static boolean isRequestShowing = false;
+    public static int count = 0;
+    public static boolean alreadyExecuted = false;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -43,35 +44,51 @@ public class UserNotification extends FirebaseMessagingService {
             String body = notification.get("body");
             String tag = notification.get("tag");
 
-            if (!tag.equals("request") || !isRequestShowing)
-                sendNotification(title, body, tag);
+            if (!alreadyExecuted) {
+                if (!tag.equals("request") || !isRequestShowing) {
+                    sendNotification(title, body, tag);
+                }
+                alreadyExecuted = true;
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                alreadyExecuted = false;
+                            }
+                        },
+                        3000
+                );
 
-
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                public void run() {
-                    if (tag.equals("request")) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    public void run() {
+                        if (tag.equals("request")) {
 //                        if (!isRequestShowing)
 //                            Catalog.toast(getApplicationContext(), title + ": \"" + body + "\"");
-                    } else if (tag.equals("order")) {
+                        } else if (tag.equals("order")) {
 //                        Catalog.toast(getApplicationContext(),   title + ".  " + body);
-                    } else if (tag.equals("reset")) {
+                        } else if (tag.equals("reset")) {
 //                        Catalog.toast(getApplicationContext(), body);
 
-                        LocalRestaurant.resetRestaurant();
+                            LocalRestaurant.resetRestaurant();
 
-                        Intent intent = new Intent(getApplicationContext(), RestaurantListActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("EXIT", true);
-                        getApplicationContext().startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(), RestaurantListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("EXIT", true);
+                            getApplicationContext().startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
     private void sendNotification(String title, String body, String tag) {
         NotificationManager manager;
+
+        count++;
+
+        System.out.println(count);
 
         Intent intent;
         if (tag.equals("request")) {
@@ -100,10 +117,11 @@ public class UserNotification extends FirebaseMessagingService {
         bigText.setSummaryText(body);
 
         builder.setContentIntent(pendingIntent);
-        builder.setSmallIcon(R.drawable.chat_white);
-        builder.setColor(ColorsCatalog.themeColor);
+        builder.setSmallIcon(R.drawable.groakroundedicon);
+        builder.setColor(Color.rgb(128, 128, 128));
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setAutoCancel(true);
+        builder.setNumber(count);
         builder.setContentTitle(title);
         builder.setContentText(body);
         builder.setStyle(bigText);

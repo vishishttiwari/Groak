@@ -24,7 +24,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;

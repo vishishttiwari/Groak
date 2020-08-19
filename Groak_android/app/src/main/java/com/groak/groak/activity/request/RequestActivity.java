@@ -11,11 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,13 +57,14 @@ public class RequestActivity extends Activity {
         GooglePlayServicesLocationListener.checkLocationPermissions(getContext());
 
         UserNotification.isRequestShowing = true;
+        UserNotification.count = 0;
 
         registerBroadcast();
 
         refresh();
 
         LocalRestaurant.requestNotifications = false;
-        FirestoreAPICallsOrders.newRequestForUserSeen();
+        FirestoreAPICallsOrders.newRequestForUserSeenFirestoreAPI();
     }
 
     @Override
@@ -195,7 +193,7 @@ public class RequestActivity extends Activity {
                 if (action.equals("refresh_request")) {
                     refresh();
                     LocalRestaurant.requestNotifications = false;
-                    FirestoreAPICallsOrders.newRequestForUserSeen();
+                    FirestoreAPICallsOrders.newRequestForUserSeenFirestoreAPI();
                 }
             }
         };

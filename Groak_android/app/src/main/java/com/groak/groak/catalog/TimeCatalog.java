@@ -2,6 +2,7 @@ package com.groak.groak.catalog;
 
 import com.google.firebase.Timestamp;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,12 +38,22 @@ public class TimeCatalog {
         return sdf.format(dt);
     }
 
+    public static String getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa MMMM dd, yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
     public static int getTimeInMinutes() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
 
         return 60*hour + minute;
+    }
+
+    public static Date getYesterdayDate() {
+        return new Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
     }
 
     public static Timestamp addThirtyMinutesToTimestamp() {

@@ -100,7 +100,7 @@ public class AddToCartRecyclerViewAdapter extends RecyclerView.Adapter<OptionCel
                 Catalog.toast(context, "Up to " + extra.getMaxOptionsSelect() + "option(s) can be selected for " + extra.getTitle());
                 return null;
             }
-            if (optionsSelected.size() < extra.getMaxOptionsSelect()) {
+            if (optionsSelected.size() < extra.getMinOptionsSelect()) {
                 Catalog.toast(context, "Atleast " + extra.getMinOptionsSelect() + "option(s) required for " + extra.getTitle());
                 return null;
             }
