@@ -1,3 +1,6 @@
+/**
+ * Used for serializing CartDish
+ */
 package com.groak.groak.restaurantobject.cart;
 
 import com.google.gson.Gson;

@@ -1,9 +1,11 @@
+/**
+ * This class is used to represent a restrictions symbol
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;

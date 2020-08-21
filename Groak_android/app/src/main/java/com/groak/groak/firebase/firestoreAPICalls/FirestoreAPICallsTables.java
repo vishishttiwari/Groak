@@ -1,3 +1,6 @@
+/**
+ * Tables related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,13 @@ import com.groak.groak.firebase.Firebase;
 import com.groak.groak.restaurantobject.table.Table;
 
 public class FirestoreAPICallsTables {
+
+    /**
+     * Fetch table
+     *
+     * @param tableReference
+     * @param callback
+     */
     public static void fetchTableFirestoreAPI(String tableReference, final GroakCallback callback) {
         DocumentReference docRef = Firebase.firebase.db.collection("tables").document(tableReference);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

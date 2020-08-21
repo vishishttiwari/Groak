@@ -1,3 +1,6 @@
+/**
+ * This fragment is used to represent the cart screen
+ */
 package com.groak.groak.activity.cart;
 
 import android.content.Intent;
@@ -64,6 +67,9 @@ public class CartFragment extends Fragment {
         refresh();
     }
 
+    /**
+     * If there is nothing in the cart then it shows an assistive images. Otherwise it shows the cart
+     */
     public void refresh() {
         ((CartRecyclerViewAdapter)cartView.getAdapter()).refresh();
         if (LocalRestaurant.cart != null && LocalRestaurant.cart.getDishes().size() == 0) {

@@ -1,3 +1,6 @@
+/**
+ * Category related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,13 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.restaurantobject.MenuCategory;
 
 public class FirestoreAPICallsCategories {
+
+    /**
+     * Fetch category
+     *
+     * @param categoryRef
+     * @param callback
+     */
     public static void fetchCategoryFirestoreAPI(DocumentReference categoryRef, final GroakCallback callback) {
         categoryRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

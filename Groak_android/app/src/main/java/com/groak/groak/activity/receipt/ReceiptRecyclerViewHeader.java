@@ -1,3 +1,6 @@
+/**
+ * This is the header of only the recycler view
+ */
 package com.groak.groak.activity.receipt;
 
 import android.content.Context;

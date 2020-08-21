@@ -1,3 +1,6 @@
+/**
+ * This is used for Camera Activity
+ */
 package com.groak.groak.activity.camera;
 
 import android.app.Activity;
@@ -8,7 +11,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,12 +21,9 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
-import com.groak.groak.activity.restaurant.RestaurantListActivity;
 import com.groak.groak.activity.tabbar.TabbarActivity;
-import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
-import com.groak.groak.catalog.DistanceCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.localstorage.LocalRestaurant;
@@ -45,6 +44,8 @@ public class CameraActivity extends Activity {
 
     private Restaurant restaurant;
 
+    // This variable is used because a QR can be scanned multiple times so this just makes sure
+    // that only the first scan produces the next activity. Otherwise same activity opens many times
     private boolean initiatedEnterRestaurant = false;
 
     @Override
@@ -87,6 +88,14 @@ public class CameraActivity extends Activity {
         super.onPause();
     }
 
+    /**
+     * When permission is asked on this screen, this function is called. If the response is
+     * negative then it calls the CameraPermissionsActivity class
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -131,7 +140,7 @@ public class CameraActivity extends Activity {
             @Override
             public void onSuccess(Object object) {
                 String url = (String)object;
-                checkGroakElements(url);
+                fetchGroakElements(url);
             }
 
             @Override
@@ -177,6 +186,13 @@ public class CameraActivity extends Activity {
         set.applyTo(layout);
     }
 
+    /**
+     * This function is called to enter a restaurant. It basically opens the tab bar and
+     * sends information like restaurant, table id and qr code id.
+     *
+     * @param tableId
+     * @param qrCodeId
+     */
     private void enterRestaurant(String tableId, String qrCodeId) {
         if (!initiatedEnterRestaurant) {
             initiatedEnterRestaurant = true;
@@ -192,7 +208,12 @@ public class CameraActivity extends Activity {
         }
     }
 
-    public void checkGroakElements(String url) {
+    /**
+     * This function fetches different elements from the url
+     *
+     * @param url
+     */
+    public void fetchGroakElements(String url) {
         String[] urlElements = url.split("/");
 
         String restaurantId = urlElements[2];

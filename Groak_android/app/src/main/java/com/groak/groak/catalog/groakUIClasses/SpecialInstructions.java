@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the special instructions in the whole project
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;

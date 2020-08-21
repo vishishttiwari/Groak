@@ -1,3 +1,6 @@
+/**
+ * The font are used all across the project
+ */
 package com.groak.groak.catalog;
 
 import android.content.Context;

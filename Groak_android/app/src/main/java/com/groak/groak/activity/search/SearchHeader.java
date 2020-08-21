@@ -1,3 +1,6 @@
+/**
+ * This class is used for the search header
+ */
 package com.groak.groak.activity.search;
 
 import android.app.Activity;

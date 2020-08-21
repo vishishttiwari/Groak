@@ -1,3 +1,6 @@
+/**
+ * Used for saving data locally
+ */
 package com.groak.groak.localstorage;
 
 import android.content.Context;
@@ -21,6 +24,12 @@ import io.realm.RealmResults;
 
 public class RealmWrapper {
 
+    /**
+     * Add dishes and comments to local storage
+     *
+     * @param context
+     * @param order
+     */
     public static void addDishesAndComments(final Context context, Order order) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -63,6 +72,12 @@ public class RealmWrapper {
         });
     }
 
+    /**
+     * Add only comments to local data
+     *
+     * @param context
+     * @param comment
+     */
     public static void addComment(final Context context, OrderComment comment) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -99,6 +114,12 @@ public class RealmWrapper {
         });
     }
 
+    /**
+     * Download all dishes and comments from local data
+     *
+     * @param context
+     * @param order
+     */
     public static void downloadDishesAndComments(Context context, Order order) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -124,6 +145,11 @@ public class RealmWrapper {
         }
     }
 
+    /**
+     * Delete all dishes and comments that are older than a day
+     *
+     * @param context
+     */
     public static void deleteOldDishesAndComments(Context context) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -149,6 +175,12 @@ public class RealmWrapper {
         });
     }
 
+    /**
+     * Add session id to local data. This is used for notification.
+     *
+     * @param context
+     * @param sessionId
+     */
     public static void addSessionId(final Context context, SessionId sessionId) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -177,6 +209,12 @@ public class RealmWrapper {
         });
     }
 
+    /**
+     * Download all session ids before yesterday. This is used for unsubscribe the session ids for notifications.
+     *
+     * @param context
+     * @return
+     */
     public static ArrayList<SessionId> downloadOldSessionIds(Context context) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -196,6 +234,11 @@ public class RealmWrapper {
         return savedSessionIdsArrayList;
     }
 
+    /**
+     * This deletes the old session ids older than yesterday
+     *
+     * @param context
+     */
     public static void deleteOldSessionIds(Context context) {
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder()

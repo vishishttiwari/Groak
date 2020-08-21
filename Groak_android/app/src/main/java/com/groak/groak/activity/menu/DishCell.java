@@ -1,3 +1,6 @@
+/**
+ * This function is used to represent the dish cell in the menu activity
+ */
 package com.groak.groak.activity.menu;
 
 import android.graphics.ColorMatrix;
@@ -73,6 +76,7 @@ public class DishCell extends RecyclerView.ViewHolder {
             }
         }
 
+        // If this search term is not null then show it as highlighted
         if (searchTerm != null) {
             SpannableStringBuilder sb = new SpannableStringBuilder(dish.getName());
             Pattern p = Pattern.compile("\\b"+searchTerm, Pattern.CASE_INSENSITIVE);
@@ -307,6 +311,12 @@ public class DishCell extends RecyclerView.ViewHolder {
         set1.applyTo(restrictionsLayout);
     }
 
+    /**
+     * This function is used for highlighted text but is not used in the project
+     *
+     * @param tv
+     * @param textToHighlight
+     */
     public void setHighLightedText(TextView tv, String textToHighlight) {
         String tvt = tv.getText().toString();
         int ofe = tvt.indexOf(textToHighlight, 0);

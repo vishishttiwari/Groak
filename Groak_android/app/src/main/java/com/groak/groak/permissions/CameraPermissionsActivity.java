@@ -1,9 +1,11 @@
+/**
+ * This class is called when camera permission is not allowed. Only in CameraActivity
+ */
 package com.groak.groak.permissions;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;

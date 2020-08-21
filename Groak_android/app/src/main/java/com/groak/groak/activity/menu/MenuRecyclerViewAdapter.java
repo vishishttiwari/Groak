@@ -1,7 +1,9 @@
+/**
+ * This class is used to represent the menu recyclerview
+ */
 package com.groak.groak.activity.menu;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -54,6 +56,10 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<DishCell> {
         builder.registerTypeAdapter(Dish.class, new DishSerializer());
         final Gson gson = builder.create();
 
+        /**
+         * If any of the following is true then it first shows Dish Activity. Otherwise it jumps straight to
+         * the Add To Cart Activity.
+         */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

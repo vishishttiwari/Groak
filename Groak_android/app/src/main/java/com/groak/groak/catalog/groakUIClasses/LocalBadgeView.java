@@ -1,3 +1,6 @@
+/**
+ * This is used to show if an order/instruction is places from this phone or not
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;

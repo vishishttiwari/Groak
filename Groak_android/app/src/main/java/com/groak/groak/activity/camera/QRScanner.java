@@ -1,3 +1,6 @@
+/**
+ * This is used for finding any qr in the images or not. If it fines a valid wr then returns with success
+ */
 package com.groak.groak.activity.camera;
 
 import androidx.annotation.NonNull;
@@ -11,7 +14,6 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.localstorage.LocalRestaurant;
 
 import java.util.List;
 
@@ -58,6 +60,13 @@ public class QRScanner {
                 });
     }
 
+    /**
+     * Check elements of the url and sees if it is valid
+     *
+     * @param url
+     * @param restaurantId
+     * @return
+     */
     public boolean checkGroakElements(String url, String restaurantId) {
         String[] urlElements = url.split("/");
         if (urlElements.length != 5) return false;

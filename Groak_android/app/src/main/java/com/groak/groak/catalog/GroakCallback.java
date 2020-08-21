@@ -1,3 +1,6 @@
+/**
+ * Callback used all across the project
+ */
 package com.groak.groak.catalog;
 
 public interface GroakCallback {

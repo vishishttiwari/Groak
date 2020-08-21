@@ -1,6 +1,8 @@
+/**
+ * This class is used for headers for fragment where it has the leave button
+ */
 package com.groak.groak.catalog.groakUIClasses.groakheader;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;

@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the footer in request activity
+ */
 package com.groak.groak.activity.request;
 
 import android.content.Context;

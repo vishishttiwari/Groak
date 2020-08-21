@@ -1,3 +1,6 @@
+/**
+ * This class is used for getting location using google play services
+ */
 package com.groak.groak.location;
 
 import android.Manifest;
@@ -13,7 +16,6 @@ import android.os.Looper;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -23,11 +25,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.groak.groak.R;
-import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.DistanceCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.permissions.CameraPermissionsActivity;
 import com.groak.groak.permissions.GooglePlayServicesPermission;
 import com.groak.groak.permissions.LocationPermissionsActivity;
 
@@ -35,6 +35,12 @@ public class GooglePlayServicesLocationListener extends Service {
 
     private static Context context;
 
+    /**
+     * The variables below:
+     *
+     * RestaurantListActivity is used for only that activity. This is stopped as soon as the RestaurantListActivity is paused
+     * Project is used all over the project.
+     */
     private static FusedLocationProviderClient fusedLocationClient;
     private static LocationRequest locationRequestForRestaurantsListActivity;
     private static LocationRequest locationRequestForProject;
@@ -42,6 +48,10 @@ public class GooglePlayServicesLocationListener extends Service {
     private static LocationCallback locationCallbackForRestaurantsListActivity;
     private static LocationCallback locationCallbackForProject;
 
+    /**
+     * This is used for the service in manifest file. This is mandatory is you are using
+     * a class as a service
+     */
     public GooglePlayServicesLocationListener() {
     }
 
@@ -126,6 +136,12 @@ public class GooglePlayServicesLocationListener extends Service {
         fusedLocationClient.removeLocationUpdates(locationCallbackForRestaurantsListActivity);
     }
 
+    /**
+     * This is used in almost every activity to first check if google play services and location is on
+     * and if it is on then it requests for location updates.
+     *
+     * @param context
+     */
     public static void checkLocationPermissions(Context context) {
         if (!checkGooglePlayServices()) {
             Intent intent = new Intent(context, GooglePlayServicesPermission.class);

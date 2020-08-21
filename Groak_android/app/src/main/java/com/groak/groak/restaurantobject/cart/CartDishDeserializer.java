@@ -1,3 +1,6 @@
+/**
+ * Used for deserializing cart
+ */
 package com.groak.groak.restaurantobject.cart;
 
 import com.google.gson.JsonDeserializationContext;

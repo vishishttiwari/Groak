@@ -1,3 +1,6 @@
+/**
+ * Orders related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import android.content.Context;
@@ -27,12 +30,17 @@ import com.groak.groak.restaurantobject.order.OrderDish;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class FirestoreAPICallsOrders {
 
     static ListenerRegistration registration;
 
+    /**
+     * Fetch order
+     *
+     * @param context
+     * @param callback
+     */
     public static void fetchOrderFirestoreAPI(final Context context, final GroakCallback callback) {
         registration = LocalRestaurant.orderReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -59,11 +67,20 @@ public class FirestoreAPICallsOrders {
         });
     }
 
+    /**
+     * Unsubscribe order
+     */
     public static void unsubscribe() {
         if (registration != null)
             registration.remove();
     }
 
+    /**
+     * Add dishes and comments to orders
+     *
+     * @param context
+     * @param callback
+     */
     public static void addOrdersFirestoreAPI(Context context, final GroakCallback callback) {
         final Order order = new Order(LocalRestaurant.cart);
 
@@ -143,6 +160,13 @@ public class FirestoreAPICallsOrders {
         });
     }
 
+    /**
+     * Add comment to order
+     *
+     * @param context
+     * @param comment
+     * @param callback
+     */
     public static void addCommentFirestoreAPI(Context context, final OrderComment comment, final GroakCallback callback) {
         final Order order = new Order(LocalRestaurant.cart);
 
@@ -214,6 +238,9 @@ public class FirestoreAPICallsOrders {
         });
     }
 
+    /**
+     * Change newRequestForUserSeen in orders, tables etc.
+     */
     public static void newRequestForUserSeenFirestoreAPI() {
         final DocumentReference orderReference = LocalRestaurant.orderReference;
         final DocumentReference tableReference = LocalRestaurant.table.getReference();
@@ -243,6 +270,9 @@ public class FirestoreAPICallsOrders {
         });
     }
 
+    /**
+     * Change status to seated everywhere
+     */
     public static void seatedFirestoreAPI() {
         final DocumentReference orderReference = LocalRestaurant.orderReference;
         final DocumentReference requestReference = LocalRestaurant.requestReference;
@@ -290,6 +320,9 @@ public class FirestoreAPICallsOrders {
         });
     }
 
+    /**
+     * Change status to payment everywhere
+     */
     public static void readyForPaymentFirestoreAPI() {
         final DocumentReference orderReference = LocalRestaurant.orderReference;
         final DocumentReference tableReference = LocalRestaurant.table.getReference();

@@ -1,3 +1,6 @@
+/**
+ * This class is used for a footer with only a button
+ */
 package com.groak.groak.catalog.groakUIClasses.groakfooter;
 
 import android.content.Context;

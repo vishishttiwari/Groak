@@ -1,3 +1,6 @@
+/**
+ * This has a header title and a back button
+ */
 package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.app.Activity;

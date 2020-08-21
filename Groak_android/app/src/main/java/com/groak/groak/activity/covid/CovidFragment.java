@@ -1,3 +1,6 @@
+/**
+ * This fragment is used for representing the Covid screen in the tab bar screens
+ */
 package com.groak.groak.activity.covid;
 
 import android.os.Bundle;

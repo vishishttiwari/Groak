@@ -1,3 +1,6 @@
+/**
+ * QRCode
+ */
 package com.groak.groak.restaurantobject;
 
 import com.google.firebase.firestore.DocumentReference;

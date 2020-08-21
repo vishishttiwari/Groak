@@ -1,3 +1,6 @@
+/**
+ * This class is used for restaurant cell in restaurant list activity
+ */
 package com.groak.groak.activity.restaurant;
 
 import android.content.Context;

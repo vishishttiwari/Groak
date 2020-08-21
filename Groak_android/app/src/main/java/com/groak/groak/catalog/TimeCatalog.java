@@ -1,3 +1,6 @@
+/**
+ * Time catalog is used all across project for time related stuff
+ */
 package com.groak.groak.catalog;
 
 import com.google.firebase.Timestamp;
@@ -32,12 +35,21 @@ public class TimeCatalog {
         return "";
     }
 
+    /**
+     * Gets time in String format
+     * @param timestamp
+     * @return
+     */
     public static String getTimeFromTimestamp(Timestamp timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
         Date dt = timestamp.toDate();
         return sdf.format(dt);
     }
 
+    /**
+     * Gets current date in String
+     * @return
+     */
     public static String getCurrentDate() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm aa MMMM dd, yyyy");
         Date date = new Date();

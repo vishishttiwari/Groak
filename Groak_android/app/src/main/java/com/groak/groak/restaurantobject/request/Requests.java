@@ -1,7 +1,9 @@
+/**
+ * Requests
+ */
 package com.groak.groak.restaurantobject.request;
 
 import com.google.firebase.firestore.DocumentReference;
-import com.groak.groak.restaurantobject.TableStatus;
 
 import java.util.ArrayList;
 import java.util.Map;

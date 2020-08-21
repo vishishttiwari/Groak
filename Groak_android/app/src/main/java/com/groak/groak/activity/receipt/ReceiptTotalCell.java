@@ -1,3 +1,6 @@
+/**
+ * The class is used to represent the total cell in recycler view
+ */
 package com.groak.groak.activity.receipt;
 
 import android.content.Context;

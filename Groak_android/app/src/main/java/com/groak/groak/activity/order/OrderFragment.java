@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the order screen in tab bar
+ */
 package com.groak.groak.activity.order;
 
 import android.app.Activity;
@@ -331,6 +334,9 @@ public class OrderFragment extends Fragment {
         set.applyTo(layout);
     }
 
+    /**
+     * This broadcast is used to refresh the order. It is useful when the order is updated.
+     */
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
 

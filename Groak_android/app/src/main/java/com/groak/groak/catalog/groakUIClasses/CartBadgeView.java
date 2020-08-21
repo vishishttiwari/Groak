@@ -1,3 +1,6 @@
+/**
+ * This class is used got the small badge next to the icon tab to show how many dishes there are in the cart
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.BroadcastReceiver;
@@ -5,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -75,6 +77,9 @@ public class CartBadgeView extends ConstraintLayout {
         set.applyTo(this);
     }
 
+    /**
+     * This function is used for broadcasting of any dishes added to the cart. This changes the badge
+     */
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
 

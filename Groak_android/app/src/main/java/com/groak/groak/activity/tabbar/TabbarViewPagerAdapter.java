@@ -1,3 +1,6 @@
+/**
+ * This function is used for the page adapter for tab bar
+ */
 package com.groak.groak.activity.tabbar;
 
 import androidx.annotation.NonNull;

@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the recycler view in restaurant list activity
+ */
 package com.groak.groak.activity.restaurant;
 
 import android.app.Activity;

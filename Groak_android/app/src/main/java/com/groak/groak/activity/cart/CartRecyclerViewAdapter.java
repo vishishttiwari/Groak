@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the recycler view in the cart view
+ */
 package com.groak.groak.activity.cart;
 
 import android.app.Activity;

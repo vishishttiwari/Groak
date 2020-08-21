@@ -1,3 +1,6 @@
+/**
+ * This class is so that the screen in tab bar cannot be swiped for left and right
+ */
 package com.groak.groak.activity.tabbar;
 
 import android.content.Context;

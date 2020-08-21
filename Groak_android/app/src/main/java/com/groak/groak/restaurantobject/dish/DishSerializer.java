@@ -1,3 +1,6 @@
+/**
+ * DishSerializer
+ */
 package com.groak.groak.restaurantobject.dish;
 
 import com.google.gson.Gson;

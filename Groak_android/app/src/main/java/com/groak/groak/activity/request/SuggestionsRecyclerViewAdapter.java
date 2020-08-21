@@ -1,3 +1,6 @@
+/**
+ * This is used to represent the recycler view of suggestions in request activity
+ */
 package com.groak.groak.activity.request;
 
 import android.content.Context;

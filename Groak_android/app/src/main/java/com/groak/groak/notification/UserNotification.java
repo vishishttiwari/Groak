@@ -1,3 +1,6 @@
+/**
+ * This class is used for user notifications in project
+ */
 package com.groak.groak.notification;
 
 import android.app.Notification;
@@ -29,10 +32,24 @@ import java.util.Map;
 
 public class UserNotification extends FirebaseMessagingService {
 
+    /**
+     * isRequestShowing basically is used to see if Request Activity is on the screen.
+     * If it is then isRequestShowing will be false and all Request related notifications will not be shown.
+     *
+     * Count decides the total badge number that will be shown in the Groak icon on home screen.
+     *
+     * Sometimes if you scan a QR again and again, you will start receiving multiple notifications. 'alreadyEcexuted'
+     * makes sure that you only receive one notification per 3 seconds.
+     */
     public static boolean isRequestShowing = false;
     public static int count = 0;
     public static boolean alreadyExecuted = false;
 
+    /**
+     * Function called when notification received
+     *
+     * @param remoteMessage
+     */
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         final Map<String, String> notification = remoteMessage.getData();
@@ -83,6 +100,13 @@ public class UserNotification extends FirebaseMessagingService {
         }
     }
 
+    /**
+     * This creates the notification.
+     *
+     * @param title
+     * @param body
+     * @param tag
+     */
     private void sendNotification(String title, String body, String tag) {
         NotificationManager manager;
 
@@ -143,6 +167,11 @@ public class UserNotification extends FirebaseMessagingService {
         manager.notify(0 /*ID of notification*/, builder.build());
     }
 
+    /**
+     * Used for subscribing the session Id
+     *
+     * @param topic
+     */
     public static void subscribe(String topic) {
         FirebaseMessaging.getInstance().subscribeToTopic(topic)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -152,6 +181,11 @@ public class UserNotification extends FirebaseMessagingService {
                 });
     }
 
+    /**
+     * Used for unsubscribing the session Id
+     *
+     * @param topic
+     */
     public static void unsubscribe(String topic) {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
     }

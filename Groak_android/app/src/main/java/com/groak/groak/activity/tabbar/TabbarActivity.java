@@ -1,8 +1,9 @@
+/**
+ * This class is used for the tab bar activity
+ */
 package com.groak.groak.activity.tabbar;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +31,6 @@ import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.CartBadgeView;
-import com.groak.groak.catalog.groakUIClasses.LoadingView;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;

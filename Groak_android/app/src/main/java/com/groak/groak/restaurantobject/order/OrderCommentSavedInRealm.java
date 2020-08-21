@@ -1,3 +1,6 @@
+/**
+ * This class is used for saving Order Comment in Realm
+ */
 package com.groak.groak.restaurantobject.order;
 
 import java.util.Date;

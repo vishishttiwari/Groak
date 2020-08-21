@@ -1,3 +1,6 @@
+/**
+ * Session Id of the object used for saving in local storage
+ */
 package com.groak.groak.restaurantobject.session;
 
 import java.util.Date;

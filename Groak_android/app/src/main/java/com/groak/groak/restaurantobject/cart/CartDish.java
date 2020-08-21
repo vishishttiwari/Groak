@@ -1,3 +1,6 @@
+/**
+ * CartDish
+ */
 package com.groak.groak.restaurantobject.cart;
 
 import com.google.firebase.firestore.DocumentReference;

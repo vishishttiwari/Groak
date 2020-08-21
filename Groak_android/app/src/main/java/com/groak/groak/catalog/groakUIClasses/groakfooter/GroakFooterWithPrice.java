@@ -1,3 +1,6 @@
+/**
+ * This class is used for a footer with a button and a subheader for price
+ */
 package com.groak.groak.catalog.groakUIClasses.groakfooter;
 
 import android.content.Context;

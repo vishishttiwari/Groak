@@ -1,3 +1,6 @@
+/**
+ * This class is called when google play services is not available. This is used all over the project.
+ */
 package com.groak.groak.permissions;
 
 import android.app.Activity;

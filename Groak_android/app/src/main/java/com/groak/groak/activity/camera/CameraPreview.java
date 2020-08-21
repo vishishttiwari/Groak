@@ -1,3 +1,6 @@
+/**
+ * This is used for showing camera in preview and capturing images. Lets not go into the depth.
+ */
 package com.groak.groak.activity.camera;
 
 import android.Manifest;

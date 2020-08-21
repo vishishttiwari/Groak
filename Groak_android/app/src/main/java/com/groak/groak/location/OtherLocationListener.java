@@ -1,3 +1,7 @@
+/**
+ * This class is used for getting locations. This uses native libraries but the project uses
+ * google play services so this class is not used.
+ */
 package com.groak.groak.location;
 
 import android.content.Context;

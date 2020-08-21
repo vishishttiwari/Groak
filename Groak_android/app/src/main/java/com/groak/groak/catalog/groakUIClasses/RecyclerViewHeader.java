@@ -1,3 +1,6 @@
+/**
+ * This class is used as a header for every recycler view. It includes a header and sub header.
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;

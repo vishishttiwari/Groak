@@ -1,3 +1,6 @@
+/**
+ * This class is called when location permission is not given. This is used all over the project.
+ */
 package com.groak.groak.permissions;
 
 import android.app.Activity;

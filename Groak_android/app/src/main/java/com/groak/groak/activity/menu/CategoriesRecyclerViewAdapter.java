@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the categories recycler view in menu screen.
+ */
 package com.groak.groak.activity.menu;
 
 import android.content.Context;
@@ -12,13 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.localstorage.LocalRestaurant;
 
-import java.util.ArrayList;
-
 public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<CategoryCell> {
     Context context;
 
     GroakCallback callback;
 
+    /**
+     * This variable is used to show which one is supposed to be selected. The value trie in the array
+     * will be shown as selected
+     */
     boolean[] isSelected;
 
     public CategoriesRecyclerViewAdapter(Context context, GroakCallback callback) {
@@ -29,12 +34,20 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
         if (isSelected.length > 0) isSelected[0] = true;
     }
 
+    /**
+     * This function is used reset the recyclerview and select the first element
+     */
     public void refresh() {
         isSelected = new boolean[LocalRestaurant.categories.size()];
         if (isSelected.length > 0) isSelected[0] = true;
         this.notifyDataSetChanged();
     }
 
+    /**
+     * This function is used reset the recyclerview and select the position element
+     *
+     * @param position
+     */
     public void refresh(int position) {
         isSelected = new boolean[LocalRestaurant.categories.size()];
         if (isSelected.length > position) isSelected[position] = true;
@@ -50,6 +63,12 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Category
         return new CategoryCell(cellLayout);
     }
 
+    /**
+     * This function makes sure that whichever element of array is selected is shown as theme colored
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull final CategoryCell holder, final int position) {
         holder.setCategory(LocalRestaurant.categories.get(position).getName());

@@ -1,3 +1,6 @@
+/**
+ * Dishes related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,13 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.restaurantobject.dish.Dish;
 
 public class FirestoreAPICallsDishes {
+
+    /**
+     * Fetch dish
+     *
+     * @param dishRef
+     * @param callback
+     */
     public static void fetchDishFirestoreAPI(DocumentReference dishRef, final GroakCallback callback) {
         dishRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

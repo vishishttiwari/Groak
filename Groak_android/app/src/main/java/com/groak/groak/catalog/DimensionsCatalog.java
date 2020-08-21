@@ -1,3 +1,6 @@
+/**
+ * These dimensions are used all over the project
+ */
 package com.groak.groak.catalog;
 
 import android.app.Activity;

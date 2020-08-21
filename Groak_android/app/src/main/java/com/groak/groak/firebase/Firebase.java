@@ -1,3 +1,6 @@
+/**
+ * Initializing firebase db variable
+ */
 package com.groak.groak.firebase;
 
 import com.google.firebase.firestore.FirebaseFirestore;

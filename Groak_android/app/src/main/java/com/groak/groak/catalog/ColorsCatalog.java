@@ -1,3 +1,6 @@
+/**
+ * Colors used all over the project
+ */
 package com.groak.groak.catalog;
 
 import android.graphics.Color;

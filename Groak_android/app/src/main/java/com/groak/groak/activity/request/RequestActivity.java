@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the request activity
+ */
 package com.groak.groak.activity.request;
 
 import android.annotation.SuppressLint;
@@ -184,6 +187,9 @@ public class RequestActivity extends Activity {
         set.applyTo(layout);
     }
 
+    /**
+     * This function is used for broadcasting used for refreshing the request view whenever a new request comes in.
+     */
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
 

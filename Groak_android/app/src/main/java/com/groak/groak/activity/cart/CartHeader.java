@@ -1,3 +1,6 @@
+/**
+ * Used to represent the header in cart view with the delete button
+ */
 package com.groak.groak.activity.cart;
 
 import android.content.Context;

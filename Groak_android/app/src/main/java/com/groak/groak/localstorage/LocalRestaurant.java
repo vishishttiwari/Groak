@@ -1,3 +1,6 @@
+/**
+ * This saves the restaurant and other stuff whenever qr code is scanned
+ */
 package com.groak.groak.localstorage;
 
 import android.app.Activity;
@@ -14,7 +17,6 @@ import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsQRCodes;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRequests;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsTables;
 import com.groak.groak.notification.UserNotification;
-import com.groak.groak.permissions.LocationPermissionsActivity;
 import com.groak.groak.restaurantobject.MenuCategory;
 import com.groak.groak.restaurantobject.QRCode;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
@@ -28,7 +30,6 @@ import com.groak.groak.restaurantobject.order.OrderDish;
 import com.groak.groak.restaurantobject.request.Requests;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class LocalRestaurant {
     public static Restaurant restaurant = null;
@@ -43,6 +44,16 @@ public class LocalRestaurant {
     public static boolean requestNotifications = false;
     public static SessionId sessionId = null;
 
+
+    /**
+     * Called when qr code scanned
+     *
+     * @param context
+     * @param restaurant
+     * @param tableId
+     * @param qrCodeId
+     * @param groakCallback
+     */
     public static void enterRestaurant(Context context, Restaurant restaurant, String tableId, String qrCodeId, GroakCallback groakCallback) {
         cart = new Cart();
         RealmWrapper.deleteOldDishesAndComments(context);
@@ -106,6 +117,11 @@ public class LocalRestaurant {
         });
     }
 
+    /**
+     * This is called when user pressed leave restaurant
+     *
+     * @param context
+     */
     public static void leaveRestaurant(Context context) {
         Catalog.alert(context, "Leaving restaurant?", "Are you sure you would like to leave the restaurant?. Your cart will be lost", new GroakCallback() {
             @Override
@@ -118,12 +134,21 @@ public class LocalRestaurant {
         });
     }
 
+    /**
+     * User is only given a toast that you are been thrown out of the restaurant
+     * @param context
+     */
     public static void leaveRestaurantWithoutAsking(Context context) {
         Catalog.toast(context, "It seems you have left the restaurant. Please scan again to see the menu if you have not.");
 
         leaveRestaurantWithoutNotice(context);
     }
 
+    /**
+     * User is thrown out without notice.
+     *
+     * @param context
+     */
     public static void leaveRestaurantWithoutNotice(Context context) {
         resetRestaurant();
 
@@ -134,6 +159,9 @@ public class LocalRestaurant {
         ((Activity)context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
     }
 
+    /**
+     * Everything in restaurant is reset
+     */
     public static void resetRestaurant() {
         if (sessionId != null && sessionId.getSessionId() != null)
             UserNotification.unsubscribe(sessionId.getSessionId());
@@ -155,12 +183,22 @@ public class LocalRestaurant {
         FirestoreAPICallsRequests.unsubscribe();
     }
 
+    /**
+     * Resets table
+     *
+     * @param table
+     */
     private static void setTable(Table table) {
         LocalRestaurant.table = table;
         LocalRestaurant.orderReference = table.getOrderReference();
         LocalRestaurant.requestReference = table.getRequestReference();
     }
 
+    /**
+     * Resets session id. Gets all previous session ids from previous day and unsubscribe from that.
+     *
+     * @param context
+     */
     private static void setSessionId(Context context) {
         LocalRestaurant.sessionId = new SessionId();
         FirestoreAPICallsOrders.seatedFirestoreAPI();
@@ -172,6 +210,11 @@ public class LocalRestaurant {
         RealmWrapper.deleteOldSessionIds(context);
     }
 
+    /**
+     * Gets the total price from the cart
+     *
+     * @return
+     */
     public static double calculateCartTotalPrice() {
         double price = 0;
         for (CartDish dish: cart.getDishes())
@@ -179,6 +222,12 @@ public class LocalRestaurant {
         return price;
     }
 
+    /**
+     * Calculates the total order price
+     *
+     * @param tableOrder
+     * @return
+     */
     public static double calculateOrderTotalPrice(boolean tableOrder) {
         double price = 0;
         if (tableOrder) {
@@ -191,6 +240,12 @@ public class LocalRestaurant {
         return price;
     }
 
+    /**
+     * This only gets the local order dish at a specific position
+     *
+     * @param position
+     * @return
+     */
     public static OrderDish getLocalOrderDish(int position) {
         int finalPosition = position;
         if (LocalRestaurant.order != null) {
@@ -204,6 +259,11 @@ public class LocalRestaurant {
         return null;
     }
 
+    /**
+     * This gets total local dishes count
+     *
+     * @return
+     */
     public static int getLocalOrderDishesCount() {
         int finalDishes = 0;
         if (LocalRestaurant.order != null) {
@@ -215,6 +275,12 @@ public class LocalRestaurant {
         return finalDishes;
     }
 
+    /**
+     * This only gets the local order comment at a specific position
+     *
+     * @param position
+     * @return
+     */
     public static OrderComment getLocalOrderComment(int position) {
         int finalPosition = position;
         if (LocalRestaurant.order != null) {
@@ -228,6 +294,11 @@ public class LocalRestaurant {
         return null;
     }
 
+    /**
+     * This gets total local comments count
+     *
+     * @return
+     */
     public static int getLocalOrderCommentsCount() {
         int finalComments = 0;
         if (LocalRestaurant.order != null) {

@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent each cell in categories recyclerview
+ */
 package com.groak.groak.activity.menu;
 
 import android.graphics.Color;

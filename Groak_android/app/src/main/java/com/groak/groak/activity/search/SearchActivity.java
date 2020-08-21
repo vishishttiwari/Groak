@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the search activity
+ */
 package com.groak.groak.activity.search;
 
 import android.app.Activity;

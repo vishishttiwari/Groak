@@ -1,3 +1,6 @@
+/**
+ * Requests related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import android.content.Context;
@@ -27,6 +30,12 @@ import java.util.HashMap;
 public class FirestoreAPICallsRequests {
     static ListenerRegistration registration;
 
+    /**
+     * Subscribe to request
+     *
+     * @param context
+     * @param callback
+     */
     public static void fetchRequestFirestoreAPI(Context context, final GroakCallback callback) {
         registration = LocalRestaurant.requestReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -49,11 +58,20 @@ public class FirestoreAPICallsRequests {
         });
     }
 
+    /**
+     * Unsubscribe request
+     */
     public static void unsubscribe() {
         if (registration != null)
             registration.remove();
     }
 
+    /**
+     * Add request to firestore
+     *
+     * @param newRequest
+     * @param callback
+     */
     public static void addRequestFirestoreAPI(final Request newRequest, final GroakCallback callback) {
         if (LocalRestaurant.requestReference == null) {
             callback.onFailure(new Exception("Request reference is null"));

@@ -1,3 +1,6 @@
+/**
+ * Restaurant Object
+ */
 package com.groak.groak.restaurantobject.restaurant;
 
 import com.google.firebase.firestore.DocumentReference;
@@ -5,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.groak.groak.firebase.Firebase;
-import com.groak.groak.restaurantobject.dish.dishextra.DishExtra;
 
 import java.util.ArrayList;
 import java.util.HashMap;

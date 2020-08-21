@@ -1,3 +1,6 @@
+/**
+ * This activity is used to represent the detail of every dish in the cart
+ */
 package com.groak.groak.activity.cart.cartdetails;
 
 import android.app.Activity;

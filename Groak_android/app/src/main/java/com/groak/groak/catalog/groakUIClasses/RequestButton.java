@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the request button on different screens.
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.BroadcastReceiver;
@@ -6,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.GradientDrawable;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;

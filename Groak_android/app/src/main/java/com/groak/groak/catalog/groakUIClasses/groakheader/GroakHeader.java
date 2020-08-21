@@ -1,3 +1,6 @@
+/**
+ * This only has a header title. Nothing else.
+ */
 package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.content.Context;
@@ -10,7 +13,6 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.groak.groak.R;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;

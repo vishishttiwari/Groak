@@ -1,3 +1,6 @@
+/**
+ * Table
+ */
 package com.groak.groak.restaurantobject.table;
 
 import com.google.firebase.Timestamp;

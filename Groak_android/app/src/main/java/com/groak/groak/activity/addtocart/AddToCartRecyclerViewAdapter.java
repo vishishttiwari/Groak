@@ -1,3 +1,6 @@
+/**
+ * This is for each of the recycler view in the add to cart activity
+ */
 package com.groak.groak.activity.addtocart;
 
 import android.content.Context;
@@ -53,6 +56,13 @@ public class AddToCartRecyclerViewAdapter extends RecyclerView.Adapter<OptionCel
         return new OptionCell(cellLayout);
     }
 
+    /**
+     * In this function, if more than maximum allowed options are tapped then either there is an alert or it will
+     * deselect the other option
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull final OptionCell holder, final int position) {
         holder.setOption(options.get(position), extra.isMultipleSelections());
@@ -94,6 +104,11 @@ public class AddToCartRecyclerViewAdapter extends RecyclerView.Adapter<OptionCel
         return options.size();
     }
 
+    /**
+     * This function is called to generate the extra item from whatever is selected
+     *
+     * @return
+     */
     public CartDishExtra getExtraItem() {
         if (extra.isMultipleSelections()) {
             if (optionsSelected.size() > extra.getMaxOptionsSelect()) {

@@ -1,3 +1,6 @@
+/**
+ * CartDishExtra
+ */
 package com.groak.groak.restaurantobject.cart;
 
 import com.groak.groak.restaurantobject.dish.dishextra.DishExtra;

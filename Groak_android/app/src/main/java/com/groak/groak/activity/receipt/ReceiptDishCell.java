@@ -1,6 +1,8 @@
+/**
+ * This class is used to represent each dish in the receipt activity
+ */
 package com.groak.groak.activity.receipt;
 
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;

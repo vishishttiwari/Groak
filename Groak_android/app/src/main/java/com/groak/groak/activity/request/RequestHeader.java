@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the header in request activity.
+ */
 package com.groak.groak.activity.request;
 
 import android.app.Activity;

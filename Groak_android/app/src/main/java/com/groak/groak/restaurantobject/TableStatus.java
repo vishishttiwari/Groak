@@ -1,3 +1,6 @@
+/**
+ * Different status of table
+ */
 package com.groak.groak.restaurantobject;
 
 public enum TableStatus {

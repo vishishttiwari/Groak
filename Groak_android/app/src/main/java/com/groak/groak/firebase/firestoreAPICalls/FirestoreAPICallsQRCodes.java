@@ -1,3 +1,6 @@
+/**
+ * QR Codes related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,14 @@ import com.groak.groak.firebase.Firebase;
 import com.groak.groak.restaurantobject.QRCode;
 
 public class FirestoreAPICallsQRCodes {
+
+    /**
+     * Fetch QR Code
+     *
+     * @param restaurantId
+     * @param qrCodeID
+     * @param callback
+     */
     public static void fetchQRCodeFirestoreAPI(String restaurantId, String qrCodeID, final GroakCallback callback) {
         DocumentReference docRef = Firebase.firebase.db.collection("restaurants").document(restaurantId).collection("qrcodes").document(qrCodeID);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

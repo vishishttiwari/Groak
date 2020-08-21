@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the bottom sheet in the camera activity
+ */
 package com.groak.groak.activity.camera;
 
 import android.app.Activity;
@@ -37,6 +40,11 @@ public class BottomSheet extends ConstraintLayout {
         setupInitialLayout();
     }
 
+    /**
+     * If the logo is available then show name and logo, otherwise just show logo.
+     *
+     * @param restaurant
+     */
     public void updateRestaurant(Restaurant restaurant) {
         if (restaurant != null) {
             if (restaurant.getLogo() != null && restaurant.getLogo().length() != 0) {

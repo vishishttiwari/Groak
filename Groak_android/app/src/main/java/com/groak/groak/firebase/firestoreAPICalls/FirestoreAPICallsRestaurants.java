@@ -1,3 +1,6 @@
+/**
+ * Restaurant related firebase functions
+ */
 package com.groak.groak.firebase.firestoreAPICalls;
 
 import android.location.Location;
@@ -6,7 +9,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
@@ -14,16 +16,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.groak.groak.catalog.DistanceCatalog;
 import com.groak.groak.catalog.GroakCallback;
-import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.firebase.Firebase;
-import com.groak.groak.localstorage.LocalRestaurant;
-import com.groak.groak.restaurantobject.MenuCategory;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class FirestoreAPICallsRestaurants {
+
+    /**
+     * Fetch restaurant
+     *
+     * @param restaurantReference
+     * @param callback
+     */
     public static void fetchRestaurantFirestoreAPI(String restaurantReference, final GroakCallback callback) {
         DocumentReference docRef = Firebase.firebase.db.collection("restaurants").document(restaurantReference);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -42,6 +47,13 @@ public class FirestoreAPICallsRestaurants {
         });
     }
 
+    /**
+     * Fetch closest restaurant. This can actually only get using latitude. For getting closer
+     * to longitude, 'DistanceCatalog.getRestaurantNearCurrentLocation' is used.
+     *
+     * @param loc
+     * @param callback
+     */
     public static void fetchClosestRestaurantFirestoreAPI(Location loc, final GroakCallback callback) {
         Location minLocation = DistanceCatalog.getMinGeoPoint(loc);
         Location maxLocation = DistanceCatalog.getMaxGeoPoint(loc);

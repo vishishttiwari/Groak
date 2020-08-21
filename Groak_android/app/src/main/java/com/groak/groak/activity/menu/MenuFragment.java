@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the menu un tab bar
+ */
 package com.groak.groak.activity.menu;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -89,6 +92,9 @@ public class MenuFragment extends Fragment {
         super.onPause();
     }
 
+    /**
+     * This function gets categories from LocalRestaurant and then populates the recycler views
+     */
     private void getCategories() {
         menuViewHeaders.clear();
         menuViews.clear();
@@ -271,6 +277,9 @@ public class MenuFragment extends Fragment {
         set.applyTo(layout);
     }
 
+    /**
+     * This broadcast is called to refresh menu. This is called from Tabbar when the enterRestaurant function is called.
+     */
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
 

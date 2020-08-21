@@ -1,3 +1,6 @@
+/**
+ * This class is used for the header in menu fragment
+ */
 package com.groak.groak.activity.menu;
 
 import android.content.Context;
@@ -17,9 +20,6 @@ import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.groakUIClasses.groakheader.GroakFragmentHeader;
 import com.groak.groak.localstorage.LocalRestaurant;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MenuHeader extends GroakFragmentHeader {
 
     private ImageView search;
@@ -35,6 +35,11 @@ public class MenuHeader extends GroakFragmentHeader {
         setupInitialLayout();
     }
 
+    /**
+     * When a category is tapped, disable scrolling is turned true which then not scrolls the categories.
+     * This is because a scroll of menu is supposed to scroll categories which we only want when user is scrolling
+     * the menu.
+     */
     private void setupViews() {
         categoriesView = new RecyclerView(getContext());
         categoriesView.setId(View.generateViewId());
@@ -103,6 +108,13 @@ public class MenuHeader extends GroakFragmentHeader {
         setHeader(LocalRestaurant.restaurant.getName());
     }
 
+    /**
+     * This disable scrolling is used for when a category is selected. The selection scrolls the menu which in turn
+     * used to scroll the menu. Now when any of the category is tapped, disableScrolling is turned true which
+     * does not do the following scroll.
+     *
+     * @param position
+     */
     public void scrollTo(int position) {
         if (!disableScrolling) {
             categoriesView.smoothScrollToPosition(position);

@@ -1,3 +1,6 @@
+/**
+ * This activity is used for add to cart for each dish
+ */
 package com.groak.groak.activity.addtocart;
 
 import android.app.Activity;
@@ -22,7 +25,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.groak.groak.R;
 import com.groak.groak.activity.request.RequestActivity;
-import com.groak.groak.activity.tabbar.TabbarActivity;
 import com.groak.groak.catalog.Catalog;
 import com.groak.groak.catalog.ColorsCatalog;
 import com.groak.groak.catalog.DimensionsCatalog;
@@ -301,6 +303,12 @@ public class AddToCartActivity extends Activity {
         return this;
     }
 
+    /**
+     * This is used for dismissing keyboard when something else is tapped
+     *
+     * @param ev
+     * @return
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();

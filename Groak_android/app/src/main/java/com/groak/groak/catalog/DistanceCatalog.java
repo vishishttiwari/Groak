@@ -1,3 +1,6 @@
+/**
+ * The functions here are distance related, used all across the project
+ */
 package com.groak.groak.catalog;
 
 import android.app.Activity;
@@ -12,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DistanceCatalog {
-    // Distance around user till which restaurant is allowed in feet. This will most probably be 200 feet
+    /**
+     * Distance around user till which restaurant is allowed in feet. This will most probably be 200 feet
+     */
     public static double distanceBufferInFeet = 500;
     private static double feetLatitude = 0.000002747252747;
     private static double feetLongitude= 0.00000346981263;
@@ -21,10 +26,22 @@ public class DistanceCatalog {
         return loc1.distanceTo(loc2);
     }
 
+    /**
+     * Min geo point from current location using feet
+     *
+     * @param location
+     * @return
+     */
     public static Location getMinGeoPoint(Location location) {
         return createLocation(location.getLatitude() - (distanceBufferInFeet * feetLatitude), location.getLongitude() - (distanceBufferInFeet * feetLongitude));
     }
 
+    /**
+     * Max geo point from current location using feet
+     *
+     * @param location
+     * @return
+     */
     public static Location getMaxGeoPoint(Location location) {
         return createLocation(location.getLatitude() + (distanceBufferInFeet * feetLatitude), location.getLongitude() + (distanceBufferInFeet * feetLongitude));
     }
@@ -45,6 +62,15 @@ public class DistanceCatalog {
         return feet/3.28084;
     }
 
+    /**
+     * This gets the closest location in ascending order from the nearest
+     *
+     * @param restaurants
+     * @param minLocation
+     * @param maxLocation
+     * @param currentLocation
+     * @return
+     */
     public static ArrayList<Restaurant> getRestaurantNearCurrentLocation(ArrayList<Restaurant> restaurants, Location minLocation, Location maxLocation, final Location currentLocation) {
         ArrayList<Restaurant> newRestaurants = new ArrayList<>();
         for (Restaurant restaurant: restaurants) {
@@ -59,26 +85,5 @@ public class DistanceCatalog {
         Collections.sort(newRestaurants, (Restaurant r1, Restaurant r2) -> Double.compare(getDistanceBetweenCoordinates(createLocation(r1.getLatitude(), r1.getLongitude()), currentLocation), (getDistanceBetweenCoordinates(createLocation(r2.getLatitude(), r2.getLongitude()), currentLocation))));
 
         return newRestaurants;
-    }
-
-    private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
-    private boolean checkGooglePlayServices(Context context){
-        int checkGooglePlayServices = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(context);
-        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
-            /*
-             * Google Play Services is missing or update is required
-             *  return code could be
-             * SUCCESS,
-             * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
-             * SERVICE_DISABLED, SERVICE_INVALID.
-             */
-            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
-                    (Activity)context, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
-
-            return false;
-        }
-
-        return true;
     }
 }

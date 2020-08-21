@@ -1,3 +1,6 @@
+/**
+ * DishExtraOption
+ */
 package com.groak.groak.restaurantobject.dish.dishextra.dishextraoption;
 
 import com.google.gson.Gson;

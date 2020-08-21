@@ -1,3 +1,6 @@
+/**
+ * This class is used for representing the dish activity
+ */
 package com.groak.groak.activity.dish;
 
 import android.app.Activity;
@@ -456,6 +459,10 @@ public class DishActivity extends Activity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+    /**
+     * This broadcast is used for finishing activity and go directly to menu screen
+     * in case an order is places in the add to cart activity.
+     */
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
 

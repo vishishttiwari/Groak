@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent each cell in the add to cart recycler views
+ */
 package com.groak.groak.activity.addtocart;
 
 import android.view.Gravity;

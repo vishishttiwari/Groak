@@ -1,3 +1,7 @@
+/**
+ * This class is used for a scroll view to determine when the scroll view has stopped scrolling.
+ * Used in menu view to scroll the categories view in the header.
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;

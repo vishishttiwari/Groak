@@ -1,3 +1,6 @@
+/**
+ * RestaurantSerializer
+ */
 package com.groak.groak.restaurantobject.restaurant;
 
 import com.google.gson.Gson;

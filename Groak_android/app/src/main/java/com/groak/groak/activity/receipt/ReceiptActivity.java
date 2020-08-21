@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the receipt activity
+ */
 package com.groak.groak.activity.receipt;
 
 import android.app.Activity;
@@ -26,7 +29,6 @@ import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.GroakCallback;
 import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.catalog.groakUIClasses.RequestButton;
-import com.groak.groak.catalog.groakUIClasses.groakfooter.GroakFooter;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsOrders;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
@@ -239,6 +241,12 @@ public class ReceiptActivity extends Activity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+    /**
+     * This function converts the view to bitmap to save image.
+     *
+     * @param view
+     * @return
+     */
     public Bitmap viewToBitmap(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), ((NestedScrollView)view).getChildAt(0).getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

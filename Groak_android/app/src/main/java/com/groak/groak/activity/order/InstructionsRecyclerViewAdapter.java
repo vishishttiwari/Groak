@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the instructions recycler view
+ */
 package com.groak.groak.activity.order;
 
 import android.content.Context;

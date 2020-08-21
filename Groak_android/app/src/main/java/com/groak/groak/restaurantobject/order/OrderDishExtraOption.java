@@ -1,8 +1,10 @@
+/**
+ * OrderDishExtraOption
+ */
 package com.groak.groak.restaurantobject.order;
 
 import com.groak.groak.restaurantobject.cart.CartDishExtraOption;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

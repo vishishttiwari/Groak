@@ -1,3 +1,6 @@
+/**
+ * This class has header title with back button and price as sub headers
+ */
 package com.groak.groak.catalog.groakUIClasses.groakheader;
 
 import android.content.Context;

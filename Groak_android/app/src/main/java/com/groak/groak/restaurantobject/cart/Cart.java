@@ -1,3 +1,6 @@
+/**
+ * Cart
+ */
 package com.groak.groak.restaurantobject.cart;
 
 import java.util.ArrayList;

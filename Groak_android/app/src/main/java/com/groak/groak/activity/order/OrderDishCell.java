@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the dish cell in order
+ */
 package com.groak.groak.activity.order;
 
 import android.view.Gravity;

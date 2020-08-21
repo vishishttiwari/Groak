@@ -1,3 +1,6 @@
+/**
+ * This class is specifically used for the restrictions view in the dish activity
+ */
 package com.groak.groak.activity.dish;
 
 import android.content.Context;

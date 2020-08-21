@@ -1,3 +1,6 @@
+/**
+ * This class is used the restaurant list activity
+ */
 package com.groak.groak.activity.restaurant;
 
 import android.app.Activity;
@@ -28,7 +31,6 @@ import com.groak.groak.catalog.groakUIClasses.groakheader.GroakHeader;
 import com.groak.groak.firebase.firestoreAPICalls.FirestoreAPICallsRestaurants;
 import com.groak.groak.localstorage.LocalRestaurant;
 import com.groak.groak.location.GooglePlayServicesLocationListener;
-import com.groak.groak.permissions.CameraPermissionsActivity;
 import com.groak.groak.permissions.LocationPermissionsActivity;
 import com.groak.groak.restaurantobject.restaurant.Restaurant;
 
@@ -143,6 +145,9 @@ public class RestaurantListActivity extends Activity {
         set.applyTo(layout);
     }
 
+    /**
+     * This class is used to setup location. This gets the current location and then gets the closest restaurants.
+     */
     private void setupLocation() {
         locationListener = new GooglePlayServicesLocationListener(this, new GroakCallback() {
             @Override

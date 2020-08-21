@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent each cell in the CartView
+ */
 package com.groak.groak.activity.cart;
 
 import android.view.Gravity;

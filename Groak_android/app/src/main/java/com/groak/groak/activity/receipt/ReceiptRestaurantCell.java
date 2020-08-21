@@ -1,3 +1,6 @@
+/**
+ * The class represents the restaurant cell in the receipt recycler view
+ */
 package com.groak.groak.activity.receipt;
 
 import android.content.Context;
@@ -16,10 +19,6 @@ import com.groak.groak.catalog.DimensionsCatalog;
 import com.groak.groak.catalog.FontCatalog;
 import com.groak.groak.catalog.TimeCatalog;
 import com.groak.groak.localstorage.LocalRestaurant;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class ReceiptRestaurantCell extends ConstraintLayout {
 

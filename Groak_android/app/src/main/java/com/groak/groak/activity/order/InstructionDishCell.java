@@ -1,3 +1,6 @@
+/**
+ * This class is used to present the instruction cell in the order view
+ */
 package com.groak.groak.activity.order;
 
 import android.view.Gravity;

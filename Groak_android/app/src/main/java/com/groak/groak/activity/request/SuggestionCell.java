@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent each suggestion cell in the footer of request activity
+ */
 package com.groak.groak.activity.request;
 
 import android.graphics.drawable.GradientDrawable;

@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the footer of the receipt activity
+ */
 package com.groak.groak.activity.receipt;
 
 import android.content.Context;

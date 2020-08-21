@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the header of receipt
+ */
 package com.groak.groak.activity.receipt;
 
 import android.content.Context;

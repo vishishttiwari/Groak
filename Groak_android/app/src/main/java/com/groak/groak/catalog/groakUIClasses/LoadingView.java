@@ -1,3 +1,6 @@
+/**
+ * This is used to show the loading window of pizza
+ */
 package com.groak.groak.catalog.groakUIClasses;
 
 import android.content.Context;
