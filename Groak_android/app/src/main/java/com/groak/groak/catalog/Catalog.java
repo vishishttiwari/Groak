@@ -39,6 +39,8 @@ public class Catalog {
      */
     public static String specialInstructionsId = "specialInstructionsCellIdABCD1234";
 
+    public static String frontDoorQRMenuPageId = "front-door-qr-menupage";
+
     public static void jsonPrettyPrint(String json) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create(); // pretty print
         String prettyJson = gson.toJson(json);

@@ -197,7 +197,7 @@ public class CameraPreview extends ConstraintLayout {
                 if (image != null) {
                     try {
                         FirebaseVisionImage inputImage = FirebaseVisionImage.fromMediaImage(image, Surface.ROTATION_90);
-                        qrScanner.scanQR(inputImage, restaurantId, new GroakCallback() {
+                        qrScanner.scanQR(getContext(), inputImage, restaurantId, new GroakCallback() {
 
                             @Override
                             public void onSuccess(Object object) {

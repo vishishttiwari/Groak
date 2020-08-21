@@ -43,7 +43,7 @@ const QRPage = (props) => {
                                     return (qrCode && qrCode.path && qrCodesMap.get(qrCode.path) && qrCodesMap.get(qrCode.path).id
                                         ? (
                                             <View key={qrCode.path} style={styles1.qr}>
-                                                <Image style={styles1.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
+                                                <Image style={styles1.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=https://groakapp.com/customermenu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
                                                 <Text style={styles1.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
                                             </View>
                                         ) : null

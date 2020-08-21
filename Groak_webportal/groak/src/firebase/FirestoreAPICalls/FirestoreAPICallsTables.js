@@ -53,6 +53,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         status: TableStatus.available,
         newRequest: false,
         newRequestForUser: true,
+        sessionIds: [],
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: data.x,
         y: data.y,
@@ -71,6 +72,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         serveTime: getCurrentDateTimePlusMinutes(30),
         newRequest: false,
         newRequestForUser: true,
+        sessionIds: [],
         table: data.name,
         reference: createOrderReference(restaurantId, tableId),
         restaurantReference: createRestaurantReference(restaurantId),
@@ -85,6 +87,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         requests: DemoRequest,
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
+        sessionIds: [],
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), orderData);

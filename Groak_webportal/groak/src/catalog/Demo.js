@@ -215,6 +215,7 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
         status: TableStatus.ordered,
         newRequest: false,
         newRequestForUser: true,
+        sessionIds: [],
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: 0,
         y: 0,
@@ -241,6 +242,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         serveTime: getCurrentDateTimePlusMinutes(30),
         newRequest: false,
         newRequestForUser: true,
+        sessionIds: [],
         table: DemoTableName,
         reference: createOrderReference(restaurantId, orderId),
         restaurantReference: createRestaurantReference(restaurantId),
@@ -265,6 +267,7 @@ export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
         requests: DemoRequest,
+        sessionIds: [],
     };
 };
 
