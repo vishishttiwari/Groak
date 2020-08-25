@@ -11,6 +11,7 @@ import { CloseRounded } from '@material-ui/icons';
 import { context } from '../../globalState/globalState';
 import Groak from '../../assets/images/white_name_icon.png';
 import AppleDownload from '../../assets/images/homepage/apple_download_white.png';
+import GoogleDownload from '../../assets/images/homepage/google_download.png';
 import Phone2 from '../../assets/images/homepage/phone_2.png';
 import Phone3 from '../../assets/images/homepage/phone_3_1.png';
 import Computer1 from '../../assets/images/homepage/computer_4_1.png';
@@ -110,10 +111,17 @@ const HomePage = (props) => {
                                 </>
                             ) }
                     </div>
-                    <div className="iosDownload">
-                        <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
-                            <img className="download" src={AppleDownload} alt="Groak - iOS download" />
-                        </a>
+                    <div className="apps">
+                        <div className="appDownload">
+                            <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
+                                <img className="download" src={AppleDownload} alt="Download on the App Store" />
+                            </a>
+                        </div>
+                        <div className="appDownload">
+                            <a href="https://play.google.com/store/apps/details?id=com.groak.groak&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                <img className="download" alt="Get it on Google Play" src={GoogleDownload} />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

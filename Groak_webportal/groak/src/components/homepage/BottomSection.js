@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import './css/HomePage.css';
 import AppleDownload from '../../assets/images/homepage/apple_download_black.png';
+import GoogleDownload from '../../assets/images/homepage/google_download.png';
 
 const BottomSection = (props) => {
     const { history } = props;
@@ -14,10 +15,17 @@ const BottomSection = (props) => {
     return (
         <footer className="lastHomepageSection verticallyCenter">
             <div className="lastSectionContent">
-                <div className="iosDownload">
-                    <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
-                        <img className="download" src={AppleDownload} alt="Groak - iOS download" />
-                    </a>
+                <div className="apps">
+                    <div className="appDownload">
+                        <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
+                            <img className="download" src={AppleDownload} alt="Download on the App Store" />
+                        </a>
+                    </div>
+                    <div className="appDownload">
+                        <a href="https://play.google.com/store/apps/details?id=com.groak.groak&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                            <img className="download" alt="Get it on Google Play" src={GoogleDownload} />
+                        </a>
+                    </div>
                 </div>
                 <div className="other-content">
                     <div className="sub-content">
