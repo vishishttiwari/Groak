@@ -24,11 +24,20 @@ const QRPage = (props) => {
     if (qrStylePage.format === 'Format 2') {
         orientation = 'landscape';
     }
+    // To get any size multiply inches with 32 to get the correct size
+    // For 5x7, The height is not perfect because for printing purpose,
+    // this size is better for 5x7 because it does not cut from top and bottom
+    let pageSize = 'A4';
+    if (qrStylePage.pageSize === '5x7') {
+        pageSize = [360, 480];
+    } else {
+        pageSize = qrStylePage.pageSize;
+    }
 
     const FinalQRPage = () => {
         if (qrStylePage.format === 'Format 1') {
             return (
-                <Page size={qrStylePage.pageSize} orientation={orientation} style={styles1.page}>
+                <Page size={pageSize} orientation={orientation} style={styles1.page}>
                     <View style={styles1.titleView}>
                         {logo ? <Image src={logo} style={styles1.restaurantTitle} /> : <Text style={styles1.restaurantTitle}>{restaurantName}</Text>}
                     </View>
@@ -58,7 +67,7 @@ const QRPage = (props) => {
             );
         } if (qrStylePage.format === 'Format 2') {
             return (
-                <Page size={qrStylePage.pageSize} orientation={orientation} style={styles2.page}>
+                <Page size={pageSize} orientation={orientation} style={styles2.page}>
                     <View style={styles2.titleView}>
                         {logo ? <Image style={styles2.restaurantTitle} src={logo} /> : <Text style={styles2.restaurantTitle}>{restaurantName}</Text>}
                     </View>
@@ -86,7 +95,7 @@ const QRPage = (props) => {
             );
         } if (qrStylePage.format === 'Format 3') {
             return (
-                <Page size={qrStylePage.pageSize} orientation={orientation} style={styles3.page}>
+                <Page size={pageSize} orientation={orientation} style={styles3.page}>
                     <View style={styles3.titleView}>
                         {logo ? <Image style={styles3.restaurantTitle} src={logo} /> : <Text style={styles3.restaurantTitle}>{restaurantName}</Text>}
                     </View>

@@ -132,6 +132,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             };
             break;
         case 'A6':
+        case '5x7':
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 22 },
                 tableTitle: { ...styles.tableTitle, fontSize: 18 },
