@@ -479,9 +479,9 @@
   .lastHomepageSection .lastSectionContent {
     width: 100%;
     -webkit-box-orient: vertical;
-    -webkit-box-direction: reverse;
-        -ms-flex-direction: column-reverse;
-            flex-direction: column-reverse;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     -ms-flex-pack: distribute;
         justify-content: space-around;
   }
@@ -503,6 +503,12 @@
           justify-content: flex-end;
 }
 
+@media (max-width: 700px) {
+  .lastHomepageSection .lastSectionContent .apps {
+    margin-top: 20px;
+  }
+}
+
 .lastHomepageSection .lastSectionContent .apps .appDownload {
   margin: 0 auto;
   margin-bottom: 10px;
@@ -515,15 +521,15 @@
 
 @media (max-width: 1200px) {
   .lastHomepageSection .lastSectionContent .apps .appDownload .download {
-    width: 250px;
-    height: 80px;
+    width: 200px;
+    height: 60px;
   }
 }
 
 @media (max-width: 700px) {
   .lastHomepageSection .lastSectionContent .apps .appDownload .download {
-    width: 200px;
-    height: 60px;
+    width: 150px;
+    height: 45px;
   }
 }
 
