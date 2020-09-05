@@ -1,0 +1,24 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.info {
+  margin: 0;
+  background-color: white;
+  width: 100%;
+}
+
+.info .info-info {
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 100;
+}
+/*# sourceMappingURL=CustomerInfo.css.map */

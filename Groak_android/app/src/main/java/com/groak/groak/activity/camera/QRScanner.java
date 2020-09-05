@@ -77,10 +77,13 @@ public class QRScanner {
      * @return
      */
     public boolean checkGroakElements(Context context, String url, String restaurantId) {
+        System.out.println(url);
         String[] urlElements = url.split("/");
         if (urlElements.length != 5) return false;
+        System.out.println("1");
         if (!urlElements[0].equals("groakapp.com") && !urlElements[0].equals("www.groakapp.com")) return false;
-        if (urlElements[3].equals(Catalog.frontDoorQRMenuPageId)) {
+        System.out.println("2");
+//        if (urlElements[3].equals(Catalog.frontDoorQRMenuPageId)) {
 //            if (!alreadyShownToast) {
 //                alreadyShownToast = true;
 //                new java.util.Timer().schedule(
@@ -94,8 +97,9 @@ public class QRScanner {
 //                        10000
 //                );
 //            }
-            return false;
-        }
+//            return false;
+//        }
+
         return urlElements[2].equals(restaurantId);
     }
 }

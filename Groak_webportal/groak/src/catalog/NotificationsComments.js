@@ -128,3 +128,13 @@ export const OrderLate = (table) => {
 export const OrderDueIn5 = (table) => {
     return `Order due in 5 minutes at ${table}`;
 };
+
+export const OptionsExceedingMax = (title) => {
+    return `Maximum options selected for ${title}`;
+};
+export const OptionsExceedingMin = (title, min) => {
+    if (min === 1) {
+        return `Select atleast ${min} options for ${title}`;
+    }
+    return `Select atleast ${min} option for ${title}`;
+};

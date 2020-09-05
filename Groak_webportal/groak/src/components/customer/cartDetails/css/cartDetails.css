@@ -1,0 +1,83 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.cart-details .content {
+  margin-top: 86px;
+  margin-bottom: 220px;
+}
+
+.cart-details .content .cart-details-extras {
+  font-size: 15px;
+  font-weight: 100;
+  margin: 0;
+  padding: 20px 20px 20px 20px;
+  color: gray;
+  white-space: pre-wrap;
+  background-color: white;
+}
+
+.cart-details .content .cart-details-quantity-wrapper {
+  width: 100%;
+  background-color: white;
+}
+
+.cart-details .content .cart-details-quantity-wrapper .cart-details-quantity {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto;
+  width: 80%;
+  font-size: 30px;
+  font-weight: 100;
+}
+
+.cart-details .content .cart-details-quantity-wrapper .cart-details-quantity .cart-details-remove {
+  width: 50px;
+  height: 50px;
+  color: #800000;
+}
+
+.cart-details .content .cart-details-quantity-wrapper .cart-details-quantity .cart-details-add {
+  width: 50px;
+  height: 50px;
+  color: #800000;
+}
+
+.cart-details .content .cart-details-delete-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 80%;
+  height: 50px;
+  margin: 20px auto;
+  background-color: #800000;
+  color: white;
+  font-weight: 100;
+  font-size: 18px;
+}
+/*# sourceMappingURL=CartDetails.css.map */

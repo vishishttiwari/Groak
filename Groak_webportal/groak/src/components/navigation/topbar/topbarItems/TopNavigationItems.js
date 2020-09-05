@@ -4,7 +4,7 @@
 import React, { useContext } from 'react';
 
 import './css/TopNavigationItems.css';
-import { context } from '../../../../globalState/globalState';
+import { context } from '../../../../globalState/globalStatePortal';
 import TopNavigationItem from './TopNavigationItemDesktop/TopNavigationItem';
 import DropDownNavigationItems from './DropDownNavigationItems';
 

@@ -1,0 +1,32 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 70px;
+  -webkit-box-shadow: 0px -2px 2px rgba(68, 68, 68, 0.4);
+          box-shadow: 0px -2px 2px rgba(68, 68, 68, 0.4);
+  background-color: #F0F0F0;
+  z-index: 25;
+}
+
+.tabbar .icons {
+  width: 25px;
+  height: 23px;
+  color: gray;
+}
+/*# sourceMappingURL=CustomTabBar.css.map */

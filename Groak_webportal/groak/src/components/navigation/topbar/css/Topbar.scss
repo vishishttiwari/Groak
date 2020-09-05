@@ -11,4 +11,15 @@ header {
             height: $topBarHeight - 5px;
         }
     }
+
+    .topbar-customer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $topBarHeight;
+
+        .logo {
+            height: $topBarHeight - 5px;
+        }
+    }
 }

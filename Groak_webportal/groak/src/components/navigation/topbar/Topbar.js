@@ -4,23 +4,32 @@
 import React from 'react';
 
 import { AppBar, Toolbar } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import TopNavigationItems from './topbarItems/TopNavigationItems';
 import './css/Topbar.css';
 import Icon from '../../../assets/images/white_name_icon.png';
 
 const Topbar = (props) => {
-    const { exact } = props;
+    const { history, exact } = props;
+
+    const optionsShouldBeVisible = () => {
+        const path = history.location.pathname.split('/')[1];
+        if (path === 'customer') {
+            return false;
+        }
+        return true;
+    };
 
     return (
         <header>
             <AppBar>
-                <Toolbar className="topbar">
+                <Toolbar className={optionsShouldBeVisible() ? 'topbar' : 'topbar-customer'}>
                     <NavLink to="/" exact={exact}>
                         <img draggable="false" className="logo" src={Icon} alt="icon" />
                     </NavLink>
-                    <TopNavigationItems />
+                    {optionsShouldBeVisible() ? <TopNavigationItems /> : null}
                 </Toolbar>
             </AppBar>
         </header>
@@ -28,6 +37,7 @@ const Topbar = (props) => {
 };
 
 Topbar.propTypes = {
+    history: PropTypes.object.isRequired,
     exact: PropTypes.bool,
 };
 
@@ -35,4 +45,4 @@ Topbar.defaultProps = {
     exact: false,
 };
 
-export default Topbar;
+export default withRouter(React.memo(Topbar));

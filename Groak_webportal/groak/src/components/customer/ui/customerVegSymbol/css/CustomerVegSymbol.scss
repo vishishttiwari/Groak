@@ -1,0 +1,36 @@
+@import '../../../../../globalCSS/globalCSS';
+
+.veg-symbol {
+    margin: 5px;
+    color: white;
+    text-align: center;
+    padding: 0;
+
+    .veg-symbol-green {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .veg-symbol-theme {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: $primaryColor;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 15px;
+        font-weight: 500;
+    }
+}

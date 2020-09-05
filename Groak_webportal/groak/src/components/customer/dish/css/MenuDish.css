@@ -1,0 +1,114 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.dish {
+  font-size: 18px;
+  font-weight: 100;
+}
+
+.dish .content {
+  margin-top: 126px;
+  margin-bottom: 100px;
+}
+
+.dish .content .dish-image {
+  margin: 0 auto;
+  width: 600px;
+  height: 400px;
+  -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+          box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+@media (max-width: 700px) {
+  .dish .content .dish-image {
+    width: 100%;
+    height: 300px;
+    border-radius: 0;
+  }
+}
+
+.dish .content .dish-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+.dish .content .dish-info .dish-info-info {
+  padding: 10px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: white;
+}
+
+.dish .content .dish-info .dish-info-info-category {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.dish .content .dish-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+.dish .content .dish-content .dish-content-content {
+  padding: 10px 20px;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+}
+
+.dish .content .dish-content .dish-content-content-category {
+  margin: 2px 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=MenuDish.css.map */

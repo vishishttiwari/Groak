@@ -1,0 +1,67 @@
+@import '../../../../globalCSS/globalCSS';
+
+.dish {
+    font-size: 18px;
+    font-weight: 100;
+
+    .content {
+        margin-top: $topBarHeight + 70px;
+        margin-bottom: $bottomTabBarHeight + 30px;
+
+        .dish-image {
+            margin: 0 auto;
+            width: 600px;
+            height: 400px;
+            box-shadow: $cardShadow;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+                height: 300px;
+                border-radius: 0;
+            }
+        }
+
+        .dish-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .dish-info-info {
+                padding: 10px $padding;
+                display: flex;
+                flex-direction: row;
+                background-color: white;
+            }
+
+            .dish-info-info-category {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .dish-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .dish-content-content {
+                padding: 10px $padding;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                background-color: white;
+            }
+
+            .dish-content-content-category {
+                margin: 2px 0;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+    }
+}

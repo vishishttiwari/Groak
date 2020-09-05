@@ -1,0 +1,63 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.addtocart {
+  font-size: 18px;
+  font-weight: 100;
+}
+
+.addtocart .content {
+  margin-top: 86px;
+  margin-bottom: 160px;
+}
+
+.addtocart .content .addtocart-category {
+  margin: 0;
+}
+
+.addtocart .content .addtocart-category .addtocart-category-option {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  width: 100%;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.addtocart .content .addtocart-category .addtocart-category-option .addtocart-category-option-select-button {
+  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  color: green;
+}
+
+.addtocart .content .addtocart-category .addtocart-category-option .addtocart-category-option-title {
+  margin-left: 20px;
+  background-color: white;
+}
+
+.addtocart .content .addtocart-category .addtocart-category-option .addtocart-category-option-price {
+  margin-left: auto;
+  margin-right: 20px;
+  background-color: white;
+  color: gray;
+}
+/*# sourceMappingURL=AddToCart.css.map */

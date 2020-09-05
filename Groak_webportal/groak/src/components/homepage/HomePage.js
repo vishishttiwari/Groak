@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import './css/HomePage.css';
 import { Button, IconButton } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
-import { context } from '../../globalState/globalState';
+import { context } from '../../globalState/globalStatePortal';
 import Groak from '../../assets/images/white_name_icon.png';
 import AppleDownload from '../../assets/images/homepage/apple_download_white.png';
 import GoogleDownload from '../../assets/images/homepage/google_download.png';

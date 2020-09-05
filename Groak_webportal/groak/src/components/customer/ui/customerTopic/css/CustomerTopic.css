@@ -1,0 +1,35 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.topic {
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  background-color: white;
+  width: 100%;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.topic .topic-header {
+  margin: 0 auto;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.topic .topic-subheader {
+  margin: 0 auto;
+  font-size: 18px;
+  font-weight: 200;
+  color: gray;
+}
+/*# sourceMappingURL=CustomerTopic.css.map */

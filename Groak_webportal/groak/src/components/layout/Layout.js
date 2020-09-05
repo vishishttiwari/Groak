@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import Topbar from '../navigation/topbar/Topbar';
-import { context } from '../../globalState/globalState';
+import { context } from '../../globalState/globalStatePortal';
 
 import './css/Layout.css';
 import Spinner from '../ui/spinner/Spinner';
-import { checkAuthentication } from '../content/authentication/AuthenticationAPICalls';
+import { checkAuthentication } from '../portal/authentication/AuthenticationAPICalls';
 
 const initialState = { allowedURLSegmentsState: false };
 

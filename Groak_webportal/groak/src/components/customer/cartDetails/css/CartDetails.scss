@@ -1,0 +1,59 @@
+@import '../../../../globalCSS/globalCSS';
+
+.cart-details {
+    .content {
+        margin-top: $topBarHeight + 30px;
+        margin-bottom: $bottomTabBarHeight + 150px;
+
+        .cart-details-extras {
+            font-size: 15px;
+            font-weight: 100;
+            margin: 0;
+            padding: $padding $padding $padding $padding;
+            color: gray;
+            white-space: pre-wrap;
+            background-color: white;
+        }
+
+        .cart-details-quantity-wrapper {
+            width: 100%;
+            background-color: white;
+
+            .cart-details-quantity {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0 auto;
+                width: 80%;
+                font-size: 30px;
+                font-weight: 100;
+
+                .cart-details-remove {
+                    width: 50px;
+                    height: 50px;
+                    color: $primaryColor;
+                }
+
+                .cart-details-add {
+                    width: 50px;
+                    height: 50px;
+                    color: $primaryColor;
+                }
+            }
+        }
+
+        .cart-details-delete-button {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 80%;
+            height: 50px;
+            margin: $margin auto;
+            background-color: $primaryColor;
+            color: white;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;  
+        }
+    }
+}

@@ -1,0 +1,67 @@
+@import '../../../../../globalCSS/globalCSS';
+
+.cart {
+    .content {
+        margin-top: $topBarHeight + 30px;
+        margin-bottom: $bottomTabBarHeight + 150px;
+
+        .cart-item-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+
+            :hover {
+                cursor: pointer;
+            }
+        
+            .cart-item-cell-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+        
+                .cart-item-cell-quantity {
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin-left: $margin;
+                }
+        
+                .cart-item-cell-name {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-left: $margin;
+                    margin-right: $margin;
+                }
+        
+                .cart-item-cell-price {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-right: $margin;
+                    margin-left: auto;
+                }
+            }
+        
+            .cart-item-cell-extras {
+                font-size: 15px;
+                font-weight: 100;
+                margin: 0 $margin;
+                color: gray;
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    .footer {
+        margin-bottom: $bottomTabBarHeight;
+
+        .footer-title-custom {
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-size: 30px;
+            font-weight: 100;
+        }
+    }
+}
