@@ -241,7 +241,7 @@ html body .not-found {
   width: 100%;
   max-width: 500px;
   display: block;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 @media (max-width: 700px) {
@@ -326,13 +326,13 @@ html body .customer .header .header-content {
 
 html body .customer .header .header-content .header-title {
   margin: 0 auto;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 100;
 }
 
 html body .customer .header .header-content .header-subtitle {
   margin: 0 auto;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 100;
   color: #800000;
 }
@@ -340,13 +340,15 @@ html body .customer .header .header-content .header-subtitle {
 html body .customer .header .header-left-icon {
   position: absolute;
   left: 10px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  top: 10px;
   width: 40px;
   height: 40px;
   color: #800000;
   font-weight: 100;
+}
+
+html body .customer .header .header-left-icon :hover {
+  cursor: pointer;
 }
 
 html body .customer .header .header-right-icon {
@@ -359,6 +361,10 @@ html body .customer .header .header-right-icon {
   height: 40px;
   color: #800000;
   font-weight: 100;
+}
+
+html body .customer .header .header-right-icon :hover {
+  cursor: pointer;
 }
 
 html body .customer .footer {
@@ -396,6 +402,10 @@ html body .customer .footer .footer-button {
   font-size: 18px;
 }
 
+html body .customer .footer .footer-button :hover {
+  cursor: pointer;
+}
+
 html body .customer .footer .footer-content {
   width: 80%;
   display: -webkit-box;
@@ -428,12 +438,20 @@ html body .customer .footer .footer-left-icon {
   color: #800000;
 }
 
+html body .customer .footer .footer-left-icon :hover {
+  cursor: pointer;
+}
+
 html body .customer .footer .footer-right-icon {
   padding-top: 10px;
   margin: 0;
   width: 50px;
   height: 50px;
   color: #800000;
+}
+
+html body .customer .footer .footer-right-icon :hover {
+  cursor: pointer;
 }
 
 html code {

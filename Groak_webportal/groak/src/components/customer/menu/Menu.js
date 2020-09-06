@@ -1,36 +1,24 @@
-/* eslint-disable import/no-unresolved */
-import React, { useEffect, useReducer, createRef, useContext } from 'react';
+import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import './css/Menu.css';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { context } from '../../../globalState/globalStateCustomer';
 
 import MenuDish from './MenuDish';
-import { fetchCategoriesAPI } from './MenuAPICalls';
-import Spinner from '../../ui/spinner/Spinner';
-import { randomNumber, frontDoorQRMenuPageId } from '../../../catalog/Others';
-import { RestaurantNotFound, MenuNotFound, ImageSubjectToChange } from '../../../catalog/Comments';
+import { randomNumber } from '../../../catalog/Others';
+import { ImageSubjectToChange } from '../../../catalog/Comments';
 import MenuHeader from './MenuHeader';
-import CustomerNotFound from '../ui/customerNotFound/CustomerNotFound';
 
-const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, loadingSpinner: true, tabValue: 0, restaurantNotFound: false, categoriesNotFound: false };
+const initialState = { tabValue: 0 };
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'fetchMenuItems':
-            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false, tabValue: 0 };
         case 'changeTabValue':
             if (action.tabValue !== state.tabValue) {
                 return { ...state, tabValue: action.tabValue };
             }
             return { ...state };
-        case 'restaurantNotFound':
-            return { ...state, restaurantNotFound: true, loadingSpinner: false };
-        case 'categoriesNotFound':
-            return { ...state, categoriesNotFound: true, loadingSpinner: false };
         default:
             return initialState;
     }
@@ -70,11 +58,8 @@ function a11yProps(index) {
 }
 
 const Menu = (props) => {
-    const { history, match } = props;
+    const { history, match, menuItems, categoryNames, restaurant } = props;
     const [state, setState] = useReducer(reducer, initialState);
-    const { setGlobalState } = useContext(context);
-    const { enqueueSnackbar } = useSnackbar();
-    const top = createRef(null);
 
     /**
      * This function is called when each dish is pressed.
@@ -121,86 +106,69 @@ const Menu = (props) => {
         }
     }
 
-    useEffect(() => {
-        top.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'start',
-        });
-        async function fetchDishes() {
-            await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
-        }
-        fetchDishes();
-    }, [enqueueSnackbar]);
+    const searchHandler = () => {
+        history.push(`/customer/search/${match.params.restaurantid}/${match.params.tableid}/${match.params.qrcodeid}`);
+    };
 
     return (
         <div className="menu">
-            <p ref={top}> </p>
-            <Spinner show={state.loadingSpinner} />
-            {!state.loadingSpinner ? (
-                <>
-                    {state.restaurantNotFound || state.categoriesNotFound ? (
-                        <CustomerNotFound text={state.restaurantNotFound ? RestaurantNotFound : MenuNotFound} />
-                    ) : (
-                        <>
-                            <MenuHeader restaurantName={state.restaurant.name} />
-                            <div className="content">
-                                {state.restaurant.logo ? <img className="menu-restaurant-logo" src={state.restaurant.logo} alt={state.restaurant.name} /> : null }
-                                <AppBar className="menu-appbar" position="static" color="secondary">
-                                    <Tabs
-                                        value={state.tabValue}
-                                        onChange={(event, newValue) => { setState({ type: 'changeTabValue', tabValue: newValue }); }}
-                                        indicatorColor="primary"
-                                        textColor="primary"
-                                        variant="scrollable"
-                                        scrollButtons="on"
-                                        aria-label="scrollable force tabs example"
-                                    >
-                                        {Array.from(state.categoryNames).map((categoryName, index) => {
-                                            return (
-                                                <Tab
-                                                    style={{ paddingLeft: '30px', paddingRight: '30px' }}
-                                                    key={randomNumber()}
-                                                    label={categoryName}
-                                                    {...a11yProps(index)}
-                                                />
-                                            );
-                                        })}
-                                    </Tabs>
-                                </AppBar>
-                                {Array.from(state.menuItems.keys()).map((menuItem, index) => {
+            <MenuHeader restaurantName={restaurant.name} searchHandler={searchHandler} />
+            <div className="content">
+                {restaurant.logo ? <img className="menu-restaurant-logo" src={restaurant.logo} alt={restaurant.name} /> : null }
+                <AppBar className="menu-appbar" position="static" color="secondary">
+                    <Tabs
+                        value={state.tabValue}
+                        onChange={(event, newValue) => { setState({ type: 'changeTabValue', tabValue: newValue }); }}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="scrollable"
+                        scrollButtons="on"
+                        aria-label="scrollable force tabs example"
+                    >
+                        {Array.from(categoryNames).map((categoryName, index) => {
+                            return (
+                                <Tab
+                                    style={{ paddingLeft: '30px', paddingRight: '30px' }}
+                                    key={randomNumber()}
+                                    label={categoryName}
+                                    {...a11yProps(index)}
+                                />
+                            );
+                        })}
+                    </Tabs>
+                </AppBar>
+                {Array.from(menuItems.keys()).map((menuItem, index) => {
+                    return (
+                        <TabPanel key={randomNumber()} value={state.tabValue} index={index}>
+                            <div className="menu-items">
+                                {menuItems.get(menuItem).map((dish) => {
                                     return (
-                                        <TabPanel key={randomNumber()} value={state.tabValue} index={index}>
-                                            <div className="menu-items">
-                                                {state.menuItems.get(menuItem).map((dish) => {
-                                                    return (
-                                                        <MenuDish
-                                                            key={randomNumber()}
-                                                            dishItem={dish}
-                                                            clickHandler={() => { menuDishHandler(dish); }}
-                                                        />
-                                                    );
-                                                })}
-                                            </div>
-                                        </TabPanel>
+                                        <MenuDish
+                                            key={randomNumber()}
+                                            dishItem={dish}
+                                            clickHandler={() => { menuDishHandler(dish); }}
+                                        />
                                     );
                                 })}
-                                <div className="image-change">
-                                    <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
-                                    <p>
-                                        {ImageSubjectToChange}
-                                    </p>
-                                </div>
                             </div>
-                        </>
-                    )}
-                </>
-            ) : null}
+                        </TabPanel>
+                    );
+                })}
+                <div className="image-change">
+                    <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
+                    <p>
+                        {ImageSubjectToChange}
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };
 
 Menu.propTypes = {
+    menuItems: PropTypes.instanceOf(Map).isRequired,
+    categoryNames: PropTypes.array.isRequired,
+    restaurant: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };

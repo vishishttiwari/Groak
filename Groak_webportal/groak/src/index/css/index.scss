@@ -189,7 +189,7 @@ html {
             width: 100%;
             max-width: 500px;
             display: block;
-            margin: 0 auto;
+            margin: 50px auto;
     
             @media (max-width: $phoneMaxWidth) {
                 width: 70%;
@@ -250,12 +250,12 @@ html {
 
                     .header-title {
                         margin: 0 auto;
-                        font-size: 40px;
+                        font-size: 30px;
                         font-weight: 100;
                     }
                     .header-subtitle {
                         margin: 0 auto;
-                        font-size: 30px;
+                        font-size: 25px;
                         font-weight: 100;
                         color: $primaryColor;
                     }
@@ -263,12 +263,15 @@ html {
                 .header-left-icon {
                     position: absolute;
                     left: $margin/2;
-                    top: 50%;
-                    transform: translateY(-50%);
+                    top: 10px;
                     width: 40px;
                     height: 40px;
                     color: $primaryColor;
                     font-weight: 100;
+
+                    :hover {
+                        cursor: pointer;
+                    }
                 }
                 .header-right-icon {
                     position: absolute;
@@ -279,6 +282,10 @@ html {
                     height: 40px;
                     color: $primaryColor;
                     font-weight: 100;
+
+                    :hover {
+                        cursor: pointer;
+                    }
                 }
             }
 
@@ -303,7 +310,11 @@ html {
                     background-color: $primaryColor;
                     color: white;
                     font-weight: $buttonFontWeight;
-                    font-size: $buttonFontSize;         
+                    font-size: $buttonFontSize;
+
+                    :hover {
+                        cursor: pointer;
+                    }
                 }
 
                 .footer-content {
@@ -327,6 +338,10 @@ html {
                     width: 50px;
                     height: 50px;
                     color: $primaryColor;
+
+                    :hover {
+                        cursor: pointer;
+                    }
                 }
 
                 .footer-right-icon {
@@ -335,6 +350,10 @@ html {
                     width: 50px;
                     height: 50px;
                     color: $primaryColor;
+
+                    :hover {
+                        cursor: pointer;
+                    }
                 }
             }
         }

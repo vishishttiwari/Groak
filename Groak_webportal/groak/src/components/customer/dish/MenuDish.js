@@ -6,8 +6,8 @@ import { fetchDishAPI } from './MenuDishAPICalls';
 import Spinner from '../../ui/spinner/Spinner';
 import './css/MenuDish.css';
 import MenuDishFooter from './MenuDishFooter';
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
-import CustomerInfo from '../ui/customerInfo/CustomerInfo';
+import CustomerTopic from '../ui/topic/CustomerTopic';
+import CustomerInfo from '../ui/info/CustomerInfo';
 import MenuDishInfo from './MenuDishInfo';
 import MenuDishContent from './MenuDishContent';
 

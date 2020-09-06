@@ -7,7 +7,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import { randomNumber } from '../../../catalog/Others';
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
+import CustomerTopic from '../ui/topic/CustomerTopic';
 import { OptionsExceedingMax } from '../../../catalog/NotificationsComments';
 
 const AddToCartCategory = (props) => {

@@ -4,7 +4,7 @@
 import React, { useContext } from 'react';
 
 import './css/TopNavigationItems.css';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 import TopNavigationItem from './TopNavigationItemDesktop/TopNavigationItem';
 import DropDownNavigationItems from './DropDownNavigationItems';
 
@@ -17,7 +17,7 @@ const TopNavigationItems = () => {
     return (
         <>
             <ul className="top-navigation-items-desktop">
-                {globalState.user == null || !globalState.user
+                {globalState.userPortal == null || !globalState.userPortal
                     ? NAV_OPTIONS_IF_NOT_AUTHENTICATED.map((item) => {
                         return (
                             <TopNavigationItem
@@ -41,8 +41,8 @@ const TopNavigationItems = () => {
             <div className="top-navigation-items-mobile">
                 <DropDownNavigationItems
                     options={
-                        globalState.user == null
-                        || !globalState.user
+                        globalState.userPortal == null
+                        || !globalState.userPortal
                             ? NAV_OPTIONS_IF_NOT_AUTHENTICATED
                             : NAV_OPTIONS_IF_AUTHENTICATED
                     }

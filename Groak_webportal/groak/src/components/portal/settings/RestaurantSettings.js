@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack';
 import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip } from '@material-ui/core';
 import { CloseRounded, CloudUpload } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
@@ -78,7 +78,7 @@ const RestaurantSettings = (props) => {
             enqueueSnackbar(InvalidRestaurantName, { variant: 'error' });
             return;
         }
-        await updateRestaurantAPI(globalState.restaurantId, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
+        await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
     };
 
     return (

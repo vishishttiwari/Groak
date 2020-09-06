@@ -1,0 +1,111 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.requests .content {
+  margin-top: 80px;
+  margin-bottom: 200px;
+}
+
+.requests .content .request {
+  width: 60%;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin: 20px;
+}
+
+.requests .content .user {
+  background-color: #800000;
+  color: white;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.requests .content .not-user {
+  background-color: silver;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.requests .content .request-request {
+  font-size: 16px;
+  font-weight: 100;
+}
+
+.requests .content .request-created {
+  font-size: 12px;
+  font-weight: 100;
+  text-align: right;
+}
+
+.requests .footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.requests .footer .footer-suggestions {
+  padding: 20px 0;
+  width: 100%;
+  white-space: nowrap;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.requests .footer .footer-suggestions .footer-suggestion {
+  font-size: 20px;
+  background-color: #800000;
+  color: white;
+  border-radius: 20px;
+  float: none;
+  margin: 0 20px;
+  padding: 0 20px;
+  display: inline-block;
+}
+
+.requests .footer .footer-bottom-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.requests .footer .footer-bottom-section .footer-input {
+  margin: 5px;
+  width: 80%;
+}
+
+.requests .footer .footer-bottom-section .footer-send-button {
+  margin: 5px;
+  width: 15%;
+}
+/*# sourceMappingURL=Requests.css.map */

@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Card, CardHeader, CardContent, Typography, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 import { updateOrderAPI, updateRequestAPI } from '../OrdersAPICalls';
 import styles from '../../../../globalCSS/_globalCSS.scss';
 import SureImage from '../../../../assets/icons/suggestions/sure1.png';
@@ -88,7 +88,7 @@ const OrderOthers = (props) => {
         const serveDate = getCurrentDateTimePlusMinutes(serveTime);
         const data = { serveTime: serveDate, status: TableStatus.approved };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -98,7 +98,7 @@ const OrderOthers = (props) => {
     const setApprovedHandler = async () => {
         const data = { status: TableStatus.approved };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -117,7 +117,7 @@ const OrderOthers = (props) => {
     const servedClickHandler = async () => {
         const data = { status: TableStatus.served };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -126,13 +126,13 @@ const OrderOthers = (props) => {
     const makeAvailableHandler = async () => {
         const data = { status: TableStatus.available };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
     };
 
     const sendRequest = async () => {
         const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
         const data = { requests };
-        await updateRequestAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateRequestAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
         setRequestReply('');
     };
 
@@ -295,7 +295,7 @@ const OrderOthers = (props) => {
             <Card className="card">
                 <CardHeader
                     title="Total"
-                    subheader={`$${calculatePriceFromDishes(dishes)} + $${calculateSalesTaxFromDishes(dishes, globalState.restaurant.salesTax)} = $${calculatePriceFromDishesWithTax(dishes, globalState.restaurant.salesTax)}`}
+                    subheader={`$${calculatePriceFromDishes(dishes)} + $${calculateSalesTaxFromDishes(dishes, globalState.restaurantPortal.salesTax)} = $${calculatePriceFromDishesWithTax(dishes, globalState.restaurantPortal.salesTax)}`}
                 />
                 <CardContent>
                     {dishes.map((dish) => {

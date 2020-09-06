@@ -3,7 +3,7 @@
  */
 import React, { useReducer, useEffect, useContext } from 'react';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import './css/Tables.css';
 import { fetchTablesAPI, addTableAPI, deleteTableAPI, updateTableAPI, unsubscribeFetchTablesAPI } from './TablesAPICalls';
@@ -47,14 +47,14 @@ const Tables = () => {
 
     useEffect(() => {
         async function fetchTables() {
-            await fetchTablesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchTablesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
         }
         fetchTables();
 
         return () => {
             unsubscribeFetchTablesAPI(enqueueSnackbar);
         };
-    }, [globalState.restaurantId, enqueueSnackbar]);
+    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
 
     /**
      * This function is called when a table is added grom the add table pop up
@@ -74,7 +74,7 @@ const Tables = () => {
             x: 0,
             y: 0,
         };
-        await addTableAPI(globalState.restaurantId, globalState.restaurant.name, newTable, newTables, setState, enqueueSnackbar);
+        await addTableAPI(globalState.restaurantPortalIdPortal, globalState.restaurantPortal.name, newTable, newTables, setState, enqueueSnackbar);
     };
 
     /**
@@ -84,7 +84,7 @@ const Tables = () => {
      */
     const deleteTableHandler = async (table) => {
         let newTables = [...state.tables];
-        await deleteTableAPI(globalState.restaurantId, table.id, setState, enqueueSnackbar);
+        await deleteTableAPI(globalState.restaurantPortalIdPortal, table.id, setState, enqueueSnackbar);
         newTables = newTables.filter((eachTable) => {
             return (eachTable.id !== table.id);
         });
@@ -103,7 +103,7 @@ const Tables = () => {
         }
         const toBeUpdatedData = { name: table.name };
         let newTables = [...state.tables];
-        await updateTableAPI(globalState.restaurantId, table.id, toBeUpdatedData, setState, enqueueSnackbar);
+        await updateTableAPI(globalState.restaurantPortalIdPortal, table.id, toBeUpdatedData, setState, enqueueSnackbar);
         newTables = newTables.map((eachTable) => {
             if (eachTable.id !== table.id) {
                 return eachTable;

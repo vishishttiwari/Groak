@@ -12,7 +12,7 @@ import QRPage from './qrPage/QRPage';
 import Heading from '../../ui/heading/Heading';
 import './css/QR.css';
 import QROptions from './QROptions';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import { updateRestaurantAPI, fetchQRCodesAPI, fetchTableAPI, updateTableAPI } from './QRAPICalls';
 import { frontDoorQRMenuPageId, frontDoorInstructions } from '../../../catalog/Others';
@@ -79,7 +79,7 @@ const QRWindow = (props) => {
     const { history, match, location } = props;
     let tableName = 'Table';
     const { globalState, setGlobalState } = useContext(context);
-    const [state, setState] = useReducer(reducer, { qrCodes: [], qrCodesMap: new Map(), table: { qrCodes: [] }, qrStylePage: { ...globalState.restaurant.qrStylePage }, saved: true, showPDF: false, loadingSpinner: true });
+    const [state, setState] = useReducer(reducer, { qrCodes: [], qrCodesMap: new Map(), table: { qrCodes: [] }, qrStylePage: { ...globalState.restaurantPortal.qrStylePage }, saved: true, showPDF: false, loadingSpinner: true });
     const { enqueueSnackbar } = useSnackbar();
 
     const query = new URLSearchParams(location.search);
@@ -87,10 +87,10 @@ const QRWindow = (props) => {
 
     useEffect(() => {
         async function fetchQRCodesAndTable() {
-            await Promise.all([await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantId, match.params.tableid, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantPortalIdPortal, match.params.tableid, setState, enqueueSnackbar)]);
         }
         async function fetchQRCodes() {
-            await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
             setState({ type: 'fetchTable', table: { qrCodes: [] } });
         }
         if (match.params.tableid === frontDoorQRMenuPageId) {
@@ -98,7 +98,7 @@ const QRWindow = (props) => {
         } else {
             fetchQRCodesAndTable();
         }
-    }, [globalState.restaurantId, match.params.tableid, enqueueSnackbar]);
+    }, [globalState.restaurantPortalIdPortal, match.params.tableid, enqueueSnackbar]);
 
     /**
      * This function is called for going back
@@ -115,9 +115,9 @@ const QRWindow = (props) => {
     async function submitHandler(event) {
         event.preventDefault();
         if (match.params.tableid === frontDoorQRMenuPageId) {
-            await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
+            await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
         } else {
-            await Promise.all([await updateRestaurantAPI(globalState.restaurantId, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantId, match.params.tableid, state.table, setState, enqueueSnackbar)]);
+            await Promise.all([await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantPortalIdPortal, match.params.tableid, state.table, setState, enqueueSnackbar)]);
         }
 
         enqueueSnackbar(QRMenuPageUpdated, { variant: 'success' });
@@ -131,27 +131,27 @@ const QRWindow = (props) => {
             <div className="qr-content">
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
                     <QRPage
-                        restaurantReference={globalState.restaurantId}
+                        restaurantReference={globalState.restaurantPortalIdPortal}
                         tableReference={match.params.tableid}
                         tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                         qrStylePage={state.qrStylePage}
                         table={state.table}
                         qrCodesMap={state.qrCodesMap}
-                        restaurantName={globalState.restaurant.name}
-                        logo={globalState.restaurant.logo}
-                        image={globalState.restaurant.image}
+                        restaurantName={globalState.restaurantPortal.name}
+                        logo={globalState.restaurantPortal.logo}
+                        image={globalState.restaurantPortal.image}
                         showPDF={state.showPDF}
                     />
                 </PDFViewer>
 
                 <QROptions
-                    restaurantReference={globalState.restaurantId}
+                    restaurantReference={globalState.restaurantPortalIdPortal}
                     tableReference={match.params.tableid}
                     tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                     state={state}
-                    restaurantName={globalState.restaurant.name}
-                    logo={globalState.restaurant.logo}
-                    image={globalState.restaurant.image}
+                    restaurantName={globalState.restaurantPortal.name}
+                    logo={globalState.restaurantPortal.logo}
+                    image={globalState.restaurantPortal.image}
                     setState={setState}
                     loadingSpinner={state.loadingSpinner}
                     goBackHandler={goBackHandler}

@@ -1,19 +1,33 @@
-import React, { createRef } from 'react';
+import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import CartHeader from './CartHeader';
 import CartFooter from './CartFooter';
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
-import { fetchCart } from '../../../catalog/LocalStorage';
-import CustomerSpecialInstructions from '../ui/customerSpecialInstructions/CustomerSpecialInstructions';
+import CustomerTopic from '../ui/topic/CustomerTopic';
+import { fetchCart, deleteCart } from '../../../catalog/LocalStorage';
+import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
 import { randomNumber } from '../../../catalog/Others';
 import './css/Cart.css';
 import CartItemCell from './CartItemCell';
+import CustomerNotFound from '../ui/notFound/CustomerNotFound';
+import { CartEmpty } from '../../../catalog/Comments';
+import Decision from '../../ui/decision/Decision';
+
+const initialState = { deletionConfirmation: false };
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'changeDeletionConfirmation':
+            return { ...state, deletionConfirmation: action.deletionConfirmation };
+        default:
+            return initialState;
+    }
+}
 
 const CustomerMenu = (props) => {
     const { history, match, setState } = props;
-    const top = createRef(null);
+    const [state, setStateHere] = useReducer(reducer, initialState);
 
     const cart = fetchCart(match.params.restaurantid);
 
@@ -32,10 +46,28 @@ const CustomerMenu = (props) => {
         });
     };
 
+    const askDeletionHandler = () => {
+        setStateHere({ type: 'changeDeletionConfirmation', deletionConfirmation: true });
+    };
+
+    const deletionHandler = (open) => {
+        if (open) {
+            deleteCart(match.params.restaurantid);
+            setState({ type: 'updatedCart' });
+        } else {
+            setStateHere({ type: 'changeDeletionConfirmation', deletionConfirmation: false });
+        }
+    };
+
     return (
         <div className="cart">
-            <p ref={top}> </p>
-            <CartHeader restaurantId={match.params.restaurantid} setState={setState} />
+            <CartHeader deletionHandler={askDeletionHandler} />
+            <Decision
+                open={state.deletionConfirmation}
+                response={deletionHandler}
+                title="Delete Cart"
+                content="Would you like to empty the cart?"
+            />
             {cart.length > 0
                 ? (
                     <>
@@ -58,7 +90,13 @@ const CustomerMenu = (props) => {
                         <CartFooter totalPrice={getTotalPrice()} />
                     </>
                 )
-                : null}
+                : (
+                    <>
+                        <div className="content-not-found">
+                            <CustomerNotFound text={CartEmpty} />
+                        </div>
+                    </>
+                )}
         </div>
     );
 };

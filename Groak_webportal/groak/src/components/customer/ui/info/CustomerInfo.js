@@ -7,7 +7,9 @@ const CustomerInfo = (props) => {
 
     return (
         <div className="info">
-            <p className="info-info">{info}</p>
+            <p className="info-info">
+                {info}
+            </p>
         </div>
     );
 };

@@ -6,7 +6,7 @@ import RestaurantSettings from './RestaurantSettings';
 
 import Heading from '../../ui/heading/Heading';
 import Spinner from '../../ui/spinner/Spinner';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import AccountSettings from './AccountSettings';
@@ -38,7 +38,7 @@ function localReducer(state, action) {
 
 const Settings = () => {
     const { globalState } = useContext(context);
-    const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurant, logo: { file: null, link: globalState.restaurant.logo }, image: { file: null, link: globalState.restaurant.image }, email: globalState.email, loadingSpinner: false });
+    const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurantPortal, logo: { file: null, link: globalState.restaurantPortal.logo }, image: { file: null, link: globalState.restaurantPortal.image }, email: globalState.emailPortal, loadingSpinner: false });
 
     return (
         <div className="settings">

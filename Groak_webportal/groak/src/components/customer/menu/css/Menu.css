@@ -10,7 +10,7 @@
 }
 
 .menu .content {
-  margin-top: 86px;
+  margin-top: 70px;
   margin-bottom: 70px;
 }
 
@@ -397,7 +397,7 @@
     border-style: solid;
     border-width: 0;
     border-bottom-width: 1px;
-    border-color: gray;
+    border-color: silver;
   }
 }
 

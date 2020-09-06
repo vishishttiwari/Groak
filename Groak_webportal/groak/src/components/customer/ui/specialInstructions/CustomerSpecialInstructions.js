@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';
-import CustomerTopic from '../customerTopic/CustomerTopic';
+import CustomerTopic from '../topic/CustomerTopic';
 
 const CustomerSpecialInstructions = (props) => {
     const { helperText } = props;
@@ -10,7 +10,13 @@ const CustomerSpecialInstructions = (props) => {
         <>
             <CustomerTopic header="Special Instructions" />
             <TextField
-                style={{ backgroundColor: 'white', padding: '0 20px', width: '100%' }}
+                className="special-instrictions-textfield"
+                style={{ backgroundColor: 'white',
+                    padding: '0 20px',
+                    width: '100%',
+                    borderBottomStyle: 'solid',
+                    borderBottomWidth: '1px',
+                    borderBottomColor: 'silver' }}
                 id="standard-multiline-static"
                 multiline
                 rows={4}

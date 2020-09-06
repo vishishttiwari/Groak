@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
+import CustomerTopic from '../ui/topic/CustomerTopic';
 
 const MenuDishContent = (props) => {
     const { calories, fats, protein, carbs } = props;

@@ -1,0 +1,15 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.covid .content {
+  margin-top: 70px;
+}
+/*# sourceMappingURL=Covid.css.map */

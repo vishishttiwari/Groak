@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import Topbar from '../navigation/topbar/Topbar';
-import { context } from '../../globalState/globalStatePortal';
+import { context } from '../../globalState/globalState';
 
 import './css/Layout.css';
 import Spinner from '../ui/spinner/Spinner';
@@ -47,7 +47,7 @@ const Layout = (props) => {
         <div className="main-container">
             <Topbar />
             <main>
-                {(globalState.user !== false || state.allowedURLSegmentsState) ? children : <Spinner show />}
+                {(globalState.userPortal !== false || state.allowedURLSegmentsState) ? children : <Spinner show />}
             </main>
         </div>
     );

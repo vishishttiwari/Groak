@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { Button } from '@material-ui/core';
 
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import { signoutAPICall, changePasswordAPICall } from '../authentication/AuthenticationAPICalls';
@@ -23,7 +23,7 @@ const AccountSettings = (props) => {
      * and also logs out the user.
      */
     const changePasswordAddressHandler = async () => {
-        await changePasswordAPICall(globalState.email, history, setGlobalState, enqueueSnackbar);
+        await changePasswordAPICall(globalState.emailPortal, history, setGlobalState, enqueueSnackbar);
     };
 
     /**

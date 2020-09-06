@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACoDA,AAAA,OAAO,CAAC;EACJ,YAAY,EArDD,OAAO;EAsDlB,cAAc,EArDD,OAAO;EAsDpB,MAAM,EAvBD,IAAI;EAwBT,OAAO,EAvBD,IAAI;EAwBV,eAAe,EAVD,KAAkB;EAWhC,eAAe,EAVD,oBAAoB;EAWlC,gBAAgB,EAVD,sBAAsB;EAWrC,aAAa,EAVD,oBAAoB;CAWnC;;AD3DD,AAEI,MAFE,CAEF,QAAQ,CAAC;EACL,UAAU,EAAE,IAAI;CACnB",
+    "sources": [
+        "Covid.scss",
+        "../../../../globalCSS/_globalCSS.scss"
+    ],
+    "names": [],
+    "file": "Covid.css"
+}

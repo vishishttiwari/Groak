@@ -68,7 +68,7 @@ export const updateRestaurantAPI = async (restaurantId, data, setState, setGloba
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
     try {
         await updateRestaurantFirestoreAPI(restaurantId, { qrStylePage: data });
-        setGlobalState({ type: 'setQRStylePage', qrStylePage: data });
+        setGlobalState({ type: 'setQRStylePagePortal', qrStylePage: data });
     } catch (error) {
         snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
     }

@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import { getPrice, randomNumber, specialInstructionsId } from '../../../../catalog/Others';
 import { getDateTimeFromTimeStamp, getTimeInAMPM } from '../../../../catalog/TimesDates';
@@ -26,7 +26,7 @@ const OrderDishes = (props) => {
         const updatedDishes = [...dishes];
         updatedDishes.splice(index, 1);
         const data = { dishes: updatedDishes, items: updatedDishes.length, status };
-        await updateOrderAPI(globalState.restaurantId, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
     };
 
     return (

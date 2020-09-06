@@ -43,7 +43,7 @@ export const updateRestaurantAPI = async (restaurantId, data, logo, image, setSt
         }
 
         await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-        setGlobalState({ type: 'setRestaurant', restaurant: updatedData });
+        setGlobalState({ type: 'setRestaurantPortal', restaurant: updatedData, restaurantId });
         snackbar(SettingsUpdated, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorUpdatingRestaurant, { variant: 'error' });

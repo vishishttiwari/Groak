@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 import { DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@material-ui/core';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import { fetchTableAPI } from '../TablesAPICalls';
 import { ShowTableMessage } from '../../../../catalog/Comments';
@@ -35,13 +35,13 @@ const ShowTableAlert = (props) => {
 
     useEffect(() => {
         async function fetchTable() {
-            await fetchTableAPI(globalState.restaurantId, tableId, setState, enqueueSnackbar);
+            await fetchTableAPI(globalState.restaurantPortalIdPortal, tableId, setState, enqueueSnackbar);
         }
         if (open && tableId.length !== 0) {
             setState({ type: 'error' });
             fetchTable();
         }
-    }, [open, globalState.restaurantId, tableId, enqueueSnackbar]);
+    }, [open, globalState.restaurantPortalIdPortal, tableId, enqueueSnackbar]);
 
     /**
      * This function is called when the name is changed

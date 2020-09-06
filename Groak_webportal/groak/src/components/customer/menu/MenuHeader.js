@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SearchIcon from '@material-ui/icons/Search';
 
 const MenuHeader = (props) => {
-    const { restaurantName } = props;
+    const { restaurantName, searchHandler } = props;
 
     return (
         <div className="header">
@@ -14,6 +14,7 @@ const MenuHeader = (props) => {
             <SearchIcon
                 className="header-right-icon"
                 onClick={() => {
+                    searchHandler();
                 }}
             />
         </div>
@@ -22,6 +23,7 @@ const MenuHeader = (props) => {
 
 MenuHeader.propTypes = {
     restaurantName: PropTypes.string.isRequired,
+    searchHandler: PropTypes.func.isRequired,
 };
 
 export default React.memo(MenuHeader);

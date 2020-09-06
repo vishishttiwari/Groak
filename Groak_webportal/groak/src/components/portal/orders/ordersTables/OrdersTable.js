@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import { differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
 import { refreshPeriod, useInterval, calculatePriceFromDishesWithTax } from '../../../../catalog/Others';
@@ -123,7 +123,7 @@ const OrdersTable = (props) => {
                                             {order.items}
                                         </TableCell>
                                         <TableCell width={columns.price.width} align={columns.price.align}>
-                                            {`$${calculatePriceFromDishesWithTax(order.dishes, globalState.restaurant.salesTax)}`}
+                                            {`$${calculatePriceFromDishesWithTax(order.dishes, globalState.restaurantPortal.salesTax)}`}
                                         </TableCell>
                                         {serveTime ? (
                                             <>

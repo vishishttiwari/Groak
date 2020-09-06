@@ -5,7 +5,7 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import './css/OrderDetails.css';
 import { unsubscribeFetchOrderAPI, fetchOrderAPI, fetchRequestAPI, unsubscribeFetchRequestAPI } from '../OrdersAPICalls';
@@ -54,8 +54,8 @@ const OrderDetails = (props) => {
 
     useEffect(() => {
         async function fetchOrder() {
-            await fetchOrderAPI(globalState.restaurantId, match.params.orderid, setState, enqueueSnackbar);
-            await fetchRequestAPI(globalState.restaurantId, match.params.orderid, setState, enqueueSnackbar);
+            await fetchOrderAPI(globalState.restaurantPortalIdPortal, match.params.orderid, setState, enqueueSnackbar);
+            await fetchRequestAPI(globalState.restaurantPortalIdPortal, match.params.orderid, setState, enqueueSnackbar);
         }
         fetchOrder();
 

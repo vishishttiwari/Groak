@@ -1,15 +1,26 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import { context } from '../../../globalState/globalState';
 
-import CustomerTabBar from '../ui/customerTabBar/CustomerTabBar';
+import CustomerTabBar from '../ui/tabBar/CustomerTabBar';
+import CustomerNotFound from '../ui/notFound/CustomerNotFound';
 import Menu from '../menu/Menu';
 import Cart from '../cart/Cart';
+import Covid from '../covid/Covid';
+import { fetchCategoriesAPI } from './CustomerIntroAPICalls';
+import Spinner from '../../ui/spinner/Spinner';
+import { frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
+import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 
-const initialState = { tabValue: 0, updated: true };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, tabValue: 0, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'fetchMenuItems':
+            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false };
         case 'changeTabValue':
             if (action.tabValue !== state.tabValue) {
                 return { ...state, tabValue: action.tabValue };
@@ -17,6 +28,12 @@ function reducer(state, action) {
             return { ...state };
         case 'updated':
             return { ...state, updated: !state.updated };
+        case 'updatedCart':
+            return { ...state, updated: !state.updated, tabValue: 0 };
+        case 'restaurantNotFound':
+            return { ...state, restaurantNotFound: true, loadingSpinner: false };
+        case 'categoriesNotFound':
+            return { ...state, categoriesNotFound: true, loadingSpinner: false };
         default:
             return initialState;
     }
@@ -25,20 +42,55 @@ function reducer(state, action) {
 const CustomerIntro = (props) => {
     const { match } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { setGlobalState } = useContext(context);
+    const top = createRef(null);
+    const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        top.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'start',
+        });
+
+        async function fetchCategoriesAndRestaurant() {
+            await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
+        }
+        fetchCategoriesAndRestaurant();
+    }, []);
 
     const getTabPanel = () => {
         if (state.tabValue === 0) {
-            return <Menu />;
+            return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
         } if (state.tabValue === 1) {
             return <Cart setState={setState} />;
+        } if (state.tabValue === 3) {
+            return <Covid restaurant={state.restaurant} />;
         }
         return null;
     };
 
     return (
         <div className="customer intro">
-            {getTabPanel()}
-            <CustomerTabBar restaurantId={match.params.restaurantid} value={state.tabValue} setState={setState} />
+            <p ref={top}> </p>
+            <Spinner show={state.loadingSpinner} />
+            {!state.loadingSpinner ? (
+                <>
+                    {state.restaurantNotFound || state.categoriesNotFound ? (
+                        <>
+                            {state.restaurantNotFound
+                                ? <CustomerNotFound text={RestaurantNotFound} />
+                                : <CustomerNotFound text={CategoriesNotFound} />}
+                        </>
+                    ) : (
+                        <>
+                            {getTabPanel()}
+                            <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} />
+                            <CustomerTabBar restaurantId={match.params.restaurantid} value={state.tabValue} setState={setState} />
+                        </>
+                    )}
+                </>
+            ) : null}
         </div>
     );
 };

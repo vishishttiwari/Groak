@@ -10,7 +10,7 @@ import AddToCartFooter from './AddToCartFooter';
 import AddToCartCategory from './AddToCartCategory';
 import { randomNumber } from '../../../catalog/Others';
 import { saveToCart } from '../../../catalog/LocalStorage';
-import CustomerSpecialInstructions from '../ui/customerSpecialInstructions/CustomerSpecialInstructions';
+import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
 import { OptionsExceedingMin } from '../../../catalog/NotificationsComments';
 
 const initialState = { dish: {}, optionsSelected: [], quantity: 1, totalPrice: 0, loadingSpinner: true };
@@ -87,9 +87,9 @@ const AddToCart = (props) => {
             name: state.dish.name,
             dishId: state.dish.id,
             restaurantId: match.params.restaurantid,
-            price: state.quantity,
+            price: state.quantity * state.totalPrice,
             quantity: state.quantity,
-            pricePerItem: state.quantity,
+            pricePerItem: state.totalPrice,
             extras,
         };
 

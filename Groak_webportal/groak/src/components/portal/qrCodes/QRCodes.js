@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import arrayMove from 'array-move';
 import { Button, Switch } from '@material-ui/core';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import './css/QRCodes.css';
 import { fetchQRCodesAPI, fetchCategoriesAPI, updateQRCodeAPI, changeQRCodeOrderAPI } from './QRCodesAPICalls';
@@ -48,10 +48,10 @@ const QRCodes = (props) => {
 
     useEffect(() => {
         async function fetchQRCodesAndCategories() {
-            await Promise.all([await fetchQRCodesAPI(globalState.restaurantId, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantId, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar)]);
         }
         fetchQRCodesAndCategories();
-    }, [globalState.restaurantId, enqueueSnackbar]);
+    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
 
     /**
      * This is called when something needs to be saved permanently on database
@@ -59,7 +59,7 @@ const QRCodes = (props) => {
      * @param {*} changedQRCode
      */
     async function updateQRCodePermanentlyHandler(changedQRCode) {
-        await updateQRCodeAPI(globalState.restaurantId, changedQRCode.id, changedQRCode, enqueueSnackbar);
+        await updateQRCodeAPI(globalState.restaurantPortalIdPortal, changedQRCode.id, changedQRCode, enqueueSnackbar);
         setState({ type: 'setQRCodes',
             updatedQRCodes: state.qrCodes.map((qrCode) => {
                 if (qrCode.id !== changedQRCode.id) { return qrCode; }
@@ -115,7 +115,7 @@ const QRCodes = (props) => {
             setState({ type: 'setQRCodes',
                 updatedQRCodes,
             });
-            await changeQRCodeOrderAPI(globalState.restaurantId, updatedQRCodes.map((qrCode) => {
+            await changeQRCodeOrderAPI(globalState.restaurantPortalIdPortal, updatedQRCodes.map((qrCode) => {
                 return qrCode.reference;
             }), enqueueSnackbar);
         }

@@ -5,7 +5,7 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import './css/OrdersTables.css';
 import OrdersTable from './OrdersTable';
@@ -91,14 +91,14 @@ const Orders = (props) => {
 
     useEffect(() => {
         async function fetchOrders() {
-            await fetchOrdersAPI(globalState.restaurantId, state, setState, enqueueSnackbar);
+            await fetchOrdersAPI(globalState.restaurantPortalIdPortal, state, setState, enqueueSnackbar);
         }
         fetchOrders();
 
         return () => {
             unsubscribeFetchOrdersAPI(enqueueSnackbar);
         };
-    }, [enqueueSnackbar, globalState.restaurantId]);
+    }, [enqueueSnackbar, globalState.restaurantPortalIdPortal]);
 
     /**
      * This function is used whenever the order row is pressed
@@ -118,7 +118,7 @@ const Orders = (props) => {
     const servedClickHandler = async (event, id) => {
         event.stopPropagation();
         const data = { status: TableStatus.served };
-        await updateOrderAPI(globalState.restaurantId, id, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, id, data, enqueueSnackbar);
     };
 
     /**
@@ -130,7 +130,7 @@ const Orders = (props) => {
     const paidClickHandler = async (event, id) => {
         event.stopPropagation();
         const data = { status: TableStatus.available };
-        await updateOrderAPI(globalState.restaurantId, id, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantPortalIdPortal, id, data, enqueueSnackbar);
     };
 
     return (

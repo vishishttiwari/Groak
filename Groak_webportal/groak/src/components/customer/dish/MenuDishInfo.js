@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
-import CustomerVegSymbol from '../ui/customerVegSymbol/CustomerVegSymbol';
+import CustomerTopic from '../ui/topic/CustomerTopic';
+import CustomerVegSymbol from '../ui/vegSymbol/CustomerVegSymbol';
 
 const MenuDishInfo = (props) => {
     const { vegetarian, vegan, glutenFree, kosher } = props;

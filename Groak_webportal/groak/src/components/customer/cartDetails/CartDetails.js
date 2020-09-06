@@ -6,7 +6,7 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { Button } from '@material-ui/core';
 import CartDetailsHeader from './CartDetailsHeader';
 import CartDetailsFooter from './CartDetailsFooter';
-import CustomerTopic from '../ui/customerTopic/CustomerTopic';
+import CustomerTopic from '../ui/topic/CustomerTopic';
 import { fetchCartItem, deleteCartItem } from '../../../catalog/LocalStorage';
 import './css/cartDetails.css';
 import { specialInstructionsId } from '../../../catalog/Others';

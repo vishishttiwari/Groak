@@ -17,7 +17,7 @@ export const signoutAPICall = async (history, setGlobalState, snackbar) => {
     try {
         await signoutFirebaseAPI();
         history.replace('/');
-        setGlobalState({ type: 'removeUser' });
+        setGlobalState({ type: 'removeUserPortal' });
     } catch (error) {
         snackbar(error.message, { variant: 'error' });
     }
@@ -46,7 +46,7 @@ export const signinAPICall = async (email, password, history, setState, setGloba
 
             // Check if the restaurant document exists or not. If not then do not sign in the user.
             if (doc.exists) {
-                setGlobalState({ type: 'fetchUser', user: userInfo.user, restaurantId, email, restaurant: doc.data() });
+                setGlobalState({ type: 'fetchUserPortal', user: userInfo.user, restaurantId, email, restaurant: doc.data() });
                 setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                 history.replace('/orders');
             } else {
@@ -87,7 +87,7 @@ export const checkAuthentication = async (history, setGlobalState, snackbar) => 
 
                     // Check if the restaurant document exists or not. If not then do not sign in the user.
                     if (doc.exists) {
-                        setGlobalState({ type: 'fetchUser', user, restaurantId, email, restaurant: doc.data() });
+                        setGlobalState({ type: 'fetchUserPortal', user, restaurantId, email, restaurant: doc.data() });
                     } else {
                         await signoutAPICall(history, setGlobalState, snackbar);
                         snackbar(NotificationsComments.NotFoundRestaurant, { variant: 'error' });

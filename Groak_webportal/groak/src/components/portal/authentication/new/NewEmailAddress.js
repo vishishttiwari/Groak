@@ -11,7 +11,7 @@ import '../css/Authentication.css';
 import { TextField, Button } from '@material-ui/core';
 import { changeEmailAPICall } from '../AuthenticationAPICalls';
 import Spinner from '../../../ui/spinner/Spinner';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 import { checkEmailValidity } from '../../../../catalog/Validity';
 import * as NotificationsComments from '../../../../catalog/NotificationsComments';
 import { ValidEmailComment } from '../../../../catalog/Comments';

@@ -14,13 +14,12 @@ import { checkCategoryAvailability, checkQRCodeAvailability, checkDishAvailabili
  * @param {*} restaurantId
  * @param {*} snacbar
  */
-export const fetchRestaurantAPI = async (restaurantId, setGlobalState) => {
+export const fetchRestaurantAPI = async (restaurantId) => {
     try {
         const doc = await fetchRestaurantFirestoreAPI(restaurantId);
 
         if (doc.exists) {
-            // setGlobalState({ type: 'setRestaurant', restaurant: doc.data(), restaurantId: doc.id });
-            return doc.data();
+            return { id: doc.id, ...doc.data() };
         }
         return {};
     } catch (error) {
@@ -35,13 +34,13 @@ export const fetchRestaurantAPI = async (restaurantId, setGlobalState) => {
  * @param {*} setState this is used for setting the categories array
  * @param {*} snackbar used for notifications
  */
-export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvailability, setState, setGlobalState, snackbar) => {
+export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvailability, setState, snackbar) => {
     const categories = [];
-    const categoryNames = [];
+    const categoryItems = new Map();
     const menuItems = new Map();
 
     try {
-        const restaurant = await fetchRestaurantAPI(restaurantId, setGlobalState);
+        const restaurant = await fetchRestaurantAPI(restaurantId);
         const data = await fetchQRCodeFirestoreAPI(restaurantId, qrCodeId);
 
         if (data.exists && data.data()) {
@@ -53,7 +52,7 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
                         const category = { id: doc.id, ...doc.data() };
                         if (dontCheckAvailability || checkCategoryAvailability(category)) {
                             categories.push(category);
-                            categoryNames.push(category.name);
+                            categoryItems.set(doc.id, category.name);
                             menuItems.set(doc.id, []);
                         }
                     }
@@ -75,7 +74,7 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
                 if (categories.length === 0) {
                     setState({ type: 'categoriesNotFound' });
                 } else {
-                    setState({ type: 'fetchMenuItems', categoryNames, menuItems, restaurant });
+                    setState({ type: 'fetchMenuItems', categoryItems, menuItems, restaurant });
                 }
             } else {
                 setState({ type: 'categoriesNotFound' });

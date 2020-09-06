@@ -21,7 +21,7 @@ const Alert = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => { setOpen(false); }}>
-                    OK
+                        OK
                     </Button>
                 </DialogActions>
             </Dialog>

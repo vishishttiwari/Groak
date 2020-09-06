@@ -5,7 +5,7 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 import { createCategoryReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 
 import './css/CategoryDetails.css';
@@ -112,8 +112,8 @@ const CategoryDetails = (props) => {
             }
         });
         return {
-            restaurantReference: createRestaurantReference(globalState.restaurantId),
-            reference: createCategoryReference(globalState.restaurantId, categoryId),
+            restaurantReference: createRestaurantReference(globalState.restaurantPortalIdPortal),
+            reference: createCategoryReference(globalState.restaurantPortalIdPortal, categoryId),
             available: true,
             created: getCurrentDateTime(),
             name: state.name,
@@ -128,10 +128,10 @@ const CategoryDetails = (props) => {
 
     useEffect(() => {
         async function fetchCategoryAndDishes() {
-            await Promise.all([await fetchCategoryAPI(globalState.restaurantId, match.params.categoryid, setState, enqueueSnackbar), await fetchDishesAPI(globalState.restaurantId, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchCategoryAPI(globalState.restaurantPortalIdPortal, match.params.categoryid, setState, enqueueSnackbar), await fetchDishesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar)]);
         }
         async function fetchDishes() {
-            await fetchDishesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchDishesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
         }
         if (match.params.categoryid !== 'addCategory' && match.params.categoryid !== 'newCategory') {
             fetchCategoryAndDishes();
@@ -139,7 +139,7 @@ const CategoryDetails = (props) => {
         } else {
             fetchDishes();
         }
-    }, [match.params.categoryid, enqueueSnackbar, globalState.restaurantId]);
+    }, [match.params.categoryid, enqueueSnackbar, globalState.restaurantPortalIdPortal]);
 
     /**
      * This function is called when the save/add changes button is pressed
@@ -156,9 +156,9 @@ const CategoryDetails = (props) => {
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newCategory) {
             const categoryId = randomNumber();
-            await addCategoryAPI(globalState.restaurantId, categoryId, createCategory(categoryId), enqueueSnackbar);
+            await addCategoryAPI(globalState.restaurantPortalIdPortal, categoryId, createCategory(categoryId), enqueueSnackbar);
         } else {
-            await updateCategoryAPI(globalState.restaurantId, match.params.categoryid, createCategory(match.params.categoryid), enqueueSnackbar);
+            await updateCategoryAPI(globalState.restaurantPortalIdPortal, match.params.categoryid, createCategory(match.params.categoryid), enqueueSnackbar);
         }
         history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
@@ -198,7 +198,7 @@ const CategoryDetails = (props) => {
     const deleteHandler = async () => {
         if (!state.newCategory) {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
-            await deleteCategoryAPI(globalState.restaurantId, match.params.categoryid, enqueueSnackbar);
+            await deleteCategoryAPI(globalState.restaurantPortalIdPortal, match.params.categoryid, enqueueSnackbar);
             history.goBack();
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         }

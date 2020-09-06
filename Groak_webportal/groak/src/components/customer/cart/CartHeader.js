@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteCart } from '../../../catalog/LocalStorage';
 
 const CartHeader = (props) => {
-    const { restaurantId, setState } = props;
+    const { deletionHandler } = props;
 
     return (
         <div className="header">
@@ -15,8 +14,7 @@ const CartHeader = (props) => {
             <DeleteIcon
                 className="header-right-icon"
                 onClick={() => {
-                    deleteCart(restaurantId);
-                    setState({ type: 'updated' });
+                    deletionHandler();
                 }}
             />
         </div>
@@ -24,8 +22,7 @@ const CartHeader = (props) => {
 };
 
 CartHeader.propTypes = {
-    restaurantId: PropTypes.string.isRequired,
-    setState: PropTypes.func.isRequired,
+    deletionHandler: PropTypes.func.isRequired,
 };
 
 export default React.memo(CartHeader);

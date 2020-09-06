@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import arrayMove from 'array-move';
 import SearchBar from 'material-ui-search-bar';
 import Switch from '@material-ui/core/Switch';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import './css/Dishes.css';
 import { fetchDishesAPI, changeAvailabilityOfDishAPI, changeDishOrderAPI } from './DishesAPICalls';
@@ -45,10 +45,10 @@ const Dishes = (props) => {
 
     useEffect(() => {
         async function fetchDishes() {
-            await fetchDishesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchDishesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
         }
         fetchDishes();
-    }, [globalState.restaurantId, enqueueSnackbar]);
+    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
 
     /**
      * This function is passed into the dish component which is called everytime
@@ -57,7 +57,7 @@ const Dishes = (props) => {
      * @param {*} changedDish this is the dish for which availability is changed
      */
     const availableDishHandler = async (changedDish) => {
-        await changeAvailabilityOfDishAPI(globalState.restaurantId, state.dishes, setState, changedDish, enqueueSnackbar);
+        await changeAvailabilityOfDishAPI(globalState.restaurantPortalIdPortal, state.dishes, setState, changedDish, enqueueSnackbar);
     };
 
     /**
@@ -87,7 +87,7 @@ const Dishes = (props) => {
             setState({ type: 'setDishes',
                 dishes: updatedDishes,
             });
-            await changeDishOrderAPI(globalState.restaurantId, updatedDishes.map((dish) => {
+            await changeDishOrderAPI(globalState.restaurantPortalIdPortal, updatedDishes.map((dish) => {
                 return dish.reference;
             }), enqueueSnackbar);
         }

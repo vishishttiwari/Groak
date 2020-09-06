@@ -6,7 +6,7 @@ import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { context } from '../../../globalState/globalStatePortal';
+import { context } from '../../../globalState/globalState';
 
 import Table from './Table';
 import { updateTableAPI } from './TablesAPICalls';
@@ -51,7 +51,7 @@ const TablesCanvas = (props) => {
             }
         });
         if (dragged) {
-            await updateTableAPI(globalState.restaurantId, id, toBeUpdatedData, setState, enqueueSnackbar);
+            await updateTableAPI(globalState.restaurantPortalIdPortal, id, toBeUpdatedData, setState, enqueueSnackbar);
             event.stopPropagation();
             setDragged(false);
         }

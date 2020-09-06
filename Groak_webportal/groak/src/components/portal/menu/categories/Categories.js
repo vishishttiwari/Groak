@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import arrayMove from 'array-move';
 import SearchBar from 'material-ui-search-bar';
 import Switch from '@material-ui/core/Switch';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import './css/Categories.css';
 import { fetchCategoriesAPI, changeAvailabilityOfCategoryAPI, changeCategoryOrderAPI } from './CategoriesAPICalls';
@@ -45,10 +45,10 @@ const Categories = (props) => {
 
     useEffect(() => {
         async function fetchCategories() {
-            await fetchCategoriesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
         }
         fetchCategories();
-    }, [globalState.restaurantId, enqueueSnackbar]);
+    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
 
     /**
      * This function is passed into the category component which is called everytime
@@ -57,7 +57,7 @@ const Categories = (props) => {
      * @param {*} changedCategory this is the category for which availability is changed
      */
     async function availableCategoryHandler(changedCategory) {
-        await changeAvailabilityOfCategoryAPI(globalState.restaurantId, state.categories, setState, changedCategory, enqueueSnackbar);
+        await changeAvailabilityOfCategoryAPI(globalState.restaurantPortalIdPortal, state.categories, setState, changedCategory, enqueueSnackbar);
     }
 
     /**
@@ -87,7 +87,7 @@ const Categories = (props) => {
             setState({ type: 'setCategories',
                 categories: updatedCategories,
             });
-            await changeCategoryOrderAPI(globalState.restaurantId, updatedCategories.map((category) => {
+            await changeCategoryOrderAPI(globalState.restaurantPortalIdPortal, updatedCategories.map((category) => {
                 return category.reference;
             }), enqueueSnackbar);
         }

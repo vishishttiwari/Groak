@@ -20,6 +20,7 @@ export const InvalidRestaurantName = 'Invalid Restaurant name. Please enter a va
 export const NoRestaurantName = 'Restaurant name not entered. Please enter a valid restaurant name';
 export const InvalidRestaurantAddress = 'Invalid Restaurant address. Please enter a valid restaurant address from the list';
 export const ErrorUpdatingRestaurant = 'Error updating restaurant';
+export const ErrorFetchingRestaurant = 'Error fetching restaurant';
 
 export const ErrorChangingAvailability = 'Error changing availability';
 export const ErrorFetchingDishes = 'Error fetching dishes';

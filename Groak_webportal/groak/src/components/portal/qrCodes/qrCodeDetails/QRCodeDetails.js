@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { TextField } from '@material-ui/core';
-import { context } from '../../../../globalState/globalStatePortal';
+import { context } from '../../../../globalState/globalState';
 
 import './css/QRCodeDetails.css';
 import { fetchQRCodeAPI, fetchCategoriesAPI, deleteQRCodeAPI, addQRCodeAPI, updateQRCodeAPI } from '../QRCodesAPICalls';
@@ -61,10 +61,10 @@ const QRCodeDetails = (props) => {
 
     useEffect(() => {
         async function fetchQRCodeAndCategories() {
-            await Promise.all([await fetchQRCodeAPI(globalState.restaurantId, match.params.qrcodeid, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantId, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar)]);
         }
         async function fetchCategories() {
-            await fetchCategoriesAPI(globalState.restaurantId, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
         }
         if (match.params.qrcodeid !== 'addQRCode' && match.params.qrcodeid !== 'newQRCode') {
             fetchQRCodeAndCategories();
@@ -72,7 +72,7 @@ const QRCodeDetails = (props) => {
         } else {
             fetchCategories();
         }
-    }, [match.params.qrcodeid, enqueueSnackbar, globalState.restaurantId]);
+    }, [match.params.qrcodeid, enqueueSnackbar, globalState.restaurantPortalIdPortal]);
 
     /**
      * Used for creating a qr code object whensaving or updating
@@ -84,9 +84,9 @@ const QRCodeDetails = (props) => {
             categories: state.qrCodeSelectedCategoriesPath.map((categoryPath) => {
                 return createCategoryReferenceFromPath(categoryPath);
             }),
-            restaurantName: globalState.restaurant.name,
-            restaurantReference: createRestaurantReference(globalState.restaurantId),
-            reference: createQRCodeReference(globalState.restaurantId, qrCodeId),
+            restaurantName: globalState.restaurantPortal.name,
+            restaurantReference: createRestaurantReference(globalState.restaurantPortalIdPortal),
+            reference: createQRCodeReference(globalState.restaurantPortalIdPortal, qrCodeId),
         };
     };
 
@@ -133,9 +133,9 @@ const QRCodeDetails = (props) => {
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newQRCode) {
             const qrCodeid = randomNumber();
-            await addQRCodeAPI(globalState.restaurantId, qrCodeid, createQRCode(qrCodeid), enqueueSnackbar);
+            await addQRCodeAPI(globalState.restaurantPortalIdPortal, qrCodeid, createQRCode(qrCodeid), enqueueSnackbar);
         } else {
-            await updateQRCodeAPI(globalState.restaurantId, match.params.qrcodeid, createQRCode(match.params.qrcodeid), enqueueSnackbar);
+            await updateQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, createQRCode(match.params.qrcodeid), enqueueSnackbar);
         }
         history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
@@ -147,7 +147,7 @@ const QRCodeDetails = (props) => {
     const deleteHandler = async () => {
         if (!state.newQRCode) {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
-            await deleteQRCodeAPI(globalState.restaurantId, match.params.qrcodeid, enqueueSnackbar);
+            await deleteQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, enqueueSnackbar);
             history.goBack();
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         }

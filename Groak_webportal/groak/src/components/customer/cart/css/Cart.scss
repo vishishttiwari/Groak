@@ -1,8 +1,8 @@
-@import '../../../../../globalCSS/globalCSS';
+@import '../../../../globalCSS/globalCSS';
 
 .cart {
     .content {
-        margin-top: $topBarHeight + 30px;
+        margin-top: 70px;
         margin-bottom: $bottomTabBarHeight + 150px;
 
         .cart-item-cell {
@@ -52,6 +52,10 @@
                 white-space: pre-wrap;
             }
         }
+    }
+
+    .content-not-found {
+        margin-top: 100px;
     }
 
     .footer {

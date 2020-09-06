@@ -1,0 +1,86 @@
+@import '../../../../globalCSS/globalCSS';
+
+.requests {
+    .content {
+        margin-top: 80px;
+        margin-bottom: 200px;
+
+        .request {
+            width: 60%;
+            border-radius: 10px;
+            padding: 2px 10px;
+            margin: $margin;
+        }
+
+        .user {
+            background-color: $primaryColor;
+            color: white;
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
+        .not-user {
+            background-color: silver;
+            margin-left: 10px;
+            margin-right: auto;
+        }
+
+        .request-request {
+            font-size: 16px;
+            font-weight: 100;
+        }
+
+        .request-created {
+            font-size: 12px;
+            font-weight: 100;
+            text-align: right;
+        }
+    }
+
+    .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .footer-suggestions {
+            padding: $margin 0;
+            width: 100%;
+            white-space: nowrap;
+            position: relative;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+
+
+            .footer-suggestion {
+                font-size: 20px;
+                background-color: $primaryColor;
+                color: white;
+                border-radius: 20px;
+                float: none;
+                margin: 0 $margin;
+                padding: 0 $margin;
+                display: inline-block;
+            }
+        }
+
+        .footer-bottom-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            .footer-input {
+                margin: 5px;
+                width: 80%;
+            }
+
+            .footer-send-button {
+                margin: 5px;
+                width: 15%;
+            }
+        }
+    }
+}

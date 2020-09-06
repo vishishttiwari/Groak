@@ -8,11 +8,11 @@ import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import NoImage from '../../../assets/icons/camera.png';
-import CustomerVegSymbol from '../ui/customerVegSymbol/CustomerVegSymbol';
+import CustomerVegSymbol from '../ui/vegSymbol/CustomerVegSymbol';
 import { randomNumber } from '../../../catalog/Others';
 
 const MenuDish = (props) => {
-    const { dishItem, clickHandler } = props;
+    const { dishItem, highlightText, clickHandler } = props;
 
     const getInfoSymbols = () => {
         const dom = [];
@@ -34,10 +34,24 @@ const MenuDish = (props) => {
         return dom;
     };
 
+    const highlightDishItem = () => {
+        if (highlightText.length > 0) {
+            return (
+                <span
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                        __html: dishItem.name.replace(new RegExp(`\\b${highlightText}`, 'i'), (match) => { return `<mark>${match}</mark>`; }),
+                    }}
+                />
+            );
+        }
+        return dishItem.name;
+    };
+
     return (
         <Card className="card" onClick={clickHandler}>
             <CardHeader
-                title={dishItem.name}
+                title={highlightDishItem()}
                 subheader={`$ ${dishItem.price.toFixed(2)}`}
             />
             {dishItem.image ? (
@@ -71,7 +85,12 @@ const MenuDish = (props) => {
 
 MenuDish.propTypes = {
     dishItem: PropTypes.object.isRequired,
+    highlightText: PropTypes.string,
     clickHandler: PropTypes.func.isRequired,
+};
+
+MenuDish.defaultProps = {
+    highlightText: '',
 };
 
 export default React.memo(MenuDish);
