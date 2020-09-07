@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef } from 'react';
+import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -13,6 +13,8 @@ import CustomerTopic from '../ui/topic/CustomerTopic';
 import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
 import MenuDish from '../menu/MenuDish';
 import SearchNotFound from '../../../assets/customerImages/search_not_found.png';
+import { context } from '../../../globalState/globalState';
+import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 
 const initialState = { menuItems: new Map(), categoryItems: new Map(), restaurant: {}, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false, searchField: '' };
 
@@ -34,10 +36,15 @@ function reducer(state, action) {
 const Menu = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
     const { enqueueSnackbar } = useSnackbar();
     const top = createRef(null);
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
+
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -48,6 +55,10 @@ const Menu = (props) => {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, enqueueSnackbar);
         }
         fetchCategoriesAndRestaurant();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
     }, [enqueueSnackbar]);
 
     /**

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef } from 'react';
+import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import MenuDishHeader from './MenuDishHeader';
@@ -10,6 +10,8 @@ import CustomerTopic from '../ui/topic/CustomerTopic';
 import CustomerInfo from '../ui/info/CustomerInfo';
 import MenuDishInfo from './MenuDishInfo';
 import MenuDishContent from './MenuDishContent';
+import { context } from '../../../globalState/globalState';
+import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 
 const initialState = { dish: {}, loadingSpinner: true };
 
@@ -23,11 +25,15 @@ function reducer(state, action) {
 }
 
 const MenuDish = (props) => {
-    const { match } = props;
+    const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
     const top = createRef(null);
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -37,6 +43,10 @@ const MenuDish = (props) => {
             await fetchDishAPI(match.params.restaurantid, match.params.dishid, setState);
         }
         fetchDish();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
     }, []);
 
     return (
@@ -49,8 +59,8 @@ const MenuDish = (props) => {
                         <MenuDishHeader dishName={state.dish.name} dishPrice={state.dish.price} />
                         <div className="content">
                             <img className="dish-image" src={state.dish.image} alt={state.dish.name || 'Dish Image'} />
-                            <MenuDishInfo vegetarian={state.dish.vegetarian} vegan={state.dish.vegan} glutenFree={state.dish.glutenFree} kosher={state.dish.kosher} />
-                            <MenuDishContent calories={state.dish.calories} fats={state.dish.fats} protein={state.dish.protein} carbs={state.dish.carbs} />
+                            <MenuDishInfo vegetarian={state.dish.restrictions.vegetarian} vegan={state.dish.restrictions.vegan} glutenFree={state.dish.restrictions.glutenFree} kosher={state.dish.restrictions.kosher} />
+                            <MenuDishContent calories={state.dish.nutrition.calories} fats={state.dish.nutrition.fats} protein={state.dish.nutrition.protein} carbs={state.dish.nutrition.carbs} />
                             {state.dish.description
                                 ? (
                                     <>
@@ -69,6 +79,7 @@ const MenuDish = (props) => {
 };
 
 MenuDish.propTypes = {
+    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };
 

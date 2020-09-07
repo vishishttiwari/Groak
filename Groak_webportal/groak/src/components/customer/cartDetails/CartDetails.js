@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef } from 'react';
+import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -11,6 +11,8 @@ import { fetchCartItem, deleteCartItem } from '../../../catalog/LocalStorage';
 import './css/cartDetails.css';
 import { specialInstructionsId } from '../../../catalog/Others';
 import Spinner from '../../ui/spinner/Spinner';
+import { context } from '../../../globalState/globalState';
+import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 
 const initialState = { cartItem: { name: '', price: 0, extras: [] }, index: -1 };
 
@@ -30,9 +32,14 @@ function reducer(state, action) {
 const CartDetails = (props) => {
     const { history, match, location } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
     const top = createRef(null);
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
+
         let index = -1;
         const query = new URLSearchParams(location.search);
         query.forEach((value, key) => {
@@ -53,6 +60,10 @@ const CartDetails = (props) => {
         } else {
             history.goBack();
         }
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
     }, []);
 
     /**

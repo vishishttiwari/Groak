@@ -11,7 +11,7 @@
 
 .order .content {
   margin-top: 110px;
-  margin-bottom: 220px;
+  margin-bottom: 215px;
 }
 
 .order .content .order-dish-cell {
@@ -161,7 +161,7 @@
 }
 
 .order .footer {
-  margin-bottom: 70px;
+  margin-bottom: 65px;
 }
 
 .order .footer .footer-title-custom {
@@ -169,5 +169,20 @@
   margin-bottom: 0;
   font-size: 30px;
   font-weight: 100;
+}
+
+.order .footer .footer-button-custom {
+  width: 80%;
+  height: 50px;
+  margin: 20px;
+  margin-top: 10px;
+  background-color: #800000;
+  color: white;
+  font-weight: 100;
+  font-size: 18px;
+}
+
+.order .footer .footer-button-custom :hover {
+  cursor: pointer;
 }
 /*# sourceMappingURL=Order.css.map */

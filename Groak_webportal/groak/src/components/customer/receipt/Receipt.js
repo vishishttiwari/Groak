@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef } from 'react';
+import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -13,11 +13,12 @@ import ReceiptFooter from './ReceiptFooter';
 import OrderDishCell from '../order/OrderDishCell';
 import Spinner from '../../ui/spinner/Spinner';
 import { fetchOrderAPI, unsubscribeFetchOrderAPI } from './ReceiptAPICalls';
-import { getTimeInAMPMFromTimeStamp } from '../../../catalog/TimesDates';
+import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import ReceiptPriceCell from './ReceiptPriceCell';
 import ReceiptRestaurantCell from './ReceiptRestaurantCell';
 import Groak from '../../../assets/images/powered_by_groak_1.png';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
+import { context } from '../../../globalState/globalState';
 
 const initialState = { order: {}, tableReceipt: 'table_receipt', loadingSpinner: true };
 
@@ -33,12 +34,17 @@ function reducer(state, action) {
 }
 
 const CustomerMenu = (props) => {
-    const { match } = props;
+    const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
     const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
+
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -48,6 +54,10 @@ const CustomerMenu = (props) => {
             await fetchOrderAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
         }
         fetchOrder();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
 
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
@@ -143,6 +153,7 @@ const CustomerMenu = (props) => {
 };
 
 CustomerMenu.propTypes = {
+    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };
 

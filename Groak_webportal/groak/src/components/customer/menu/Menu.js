@@ -6,7 +6,7 @@ import './css/Menu.css';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 import MenuDish from './MenuDish';
-import { randomNumber } from '../../../catalog/Others';
+import { randomNumber, showDishDetails } from '../../../catalog/Others';
 import { ImageSubjectToChange } from '../../../catalog/Comments';
 import MenuHeader from './MenuHeader';
 
@@ -67,39 +67,7 @@ const Menu = (props) => {
      * @param {*} dish this is the dish that is passed
      */
     function menuDishHandler(dish) {
-        let showDish = false;
-
-        if (dish.calories && dish.calories > 0) {
-            showDish = true;
-        }
-        if (dish.fats && dish.fats > 0) {
-            showDish = true;
-        }
-        if (dish.protein && dish.protein > 0) {
-            showDish = true;
-        }
-        if (dish.carbs && dish.carbs > 0) {
-            showDish = true;
-        }
-
-        if (dish.vegetarian && dish.vegetarian !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.vegan && dish.vegan !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.glutenFree && dish.glutenFree !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.kosher && dish.kosher !== 'Not Sure') {
-            showDish = true;
-        }
-
-        if (dish.description && dish.description.length > 0) {
-            showDish = true;
-        }
-
-        if (showDish) {
+        if (showDishDetails(dish)) {
             history.push(`/customer/dish/${match.params.restaurantid}/${dish.id}`);
         } else {
             history.push(`/customer/addtocart/${match.params.restaurantid}/${dish.id}`);

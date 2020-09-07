@@ -15,6 +15,7 @@ import Spinner from '../../ui/spinner/Spinner';
 import { frontDoorQRMenuPageId, TableStatus } from '../../../catalog/Others';
 import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
+import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 
 const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, tabValue: 0, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
 
@@ -43,7 +44,7 @@ function reducer(state, action) {
 }
 
 const CustomerIntro = (props) => {
-    const { match } = props;
+    const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { setGlobalState } = useContext(context);
     const top = createRef(null);
@@ -68,6 +69,10 @@ const CustomerIntro = (props) => {
         fetchCategoriesAndRestaurant();
         fetchOrder();
         updateOrder();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
 
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
@@ -113,6 +118,7 @@ const CustomerIntro = (props) => {
 };
 
 CustomerIntro.propTypes = {
+    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };
 

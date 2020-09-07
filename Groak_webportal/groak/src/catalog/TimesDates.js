@@ -3,6 +3,11 @@
  */
 
 /**
+  * 10 mins
+  */
+export const timeoutValueForCustomer = 10 * 1000 * 60;
+
+/**
  * This function gets the current date and time
  */
 export const getCurrentDateTime = () => {

@@ -131,5 +131,20 @@
             font-size: 30px;
             font-weight: 100;
         }
+
+        .footer-button-custom {
+            width: 80%;
+            height: 50px;
+            margin: $margin;
+            margin-top: 10px;
+            background-color: $primaryColor;
+            color: white;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+
+            :hover {
+                cursor: pointer;
+            }
+        }
     }
 }

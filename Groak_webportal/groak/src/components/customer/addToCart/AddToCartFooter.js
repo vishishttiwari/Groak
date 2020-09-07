@@ -33,7 +33,7 @@ const AddToCartFooter = (props) => {
             </div>
             <Button
                 variant="contained"
-                className="footer-button"
+                className="footer-button-custom"
                 onClick={() => {
                     addToCartHandler();
                 }}

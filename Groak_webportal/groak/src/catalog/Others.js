@@ -107,7 +107,7 @@ export const calculatePriceFromDishes = (dishes) => {
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    return price.toFixed(2);
+    return `$ ${price.toFixed(2)}`;
 };
 
 /**
@@ -124,7 +124,7 @@ export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
     const totalPrice = price;
     price += price * (salesTax / 100);
     price -= totalPrice;
-    return price.toFixed(2);
+    return `$ ${price.toFixed(2)}`;
 };
 
 /**
@@ -139,7 +139,7 @@ export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
         price += dish.price;
     });
     price += price * (salesTax / 100);
-    return price.toFixed(2);
+    return `$ ${price.toFixed(2)}`;
 };
 
 /**
@@ -148,7 +148,78 @@ export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
  * @param {*} price
  */
 export const getPrice = (price) => {
-    return price.toFixed(2);
+    return `$${price.toFixed(2)}`;
+};
+
+/**
+ * This function is used to show all the extras selected for a dish in cart and in order
+ *
+ * @param dishExtras
+ * @param showSpecialInstructions
+ * @return
+ */
+export const showExtras = (extras, showSpecialInstructions) => {
+    let str = '';
+    extras.forEach((extra) => {
+        if (extra.options.length > 0) {
+            if (extra.title !== specialInstructionsId) {
+                str += `${extra.title}:\n`;
+                extra.options.forEach((option) => {
+                    str += `\t-${option.title}: ${getPrice(option.price)}\n`;
+                });
+            } else if (showSpecialInstructions) {
+                str += 'Special Instructions:\n';
+                extra.options.forEach((option) => {
+                    str += `\t-${option.title}: ${getPrice(option.price)}\n`;
+                });
+            }
+        }
+    });
+
+    if (str.length > 2) {
+        if (str.endsWith('\n')) return str.substring(0, str.length - 1);
+        return str;
+    }
+    return str;
+};
+
+/**
+ * This function is called when each dish is pressed.
+ *
+ * @param {*} dish this is the dish that is passed
+ */
+export const showDishDetails = (dish) => {
+    if (dish.calories && dish.calories > 0) {
+        return true;
+    }
+    if (dish.fats && dish.fats > 0) {
+        return true;
+    }
+    if (dish.protein && dish.protein > 0) {
+        return true;
+    }
+    if (dish.carbs && dish.carbs > 0) {
+        return true;
+    }
+
+    if (dish.vegetarian && dish.vegetarian !== 'Not Sure') {
+        return true;
+    }
+    if (dish.vegan && dish.vegan !== 'Not Sure') {
+        return true;
+    }
+    if (dish.glutenFree && dish.glutenFree !== 'Not Sure') {
+        return true;
+    }
+    if (dish.kosher && dish.kosher !== 'Not Sure') {
+        return true;
+    }
+
+    if (dish.description && dish.description.length > 0) {
+        return true;
+    }
+
+    return false;
 };
 
 /**

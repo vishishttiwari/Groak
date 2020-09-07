@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef } from 'react';
+import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -8,10 +8,12 @@ import './css/AddToCart.css';
 import AddToCartHeader from './AddToCartHeader';
 import AddToCartFooter from './AddToCartFooter';
 import AddToCartCategory from './AddToCartCategory';
-import { randomNumber, specialInstructionsId } from '../../../catalog/Others';
+import { randomNumber, specialInstructionsId, showDishDetails } from '../../../catalog/Others';
 import { saveToCart } from '../../../catalog/LocalStorage';
 import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
 import { OptionsExceedingMin } from '../../../catalog/NotificationsComments';
+import { context } from '../../../globalState/globalState';
+import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 
 const initialState = { dish: {}, optionsSelected: [], quantity: 1, totalPrice: 0, specialInstructions: '', loadingSpinner: true };
 
@@ -38,10 +40,15 @@ function reducer(state, action) {
 const AddToCart = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
     const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
+
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -51,6 +58,10 @@ const AddToCart = (props) => {
             await fetchDishAPI(match.params.restaurantid, match.params.dishid, setState);
         }
         fetchDish();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
     }, []);
 
     const addToCartHandler = () => {
@@ -105,7 +116,12 @@ const AddToCart = (props) => {
         };
 
         saveToCart(match.params.restaurantid, cartDish);
-        history.go(-2);
+
+        if (showDishDetails(state.dish)) {
+            history.go(-2);
+        } else {
+            history.goBack();
+        }
     };
 
     return (

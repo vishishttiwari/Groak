@@ -8,7 +8,7 @@ import CartFooter from './CartFooter';
 import CustomerTopic from '../ui/topic/CustomerTopic';
 import { fetchCart, deleteCart } from '../../../catalog/LocalStorage';
 import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
-import { randomNumber } from '../../../catalog/Others';
+import { randomNumber, calculatePriceFromDishes } from '../../../catalog/Others';
 import './css/Cart.css';
 import CartItemCell from './CartItemCell';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
@@ -41,14 +41,6 @@ const CustomerMenu = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const cart = fetchCart(match.params.restaurantid);
-
-    const getTotalPrice = () => {
-        let price = 0;
-        cart.forEach((dish) => {
-            price += parseInt(dish.price, 10);
-        });
-        return price;
-    };
 
     const dishDetailClickHandler = (index) => {
         history.push({
@@ -132,7 +124,7 @@ const CustomerMenu = (props) => {
                                     />
                                 </div>
                                 <CartFooter
-                                    totalPrice={getTotalPrice()}
+                                    totalPrice={calculatePriceFromDishes(cart)}
                                     addToOrderHandler={addToOrderHandler}
                                 />
                             </>

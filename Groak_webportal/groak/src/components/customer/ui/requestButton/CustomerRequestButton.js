@@ -11,9 +11,11 @@ const CustomerRequestButton = (props) => {
     return (
         <Fab
             style={{
+                width: '70px',
+                height: '70px',
                 position: 'fixed',
                 right: '20px',
-                bottom: '100px',
+                bottom: '150px',
                 zIndex: '30',
             }}
             color="primary"

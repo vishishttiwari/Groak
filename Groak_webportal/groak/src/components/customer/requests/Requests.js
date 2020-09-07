@@ -8,7 +8,7 @@ import Spinner from '../../ui/spinner/Spinner';
 import { fetchRequestAPI, unsubscribeFetchRequestAPI, updateRequestAPI } from './RequestsAPICalls';
 import RequestsFooter from './RequestsFooter';
 import { randomNumber } from '../../../catalog/Others';
-import { getTimeInAMPMFromTimeStamp } from '../../../catalog/TimesDates';
+import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { getCurrentDateTime } from '../../../firebase/FirebaseLibrary';
 import { context } from '../../../globalState/globalState';
 import { isNearRestaurant } from '../../../catalog/Distance';
@@ -29,13 +29,17 @@ function reducer(state, action) {
 }
 
 const Requests = (props) => {
-    const { match } = props;
+    const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
     const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
+
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
@@ -46,6 +50,10 @@ const Requests = (props) => {
             await fetchRequestAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
         }
         fetchOrder();
+
+        setTimeout(() => {
+            history.replace('/');
+        }, timeoutValueForCustomer);
 
         return () => {
             unsubscribeFetchRequestAPI(enqueueSnackbar);
@@ -96,6 +104,7 @@ const Requests = (props) => {
 };
 
 Requests.propTypes = {
+    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };
 

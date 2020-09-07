@@ -8,10 +8,10 @@ const CartFooter = (props) => {
 
     return (
         <div className="footer">
-            <p className="footer-title-custom">{`$ ${totalPrice.toFixed(2)}`}</p>
+            <p className="footer-title-custom">{`${totalPrice}`}</p>
             <Button
                 variant="contained"
-                className="footer-button"
+                className="footer-button-custom"
                 onClick={() => {
                     addToOrderHandler();
                 }}
@@ -23,7 +23,7 @@ const CartFooter = (props) => {
 };
 
 CartFooter.propTypes = {
-    totalPrice: PropTypes.number.isRequired,
+    totalPrice: PropTypes.string.isRequired,
     addToOrderHandler: PropTypes.func.isRequired,
 };
 

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
+import { getPrice } from '../../../catalog/Others';
 
 const OrderFooter = (props) => {
     const { history, match, totalPrice } = props;
 
     return (
         <div className="footer">
-            <p className="footer-title-custom">{`$ ${totalPrice.toFixed(2)}`}</p>
+            <p className="footer-title-custom">{getPrice(totalPrice)}</p>
             <Button
                 variant="contained"
-                className="footer-button"
+                className="footer-button-custom"
                 onClick={() => {
                     history.push(`/customer/receipt/${match.params.restaurantid}/${match.params.tableid}`);
                 }}

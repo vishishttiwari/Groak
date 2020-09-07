@@ -295,7 +295,7 @@ const OrderOthers = (props) => {
             <Card className="card">
                 <CardHeader
                     title="Total"
-                    subheader={`$${calculatePriceFromDishes(dishes)} + $${calculateSalesTaxFromDishes(dishes, globalState.restaurantPortal.salesTax)} = $${calculatePriceFromDishesWithTax(dishes, globalState.restaurantPortal.salesTax)}`}
+                    subheader={`${calculatePriceFromDishes(dishes)} + ${calculateSalesTaxFromDishes(dishes, globalState.restaurantPortal.salesTax)} = ${calculatePriceFromDishesWithTax(dishes, globalState.restaurantPortal.salesTax)}`}
                 />
                 <CardContent>
                     {dishes.map((dish) => {

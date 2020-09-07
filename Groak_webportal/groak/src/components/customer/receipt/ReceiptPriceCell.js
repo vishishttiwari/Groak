@@ -12,7 +12,7 @@ const ReceiptPriceCell = (props) => {
     };
 
     const calculateTotal = () => {
-        return (1 + globalState.restaurantCustomer.salesTax / 100) * totalPrice;
+        return totalPrice + calculateSalesTax();
     };
 
     return (
