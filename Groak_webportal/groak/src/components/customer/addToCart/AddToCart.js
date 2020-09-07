@@ -8,12 +8,12 @@ import './css/AddToCart.css';
 import AddToCartHeader from './AddToCartHeader';
 import AddToCartFooter from './AddToCartFooter';
 import AddToCartCategory from './AddToCartCategory';
-import { randomNumber } from '../../../catalog/Others';
+import { randomNumber, specialInstructionsId } from '../../../catalog/Others';
 import { saveToCart } from '../../../catalog/LocalStorage';
 import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
 import { OptionsExceedingMin } from '../../../catalog/NotificationsComments';
 
-const initialState = { dish: {}, optionsSelected: [], quantity: 1, totalPrice: 0, loadingSpinner: true };
+const initialState = { dish: {}, optionsSelected: [], quantity: 1, totalPrice: 0, specialInstructions: '', loadingSpinner: true };
 
 function reducer(state, action) {
     let updatedOptionsSelected;
@@ -28,6 +28,8 @@ function reducer(state, action) {
             return { ...state, optionsSelected: action.optionsSelected, totalPrice: state.totalPrice + action.priceDelta };
         case 'changeQuantity':
             return { ...state, quantity: action.quantity };
+        case 'setSpecialInstructions':
+            return { ...state, specialInstructions: action.specialInstructions };
         default:
             return initialState;
     }
@@ -60,8 +62,7 @@ const AddToCart = (props) => {
                 if (option) {
                     options.push({
                         title: state.dish.extras[extraIndex].options[optionIndex].title,
-                        price: state.dish.extras[extraIndex].options[optionIndex].price,
-                        optionIndex });
+                        price: state.dish.extras[extraIndex].options[optionIndex].price });
                 }
             });
             if (state.dish.extras[extraIndex].multipleSelections) {
@@ -82,6 +83,16 @@ const AddToCart = (props) => {
         });
         if (!success) {
             return;
+        }
+        if (state.specialInstructions && state.specialInstructions.length > 0) {
+            const optionsFinal = [];
+            optionsFinal.push({
+                title: state.specialInstructions,
+                price: 0 });
+            extras.push({
+                title: specialInstructionsId,
+                options: optionsFinal,
+            });
         }
         const cartDish = {
             name: state.dish.name,
@@ -117,7 +128,11 @@ const AddToCart = (props) => {
                                     />
                                 );
                             })}
-                            <CustomerSpecialInstructions helperText="Leave a note for the kitchen" />
+                            <CustomerSpecialInstructions
+                                specialInstructions={state.specialInstructions}
+                                setState={setState}
+                                helperText="Leave a note for the kitchen"
+                            />
                         </div>
                         <AddToCartFooter
                             dishPrice={state.totalPrice}

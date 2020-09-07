@@ -1,0 +1,276 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.receipt .content .receipt-restaurant-cell {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.receipt .content .receipt-restaurant-cell .receipt-restaurant-cell-image {
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
+}
+
+.receipt .content .receipt-restaurant-cell .receipt-restaurant-cell-address {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.receipt .content .receipt-restaurant-cell .receipt-restaurant-cell-time {
+  margin: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.receipt .content .receipt-price-cell {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.receipt .content .receipt-price-cell .receipt-price-cell-content {
+  margin: 0 20px;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 30px;
+}
+
+.receipt .content .receipt-price-cell .receipt-price-cell-content-1 {
+  margin: 0 20px;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 15px;
+}
+
+.receipt .content .receipt-price-cell .receipt-price-cell-title {
+  font-weight: 500;
+  margin: 10px;
+}
+
+.receipt .content .receipt-price-cell .receipt-price-cell-price {
+  font-weight: 100;
+  margin: 0;
+}
+
+.receipt .content .order-dish-cell {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content .order-dish-cell-quantity {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content .order-dish-cell-name {
+  font-size: 20px;
+  font-weight: 100;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content .order-dish-cell-price {
+  font-size: 20px;
+  font-weight: 100;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-extras {
+  font-size: 15px;
+  font-weight: 100;
+  margin: 0 20px;
+  color: gray;
+  white-space: pre-wrap;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-local-badge {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  padding: 5px;
+  color: green;
+  margin-left: 20px;
+  margin-right: auto;
+  width: auto;
+}
+
+.receipt .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-created {
+  font-size: 12px;
+  font-weight: 100;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.receipt .content .powered-by-groak-wrapper {
+  width: 100%;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.receipt .content .powered-by-groak-wrapper .powered-by-groak {
+  width: 50%;
+  margin: 10px auto;
+  max-width: 200px;
+  height: 50%;
+}
+
+.receipt .footer .footer-button-custom {
+  width: 80%;
+  height: 50px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #800000;
+  color: white;
+  font-weight: 100;
+  font-size: 18px;
+}
+
+.receipt .footer .footer-button-custom :hover {
+  cursor: pointer;
+}
+
+.receipt .receipt-final-message-top {
+  margin-top: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  padding-bottom: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: gray;
+  text-justify: auto;
+  text-align: left;
+}
+
+.receipt .receipt-final-message-bottom {
+  margin-bottom: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: gray;
+  text-justify: auto;
+  text-align: left;
+}
+/*# sourceMappingURL=Receipt.css.map */

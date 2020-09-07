@@ -1,0 +1,173 @@
+:export {
+  primaryColor: #800000;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.order .content {
+  margin-top: 110px;
+  margin-bottom: 220px;
+}
+
+.order .content .order-dish-cell {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content .order-dish-cell-quantity {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content .order-dish-cell-name {
+  font-size: 20px;
+  font-weight: 100;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content .order-dish-cell-price {
+  font-size: 20px;
+  font-weight: 100;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.order .content .order-dish-cell .order-dish-cell-extras {
+  font-size: 15px;
+  font-weight: 100;
+  margin: 0 20px;
+  color: gray;
+  white-space: pre-wrap;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-local-badge {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  padding: 5px;
+  color: green;
+  margin-left: 20px;
+  margin-right: auto;
+  width: auto;
+}
+
+.order .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-created {
+  font-size: 12px;
+  font-weight: 100;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.order .content .order-comment-cell {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: silver;
+}
+
+.order .content .order-comment-cell .order-comment-cell-comment {
+  font-size: 15px;
+  font-weight: 100;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.order .content .order-comment-cell .order-comment-cell-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order .content .order-comment-cell .order-comment-cell-content .order-comment-cell-local-badge {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  padding: 5px;
+  color: green;
+  margin-left: 20px;
+  margin-right: auto;
+  width: auto;
+}
+
+.order .content .order-comment-cell .order-comment-cell-content .order-comment-cell-created {
+  font-size: 12px;
+  font-weight: 100;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.order .content-not-found {
+  margin-top: 200px;
+}
+
+.order .footer {
+  margin-bottom: 70px;
+}
+
+.order .footer .footer-title-custom {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 30px;
+  font-weight: 100;
+}
+/*# sourceMappingURL=Order.css.map */

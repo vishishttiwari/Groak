@@ -8,19 +8,22 @@ import CustomerTabBar from '../ui/tabBar/CustomerTabBar';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
 import Menu from '../menu/Menu';
 import Cart from '../cart/Cart';
+import Order from '../order/Order';
 import Covid from '../covid/Covid';
-import { fetchCategoriesAPI } from './CustomerIntroAPICalls';
+import { fetchCategoriesAPI, fetchOrderAPI, unsubscribeFetchOrderAPI, updateOrderAPI } from './CustomerIntroAPICalls';
 import Spinner from '../../ui/spinner/Spinner';
-import { frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { frontDoorQRMenuPageId, TableStatus } from '../../../catalog/Others';
 import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 
-const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, tabValue: 0, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, tabValue: 0, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchMenuItems':
             return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false };
+        case 'fetchOrder':
+            return { ...state, order: action.order };
         case 'changeTabValue':
             if (action.tabValue !== state.tabValue) {
                 return { ...state, tabValue: action.tabValue };
@@ -56,7 +59,19 @@ const CustomerIntro = (props) => {
         async function fetchCategoriesAndRestaurant() {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
         }
+        async function fetchOrder() {
+            await fetchOrderAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
+        }
+        async function updateOrder() {
+            await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.seated, enqueueSnackbar);
+        }
         fetchCategoriesAndRestaurant();
+        fetchOrder();
+        updateOrder();
+
+        return () => {
+            unsubscribeFetchOrderAPI(enqueueSnackbar);
+        };
     }, []);
 
     const getTabPanel = () => {
@@ -64,6 +79,8 @@ const CustomerIntro = (props) => {
             return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
         } if (state.tabValue === 1) {
             return <Cart setState={setState} />;
+        } if (state.tabValue === 2) {
+            return <Order order={state.order} />;
         } if (state.tabValue === 3) {
             return <Covid restaurant={state.restaurant} />;
         }

@@ -18,3 +18,14 @@ export const updateRequestFirestoreAPI = (restaurantId, requestId, data) => {
 
     return batch.commit();
 };
+
+export const updateRequestFromUserFirestoreAPI = (restaurantId, requestId, data) => {
+    const batch = db.batch();
+
+    batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(requestId), data);
+    batch.update(db.collection('tables').doc(requestId), { newRequest: true, newRequestForUser: false });
+    batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(requestId), { newRequest: true, newRequestForUser: false });
+    batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(requestId), { newRequest: true, newRequestForUser: false });
+
+    return batch.commit();
+};

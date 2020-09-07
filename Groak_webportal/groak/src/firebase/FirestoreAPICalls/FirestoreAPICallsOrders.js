@@ -1,6 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
 import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { TableStatus } from '../../catalog/Others';
 import { DemoRequest } from '../../catalog/Demo';
+import { createDishReference } from './FirestoreAPICallsDishes';
+import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections, createRestaurantReference } from './FirestoreAPICallsTables';
+import { getCurrentDateTimePlusMinutes } from '../../catalog/TimesDates';
+import { saveOrder } from '../../catalog/LocalStorage';
 
 export const createOrderReference = (restaurantId, orderId) => {
     return db.collection(`restaurants/${restaurantId}/orders`).doc(orderId);
@@ -46,4 +51,124 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
     }
 
     return batch.commit();
+};
+
+export const addOrderFirestoreAPI = (restaurantId, orderId, cart, comment) => {
+    const finalCart = [];
+    const finalItemIds = [];
+    cart.forEach((item) => {
+        const reference = uuidv4();
+        finalCart.push({
+            name: item.name,
+            reference,
+            dishReference: createDishReference(restaurantId, item.dishId),
+            price: item.price,
+            quantity: item.quantity,
+            extras: item.extras,
+            created: getCurrentDateTime(),
+        });
+        finalItemIds.push(reference);
+    });
+
+    let finalComment = {};
+    if (comment && comment.length > 0) {
+        const finalCommentId = uuidv4();
+        finalComment = {
+            comment,
+            reference: finalCommentId,
+            created: getCurrentDateTime(),
+        };
+        finalItemIds.push(finalCommentId);
+    }
+
+    saveOrder(restaurantId, finalItemIds);
+
+    const orderReference = createOrderReference(restaurantId, orderId);
+    const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
+    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    return db.runTransaction(async (transaction) => {
+        const orderDoc = await transaction.get(orderReference);
+        if (orderDoc.exists) {
+            const { dishes, comments, status } = orderDoc.data();
+            if (dishes) {
+                finalCart.forEach((dish) => {
+                    dishes.push(dish);
+                });
+            }
+            const updated = getCurrentDateTime();
+            const items = dishes.length;
+            if (comment && comment.length > 0) {
+                if (comments) {
+                    comments.push(finalComment);
+                }
+                if (status === TableStatus.seated || status === TableStatus.available) {
+                    transaction.update(orderReference, { dishes, comments, status: TableStatus.ordered, updated, items, serveTime: getCurrentDateTimePlusMinutes(30) });
+                } else {
+                    transaction.update(orderReference, { dishes, comments, status: TableStatus.ordered, updated, items });
+                }
+            } else if (status === TableStatus.seated || status === TableStatus.available) {
+                transaction.update(orderReference, { dishes, status: TableStatus.ordered, updated, items, serveTime: getCurrentDateTimePlusMinutes(30) });
+            } else {
+                transaction.update(orderReference, { dishes, status: TableStatus.ordered, updated, items });
+            }
+
+            transaction.update(tableReference, { status: TableStatus.ordered });
+            transaction.update(tableOriginalReference, { status: TableStatus.ordered });
+        }
+    });
+};
+
+export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
+    const finalItemIds = [];
+    const finalCommentId = uuidv4();
+    const finalComment = {
+        comment,
+        reference: finalCommentId,
+        created: getCurrentDateTime(),
+    };
+    finalItemIds.push(finalCommentId);
+
+    saveOrder(restaurantId, finalItemIds);
+
+    const orderReference = createOrderReference(restaurantId, orderId);
+    const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
+    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    return db.runTransaction(async (transaction) => {
+        const orderDoc = await transaction.get(orderReference);
+        if (orderDoc.exists) {
+            const { comments } = orderDoc.data();
+
+            const updated = getCurrentDateTime();
+            if (comments) {
+                comments.push(finalComment);
+            }
+            transaction.update(orderReference, { comments, status: TableStatus.ordered, updated });
+
+            transaction.update(tableReference, { status: TableStatus.ordered });
+            transaction.update(tableOriginalReference, { status: TableStatus.ordered });
+        }
+    });
+};
+
+export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus) => {
+    const restaurantReference = createRestaurantReference(restaurantId);
+    const orderReference = createOrderReference(restaurantId, orderId);
+    const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
+    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    return db.runTransaction(async (transaction) => {
+        const restaurantDoc = await transaction.get(restaurantReference);
+        if (restaurantDoc.exists) {
+            const { status } = restaurantDoc.data();
+
+            if (status === TableStatus.available && newStatus === TableStatus.seated) {
+                transaction.update(tableReference, { status: newStatus });
+                transaction.update(tableOriginalReference, { status: newStatus });
+                transaction.update(orderReference, { status: newStatus });
+            } else if (status !== TableStatus.payment || newStatus === TableStatus.payment) {
+                transaction.update(tableReference, { status: newStatus });
+                transaction.update(tableOriginalReference, { status: newStatus });
+                transaction.update(orderReference, { status: newStatus });
+            }
+        }
+    });
 };

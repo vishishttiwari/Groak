@@ -1,0 +1,135 @@
+@import '../../../../globalCSS/globalCSS';
+
+.order {
+
+    .content {
+        margin-top: 110px;
+        margin-bottom: $bottomTabBarHeight + 150px;
+
+        .order-dish-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+        
+            .order-dish-cell-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+        
+                .order-dish-cell-quantity {
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin-left: $margin;
+                }
+        
+                .order-dish-cell-name {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-left: $margin;
+                    margin-right: $margin;
+                }
+        
+                .order-dish-cell-price {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-right: $margin;
+                    margin-left: auto;
+                }
+            }
+        
+            .order-dish-cell-extras {
+                font-size: 15px;
+                font-weight: 100;
+                margin: 0 $margin;
+                color: gray;
+                white-space: pre-wrap;
+            }
+
+            .order-dish-cell-content-1 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .order-dish-cell-local-badge {
+                    border-style: solid;
+                    border-width: 3px;
+                    border-radius: 5px;
+                    padding: 5px;
+                    color: green;
+                    margin-left: $margin;
+                    margin-right: auto;
+                    width: auto;
+                }
+
+                .order-dish-cell-created {
+                    font-size: 12px;
+                    font-weight: 100;
+                    text-align: right;
+                    margin-left: auto;
+                    margin-right: $margin;
+                }
+            }
+        }
+
+        .order-comment-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+    
+            .order-comment-cell-comment {
+                font-size: 15px;
+                font-weight: 100;
+                margin-left: $margin;
+                margin-right: $margin;
+            }
+    
+            .order-comment-cell-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+    
+                .order-comment-cell-local-badge {
+                    border-style: solid;
+                    border-width: 3px;
+                    border-radius: 5px;
+                    padding: 5px;
+                    color: green;
+                    margin-left: $margin;
+                    margin-right: auto;
+                    width: auto;
+                }
+    
+                .order-comment-cell-created {
+                    font-size: 12px;
+                    font-weight: 100;
+                    text-align: right;
+                    margin-left: auto;
+                    margin-right: $margin;
+                }
+            }
+        }
+    }
+
+    .content-not-found {
+        margin-top: 200px;
+    }
+
+    .footer {
+        margin-bottom: $bottomTabBarHeight;
+
+        .footer-title-custom {
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-size: 30px;
+            font-weight: 100;
+        }
+    }
+}

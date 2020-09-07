@@ -1,0 +1,206 @@
+@import '../../../../globalCSS/globalCSS';
+
+.receipt {
+
+    .content {
+
+        .receipt-restaurant-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+
+            .receipt-restaurant-cell-image {
+                width: 100%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 500px;
+            }
+            .receipt-restaurant-cell-address {
+                margin-left: $margin;
+                margin-right: $margin;
+                margin-top: $margin;
+                margin-bottom: 0;
+                text-align: center;
+                font-size: 15px;
+                font-weight: 400;
+            }
+
+            .receipt-restaurant-cell-time {
+                margin: $margin;
+                text-align: center;
+                font-size: 15px;
+                font-weight: 400;
+            }
+        }
+
+        .receipt-price-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+
+            .receipt-price-cell-content {
+                margin: 0 $margin;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 30px;
+            }
+
+            .receipt-price-cell-content-1 {
+                margin: 0 $margin;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 15px;
+            }
+
+            .receipt-price-cell-title {
+                font-weight: 500;
+                margin: 10px;
+            }
+
+            .receipt-price-cell-price {
+                font-weight: 100;
+                margin: 0;
+            }
+        }
+
+        .order-dish-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+        
+            .order-dish-cell-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+        
+                .order-dish-cell-quantity {
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin-left: $margin;
+                }
+        
+                .order-dish-cell-name {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-left: $margin;
+                    margin-right: $margin;
+                }
+        
+                .order-dish-cell-price {
+                    font-size: 20px;
+                    font-weight: 100;
+                    margin-right: $margin;
+                    margin-left: auto;
+                }
+            }
+        
+            .order-dish-cell-extras {
+                font-size: 15px;
+                font-weight: 100;
+                margin: 0 $margin;
+                color: gray;
+                white-space: pre-wrap;
+            }
+
+            .order-dish-cell-content-1 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .order-dish-cell-local-badge {
+                    border-style: solid;
+                    border-width: 3px;
+                    border-radius: 5px;
+                    padding: 5px;
+                    color: green;
+                    margin-left: $margin;
+                    margin-right: auto;
+                    width: auto;
+                }
+
+                .order-dish-cell-created {
+                    font-size: 12px;
+                    font-weight: 100;
+                    text-align: right;
+                    margin-left: auto;
+                    margin-right: $margin;
+                }
+            }
+        }
+
+        .powered-by-groak-wrapper {
+            width: 100%;
+            background-color: white;
+            display: flex;
+
+            .powered-by-groak {
+                width: 50%;
+                margin: 10px auto;
+                max-width: 200px;
+                height: 50%;
+            }
+        }
+    }
+
+    .footer {
+        .footer-button-custom {
+            width: 80%;
+            height: 50px;
+            margin-top: $margin;
+            margin-left: $margin;
+            margin-right: $margin;
+            background-color: $primaryColor;
+            color: white;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+
+            :hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .receipt-final-message-top {
+        margin-top: 100px;
+        display: flex;
+        padding: $margin;
+        padding-bottom: 0;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: gray;
+        text-justify: auto;
+        text-align: left;
+    }
+
+    .receipt-final-message-bottom {
+        margin-bottom: 150px;
+        display: flex;
+        padding: $margin;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: gray;
+        text-justify: auto;
+        text-align: left;
+    }
+}

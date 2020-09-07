@@ -26,7 +26,8 @@ const CustomerSearch = lazy(() => { return import('../components/customer/search
 const CustomerMenuDish = lazy(() => { return import('../components/customer/dish/MenuDish'); });
 const CustomerAddToCart = lazy(() => { return import('../components/customer/addToCart/AddToCart'); });
 const CustomerCartDetails = lazy(() => { return import('../components/customer/cartDetails/CartDetails'); });
-const Requests = lazy(() => { return import('../components/customer/requests/Requests'); });
+const CustomerRequests = lazy(() => { return import('../components/customer/requests/Requests'); });
+const CustomerReceipt = lazy(() => { return import('../components/customer/receipt/Receipt'); });
 const QRCodes = lazy(() => { return import('../components/portal/qrCodes/QRCodes'); });
 const QRCodesDetails = lazy(() => { return import('../components/portal/qrCodes/qrCodeDetails/QRCodeDetails'); });
 
@@ -82,7 +83,8 @@ function App() {
                                         <Route path="/customer/dish/:restaurantid/:dishid" exact render={() => { return <CustomerMenuDish />; }} />
                                         <Route path="/customer/addtocart/:restaurantid/:dishid" exact render={() => { return <CustomerAddToCart />; }} />
                                         <Route path="/customer/cartdetails/:restaurantid" exact render={() => { return <CustomerCartDetails />; }} />
-                                        <Route path="/customer/requests/:restaurantid/:tableid" exact render={() => { return <Requests />; }} />
+                                        <Route path="/customer/requests/:restaurantid/:tableid" exact render={() => { return <CustomerRequests />; }} />
+                                        <Route path="/customer/receipt/:restaurantid/:tableid" exact render={() => { return <CustomerReceipt />; }} />
                                         <Redirect from="/qrmenupage" to="/tables" exact />
                                         <Redirect from="/menu/:restaurantid/:tableid/:qrcodeid" to="/customer/menu/:restaurantid/:tableid/:qrcodeid" exact />
                                         <Redirect from="/customermenu/:restaurantid/:tableid/:qrcodeid" to="/customer/menu/:restaurantid/:tableid/:qrcodeid" />

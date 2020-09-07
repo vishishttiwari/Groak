@@ -4,9 +4,13 @@
 import { fetchCategoriesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { fetchDishesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
-import { ErrorFetchingCategories } from '../../../catalog/NotificationsComments';
+import { ErrorFetchingCategories, ErrorUnsubscribingOrder, ErrorFetchingOrder, ErrorUpdatingOrder } from '../../../catalog/NotificationsComments';
 import { fetchQRCodeFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 import { checkCategoryAvailability, checkQRCodeAvailability, checkDishAvailability } from '../../../catalog/Others';
+import { fetchOrderFirestoreAPI, updateOrderFromUserFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
+import { checkOrderLocallity } from '../../../catalog/LocalStorage';
+
+let orderSnapshot;
 
 /**
  * Function used to get restaurant name and restaurant logo
@@ -86,5 +90,65 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
     } catch (error) {
         snackbar(ErrorFetchingCategories, { variant: 'error' });
         setState({ type: 'error' });
+    }
+};
+
+/**
+ * This function is used for unsubscribing from realtime updates of order
+ *
+ * @param {*} snackbar used for notifications
+ */
+export const unsubscribeFetchOrderAPI = (snackbar) => {
+    try {
+        if (orderSnapshot) {
+            orderSnapshot();
+        }
+    } catch (error) {
+        snackbar(ErrorUnsubscribingOrder, { variant: 'error' });
+    }
+};
+
+/**
+ * The function is used for fetching order
+ *
+ * @param {*} restaurantId id of the restaurant for which order needs to be fetched
+ * @param {*} orderId order id of the order that needs to be fetched
+ * @param {*} setState used for setting the order
+ * @param {*} snackbar used for notifications
+ */
+export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) => {
+    try {
+        const getOrder = (querySnapshot) => {
+            if (querySnapshot.data()) {
+                const { dishes, comments } = querySnapshot.data();
+                const updatedDishes = [];
+                const updatedComments = [];
+                dishes.forEach((dish) => {
+                    updatedDishes.push({ ...dish, local: checkOrderLocallity(restaurantId, dish.reference) });
+                });
+                comments.forEach((comment) => {
+                    updatedComments.push({ ...comment, local: checkOrderLocallity(restaurantId, comment.reference) });
+                });
+                setState({
+                    type: 'fetchOrder',
+                    order: { ...querySnapshot.data(), dishes: updatedDishes, comments: updatedComments },
+                });
+            } else {
+                snackbar(ErrorFetchingOrder, { variant: 'error' });
+                setState({ type: 'error' });
+            }
+        };
+        orderSnapshot = await fetchOrderFirestoreAPI(restaurantId, orderId, getOrder);
+    } catch (error) {
+        snackbar(ErrorFetchingOrder, { variant: 'error' });
+        setState({ type: 'error' });
+    }
+};
+
+export const updateOrderAPI = async (restaurantId, orderId, newStatus, snackbar) => {
+    try {
+        await updateOrderFromUserFirestoreAPI(restaurantId, orderId, newStatus);
+    } catch (error) {
+        snackbar(ErrorUpdatingOrder, { variant: 'error' });
     }
 };

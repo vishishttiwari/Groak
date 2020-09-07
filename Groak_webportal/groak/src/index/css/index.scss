@@ -287,6 +287,16 @@ html {
                         cursor: pointer;
                     }
                 }
+                .header-toggle-group {
+                    width: 80%;
+                    max-width: 500px;
+                    height: 40px;
+                    
+                    .header-toggle {
+                        padding: 0;
+                        width: 50%;
+                    }
+                }
             }
 
             .footer {

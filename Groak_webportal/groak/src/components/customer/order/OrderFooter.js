@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
-const CartFooter = (props) => {
-    const { totalPrice, addToOrderHandler } = props;
+const OrderFooter = (props) => {
+    const { history, match, totalPrice } = props;
 
     return (
         <div className="footer">
@@ -13,18 +14,19 @@ const CartFooter = (props) => {
                 variant="contained"
                 className="footer-button"
                 onClick={() => {
-                    addToOrderHandler();
+                    history.push(`/customer/receipt/${match.params.restaurantid}/${match.params.tableid}`);
                 }}
             >
-                Order
+                View Receipt
             </Button>
         </div>
     );
 };
 
-CartFooter.propTypes = {
+OrderFooter.propTypes = {
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     totalPrice: PropTypes.number.isRequired,
-    addToOrderHandler: PropTypes.func.isRequired,
 };
 
-export default React.memo(CartFooter);
+export default withRouter(React.memo(OrderFooter));

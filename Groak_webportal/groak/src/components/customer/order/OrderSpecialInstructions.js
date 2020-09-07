@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import CustomerTopic from '../topic/CustomerTopic';
+import { TextField, Button } from '@material-ui/core';
+import CustomerTopic from '../ui/topic/CustomerTopic';
 
 const CustomerSpecialInstructions = (props) => {
-    const { helperText, specialInstructions, setState } = props;
+    const { helperText, specialInstructions, setState, addToOrderHandler } = props;
 
     return (
         <>
             <CustomerTopic header="Special Instructions" />
             <div style={{
                 backgroundColor: 'white',
-                paddingBottom: '20px',
+                paddingBottom: '10px',
                 borderBottomStyle: 'solid',
                 borderBottomWidth: '1px',
-                borderBottomColor: 'silver',
-            }}
+                borderBottomColor: 'silver' }}
             >
                 <TextField
                     value={specialInstructions}
@@ -30,6 +29,19 @@ const CustomerSpecialInstructions = (props) => {
                     rows={5}
                     placeholder={helperText}
                 />
+                <Button
+                    style={{
+                        display: 'flex',
+                        marginTop: '10px',
+                        marginLeft: 'auto',
+                        marginRight: '20px',
+                        marginBottom: '10x' }}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => { addToOrderHandler(); }}
+                >
+                    Send
+                </Button>
             </div>
         </>
     );
@@ -38,6 +50,7 @@ const CustomerSpecialInstructions = (props) => {
 CustomerSpecialInstructions.propTypes = {
     specialInstructions: PropTypes.string.isRequired,
     setState: PropTypes.func.isRequired,
+    addToOrderHandler: PropTypes.func.isRequired,
     helperText: PropTypes.string.isRequired,
 };
 
