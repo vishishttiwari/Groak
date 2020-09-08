@@ -36,7 +36,7 @@ const CartDetails = (props) => {
     const top = createRef(null);
 
     useEffect(() => {
-        if (!globalState.scannedCustomer) {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
             history.replace('/');
         }
 

@@ -10,6 +10,7 @@ const initialState = {
     tabValueCustomer: 0,
     restaurantIdCustomer: '',
     restaurantCustomer: null,
+    orderAllowedCustomer: false,
 };
 
 function reducerLocal(state, action) {
@@ -20,9 +21,14 @@ function reducerLocal(state, action) {
         case 'setRestaurantPortal':
             return { ...state, restaurantPortal: action.restaurant, restaurantIdPortal: action.restaurantId };
         case 'setRestaurantCustomer':
-            return { ...state, restaurantCustomer: action.restaurant, restaurantIdCustomer: action.restaurantId, scannedCustomer: true };
+            return { ...state, restaurantCustomer: action.restaurant, restaurantIdCustomer: action.restaurantId, orderAllowedCustomer: action.orderAllowed, scannedCustomer: true };
         case 'setTabValueCustomer':
-            return { ...state, tabValueCustomer: action.tabValue };
+            if (action.tabValue !== state.tabValueCustomer) {
+                return { ...state, tabValueCustomer: action.tabValue };
+            }
+            return { ...state };
+        case 'setOrderAllowedCustomer':
+            return { ...state, orderAllowedCustomer: action.orderAllowed };
         case 'setQRStylePagePortal':
             updatedRestaurant = { ...state.restaurant, qrStylePage: action.qrStylePage };
             return { ...state, restaurantPortal: updatedRestaurant };

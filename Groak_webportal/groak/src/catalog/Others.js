@@ -107,7 +107,7 @@ export const calculatePriceFromDishes = (dishes) => {
     dishes.forEach((dish) => {
         price += dish.price;
     });
-    return `$ ${price.toFixed(2)}`;
+    return `$${price.toFixed(2)}`;
 };
 
 /**
@@ -124,7 +124,7 @@ export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
     const totalPrice = price;
     price += price * (salesTax / 100);
     price -= totalPrice;
-    return `$ ${price.toFixed(2)}`;
+    return `$${price.toFixed(2)}`;
 };
 
 /**
@@ -139,7 +139,7 @@ export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
         price += dish.price;
     });
     price += price * (salesTax / 100);
-    return `$ ${price.toFixed(2)}`;
+    return `$${price.toFixed(2)}`;
 };
 
 /**

@@ -51,7 +51,7 @@ const TablesCanvas = (props) => {
             }
         });
         if (dragged) {
-            await updateTableAPI(globalState.restaurantPortalIdPortal, id, toBeUpdatedData, setState, enqueueSnackbar);
+            await updateTableAPI(globalState.restaurantIdPortal, id, toBeUpdatedData, setState, enqueueSnackbar);
             event.stopPropagation();
             setDragged(false);
         }

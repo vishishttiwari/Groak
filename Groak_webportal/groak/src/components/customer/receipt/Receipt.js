@@ -33,7 +33,7 @@ function reducer(state, action) {
     }
 }
 
-const CustomerMenu = (props) => {
+const Receipt = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
@@ -41,7 +41,7 @@ const CustomerMenu = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (!globalState.scannedCustomer) {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
             history.replace('/');
         }
 
@@ -134,7 +134,7 @@ const CustomerMenu = (props) => {
                                         <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
                                         <p>To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll</p>
                                     </div>
-                                    <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} />
+                                    <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
                                     <ReceiptFooter />
                                 </>
                             )
@@ -152,9 +152,9 @@ const CustomerMenu = (props) => {
     );
 };
 
-CustomerMenu.propTypes = {
+Receipt.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 };
 
-export default withRouter(React.memo(CustomerMenu));
+export default withRouter(React.memo(Receipt));

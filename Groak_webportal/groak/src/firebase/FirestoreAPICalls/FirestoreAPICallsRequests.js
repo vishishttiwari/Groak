@@ -29,3 +29,13 @@ export const updateRequestFromUserFirestoreAPI = (restaurantId, requestId, data)
 
     return batch.commit();
 };
+
+export const updateRequestFromUserWhenUserSeenMessageFirestoreAPI = (restaurantId, requestId) => {
+    const batch = db.batch();
+
+    batch.update(db.collection('tables').doc(requestId), { newRequestForUser: false });
+    batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(requestId), { newRequestForUser: false });
+    batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(requestId), { newRequestForUser: false });
+
+    return batch.commit();
+};

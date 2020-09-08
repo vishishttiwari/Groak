@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import './css/Menu.css';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { context } from '../../../globalState/globalState';
 
 import MenuDish from './MenuDish';
 import { randomNumber, showDishDetails } from '../../../catalog/Others';
@@ -60,6 +61,7 @@ function a11yProps(index) {
 const Menu = (props) => {
     const { history, match, menuItems, categoryNames, restaurant } = props;
     const [state, setState] = useReducer(reducer, initialState);
+    const { globalState } = useContext(context);
 
     /**
      * This function is called when each dish is pressed.
@@ -67,10 +69,12 @@ const Menu = (props) => {
      * @param {*} dish this is the dish that is passed
      */
     function menuDishHandler(dish) {
-        if (showDishDetails(dish)) {
-            history.push(`/customer/dish/${match.params.restaurantid}/${dish.id}`);
-        } else {
-            history.push(`/customer/addtocart/${match.params.restaurantid}/${dish.id}`);
+        if (globalState && globalState.orderAllowedCustomer) {
+            if (showDishDetails(dish)) {
+                history.push(`/customer/dish/${match.params.restaurantid}/${dish.id}`);
+            } else {
+                history.push(`/customer/addtocart/${match.params.restaurantid}/${dish.id}`);
+            }
         }
     }
 

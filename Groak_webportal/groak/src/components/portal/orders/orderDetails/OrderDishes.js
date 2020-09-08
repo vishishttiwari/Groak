@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent, Typography, CardActions, Button } from '
 import { useSnackbar } from 'notistack';
 import { context } from '../../../../globalState/globalState';
 
-import { getPrice, randomNumber, specialInstructionsId } from '../../../../catalog/Others';
+import { getPrice, randomNumber, showExtras } from '../../../../catalog/Others';
 import { getDateTimeFromTimeStamp, getTimeInAMPM } from '../../../../catalog/TimesDates';
 import { updateOrderAPI } from '../OrdersAPICalls';
 
@@ -26,7 +26,7 @@ const OrderDishes = (props) => {
         const updatedDishes = [...dishes];
         updatedDishes.splice(index, 1);
         const data = { dishes: updatedDishes, items: updatedDishes.length, status };
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
     return (
@@ -37,30 +37,12 @@ const OrderDishes = (props) => {
                         <CardHeader title={`${dish.quantity} ${dish.name}`} subheader={`Ordered at: ${getTimeInAMPM(getDateTimeFromTimeStamp(dish.created))}`} />
                         <CardContent className="card-content">
                             {dish.extras
-                                ? dish.extras.map((extra) => {
-                                    return (
-                                        extra.options && extra.options.length > 0
-                                            ? (
-                                                <div className="dish-extra" key={randomNumber()}>
-                                                    <Typography variant="body1" className="dish-extra-title" color="textPrimary" component="p">
-                                                        {extra.title === specialInstructionsId ? 'Special Instructions' : extra.title}
-                                                    </Typography>
-                                                    {extra.options.map((option) => {
-                                                        return (
-                                                            <Typography key={randomNumber()} className="dish-extra-options" variant="body2" color="textSecondary" component="p">
-                                                                {option.title}
-                                                            </Typography>
-                                                        );
-                                                    })}
-                                                </div>
-                                            )
-                                            : null
-                                    );
-                                }) : null}
+                                ? showExtras(dish.extras, true)
+                                : null}
                         </CardContent>
                         <CardActions className="actions">
                             <Typography className="dish-price" variant="body1" color="textPrimary" component="p">
-                                {`Price: $${getPrice(dish.price)}`}
+                                {`Price: ${getPrice(dish.price)}`}
                             </Typography>
                             <Button
                                 variant="contained"

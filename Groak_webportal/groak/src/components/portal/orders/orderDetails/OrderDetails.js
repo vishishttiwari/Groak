@@ -54,8 +54,8 @@ const OrderDetails = (props) => {
 
     useEffect(() => {
         async function fetchOrder() {
-            await fetchOrderAPI(globalState.restaurantPortalIdPortal, match.params.orderid, setState, enqueueSnackbar);
-            await fetchRequestAPI(globalState.restaurantPortalIdPortal, match.params.orderid, setState, enqueueSnackbar);
+            await fetchOrderAPI(globalState.restaurantIdPortal, match.params.orderid, setState, enqueueSnackbar);
+            await fetchRequestAPI(globalState.restaurantIdPortal, match.params.orderid, setState, enqueueSnackbar);
         }
         fetchOrder();
 

@@ -1,5 +1,5 @@
 import { ErrorUnsubscribingRequest, ErrorFetchingRequest, ErrorUpdatingRequest } from '../../../catalog/NotificationsComments';
-import { fetchRequestFirestoreAPI, updateRequestFromUserFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
+import { fetchRequestFirestoreAPI, updateRequestFromUserFirestoreAPI, updateRequestFromUserWhenUserSeenMessageFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 
 let requestSnapshot;
 
@@ -61,6 +61,17 @@ export const updateRequestAPI = async (restaurantId, requestId, data, snackbar) 
         await updateRequestFromUserFirestoreAPI(restaurantId, requestId, data);
     } catch (error) {
         snackbar(ErrorUpdatingRequest, { variant: 'error' });
-        unsubscribeFetchRequestAPI(snackbar);
     }
+};
+
+/**
+ * The function is used for updating request by user
+ *
+ * @param {*} restaurantId id of the restaurant for which request needs to be fetched
+ * @param {*} requestId request id of the request that needs to be fetched
+ * @param {*} setState used for setting the request
+ * @param {*} snackbar used for notifications
+ */
+export const updateRequestWhenSeenAPI = async (restaurantId, requestId) => {
+    await updateRequestFromUserWhenUserSeenMessageFirestoreAPI(restaurantId, requestId);
 };

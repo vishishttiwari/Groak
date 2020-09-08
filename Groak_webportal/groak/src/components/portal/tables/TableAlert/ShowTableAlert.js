@@ -35,13 +35,13 @@ const ShowTableAlert = (props) => {
 
     useEffect(() => {
         async function fetchTable() {
-            await fetchTableAPI(globalState.restaurantPortalIdPortal, tableId, setState, enqueueSnackbar);
+            await fetchTableAPI(globalState.restaurantIdPortal, tableId, setState, enqueueSnackbar);
         }
         if (open && tableId.length !== 0) {
             setState({ type: 'error' });
             fetchTable();
         }
-    }, [open, globalState.restaurantPortalIdPortal, tableId, enqueueSnackbar]);
+    }, [open, globalState.restaurantIdPortal, tableId, enqueueSnackbar]);
 
     /**
      * This function is called when the name is changed

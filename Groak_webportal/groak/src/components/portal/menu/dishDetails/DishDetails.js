@@ -114,7 +114,7 @@ const DishDetails = (props) => {
      */
     useEffect(() => {
         async function fetchDish() {
-            await fetchDishAPI(globalState.restaurantPortalIdPortal, match.params.dishid, setState, enqueueSnackbar);
+            await fetchDishAPI(globalState.restaurantIdPortal, match.params.dishid, setState, enqueueSnackbar);
         }
         if (match.params.dishid !== 'addDish' && match.params.dishid !== 'newDish') {
             fetchDish();
@@ -122,7 +122,7 @@ const DishDetails = (props) => {
         } else {
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         }
-    }, [match.params.dishid, enqueueSnackbar, globalState.restaurantPortalIdPortal]);
+    }, [match.params.dishid, enqueueSnackbar, globalState.restaurantIdPortal]);
 
     /**
      * This function is used to check if all the calorie values enteres are correct.
@@ -203,9 +203,9 @@ const DishDetails = (props) => {
         }
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newDish) {
-            await addDishAPI(globalState.restaurantPortalIdPortal, state, enqueueSnackbar);
+            await addDishAPI(globalState.restaurantIdPortal, state, enqueueSnackbar);
         } else {
-            await updateDishAPI(globalState.restaurantPortalIdPortal, match.params.dishid, state, enqueueSnackbar);
+            await updateDishAPI(globalState.restaurantIdPortal, match.params.dishid, state, enqueueSnackbar);
         }
         setTimeout(() => {
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
@@ -219,7 +219,7 @@ const DishDetails = (props) => {
     const deleteHandler = async () => {
         if (!state.newDish) {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
-            await deleteDishAPI(globalState.restaurantPortalIdPortal, match.params.dishid, enqueueSnackbar);
+            await deleteDishAPI(globalState.restaurantIdPortal, match.params.dishid, enqueueSnackbar);
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
             history.replace('/dishes');
         }

@@ -87,10 +87,10 @@ const QRWindow = (props) => {
 
     useEffect(() => {
         async function fetchQRCodesAndTable() {
-            await Promise.all([await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantPortalIdPortal, match.params.tableid, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar), await fetchTableAPI(globalState.restaurantIdPortal, match.params.tableid, setState, enqueueSnackbar)]);
         }
         async function fetchQRCodes() {
-            await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
+            await fetchQRCodesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar);
             setState({ type: 'fetchTable', table: { qrCodes: [] } });
         }
         if (match.params.tableid === frontDoorQRMenuPageId) {
@@ -98,7 +98,7 @@ const QRWindow = (props) => {
         } else {
             fetchQRCodesAndTable();
         }
-    }, [globalState.restaurantPortalIdPortal, match.params.tableid, enqueueSnackbar]);
+    }, [globalState.restaurantIdPortal, match.params.tableid, enqueueSnackbar]);
 
     /**
      * This function is called for going back
@@ -115,9 +115,9 @@ const QRWindow = (props) => {
     async function submitHandler(event) {
         event.preventDefault();
         if (match.params.tableid === frontDoorQRMenuPageId) {
-            await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
+            await updateRestaurantAPI(globalState.restaurantIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
         } else {
-            await Promise.all([await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantPortalIdPortal, match.params.tableid, state.table, setState, enqueueSnackbar)]);
+            await Promise.all([await updateRestaurantAPI(globalState.restaurantIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantIdPortal, match.params.tableid, state.table, setState, enqueueSnackbar)]);
         }
 
         enqueueSnackbar(QRMenuPageUpdated, { variant: 'success' });
@@ -131,7 +131,7 @@ const QRWindow = (props) => {
             <div className="qr-content">
                 <PDFViewer className="qr-page" filename={`${tableName}.pdf`}>
                     <QRPage
-                        restaurantReference={globalState.restaurantPortalIdPortal}
+                        restaurantReference={globalState.restaurantIdPortal}
                         tableReference={match.params.tableid}
                         tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                         qrStylePage={state.qrStylePage}
@@ -145,7 +145,7 @@ const QRWindow = (props) => {
                 </PDFViewer>
 
                 <QROptions
-                    restaurantReference={globalState.restaurantPortalIdPortal}
+                    restaurantReference={globalState.restaurantIdPortal}
                     tableReference={match.params.tableid}
                     tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
                     state={state}

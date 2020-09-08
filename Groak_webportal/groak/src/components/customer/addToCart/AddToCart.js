@@ -45,7 +45,7 @@ const AddToCart = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (!globalState.scannedCustomer) {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
             history.replace('/');
         }
 

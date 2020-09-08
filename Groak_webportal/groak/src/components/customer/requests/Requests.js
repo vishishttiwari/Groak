@@ -5,7 +5,7 @@ import './css/Requests.css';
 import { withRouter } from 'react-router-dom';
 import RequestsHeader from './RequestsHeader';
 import Spinner from '../../ui/spinner/Spinner';
-import { fetchRequestAPI, unsubscribeFetchRequestAPI, updateRequestAPI } from './RequestsAPICalls';
+import { fetchRequestAPI, unsubscribeFetchRequestAPI, updateRequestAPI, updateRequestWhenSeenAPI } from './RequestsAPICalls';
 import RequestsFooter from './RequestsFooter';
 import { randomNumber } from '../../../catalog/Others';
 import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
@@ -32,24 +32,23 @@ const Requests = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
-    const top = createRef(null);
+    const requestEndRef = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (!globalState.scannedCustomer) {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
             history.replace('/');
         }
 
-        top.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'start',
-        });
-
-        async function fetchOrder() {
+        async function fetchRequest() {
             await fetchRequestAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
         }
-        fetchOrder();
+        fetchRequest();
+
+        async function updateRequest() {
+            await updateRequestWhenSeenAPI(match.params.restaurantid, match.params.tableid);
+        }
+        updateRequest();
 
         setTimeout(() => {
             history.replace('/');
@@ -59,6 +58,18 @@ const Requests = (props) => {
             unsubscribeFetchRequestAPI(enqueueSnackbar);
         };
     }, [enqueueSnackbar]);
+
+    useEffect(() => {
+        if (state.requests && state.requests.length) {
+            if (requestEndRef && requestEndRef.current) {
+                requestEndRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'end',
+                });
+            }
+        }
+    }, [state.request, requestEndRef]);
 
     const sendHandler = async () => {
         if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
@@ -80,7 +91,6 @@ const Requests = (props) => {
 
     return (
         <div className="customer requests">
-            <p ref={top}> </p>
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
@@ -96,6 +106,7 @@ const Requests = (props) => {
                             );
                         })}
                     </div>
+                    <p ref={requestEndRef}> </p>
                     <RequestsFooter requestField={state.requestField} setState={setState} sendHandler={() => { sendHandler(); }} />
                 </>
             ) : null}

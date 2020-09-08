@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -18,6 +18,7 @@ import { context } from '../../../globalState/globalState';
 import { addCommentFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { isNearRestaurant } from '../../../catalog/Distance';
 import CustomerInfo from '../ui/info/CustomerInfo';
+import { updateOrderWhenSeenAPI } from './OrderAPICalls';
 
 const initialState = { specialInstructions: '', tableOrder: 'table_order' };
 
@@ -32,11 +33,18 @@ function reducer(state, action) {
     }
 }
 
-const CustomerMenu = (props) => {
+const Order = (props) => {
     const { match, order } = props;
     const { globalState } = useContext(context);
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        async function updateRequest() {
+            await updateOrderWhenSeenAPI(match.params.restaurantid, match.params.tableid);
+        }
+        updateRequest();
+    }, []);
 
     const getOrderStatus = () => {
         let status = '';
@@ -135,50 +143,67 @@ const CustomerMenu = (props) => {
     return (
         <div className="order">
             <OrderHeader tableOrder={state.tableOrder} setState={setState} />
-            {order.dishes.length > 0
-                ? (
-                    <>
-                        <div className="content">
-                            {getOrderStatus()}
-                            <CustomerTopic header="Order" />
-                            {order.dishes.map((dish) => {
-                                return (
-                                    <div key={randomNumber()}>
-                                        {showDishCell(dish)}
-                                    </div>
-                                );
-                            })}
-                            <OrderSpecialInstructions
-                                specialInstructions={state.specialInstructions}
-                                setState={setState}
-                                helperText="Any other instructions? (Ex: Please start with starters)"
-                                addToOrderHandler={addToOrderHandler}
-                            />
-                            {order.comments.map((comment) => {
-                                return (
-                                    <div key={randomNumber()}>
-                                        {showCommentCell(comment)}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <OrderFooter totalPrice={getTotalPrice()} />
-                    </>
-                )
-                : (
-                    <>
-                        <div className="content-not-found">
-                            <CustomerNotFound text={CartEmpty} />
-                        </div>
-                    </>
-                )}
+            {order && order.dishes ? (
+                <>
+                    {order.dishes.length > 0
+                        ? (
+                            <>
+                                <div className="content">
+                                    {getOrderStatus()}
+                                    <CustomerTopic header="Order" />
+                                    {order && order.dishes ? (
+                                        <>
+                                            {order.dishes.map((dish) => {
+                                                return (
+                                                    <div key={randomNumber()}>
+                                                        {showDishCell(dish)}
+                                                    </div>
+                                                );
+                                            })}
+                                        </>
+                                    ) : null}
+                                    <OrderSpecialInstructions
+                                        specialInstructions={state.specialInstructions}
+                                        setState={setState}
+                                        helperText="Any other instructions? (Ex: Please start with starters)"
+                                        addToOrderHandler={addToOrderHandler}
+                                    />
+                                    {order && order.comments ? (
+                                        <>
+                                            {order.comments.map((comment) => {
+                                                return (
+                                                    <div key={randomNumber()}>
+                                                        {showCommentCell(comment)}
+                                                    </div>
+                                                );
+                                            })}
+                                        </>
+                                    ) : null}
+                                </div>
+                                <OrderFooter totalPrice={getTotalPrice()} />
+                            </>
+                        )
+                        : (
+                            <>
+                                <div className="content-not-found">
+                                    <CustomerNotFound text={CartEmpty} />
+                                </div>
+                            </>
+                        )}
+                </>
+            ) : null}
+
         </div>
     );
 };
 
-CustomerMenu.propTypes = {
+Order.propTypes = {
     match: PropTypes.object.isRequired,
-    order: PropTypes.object.isRequired,
+    order: PropTypes.object,
 };
 
-export default withRouter(React.memo(CustomerMenu));
+Order.defaultProps = {
+    order: {},
+};
+
+export default withRouter(React.memo(Order));

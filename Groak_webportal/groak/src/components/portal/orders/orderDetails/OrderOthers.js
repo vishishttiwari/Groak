@@ -88,7 +88,7 @@ const OrderOthers = (props) => {
         const serveDate = getCurrentDateTimePlusMinutes(serveTime);
         const data = { serveTime: serveDate, status: TableStatus.approved };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -98,7 +98,7 @@ const OrderOthers = (props) => {
     const setApprovedHandler = async () => {
         const data = { status: TableStatus.approved };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -117,7 +117,7 @@ const OrderOthers = (props) => {
     const servedClickHandler = async () => {
         const data = { status: TableStatus.served };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
     /**
@@ -126,14 +126,16 @@ const OrderOthers = (props) => {
     const makeAvailableHandler = async () => {
         const data = { status: TableStatus.available };
         history.goBack();
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
     const sendRequest = async () => {
-        const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
-        const data = { requests };
-        await updateRequestAPI(globalState.restaurantPortalIdPortal, orderId, data, enqueueSnackbar);
-        setRequestReply('');
+        if (requestReply && requestReply.length > 0) {
+            const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
+            const data = { requests };
+            await updateRequestAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
+            setRequestReply('');
+        }
     };
 
     return (
@@ -265,7 +267,7 @@ const OrderOthers = (props) => {
             {comments ? (
                 <Card className="card">
                     <CardHeader
-                        title="Comments"
+                        title="Special Instructions"
                     />
                     <CardContent>
                         {comments.map((comment) => {
@@ -284,7 +286,7 @@ const OrderOthers = (props) => {
                                         color="textSecondary"
                                         component="p"
                                     >
-                                        {`Commented at: ${getTimeInAMPMFromTimeStamp(comment.created)}`}
+                                        {`Asked at: ${getTimeInAMPMFromTimeStamp(comment.created)}`}
                                     </Typography>
                                 </div>
                             );
@@ -314,7 +316,7 @@ const OrderOthers = (props) => {
                                     color="textSecondary"
                                     component="p"
                                 >
-                                    {`$${getPrice(dish.price)}`}
+                                    {`${getPrice(dish.price)}`}
                                 </Typography>
                             </div>
                         );

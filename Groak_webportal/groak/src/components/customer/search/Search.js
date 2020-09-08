@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 
 import Spinner from '../../ui/spinner/Spinner';
 import SearchHeader from './SearchHeader';
-import { frontDoorQRMenuPageId, randomNumber } from '../../../catalog/Others';
+import { frontDoorQRMenuPageId, randomNumber, showDishDetails } from '../../../catalog/Others';
 import { fetchCategoriesAPI } from './SearchAPICalls';
 import './css/Search.css';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
@@ -67,42 +67,12 @@ const Menu = (props) => {
      * @param {*} dish this is the dish that is passed
      */
     function menuDishHandler(dish) {
-        let showDish = false;
-
-        if (dish.calories && dish.calories > 0) {
-            showDish = true;
-        }
-        if (dish.fats && dish.fats > 0) {
-            showDish = true;
-        }
-        if (dish.protein && dish.protein > 0) {
-            showDish = true;
-        }
-        if (dish.carbs && dish.carbs > 0) {
-            showDish = true;
-        }
-
-        if (dish.vegetarian && dish.vegetarian !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.vegan && dish.vegan !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.glutenFree && dish.glutenFree !== 'Not Sure') {
-            showDish = true;
-        }
-        if (dish.kosher && dish.kosher !== 'Not Sure') {
-            showDish = true;
-        }
-
-        if (dish.description && dish.description.length > 0) {
-            showDish = true;
-        }
-
-        if (showDish) {
-            history.push(`/customer/dish/${match.params.restaurantid}/${dish.id}`);
-        } else {
-            history.push(`/customer/addtocart/${match.params.restaurantid}/${dish.id}`);
+        if (globalState && globalState.orderAllowedCustomer) {
+            if (showDishDetails(dish)) {
+                history.push(`/customer/dish/${match.params.restaurantid}/${dish.id}`);
+            } else {
+                history.push(`/customer/addtocart/${match.params.restaurantid}/${dish.id}`);
+            }
         }
     }
 

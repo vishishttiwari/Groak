@@ -78,7 +78,7 @@ const RestaurantSettings = (props) => {
             enqueueSnackbar(InvalidRestaurantName, { variant: 'error' });
             return;
         }
-        await updateRestaurantAPI(globalState.restaurantPortalIdPortal, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
+        await updateRestaurantAPI(globalState.restaurantIdPortal, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
     };
 
     return (

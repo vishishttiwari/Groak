@@ -49,6 +49,12 @@
           flex-flow: column;
 }
 
+@media (max-width: 700px) {
+  .order-details .order-details-row .order-details-col {
+    width: 100%;
+  }
+}
+
 .order-details .order-details-row .order-details-col .order-dishes {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -63,7 +69,7 @@
       -ms-flex-pack: left;
           justify-content: left;
   width: 100%;
-  height: 0;
+  height: auto;
 }
 
 @media (max-width: 700px) {
@@ -76,39 +82,8 @@
   }
 }
 
-.order-details .order-details-row .order-details-col .order-dishes .card {
-  width: 300px;
-  margin-bottom: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
-          box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
-  height: 300px;
-}
-
 .order-details .order-details-row .order-details-col .order-dishes .card .card-content {
-  overflow: scroll;
-}
-
-.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-extra {
-  margin-bottom: 20px;
-}
-
-.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-extra .dish-extra-options {
-  margin-left: 20px;
-  text-transform: 'capitalize';
-}
-
-.order-details .order-details-row .order-details-col .order-dishes .card .card-content .dish-price {
-  margin-left: 20px;
-  text-transform: 'capitalize';
+  white-space: pre-wrap;
 }
 
 .order-details .order-details-row .order-details-col .order-dishes .card .actions {

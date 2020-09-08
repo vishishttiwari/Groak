@@ -45,10 +45,10 @@ const Categories = (props) => {
 
     useEffect(() => {
         async function fetchCategories() {
-            await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar);
         }
         fetchCategories();
-    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
+    }, [globalState.restaurantIdPortal, enqueueSnackbar]);
 
     /**
      * This function is passed into the category component which is called everytime
@@ -57,7 +57,7 @@ const Categories = (props) => {
      * @param {*} changedCategory this is the category for which availability is changed
      */
     async function availableCategoryHandler(changedCategory) {
-        await changeAvailabilityOfCategoryAPI(globalState.restaurantPortalIdPortal, state.categories, setState, changedCategory, enqueueSnackbar);
+        await changeAvailabilityOfCategoryAPI(globalState.restaurantIdPortal, state.categories, setState, changedCategory, enqueueSnackbar);
     }
 
     /**
@@ -87,7 +87,7 @@ const Categories = (props) => {
             setState({ type: 'setCategories',
                 categories: updatedCategories,
             });
-            await changeCategoryOrderAPI(globalState.restaurantPortalIdPortal, updatedCategories.map((category) => {
+            await changeCategoryOrderAPI(globalState.restaurantIdPortal, updatedCategories.map((category) => {
                 return category.reference;
             }), enqueueSnackbar);
         }

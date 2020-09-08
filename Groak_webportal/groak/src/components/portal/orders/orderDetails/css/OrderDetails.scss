@@ -22,13 +22,17 @@ $imageWidth: 40px;
             display: flex;
             flex-flow: column;
 
+            @media (max-width: $phoneMaxWidth) {
+                width: 100%;
+            }
+
             .order-dishes {
                 display: flex;
                 flex-flow: row;
                 flex-wrap: wrap;
                 justify-content: left;
                 width: 100%;
-                height: 0;
+                height: auto;
     
                 @media (max-width: $phoneMaxWidth) {
                     width: 100%;
@@ -37,31 +41,9 @@ $imageWidth: 40px;
                 }
     
                 .card {
-                    width: $cardWidth;
-                    margin-bottom: $cardMargin;
-                    margin-left: $cardMargin/2;
-                    margin-right: $cardMargin/2;
-                    display: flex;
-                    flex-flow: column;
-                    box-shadow: $cardShadow;
-                    height: 300px;
     
                     .card-content {
-                        overflow: scroll;
-    
-                        .dish-extra {
-                            margin-bottom: $cardMargin;
-            
-                            .dish-extra-options {
-                                margin-left: $commentMarginLeft;
-                                text-transform: 'capitalize';
-                            }
-                        }
-            
-                        .dish-price {
-                            margin-left: $commentMarginLeft;
-                            text-transform: 'capitalize';
-                        }
+                        white-space: pre-wrap;
                     }
     
                     .actions {
@@ -74,7 +56,6 @@ $imageWidth: 40px;
                         justify-content: space-between;
     
                         .dish-price {
-                            // margin-left: 10px;
                             text-transform: 'capitalize';
                         }
     
@@ -82,7 +63,6 @@ $imageWidth: 40px;
                             min-width: 150px;
                             margin: 0;
                             font-size: $buttonFontSize - 3px;
-                            // margin-right: 10px;
                         }
                     }
                 }

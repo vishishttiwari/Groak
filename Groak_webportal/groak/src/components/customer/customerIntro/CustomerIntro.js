@@ -10,30 +10,24 @@ import Menu from '../menu/Menu';
 import Cart from '../cart/Cart';
 import Order from '../order/Order';
 import Covid from '../covid/Covid';
-import { fetchCategoriesAPI, fetchOrderAPI, unsubscribeFetchOrderAPI, updateOrderAPI } from './CustomerIntroAPICalls';
+import { fetchCategoriesAPI, unsubscribeFetchOrderAPI } from './CustomerIntroAPICalls';
 import Spinner from '../../ui/spinner/Spinner';
-import { frontDoorQRMenuPageId, TableStatus } from '../../../catalog/Others';
+import { frontDoorQRMenuPageId } from '../../../catalog/Others';
 import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
+import { deleteAllLocalStorageAfter6Hours } from '../../../catalog/LocalStorage';
 
-const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, tabValue: 0, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchMenuItems':
-            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false };
+            return { ...state, menuItems: action.menuItems, categoryNames: action.categoryNames, restaurant: action.restaurant, order: action.order, loadingSpinner: false, restaurantNotFound: false, categoriesNotFound: false };
         case 'fetchOrder':
             return { ...state, order: action.order };
-        case 'changeTabValue':
-            if (action.tabValue !== state.tabValue) {
-                return { ...state, tabValue: action.tabValue };
-            }
-            return { ...state };
         case 'updated':
             return { ...state, updated: !state.updated };
-        case 'updatedCart':
-            return { ...state, updated: !state.updated, tabValue: 0 };
         case 'restaurantNotFound':
             return { ...state, restaurantNotFound: true, loadingSpinner: false };
         case 'categoriesNotFound':
@@ -46,7 +40,7 @@ function reducer(state, action) {
 const CustomerIntro = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
-    const { setGlobalState } = useContext(context);
+    const { globalState, setGlobalState } = useContext(context);
     const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -58,21 +52,15 @@ const CustomerIntro = (props) => {
         });
 
         async function fetchCategoriesAndRestaurant() {
-            await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
-        }
-        async function fetchOrder() {
-            await fetchOrderAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
-        }
-        async function updateOrder() {
-            await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.seated, enqueueSnackbar);
+            await fetchCategoriesAPI(match.params.restaurantid, match.params.tableid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
         }
         fetchCategoriesAndRestaurant();
-        fetchOrder();
-        updateOrder();
 
         setTimeout(() => {
             history.replace('/');
         }, timeoutValueForCustomer);
+
+        deleteAllLocalStorageAfter6Hours(match.params.restaurantid);
 
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
@@ -80,13 +68,13 @@ const CustomerIntro = (props) => {
     }, []);
 
     const getTabPanel = () => {
-        if (state.tabValue === 0) {
+        if (globalState.tabValueCustomer === 0) {
             return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
-        } if (state.tabValue === 1) {
+        } if (globalState.tabValueCustomer === 1) {
             return <Cart setState={setState} />;
-        } if (state.tabValue === 2) {
+        } if (globalState.tabValueCustomer === 2) {
             return <Order order={state.order} />;
-        } if (state.tabValue === 3) {
+        } if (globalState.tabValueCustomer === 3) {
             return <Covid restaurant={state.restaurant} />;
         }
         return null;
@@ -107,8 +95,12 @@ const CustomerIntro = (props) => {
                     ) : (
                         <>
                             {getTabPanel()}
-                            <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} />
-                            <CustomerTabBar restaurantId={match.params.restaurantid} value={state.tabValue} setState={setState} />
+                            {globalState && globalState.orderAllowedCustomer ? (
+                                <>
+                                    <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
+                                    <CustomerTabBar restaurantId={match.params.restaurantid} visible={state && state.order && state.order.newOrderUpdateForUser} />
+                                </>
+                            ) : null}
                         </>
                     )}
                 </>

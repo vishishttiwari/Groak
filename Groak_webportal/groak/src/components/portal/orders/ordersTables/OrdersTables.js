@@ -91,14 +91,14 @@ const Orders = (props) => {
 
     useEffect(() => {
         async function fetchOrders() {
-            await fetchOrdersAPI(globalState.restaurantPortalIdPortal, state, setState, enqueueSnackbar);
+            await fetchOrdersAPI(globalState.restaurantIdPortal, state, setState, enqueueSnackbar);
         }
         fetchOrders();
 
         return () => {
             unsubscribeFetchOrdersAPI(enqueueSnackbar);
         };
-    }, [enqueueSnackbar, globalState.restaurantPortalIdPortal]);
+    }, [enqueueSnackbar, globalState.restaurantIdPortal]);
 
     /**
      * This function is used whenever the order row is pressed
@@ -118,7 +118,7 @@ const Orders = (props) => {
     const servedClickHandler = async (event, id) => {
         event.stopPropagation();
         const data = { status: TableStatus.served };
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, id, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, id, data, enqueueSnackbar);
     };
 
     /**
@@ -130,7 +130,7 @@ const Orders = (props) => {
     const paidClickHandler = async (event, id) => {
         event.stopPropagation();
         const data = { status: TableStatus.available };
-        await updateOrderAPI(globalState.restaurantPortalIdPortal, id, data, enqueueSnackbar);
+        await updateOrderAPI(globalState.restaurantIdPortal, id, data, enqueueSnackbar);
     };
 
     return (

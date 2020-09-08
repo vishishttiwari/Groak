@@ -34,9 +34,9 @@ function reducer(state, action) {
     }
 }
 
-const CustomerMenu = (props) => {
+const Cart = (props) => {
     const { history, match, setState } = props;
-    const { globalState } = useContext(context);
+    const { globalState, setGlobalState } = useContext(context);
     const [state, setStateHere] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -56,7 +56,8 @@ const CustomerMenu = (props) => {
     const deletionHandler = (open) => {
         if (open) {
             deleteCart(match.params.restaurantid);
-            setState({ type: 'updatedCart' });
+            setState({ type: 'updated' });
+            setGlobalState({ type: 'setTabValueCustomer', tabValue: 0 });
         } else {
             setStateHere({ type: 'changeDeletionConfirmation', deletionConfirmation: false });
         }
@@ -71,7 +72,8 @@ const CustomerMenu = (props) => {
                         if (nearRestaurant) {
                             await addOrderFirestoreAPI(match.params.restaurantid, match.params.tableid, cart, state.specialInstructions);
                             deleteCart(match.params.restaurantid);
-                            setState({ type: 'updatedCart' });
+                            setState({ type: 'updated' });
+                            setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
                         } else {
                             enqueueSnackbar('Seems like you are not at the restaurant. Please order while you are at the restaurant.', { variant: 'error' });
                         }
@@ -142,10 +144,10 @@ const CustomerMenu = (props) => {
     );
 };
 
-CustomerMenu.propTypes = {
+Cart.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     setState: PropTypes.func.isRequired,
 };
 
-export default withRouter(React.memo(CustomerMenu));
+export default withRouter(React.memo(Cart));

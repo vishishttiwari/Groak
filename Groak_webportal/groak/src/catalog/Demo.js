@@ -99,6 +99,11 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
         dishes: [createDishReference(restaurantId, dishId)],
         categories: [createCategoryReference(restaurantId, categoryId)],
         location: createGeoPoint(address.latitude, address.longitude),
+        allowOrdering: {
+            restaurant: false,
+            groak: true,
+        },
+        pos: '',
     };
 };
 
@@ -215,6 +220,7 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
         status: TableStatus.ordered,
         newRequest: false,
         newRequestForUser: true,
+        newOrderUpdateForUser: false,
         sessionIds: [],
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: 0,
@@ -242,6 +248,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         serveTime: getCurrentDateTimePlusMinutes(30),
         newRequest: false,
         newRequestForUser: true,
+        newOrderUpdateForUser: false,
         sessionIds: [],
         table: DemoTableName,
         reference: createOrderReference(restaurantId, orderId),

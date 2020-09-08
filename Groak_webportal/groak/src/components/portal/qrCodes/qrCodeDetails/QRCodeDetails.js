@@ -61,10 +61,10 @@ const QRCodeDetails = (props) => {
 
     useEffect(() => {
         async function fetchQRCodeAndCategories() {
-            await Promise.all([await fetchQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodeAPI(globalState.restaurantIdPortal, match.params.qrcodeid, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar)]);
         }
         async function fetchCategories() {
-            await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
+            await fetchCategoriesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar);
         }
         if (match.params.qrcodeid !== 'addQRCode' && match.params.qrcodeid !== 'newQRCode') {
             fetchQRCodeAndCategories();
@@ -72,7 +72,7 @@ const QRCodeDetails = (props) => {
         } else {
             fetchCategories();
         }
-    }, [match.params.qrcodeid, enqueueSnackbar, globalState.restaurantPortalIdPortal]);
+    }, [match.params.qrcodeid, enqueueSnackbar, globalState.restaurantIdPortal]);
 
     /**
      * Used for creating a qr code object whensaving or updating
@@ -85,8 +85,8 @@ const QRCodeDetails = (props) => {
                 return createCategoryReferenceFromPath(categoryPath);
             }),
             restaurantName: globalState.restaurantPortal.name,
-            restaurantReference: createRestaurantReference(globalState.restaurantPortalIdPortal),
-            reference: createQRCodeReference(globalState.restaurantPortalIdPortal, qrCodeId),
+            restaurantReference: createRestaurantReference(globalState.restaurantIdPortal),
+            reference: createQRCodeReference(globalState.restaurantIdPortal, qrCodeId),
         };
     };
 
@@ -133,9 +133,9 @@ const QRCodeDetails = (props) => {
         setState({ type: 'setLoadingSpinner', loadingSpinner: true });
         if (state.newQRCode) {
             const qrCodeid = randomNumber();
-            await addQRCodeAPI(globalState.restaurantPortalIdPortal, qrCodeid, createQRCode(qrCodeid), enqueueSnackbar);
+            await addQRCodeAPI(globalState.restaurantIdPortal, qrCodeid, createQRCode(qrCodeid), enqueueSnackbar);
         } else {
-            await updateQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, createQRCode(match.params.qrcodeid), enqueueSnackbar);
+            await updateQRCodeAPI(globalState.restaurantIdPortal, match.params.qrcodeid, createQRCode(match.params.qrcodeid), enqueueSnackbar);
         }
         history.goBack();
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
@@ -147,7 +147,7 @@ const QRCodeDetails = (props) => {
     const deleteHandler = async () => {
         if (!state.newQRCode) {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
-            await deleteQRCodeAPI(globalState.restaurantPortalIdPortal, match.params.qrcodeid, enqueueSnackbar);
+            await deleteQRCodeAPI(globalState.restaurantIdPortal, match.params.qrcodeid, enqueueSnackbar);
             history.goBack();
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         }

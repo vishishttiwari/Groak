@@ -48,10 +48,10 @@ const QRCodes = (props) => {
 
     useEffect(() => {
         async function fetchQRCodesAndCategories() {
-            await Promise.all([await fetchQRCodesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar)]);
+            await Promise.all([await fetchQRCodesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar), await fetchCategoriesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar)]);
         }
         fetchQRCodesAndCategories();
-    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
+    }, [globalState.restaurantIdPortal, enqueueSnackbar]);
 
     /**
      * This is called when something needs to be saved permanently on database
@@ -59,7 +59,7 @@ const QRCodes = (props) => {
      * @param {*} changedQRCode
      */
     async function updateQRCodePermanentlyHandler(changedQRCode) {
-        await updateQRCodeAPI(globalState.restaurantPortalIdPortal, changedQRCode.id, changedQRCode, enqueueSnackbar);
+        await updateQRCodeAPI(globalState.restaurantIdPortal, changedQRCode.id, changedQRCode, enqueueSnackbar);
         setState({ type: 'setQRCodes',
             updatedQRCodes: state.qrCodes.map((qrCode) => {
                 if (qrCode.id !== changedQRCode.id) { return qrCode; }
@@ -115,7 +115,7 @@ const QRCodes = (props) => {
             setState({ type: 'setQRCodes',
                 updatedQRCodes,
             });
-            await changeQRCodeOrderAPI(globalState.restaurantPortalIdPortal, updatedQRCodes.map((qrCode) => {
+            await changeQRCodeOrderAPI(globalState.restaurantIdPortal, updatedQRCodes.map((qrCode) => {
                 return qrCode.reference;
             }), enqueueSnackbar);
         }

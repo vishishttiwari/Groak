@@ -1,3 +1,5 @@
+import { getCurrentDateTime } from './TimesDates';
+
 export const saveToCart = (restaurantId, item) => {
     let cart = JSON.parse(localStorage.getItem(`groak-${restaurantId}-cart`));
     if (!cart) {
@@ -5,6 +7,7 @@ export const saveToCart = (restaurantId, item) => {
     }
     cart.push(item);
     localStorage.setItem(`groak-${restaurantId}-cart`, JSON.stringify(cart));
+    localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
 };
 
 export const fetchCart = (restaurantId) => {
@@ -44,6 +47,7 @@ export const saveOrder = (restaurantId, itemIds) => {
         order.push(item);
     });
     localStorage.setItem(`groak-${restaurantId}-order`, JSON.stringify(order));
+    localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
 };
 
 export const fetchOrder = (restaurantId) => {
@@ -66,6 +70,10 @@ export const deleteOrder = (restaurantId) => {
     localStorage.removeItem(`groak-${restaurantId}-order`);
 };
 
-export const deleteAllLocalStorageAfter6Hours = () => {
-    // see the timings and delete all local storage items before 6 hours
+export const deleteAllLocalStorageAfter6Hours = (restaurantId) => {
+    const updatedTime = new Date(JSON.parse(localStorage.getItem(`groak-${restaurantId}-time`)));
+    updatedTime.setHours(updatedTime.getHours() + 6);
+    if (updatedTime <= getCurrentDateTime()) {
+        localStorage.clear();
+    }
 };

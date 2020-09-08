@@ -45,10 +45,10 @@ const Dishes = (props) => {
 
     useEffect(() => {
         async function fetchDishes() {
-            await fetchDishesAPI(globalState.restaurantPortalIdPortal, setState, enqueueSnackbar);
+            await fetchDishesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar);
         }
         fetchDishes();
-    }, [globalState.restaurantPortalIdPortal, enqueueSnackbar]);
+    }, [globalState.restaurantIdPortal, enqueueSnackbar]);
 
     /**
      * This function is passed into the dish component which is called everytime
@@ -57,7 +57,7 @@ const Dishes = (props) => {
      * @param {*} changedDish this is the dish for which availability is changed
      */
     const availableDishHandler = async (changedDish) => {
-        await changeAvailabilityOfDishAPI(globalState.restaurantPortalIdPortal, state.dishes, setState, changedDish, enqueueSnackbar);
+        await changeAvailabilityOfDishAPI(globalState.restaurantIdPortal, state.dishes, setState, changedDish, enqueueSnackbar);
     };
 
     /**
@@ -87,7 +87,7 @@ const Dishes = (props) => {
             setState({ type: 'setDishes',
                 dishes: updatedDishes,
             });
-            await changeDishOrderAPI(globalState.restaurantPortalIdPortal, updatedDishes.map((dish) => {
+            await changeDishOrderAPI(globalState.restaurantIdPortal, updatedDishes.map((dish) => {
                 return dish.reference;
             }), enqueueSnackbar);
         }

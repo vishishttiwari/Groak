@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
 import { Paper, Tabs, Tab, Badge } from '@material-ui/core';
+import { context } from '../../../../globalState/globalState';
+
 import './css/CustomTabBar.css';
 import Menu from '../../../../assets/icons/tabbar/menu.png';
 import Cart from '../../../../assets/icons/tabbar/waiter.png';
@@ -10,13 +11,16 @@ import Covid from '../../../../assets/icons/tabbar/corona.png';
 import { fetchCart } from '../../../../catalog/LocalStorage';
 
 const CustomerTabBar = (props) => {
-    const { restaurantId, value, setState } = props;
+    const { restaurantId, visible } = props;
+    const { globalState, setGlobalState } = useContext(context);
 
     return (
         <Paper square className="tabbar">
             <Tabs
-                value={value}
-                onChange={(event, newValue) => { setState({ type: 'changeTabValue', tabValue: newValue }); }}
+                value={globalState.tabValueCustomer}
+                onChange={(event, newValue) => {
+                    setGlobalState({ type: 'setTabValueCustomer', tabValue: newValue });
+                }}
                 variant="fullWidth"
                 indicatorColor="primary"
                 textColor="primary"
@@ -34,7 +38,18 @@ const CustomerTabBar = (props) => {
                     )}
                     label="Cart"
                 />
-                <Tab icon={<img className="icons" src={Table} alt="Order" />} label="Order" />
+                <Tab
+                    icon={(
+                        <Badge
+                            color="primary"
+                            variant="dot"
+                            invisible={!visible}
+                        >
+                            <img className="icons" src={Table} alt="Order" />
+                        </Badge>
+                    )}
+                    label="Order"
+                />
                 <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
             </Tabs>
         </Paper>
@@ -43,8 +58,11 @@ const CustomerTabBar = (props) => {
 
 CustomerTabBar.propTypes = {
     restaurantId: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
-    setState: PropTypes.func.isRequired,
+    visible: PropTypes.bool,
+};
+
+CustomerTabBar.defaultProps = {
+    visible: false,
 };
 
 export default React.memo(CustomerTabBar);

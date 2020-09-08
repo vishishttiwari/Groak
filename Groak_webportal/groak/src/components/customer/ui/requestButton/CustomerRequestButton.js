@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Fab } from '@material-ui/core';
+import { Fab, Badge } from '@material-ui/core';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import { withRouter } from 'react-router-dom';
 
 const CustomerRequestButton = (props) => {
-    const { history, restaurantId, tableId } = props;
+    const { history, restaurantId, tableId, visible } = props;
 
     return (
         <Fab
@@ -18,12 +18,14 @@ const CustomerRequestButton = (props) => {
                 bottom: '150px',
                 zIndex: '30',
             }}
-            color="primary"
+            color="secondary"
             onClick={() => {
                 history.push(`/customer/requests/${restaurantId}/${tableId}`);
             }}
         >
-            <QuestionAnswerIcon />
+            <Badge color="primary" variant="dot" invisible={!visible}>
+                <QuestionAnswerIcon color="primary" />
+            </Badge>
         </Fab>
     );
 };
@@ -32,6 +34,11 @@ CustomerRequestButton.propTypes = {
     history: PropTypes.object.isRequired,
     restaurantId: PropTypes.string.isRequired,
     tableId: PropTypes.string.isRequired,
+    visible: PropTypes.bool,
+};
+
+CustomerRequestButton.defaultProps = {
+    visible: false,
 };
 
 export default withRouter(React.memo(CustomerRequestButton));
