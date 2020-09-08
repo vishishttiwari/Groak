@@ -1,18 +1,18 @@
-import { getPreciseDistance } from 'geolib';
+import { getDistance } from 'geolib';
 
-const distanceThresholdMeters = 1000;
+const distanceThresholdMeters = 200;
 
 export const isNearRestaurant = async (latitude, longitude, snackbar) => {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(async (position) => {
-            const distance = getPreciseDistance(
+            const distance = getDistance(
                 {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
                 }, {
                     latitude,
                     longitude,
-                }, 0.01,
+                }, 1,
             );
 
             if (distance) {

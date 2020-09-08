@@ -78,18 +78,14 @@ export const fetchOrderAPI = async (restaurant, restaurantId, orderId, setState,
                 setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: true });
                 await updateOrderAPI(restaurantId, orderId, TableStatus.seated);
             } else {
-                setState({
-                    type: 'fetchOrder',
-                    order: {},
-                });
+                setState({ type: 'fetchOrder', order: {} });
+                setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
             }
         };
         orderSnapshot = await fetchOrderFirestoreAPI(restaurantId, orderId, getOrder);
     } catch (error) {
-        setState({
-            type: 'fetchOrder',
-            order: {},
-        });
+        setState({ type: 'fetchOrder', order: {} });
+        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
     }
 };
 

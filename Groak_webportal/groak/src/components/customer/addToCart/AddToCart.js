@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createRef, useContext } from 'react';
+import React, { useEffect, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -41,16 +41,7 @@ const AddToCart = (props) => {
     const { history, match } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
-    const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
-
-    useEffect(() => {
-        top.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'start',
-        });
-    }, [top]);
 
     useEffect(() => {
         if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
@@ -128,7 +119,6 @@ const AddToCart = (props) => {
 
     return (
         <div className="customer addtocart">
-            <p ref={top}> </p>
             <Spinner show={state.loadingSpinner} />
             {
                 !state.loadingSpinner ? (

@@ -57,7 +57,7 @@ function App() {
                 <SnackbarProvider maxSnack={10}>
                     <ThemeProvider theme={theme}>
                         <Provider value={{ globalState, setGlobalState }}>
-                            <Layout allowedURLSegments={['privacypolicy', 'customer', 'signin', 'signup', 'contactus', 'requestademo']}>
+                            <Layout allowedURLSegments={['privacypolicy', 'menu', 'customermenu', 'customer', 'signin', 'signup', 'contactus', 'requestademo']}>
                                 <Suspense fallback={<Spinner show />}>
                                     <Switch>
                                         <Route path="/privacypolicy" exact render={() => { return <PrivacyPolicy />; }} />
@@ -86,7 +86,7 @@ function App() {
                                         <Route path="/customer/requests/:restaurantid/:tableid" exact render={() => { return <CustomerRequests />; }} />
                                         <Route path="/customer/receipt/:restaurantid/:tableid" exact render={() => { return <CustomerReceipt />; }} />
                                         <Redirect from="/qrmenupage" to="/tables" exact />
-                                        <Redirect from="/menu/:restaurantid/:tableid/:qrcodeid" to="/customer/menu/:restaurantid/:tableid/:qrcodeid" exact />
+                                        <Redirect from="/menu/:restaurantid/:tableid/:qrcodeid" to="/customer/menu/:restaurantid/:tableid/:qrcodeid" />
                                         <Redirect from="/customermenu/:restaurantid/:tableid/:qrcodeid" to="/customer/menu/:restaurantid/:tableid/:qrcodeid" />
                                         <Route path="/" exact render={() => { return <HomePage />; }} />
                                         <Route render={() => { return <Redirect to={{ pathname: '/' }} />; }} />

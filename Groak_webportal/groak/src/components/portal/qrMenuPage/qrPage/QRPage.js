@@ -52,7 +52,7 @@ const QRPage = (props) => {
                                     return (qrCode && qrCode.path && qrCodesMap.get(qrCode.path) && qrCodesMap.get(qrCode.path).id
                                         ? (
                                             <View key={qrCode.path} style={styles1.qr}>
-                                                <Image style={styles1.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=https://groakapp.com/customermenu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
+                                                <Image style={styles1.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=https://groakapp.com/customer/menu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
                                                 <Text style={styles1.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
                                             </View>
                                         ) : null
@@ -81,7 +81,7 @@ const QRPage = (props) => {
                                 return (qrCode
                                     ? (
                                         <View key={qrCode.path} style={styles2.qr}>
-                                            <Image style={styles2.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
+                                            <Image style={styles2.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customer/menu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
                                             <Text style={styles2.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
                                         </View>
                                     ) : null
@@ -109,7 +109,7 @@ const QRPage = (props) => {
                                 return (qrCode
                                     ? (
                                         <View key={qrCode.path} style={styles3.qr}>
-                                            <Image style={styles3.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customermenu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
+                                            <Image style={styles3.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=groakapp.com/customer/menu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
                                             <Text style={styles3.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
                                         </View>
                                     ) : null
