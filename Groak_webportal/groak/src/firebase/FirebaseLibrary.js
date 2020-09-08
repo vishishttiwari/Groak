@@ -24,9 +24,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 export const db = firebase.firestore();
+export const analytics = firebase.analytics();
 export const createGeoPoint = (latitude, longitude) => {
     return new firebase.firestore.GeoPoint(latitude, longitude);
 };

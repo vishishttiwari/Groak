@@ -42,7 +42,6 @@ const CustomerTabBar = (props) => {
                     icon={(
                         <Badge
                             color="primary"
-                            variant="dot"
                             invisible={!visible}
                         >
                             <img className="icons" src={Table} alt="Order" />

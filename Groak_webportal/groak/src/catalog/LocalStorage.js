@@ -27,6 +27,15 @@ export const fetchCartItem = (restaurantId, index) => {
     return cart[index];
 };
 
+export const updateCartItem = (restaurantId, index, item) => {
+    const cart = JSON.parse(localStorage.getItem(`groak-${restaurantId}-cart`));
+    if (!cart || cart.length <= 0) {
+        return;
+    }
+    cart.splice(index, 1, item);
+    localStorage.setItem(`groak-${restaurantId}-cart`, JSON.stringify(cart));
+};
+
 export const deleteCart = (restaurantId) => {
     localStorage.removeItem(`groak-${restaurantId}-cart`);
 };

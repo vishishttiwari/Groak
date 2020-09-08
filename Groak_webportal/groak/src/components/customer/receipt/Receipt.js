@@ -41,15 +41,18 @@ const Receipt = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
-            history.replace('/');
-        }
-
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
+            history.replace('/');
+        }
+
         async function fetchOrder() {
             await fetchOrderAPI(match.params.restaurantid, match.params.tableid, setState, enqueueSnackbar);
         }
@@ -62,7 +65,7 @@ const Receipt = (props) => {
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
         };
-    }, []);
+    }, [enqueueSnackbar, globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.restaurantid, match.params.tableid]);
 
     const getTotalPrice = () => {
         let price = 0;

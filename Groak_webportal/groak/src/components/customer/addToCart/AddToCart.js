@@ -45,15 +45,17 @@ const AddToCart = (props) => {
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
-            history.replace('/');
-        }
-
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
+            history.replace('/');
+        }
         async function fetchDish() {
             await fetchDishAPI(match.params.restaurantid, match.params.dishid, setState);
         }
@@ -62,7 +64,7 @@ const AddToCart = (props) => {
         setTimeout(() => {
             history.replace('/');
         }, timeoutValueForCustomer);
-    }, []);
+    }, [globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.dishid, match.params.restaurantid]);
 
     const addToCartHandler = () => {
         const extras = [];

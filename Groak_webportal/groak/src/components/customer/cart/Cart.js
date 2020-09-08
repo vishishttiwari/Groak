@@ -14,10 +14,11 @@ import CartItemCell from './CartItemCell';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
 import { CartEmpty } from '../../../catalog/Comments';
 import Decision from '../../ui/decision/Decision';
-import { addOrderFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { isNearRestaurant } from '../../../catalog/Distance';
 import { context } from '../../../globalState/globalState';
 import Spinner from '../../ui/spinner/Spinner';
+import { analytics } from '../../../firebase/FirebaseLibrary';
+import { addOrderAPI } from './CartAPICalls';
 
 const initialState = { specialInstructions: '', deletionConfirmation: false, loadingSpinner: false };
 
@@ -70,10 +71,11 @@ const Cart = (props) => {
                 isNearRestaurant(globalState.restaurantCustomer.location.latitude, globalState.restaurantCustomer.location.longitude, enqueueSnackbar)
                     .then(async (nearRestaurant) => {
                         if (nearRestaurant) {
-                            await addOrderFirestoreAPI(match.params.restaurantid, match.params.tableid, cart, state.specialInstructions);
+                            await addOrderAPI(match.params.restaurantid, match.params.tableid, cart, state.specialInstructions);
                             deleteCart(match.params.restaurantid);
                             setState({ type: 'updated' });
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
+                            analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
                         } else {
                             enqueueSnackbar('Seems like you are not at the restaurant. Please order while you are at the restaurant.', { variant: 'error' });
                         }

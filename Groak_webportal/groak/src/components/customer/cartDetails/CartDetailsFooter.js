@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
 const CartDetailsFooter = (props) => {
-    const { history, totalPrice } = props;
+    const { totalPrice, cartItemUpdate } = props;
 
     return (
         <div className="footer">
@@ -14,6 +13,7 @@ const CartDetailsFooter = (props) => {
                 variant="contained"
                 className="footer-button"
                 onClick={() => {
+                    cartItemUpdate();
                 }}
             >
                 Update Cart
@@ -23,8 +23,8 @@ const CartDetailsFooter = (props) => {
 };
 
 CartDetailsFooter.propTypes = {
-    history: PropTypes.object.isRequired,
     totalPrice: PropTypes.number.isRequired,
+    cartItemUpdate: PropTypes.func.isRequired,
 };
 
-export default withRouter(React.memo(CartDetailsFooter));
+export default React.memo(CartDetailsFooter);

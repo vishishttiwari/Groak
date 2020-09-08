@@ -44,7 +44,7 @@ const Order = (props) => {
             await updateOrderWhenSeenAPI(match.params.restaurantid, match.params.tableid);
         }
         updateRequest();
-    }, []);
+    }, [match.params.restaurantid, match.params.tableid]);
 
     const getOrderStatus = () => {
         let status = '';

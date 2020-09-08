@@ -17,6 +17,7 @@ import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comment
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { deleteAllLocalStorageAfter6Hours } from '../../../catalog/LocalStorage';
+import { analytics } from '../../../firebase/FirebaseLibrary';
 
 const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
 
@@ -50,6 +51,10 @@ const CustomerIntro = (props) => {
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
+        analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
 
         async function fetchCategoriesAndRestaurant() {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.tableid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);
@@ -65,7 +70,7 @@ const CustomerIntro = (props) => {
         return () => {
             unsubscribeFetchOrderAPI(enqueueSnackbar);
         };
-    }, []);
+    }, [enqueueSnackbar, history, match.params.restaurantid, match.params.tableid, match.params.qrcodeid, setGlobalState]);
 
     const getTabPanel = () => {
         if (globalState.tabValueCustomer === 0) {

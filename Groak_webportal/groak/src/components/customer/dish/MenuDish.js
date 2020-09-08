@@ -31,14 +31,18 @@ const MenuDish = (props) => {
     const top = createRef(null);
 
     useEffect(() => {
-        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
-            history.replace('/');
-        }
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
+        if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
+            history.replace('/');
+        }
+
         async function fetchDish() {
             await fetchDishAPI(match.params.restaurantid, match.params.dishid, setState);
         }
@@ -47,7 +51,7 @@ const MenuDish = (props) => {
         setTimeout(() => {
             history.replace('/');
         }, timeoutValueForCustomer);
-    }, []);
+    }, [globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.dishid, match.params.restaurantid]);
 
     return (
         <div className="customer dish">

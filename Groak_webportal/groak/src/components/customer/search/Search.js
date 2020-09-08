@@ -41,15 +41,17 @@ const Menu = (props) => {
     const top = createRef(null);
 
     useEffect(() => {
-        if (!globalState.scannedCustomer) {
-            history.replace('/');
-        }
-
         top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
+        if (!globalState.scannedCustomer) {
+            history.replace('/');
+        }
 
         async function fetchCategoriesAndRestaurant() {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, enqueueSnackbar);
@@ -59,7 +61,7 @@ const Menu = (props) => {
         setTimeout(() => {
             history.replace('/');
         }, timeoutValueForCustomer);
-    }, [enqueueSnackbar]);
+    }, [enqueueSnackbar, globalState.scannedCustomer, history, match.params.qrcodeid, match.params.restaurantid, match.params.tableid]);
 
     /**
      * This function is called when each dish is pressed.

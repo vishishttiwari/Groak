@@ -7,9 +7,9 @@ import { Button } from '@material-ui/core';
 import CartDetailsHeader from './CartDetailsHeader';
 import CartDetailsFooter from './CartDetailsFooter';
 import CustomerTopic from '../ui/topic/CustomerTopic';
-import { fetchCartItem, deleteCartItem } from '../../../catalog/LocalStorage';
+import { fetchCartItem, deleteCartItem, updateCartItem } from '../../../catalog/LocalStorage';
 import './css/cartDetails.css';
-import { specialInstructionsId } from '../../../catalog/Others';
+import { showExtras } from '../../../catalog/Others';
 import Spinner from '../../ui/spinner/Spinner';
 import { context } from '../../../globalState/globalState';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
@@ -22,7 +22,7 @@ function reducer(state, action) {
         case 'fetchCartItem':
             return { ...state, cartItem: action.cartItem, index: action.index };
         case 'changeQuantity':
-            updatedCartItem = { ...state.cartItem, quantity: action.quantity };
+            updatedCartItem = { ...state.cartItem, quantity: action.quantity, price: action.quantity * state.cartItem.pricePerItem };
             return { ...state, cartItem: updatedCartItem };
         default:
             return initialState;
@@ -64,38 +64,11 @@ const CartDetails = (props) => {
         setTimeout(() => {
             history.replace('/');
         }, timeoutValueForCustomer);
-    }, []);
+    }, [globalState.orderAllowedCustomer, globalState.scannedCustomer, history, location.search, match.params.restaurantid]);
 
-    /**
-     * This function is used to show all the extras selected for a dish in cart and in order
-     *
-     * @param dishExtras
-     * @param showSpecialInstructions
-     * @return
-     */
-    const showExtras = (showSpecialInstructions) => {
-        let str = '';
-        state.cartItem.extras.forEach((extra) => {
-            if (extra.options.length > 0) {
-                if (extra.title !== specialInstructionsId) {
-                    str += `${extra.title}:\n`;
-                    extra.options.forEach((option) => {
-                        str += `\t-${option.title}: $${option.price.toFixed(2)}\n`;
-                    });
-                } else if (showSpecialInstructions) {
-                    str += 'Special Instructions:\n';
-                    extra.options.forEach((option) => {
-                        str += `\t-${option.title}: $${option.price.toFixed(2)}\n`;
-                    });
-                }
-            }
-        });
-
-        if (str.length > 2) {
-            if (str.endsWith('\n')) return str.substring(0, str.length - 1);
-            return str;
-        }
-        return str;
+    const cartItemUpdate = () => {
+        updateCartItem(match.params.restaurantid, state.index, state.cartItem);
+        history.goBack();
     };
 
     return (
@@ -108,10 +81,10 @@ const CartDetails = (props) => {
                     <>
                         <CartDetailsHeader dishName={state.cartItem.name} />
                         <div className="content">
-                            {state.cartItem.extras.length > 0 ? (
+                            {state.cartItem && state.cartItem.extras && state.cartItem.extras.length > 0 ? (
                                 <>
                                     <CustomerTopic header="Cart Item Details" />
-                                    <p className="cart-details-extras">{showExtras(true)}</p>
+                                    <p className="cart-details-extras">{showExtras(state.cartItem.extras, true)}</p>
                                 </>
                             ) : null}
                             <CustomerTopic header="Quantity" />
@@ -151,6 +124,7 @@ const CartDetails = (props) => {
                         </div>
                         <CartDetailsFooter
                             totalPrice={state.cartItem.price}
+                            cartItemUpdate={cartItemUpdate}
                         />
                     </>
                 ) : null

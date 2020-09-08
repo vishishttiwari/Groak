@@ -23,7 +23,10 @@ const CustomerRequestButton = (props) => {
                 history.push(`/customer/requests/${restaurantId}/${tableId}`);
             }}
         >
-            <Badge color="primary" variant="dot" invisible={!visible}>
+            <Badge
+                color="primary"
+                invisible={!visible}
+            >
                 <QuestionAnswerIcon color="primary" />
             </Badge>
         </Fab>

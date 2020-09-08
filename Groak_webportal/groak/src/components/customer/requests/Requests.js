@@ -57,7 +57,7 @@ const Requests = (props) => {
         return () => {
             unsubscribeFetchRequestAPI(enqueueSnackbar);
         };
-    }, [enqueueSnackbar]);
+    }, [enqueueSnackbar, globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.restaurantid, match.params.tableid]);
 
     useEffect(() => {
         if (state.requests && state.requests.length) {
@@ -69,7 +69,7 @@ const Requests = (props) => {
                 });
             }
         }
-    }, [state.request, requestEndRef]);
+    }, [state.requests, requestEndRef]);
 
     const sendHandler = async () => {
         if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {

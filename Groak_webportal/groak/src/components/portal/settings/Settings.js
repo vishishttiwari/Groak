@@ -23,6 +23,9 @@ function localReducer(state, action) {
         case 'setCovidMessage':
             updatedRestaurant = { ...state.restaurant, covidMessage: action.covidMessage };
             return { ...state, restaurant: updatedRestaurant };
+        case 'setAllowOrdering':
+            updatedRestaurant = { ...state.restaurant, allowOrdering: { restaurant: action.allowOrdering, groak: state.restaurant.allowOrdering.groak } };
+            return { ...state, restaurant: updatedRestaurant };
         case 'setLogo':
             return { ...state, logo: action.logo };
         case 'setImage':

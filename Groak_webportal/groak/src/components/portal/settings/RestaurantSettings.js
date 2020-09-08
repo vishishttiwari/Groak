@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
-import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip } from '@material-ui/core';
+import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip, FormControl } from '@material-ui/core';
 import { CloseRounded, CloudUpload } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { context } from '../../../globalState/globalState';
@@ -138,6 +138,18 @@ const RestaurantSettings = (props) => {
                 onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
+            <p>Allow Ordering:</p>
+            <FormControl disabled={!state.restaurant.allowOrdering.groak}>
+                <Select
+                    value={state.restaurant.allowOrdering.restaurant}
+                    onChange={(event) => { setState({ type: 'setAllowOrdering', allowOrdering: event.target.value }); }}
+                    label="Age"
+                    variant="outlined"
+                >
+                    <MenuItem value>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                </Select>
+            </FormControl>
             <p>
                 Front Door QR Menu Page (
                 {FrontDoorQRMenuPage}
