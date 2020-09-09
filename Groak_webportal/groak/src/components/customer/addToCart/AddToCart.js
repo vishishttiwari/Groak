@@ -1,3 +1,6 @@
+/**
+ * Thie class is used for the add to cart web page
+ */
 import React, { useEffect, useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -14,6 +17,7 @@ import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpeci
 import { OptionsExceedingMin } from '../../../catalog/NotificationsComments';
 import { context } from '../../../globalState/globalState';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
+import { LeaveNoteForKitchen } from '../../../catalog/Comments';
 
 const initialState = { dish: {}, optionsSelected: [], quantity: 1, totalPrice: 0, specialInstructions: '', loadingSpinner: true };
 
@@ -57,6 +61,11 @@ const AddToCart = (props) => {
         }, timeoutValueForCustomer);
     }, [globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.dishid, match.params.restaurantid]);
 
+    /**
+     * This adds the current dish to cart. It also gies back depending
+     * on if the /dish page was displayed before add to cart page.
+     * Cart is added to local storage.
+     */
     const addToCartHandler = () => {
         const extras = [];
         let success = true;
@@ -139,7 +148,7 @@ const AddToCart = (props) => {
                             <CustomerSpecialInstructions
                                 specialInstructions={state.specialInstructions}
                                 setState={setState}
-                                helperText="Leave a note for the kitchen"
+                                helperText={LeaveNoteForKitchen}
                             />
                         </div>
                         <AddToCartFooter

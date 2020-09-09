@@ -1,3 +1,5 @@
+import { getTimeInAMPMFromTimeStamp } from './TimesDates';
+
 /**
  * Random comments used through out the project.
  */
@@ -52,4 +54,23 @@ export const TablePayment = 'Customers are ready for the payment';
 export const FrontDoorQRMenuPage = 'Front door menu page will show the whole menu regardless of availability and timings. You can use this menu on the front door to help your customers view the full menu.';
 
 export const ImageSubjectToChange = 'Disclaimer: The images depicted are not representative of the services offered. Food images are subject to change';
+
 export const CartEmpty = 'You can add dishes from the menu tab';
+export const OrderEmpty = 'You can place your orders from the cart tab';
+
+export const OrderOrdered = 'Your order has been requested. Pending for approval.';
+export const OrderServed = 'Your order has been served. Enjoy!';
+export const OrderPayment = 'You have requested for payment. Someone will be at your table soon.';
+export const OrderAvailable = 'You can start ordering. Your orders will appear below.';
+export const OrderApproved = (serveTime) => {
+    return `Your order will be served at ${getTimeInAMPMFromTimeStamp(serveTime)}`;
+};
+
+export const LeaveNoteForKitchen = 'Leave a note for the kitchen';
+export const OtherInstructions = 'Any other instructions? (Ex: Please start with starters)';
+
+export const EmptyCartMessage = 'Would you like to empty the cart?';
+export const PaymentMessage = 'We will send a waiter to your table for payment. Would you like to continue?';
+
+export const CovidMessageSubheader = 'Measures taken by restaurant to reduce the spread';
+export const CovidGuidelineSubheader = 'Covid guidelines in your area';

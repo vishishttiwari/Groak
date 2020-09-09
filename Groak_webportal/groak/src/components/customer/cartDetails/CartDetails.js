@@ -1,3 +1,6 @@
+/**
+ * The class is used to represent the cart details
+ */
 import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -66,6 +69,9 @@ const CartDetails = (props) => {
         }, timeoutValueForCustomer);
     }, [globalState.orderAllowedCustomer, globalState.scannedCustomer, history, location.search, match.params.restaurantid]);
 
+    /**
+     * Function called when cart is updated
+     */
     const cartItemUpdate = () => {
         updateCartItem(match.params.restaurantid, state.index, state.cartItem);
         history.goBack();

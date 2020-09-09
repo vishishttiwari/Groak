@@ -1,4 +1,7 @@
 import React from 'react';
+/**
+ * Used for representing footer in order
+ */
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 

@@ -1,3 +1,6 @@
+/**
+ * Topic for any screen in all customers interface
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/CustomerTopic.css';

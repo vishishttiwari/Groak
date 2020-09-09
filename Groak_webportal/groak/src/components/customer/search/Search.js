@@ -1,3 +1,6 @@
+/**
+ * Used for representing search screen in the app
+ */
 import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -98,6 +101,11 @@ const Menu = (props) => {
         return false;
     };
 
+    /**
+     * This function decides if category is visble after writing something up in the search bar
+     *
+     * @param {*} categoryName
+     */
     const isCategoryVisible = (categoryName) => {
         if (state.searchField.length <= 0) { return true; }
         if (categoryName && categoryName.toLowerCase().startsWith(state.searchField.toLowerCase())) { return true; }
@@ -112,6 +120,11 @@ const Menu = (props) => {
         return false;
     };
 
+    /**
+     * Checks visibility of categories and dishes using the functions above
+     *
+     * @param {*} categoriId
+     */
     const checkVisibility = (categoriId) => {
         const categoryName = state.categoryItems.get(categoriId);
         const category = state.menuItems.get(categoriId);
@@ -150,6 +163,9 @@ const Menu = (props) => {
         return dom;
     };
 
+    /**
+     * This function decides for each category what dishes and categories will be shown
+     */
     const showCategories = () => {
         const dom = [];
         Array.from(state.menuItems.keys()).forEach((menuItem) => {

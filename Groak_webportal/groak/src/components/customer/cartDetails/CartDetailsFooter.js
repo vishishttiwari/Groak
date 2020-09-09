@@ -1,3 +1,6 @@
+/**
+ * This class is used as footer of cart details
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

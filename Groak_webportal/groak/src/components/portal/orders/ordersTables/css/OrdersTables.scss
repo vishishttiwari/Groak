@@ -17,16 +17,18 @@
         border-radius: $borderRadius;
 
         @media (max-width: $padMaxWidth) {
-            width: 90%
+            width: 100%
         }
 
         .table-header {
             position: sticky;
             top: 0;
+            overflow-x: scroll;
         }
         .table-body {
             height: 300px;
             overflow: auto;
+            overflow-x: scroll;
             .table-row {
                 height: 63px;
                 cursor: pointer;

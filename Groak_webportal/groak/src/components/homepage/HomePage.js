@@ -13,10 +13,11 @@ import Groak from '../../assets/images/white_name_icon.png';
 import AppleDownload from '../../assets/images/homepage/apple_download_white.png';
 import GoogleDownload from '../../assets/images/homepage/google_download.png';
 import Phone2 from '../../assets/images/homepage/phone_2.png';
-import Phone3 from '../../assets/images/homepage/phone_3_1.png';
-import Computer1 from '../../assets/images/homepage/computer_4_1.png';
-import Computer2 from '../../assets/images/homepage/computer_5_2.png';
-import Computer3 from '../../assets/images/homepage/computer_3_2.png';
+import Phone3 from '../../assets/images/homepage/phone_3.png';
+import Computer1 from '../../assets/images/homepage/computer_1.png';
+import Computer2 from '../../assets/images/homepage/computer_2.png';
+import Computer3 from '../../assets/images/homepage/computer_3.png';
+import { analytics } from '../../firebase/FirebaseLibrary';
 
 const initialState = {
     videoPopUp: false,
@@ -45,6 +46,7 @@ const HomePage = (props) => {
             block: 'center',
             inline: 'start',
         });
+        analytics.logEvent('visit_website_web');
     }, [top]);
 
     return (
@@ -126,30 +128,36 @@ const HomePage = (props) => {
                 </div>
             </div>
             <div className="whiteBackground sections verticallyCenter">
+                <img src={Computer1} alt="Groak - Computer demo 2" />
+                <div className="text">
+                    <p>Create a customizable QR menu that customers can explore. Customize and update your menu anytime from any device</p>
+                </div>
+            </div>
+            <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
                     <p>Connect your customers directly to your digital menu so they can view, order, and check-out on their own device</p>
                 </div>
                 <img src={Phone3} alt="Groak - Computer demo 2" />
             </div>
-            <div className="primaryColorBackground sections verticallyCenter">
+            <div className="whiteBackground sections verticallyCenter">
                 <img src={Computer2} alt="Groak - Computer demo 2" />
                 <div className="text">
                     <p>Create a contactless digital menu that customers can explore. Update it anytime from your device, with immediate display of your updates to customers!</p>
                 </div>
             </div>
-            <div className="whiteBackground sections verticallyCenter">
+            <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
                     <p>Promote Safety and Wellbeing for your Customers! Interact with your customers at each table with our live chat feature to minimize health and safety risks</p>
                 </div>
                 <img src={Computer3} alt="Groak - Computer demo 3" />
             </div>
-            <div className="primaryColorBackground sections verticallyCenter">
-                <img src={Computer1} alt="Groak - Computer demo 3" />
+            <div className="whiteBackground sections verticallyCenter">
+                <img src={Computer2} alt="Groak - Computer demo 3" />
                 <div className="text">
                     <p>View real time order updates from each table using the device of your choice. Orders are automatically added and available in our webportal. This feature gives you a clear view into your customer’s recent orders, table occupancy, and order payment alerts</p>
                 </div>
             </div>
-            <div className="whiteBackground sections verticallyCenter">
+            <div className="primaryColorBackground sections verticallyCenter">
                 <div className="text">
                     <p>Automated receipt generation, sent directly to your customer&#39;s phone</p>
                 </div>

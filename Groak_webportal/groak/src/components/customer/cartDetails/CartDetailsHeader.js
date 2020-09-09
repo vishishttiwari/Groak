@@ -1,3 +1,6 @@
+/**
+ * This class is used as header of cart details
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';

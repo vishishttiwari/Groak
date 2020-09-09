@@ -139,3 +139,5 @@ export const OptionsExceedingMin = (title, min) => {
     }
     return `Select atleast ${min} option for ${title}`;
 };
+
+export const NotAtRestaurant = 'Seems like you are not at the restaurant. Please order while you are at the restaurant.';

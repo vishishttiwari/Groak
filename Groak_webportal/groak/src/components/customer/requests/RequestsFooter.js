@@ -1,11 +1,14 @@
+/**
+ * Used for representing footer in requests
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, CircularProgress } from '@material-ui/core';
 import { randomNumber } from '../../../catalog/Others';
 
 const RequestsFooter = (props) => {
-    const { requestField, setState, sendHandler } = props;
+    const { requestField, loadingSpinner, setState, sendHandler } = props;
 
     const suggestions = ['💧',
         '🍴',
@@ -19,7 +22,7 @@ const RequestsFooter = (props) => {
         'Can we get some cutlery please?',
         'Can we get a refill on our drink?',
         'Can we get some extra plates?',
-        'Could you tell me about the specils?',
+        'Could you tell me about the specials?',
         'Can you suggest some gluten fee dishes?',
         'Can you suggest some dishes for someoe with nut allergies?',
     ];
@@ -51,14 +54,25 @@ const RequestsFooter = (props) => {
                     multiline
                     rows={2}
                 />
-                <Button
-                    className="footer-send-button"
-                    variant="outlined"
-                    color="primary"
-                    onClick={sendHandler}
-                >
-                    Send
-                </Button>
+                <div className="footer-bottom-section-others">
+                    <Button
+                        className="footer-send-button"
+                        variant="outlined"
+                        color="primary"
+                        onClick={sendHandler}
+                    >
+                        Send
+                    </Button>
+                    <CircularProgress
+                        className="footer-send-spinner"
+                        variant="indeterminate"
+                        size={20}
+                        thickness={2}
+                        style={{
+                            display: (loadingSpinner ? 'block' : 'none'),
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );
@@ -66,6 +80,7 @@ const RequestsFooter = (props) => {
 
 RequestsFooter.propTypes = {
     requestField: PropTypes.string.isRequired,
+    loadingSpinner: PropTypes.bool.isRequired,
     setState: PropTypes.func.isRequired,
     sendHandler: PropTypes.func.isRequired,
 };

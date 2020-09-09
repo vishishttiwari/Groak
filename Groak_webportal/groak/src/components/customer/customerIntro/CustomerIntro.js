@@ -1,3 +1,6 @@
+/**
+ * This class is used to represent the intro screen including tab bars
+ */
 import React, { useReducer, useContext, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -72,6 +75,9 @@ const CustomerIntro = (props) => {
         };
     }, [enqueueSnackbar, history, match.params.restaurantid, match.params.tableid, match.params.qrcodeid, setGlobalState]);
 
+    /**
+     * Used for showing which component will be showin in each tab
+     */
     const getTabPanel = () => {
         if (globalState.tabValueCustomer === 0) {
             return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;

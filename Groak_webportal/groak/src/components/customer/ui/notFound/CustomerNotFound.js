@@ -1,3 +1,6 @@
+/**
+ * Not found text and image shown using this
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Empty from '../../../../assets/others/empty.png';

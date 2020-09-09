@@ -1,3 +1,6 @@
+/**
+ * Cart class for customers
+ */
 import React, { useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -12,13 +15,14 @@ import { randomNumber, calculatePriceFromDishes } from '../../../catalog/Others'
 import './css/Cart.css';
 import CartItemCell from './CartItemCell';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
-import { CartEmpty } from '../../../catalog/Comments';
+import { CartEmpty, OtherInstructions, EmptyCartMessage } from '../../../catalog/Comments';
 import Decision from '../../ui/decision/Decision';
 import { isNearRestaurant } from '../../../catalog/Distance';
 import { context } from '../../../globalState/globalState';
 import Spinner from '../../ui/spinner/Spinner';
 import { analytics } from '../../../firebase/FirebaseLibrary';
 import { addOrderAPI } from './CartAPICalls';
+import { NotAtRestaurant } from '../../../catalog/NotificationsComments';
 
 const initialState = { specialInstructions: '', deletionConfirmation: false, loadingSpinner: false };
 
@@ -43,6 +47,11 @@ const Cart = (props) => {
 
     const cart = fetchCart(match.params.restaurantid);
 
+    /**
+     * Whenever an item is clicked, this is called
+     *
+     * @param {*} index
+     */
     const dishDetailClickHandler = (index) => {
         history.push({
             pathname: `/customer/cartdetails/${match.params.restaurantid}`,
@@ -50,10 +59,18 @@ const Cart = (props) => {
         });
     };
 
+    /**
+     * Ask user to confirm if they would like to delete the cart
+     */
     const askDeletionHandler = () => {
         setStateHere({ type: 'changeDeletionConfirmation', deletionConfirmation: true });
     };
 
+    /**
+     * If deletion is sure then delete cart from local storage
+     *
+     * @param {*} open
+     */
     const deletionHandler = (open) => {
         if (open) {
             deleteCart(match.params.restaurantid);
@@ -64,6 +81,11 @@ const Cart = (props) => {
         }
     };
 
+    /**
+     * Function called when cart has to be converted to order.
+     * This first checks if user is within 200 meters of user.
+     * Then adds to order, deletes cart and also logs the event.
+     */
     const addToOrderHandler = async () => {
         if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
             setStateHere({ type: 'setLoadingSpinner', loadingSpinner: true });
@@ -77,7 +99,7 @@ const Cart = (props) => {
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
                             analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
                         } else {
-                            enqueueSnackbar('Seems like you are not at the restaurant. Please order while you are at the restaurant.', { variant: 'error' });
+                            enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                         }
                         setStateHere({ type: 'setLoadingSpinner', loadingSpinner: false });
                     })
@@ -102,7 +124,7 @@ const Cart = (props) => {
                         open={state.deletionConfirmation}
                         response={deletionHandler}
                         title="Delete Cart"
-                        content="Would you like to empty the cart?"
+                        content={EmptyCartMessage}
                     />
                     {cart.length > 0
                         ? (
@@ -124,7 +146,7 @@ const Cart = (props) => {
                                     <CustomerSpecialInstructions
                                         specialInstructions={state.specialInstructions}
                                         setState={setStateHere}
-                                        helperText="Any other instructions? (Ex: Please start with starters)"
+                                        helperText={OtherInstructions}
                                     />
                                 </div>
                                 <CartFooter

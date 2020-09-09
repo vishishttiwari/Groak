@@ -1,7 +1,6 @@
 /**
  * This component is used to represent each dish card in customerMenu
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';

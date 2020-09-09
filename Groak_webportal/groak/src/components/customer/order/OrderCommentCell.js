@@ -1,3 +1,6 @@
+/**
+ * Used for representing comment cell in order
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/Order.css';

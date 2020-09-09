@@ -1,3 +1,6 @@
+/**
+ * Used for representing special instructions in order
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';

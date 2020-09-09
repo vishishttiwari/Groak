@@ -1,3 +1,6 @@
+/**
+ * Class is used to represent restaurant cell in receipt
+ */
 import React, { useContext } from 'react';
 import './css/Receipt.css';
 import { context } from '../../../globalState/globalState';

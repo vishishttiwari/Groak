@@ -1,3 +1,6 @@
+/**
+ * This class is used as header of covid
+ */
 import React from 'react';
 
 const MenuHeader = () => {

@@ -1,3 +1,6 @@
+/**
+ * Used for representing any info as table cell with white background border etc.
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/CustomerInfo.css';

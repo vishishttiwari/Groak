@@ -1,3 +1,6 @@
+/**
+ * Veg non veg symbol
+ */
 import PropTypes from 'prop-types';
 import React from 'react';
 import './css/CustomerVegSymbol.css';

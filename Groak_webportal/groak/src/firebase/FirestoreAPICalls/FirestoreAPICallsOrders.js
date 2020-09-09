@@ -3,7 +3,7 @@ import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { TableStatus } from '../../catalog/Others';
 import { DemoRequest } from '../../catalog/Demo';
 import { createDishReference } from './FirestoreAPICallsDishes';
-import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections, createRestaurantReference } from './FirestoreAPICallsTables';
+import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from './FirestoreAPICallsTables';
 import { getCurrentDateTimePlusMinutes } from '../../catalog/TimesDates';
 import { saveOrder } from '../../catalog/LocalStorage';
 
@@ -36,7 +36,7 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
             batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newOrderUpdateForUser: true });
             batch.update(db.collection('tables').doc(orderId), { status: data.status, newOrderUpdateForUser: true });
         }
-        const newData = { ...data, updated: getCurrentDateTime() };
+        const newData = { ...data, updated: getCurrentDateTime(), newOrderUpdateForUser: true };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
     } else if (data.status === TableStatus.served || data.status === TableStatus.payment) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newOrderUpdateForUser: true });
@@ -151,20 +151,19 @@ export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
 };
 
 export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus) => {
-    const restaurantReference = createRestaurantReference(restaurantId);
     const orderReference = createOrderReference(restaurantId, orderId);
     const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
     const tableOriginalReference = createTableReferenceInTableCollections(orderId);
     return db.runTransaction(async (transaction) => {
-        const restaurantDoc = await transaction.get(restaurantReference);
-        if (restaurantDoc.exists) {
-            const { status } = restaurantDoc.data();
+        const orderDoc = await transaction.get(orderReference);
+        if (orderDoc.exists) {
+            const { status } = orderDoc.data();
 
             if (status === TableStatus.available && newStatus === TableStatus.seated) {
                 transaction.update(tableReference, { status: newStatus });
                 transaction.update(tableOriginalReference, { status: newStatus });
                 transaction.update(orderReference, { status: newStatus });
-            } else if (status !== TableStatus.payment || newStatus === TableStatus.payment) {
+            } else if (status !== TableStatus.payment && newStatus === TableStatus.payment) {
                 transaction.update(tableReference, { status: newStatus });
                 transaction.update(tableOriginalReference, { status: newStatus });
                 transaction.update(orderReference, { status: newStatus });

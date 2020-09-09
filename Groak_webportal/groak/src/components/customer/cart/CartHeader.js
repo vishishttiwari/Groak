@@ -1,3 +1,6 @@
+/**
+ * This class is used as header of cart
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

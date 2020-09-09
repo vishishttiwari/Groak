@@ -1,3 +1,6 @@
+/**
+ * This class is used for representing the header of menu
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

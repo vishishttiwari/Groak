@@ -1,3 +1,6 @@
+/**
+ * Each extra in cart is shown here
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
@@ -32,6 +35,13 @@ const AddToCartCategory = (props) => {
         return str;
     });
 
+    /**
+     * Whenever an option is clicked, this function is called.
+     * It checks if more than max are not selected. If the
+     * selection is fine, it also changes the price.
+     *
+     * @param {*} optionIndex
+     */
     const optionClicked = (optionIndex) => {
         const updatedOptionsSelected = optionsSelected;
         let priceDelta = 0;
@@ -65,6 +75,12 @@ const AddToCartCategory = (props) => {
         });
     };
 
+    /**
+     * This will decide which kind of selection button will be shown.
+     * Will be ticked or unticked, will it be circle or square.
+     *
+     * @param {*} index2
+     */
     const getSelectionButton = (index2) => {
         const checked = optionsSelected[extraIndex][index2];
         if (extra.multipleSelections) {

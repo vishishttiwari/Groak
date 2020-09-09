@@ -1,3 +1,6 @@
+/**
+ * The cart is used for representing menu
+ */
 import React, { useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -78,6 +81,9 @@ const Menu = (props) => {
         }
     }
 
+    /**
+     * This function is used to call the search screen
+     */
     const searchHandler = () => {
         history.push(`/customer/search/${match.params.restaurantid}/${match.params.tableid}/${match.params.qrcodeid}`);
     };

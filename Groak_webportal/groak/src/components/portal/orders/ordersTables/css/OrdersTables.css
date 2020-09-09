@@ -41,7 +41,7 @@
 
 @media (max-width: 1200px) {
   .orders .orders-table {
-    width: 90%;
+    width: 100%;
   }
 }
 
@@ -49,11 +49,13 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  overflow-x: scroll;
 }
 
 .orders .orders-table .table-body {
   height: 300px;
   overflow: auto;
+  overflow-x: scroll;
 }
 
 .orders .orders-table .table-body .table-row {

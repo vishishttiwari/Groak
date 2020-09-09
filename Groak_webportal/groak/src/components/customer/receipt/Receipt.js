@@ -1,33 +1,43 @@
+/**
+ * Used for representing receipt view
+ */
 import React, { useEffect, useReducer, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { randomNumber } from '../../../catalog/Others';
+import { randomNumber, TableStatus } from '../../../catalog/Others';
 import './css/Receipt.css';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
-import { CartEmpty } from '../../../catalog/Comments';
+import { CartEmpty, PaymentMessage } from '../../../catalog/Comments';
 import ReceiptHeader from './ReceiptHeader';
 import ReceiptFooter from './ReceiptFooter';
 import OrderDishCell from '../order/OrderDishCell';
 import Spinner from '../../ui/spinner/Spinner';
-import { fetchOrderAPI, unsubscribeFetchOrderAPI } from './ReceiptAPICalls';
+import { fetchOrderAPI, unsubscribeFetchOrderAPI, updateOrderAPI } from './ReceiptAPICalls';
 import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import ReceiptPriceCell from './ReceiptPriceCell';
 import ReceiptRestaurantCell from './ReceiptRestaurantCell';
 import Groak from '../../../assets/images/powered_by_groak_1.png';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { context } from '../../../globalState/globalState';
+import { isNearRestaurant } from '../../../catalog/Distance';
+import { NotAtRestaurant } from '../../../catalog/NotificationsComments';
+import Decision from '../../ui/decision/Decision';
 
-const initialState = { order: {}, tableReceipt: 'table_receipt', loadingSpinner: true };
+const initialState = { order: {}, paymentConfirmation: false, tableReceipt: 'table_receipt', loadingSpinner: true };
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'changePaymentConfirmation':
+            return { ...state, paymentConfirmation: action.paymentConfirmation };
         case 'fetchOrder':
             return { ...state, order: action.order, loadingSpinner: false };
         case 'setReceipt':
             return { ...state, tableReceipt: action.tableReceipt };
+        case 'setLoadingSpinner':
+            return { ...state, loadingSpinner: action.loadingSpinner };
         default:
             return initialState;
     }
@@ -67,6 +77,9 @@ const Receipt = (props) => {
         };
     }, [enqueueSnackbar, globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.restaurantid, match.params.tableid]);
 
+    /**
+     * Get total price depending on table receipt or your receipt
+     */
     const getTotalPrice = () => {
         let price = 0;
         state.order.dishes.forEach((dish) => {
@@ -106,6 +119,40 @@ const Receipt = (props) => {
         return null;
     };
 
+    /**
+     * Ask user to confirm if they would like to delete the cart
+     */
+    const askPaymentHandler = () => {
+        setState({ type: 'changePaymentConfirmation', paymentConfirmation: true });
+    };
+
+    /**
+     * Function called when ready for payment
+     */
+    const updateOrderHandler = async (open) => {
+        if (open) {
+            if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
+                setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                isNearRestaurant(globalState.restaurantCustomer.location.latitude, globalState.restaurantCustomer.location.longitude, enqueueSnackbar)
+                    .then(async (nearRestaurant) => {
+                        if (nearRestaurant) {
+                            await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.payment, enqueueSnackbar);
+                            setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+                            history.goBack();
+                        } else {
+                            enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
+                            setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                        }
+                    })
+                    .catch(() => {
+                        setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                    });
+            }
+        } else {
+            setState({ type: 'changePaymentConfirmation', deletionConfirmation: false });
+        }
+    };
+
     return (
         <div className="customer receipt">
             <p ref={top}> </p>
@@ -117,6 +164,12 @@ const Receipt = (props) => {
                             ? (
                                 <>
                                     <ReceiptHeader tableReceipt={state.tableReceipt} setState={setState} />
+                                    <Decision
+                                        open={state.paymentConfirmation}
+                                        response={updateOrderHandler}
+                                        title="Ready for payment?"
+                                        content={PaymentMessage}
+                                    />
                                     <div className="receipt-final-message-top">
                                     </div>
                                     <div className="content" id="receipt-content">
@@ -138,7 +191,7 @@ const Receipt = (props) => {
                                         <p>To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll</p>
                                     </div>
                                     <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
-                                    <ReceiptFooter />
+                                    <ReceiptFooter askPaymentHandler={askPaymentHandler} />
                                 </>
                             )
                             : (

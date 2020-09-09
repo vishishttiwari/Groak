@@ -1,3 +1,6 @@
+/**
+ * The class is used for representing order
+ */
 import React, { useReducer, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -7,7 +10,7 @@ import CustomerTopic from '../ui/topic/CustomerTopic';
 import { randomNumber, TableStatus } from '../../../catalog/Others';
 import './css/Order.css';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
-import { CartEmpty } from '../../../catalog/Comments';
+import { OrderOrdered, OrderServed, OrderPayment, OrderAvailable, OrderApproved, OrderEmpty, OtherInstructions } from '../../../catalog/Comments';
 import OrderHeader from './OrderHeader';
 import OrderFooter from './OrderFooter';
 import OrderDishCell from './OrderDishCell';
@@ -17,8 +20,8 @@ import OrderSpecialInstructions from './OrderSpecialInstructions';
 import { context } from '../../../globalState/globalState';
 import { addCommentFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { isNearRestaurant } from '../../../catalog/Distance';
-import CustomerInfo from '../ui/info/CustomerInfo';
 import { updateOrderWhenSeenAPI } from './OrderAPICalls';
+import { NotAtRestaurant } from '../../../catalog/NotificationsComments';
 
 const initialState = { specialInstructions: '', tableOrder: 'table_order' };
 
@@ -46,24 +49,34 @@ const Order = (props) => {
         updateRequest();
     }, [match.params.restaurantid, match.params.tableid]);
 
+    /**
+     * Used for seeing which order status will be shown
+     */
     const getOrderStatus = () => {
         let status = '';
 
-        if (order.status === TableStatus.ordered) status = 'Your order has been requested. Pending for approval.';
-        if (order.status === TableStatus.served) status = 'Your order has been served. Enjoy!';
-        if (order.status === TableStatus.payment) status = 'You have requested for payment. Someone will be at your table soon.';
-        if (order.status === TableStatus.available || order.status === TableStatus.seated) status = 'You can start ordering. Your orders will appear below.';
-        if (order.status === TableStatus.approved) status = `Your order will be served at ${getTimeInAMPMFromTimeStamp(order.serveTime)}`;
+        if (order.status === TableStatus.ordered) status = OrderOrdered;
+        if (order.status === TableStatus.served) status = OrderServed;
+        if (order.status === TableStatus.payment) status = OrderPayment;
+        if (order.status === TableStatus.available || order.status === TableStatus.seated) status = OrderAvailable;
+        if (order.status === TableStatus.approved) status = OrderApproved(order.serveTime);
 
         if (status.length <= 0) return null;
         return (
             <>
                 <CustomerTopic header="Order Status" />
-                <CustomerInfo info={status} />
+                <div className="info">
+                    <p style={{ textAlign: 'center' }} className="info-info">
+                        {status}
+                    </p>
+                </div>
             </>
         );
     };
 
+    /**
+     * Get total price depending on your order or table order
+     */
     const getTotalPrice = () => {
         let price = 0;
         order.dishes.forEach((dish) => {
@@ -76,6 +89,12 @@ const Order = (props) => {
         return price;
     };
 
+    /**
+     * Shows dish cell depending on if it supposed to be shown
+     * depending on your order or table order
+     *
+     * @param {*} dish
+     */
     const showDishCell = (dish) => {
         if (state.tableOrder === 'table_order') {
             return (
@@ -103,6 +122,12 @@ const Order = (props) => {
         return null;
     };
 
+    /**
+     * Shows comment cell depending on if it supposed to be shown
+     * depending on your order or table order
+     *
+     * @param {*} comment
+     */
     const showCommentCell = (comment) => {
         if (state.tableOrder === 'table_order') {
             return (
@@ -124,6 +149,10 @@ const Order = (props) => {
         return null;
     };
 
+    /**
+     * Function is used for adding comment to order.
+     * It depends if you are near the restaurant or not.
+     */
     const addToOrderHandler = async () => {
         if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
             isNearRestaurant(globalState.restaurantCustomer.location.latitude, globalState.restaurantCustomer.location.longitude, enqueueSnackbar)
@@ -132,7 +161,7 @@ const Order = (props) => {
                         await addCommentFirestoreAPI(match.params.restaurantid, match.params.tableid, state.specialInstructions);
                         setState({ type: 'setSpecialInstructions', specialInstructions: '' });
                     } else {
-                        enqueueSnackbar('Seems like you are not at the restaurant. Please order while you are at the restaurant.', { variant: 'error' });
+                        enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                     }
                 })
                 .catch(() => {
@@ -165,7 +194,7 @@ const Order = (props) => {
                                     <OrderSpecialInstructions
                                         specialInstructions={state.specialInstructions}
                                         setState={setState}
-                                        helperText="Any other instructions? (Ex: Please start with starters)"
+                                        helperText={OtherInstructions}
                                         addToOrderHandler={addToOrderHandler}
                                     />
                                     {order && order.comments ? (
@@ -186,7 +215,7 @@ const Order = (props) => {
                         : (
                             <>
                                 <div className="content-not-found">
-                                    <CustomerNotFound text={CartEmpty} />
+                                    <CustomerNotFound text={OrderEmpty} />
                                 </div>
                             </>
                         )}

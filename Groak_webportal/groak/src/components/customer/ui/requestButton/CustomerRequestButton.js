@@ -1,3 +1,6 @@
+/**
+ * Request button for opening chats and requests
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

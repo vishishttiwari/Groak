@@ -15,6 +15,7 @@
             box-shadow: $cardShadow;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
+            display: flex;
 
             @media (max-width: $phoneMaxWidth) {
                 width: 100%;

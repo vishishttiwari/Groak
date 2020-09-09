@@ -1,4 +1,7 @@
 import React, { useContext } from 'react';
+/**
+ * Class is used to price cell in receipt
+ */
 import PropTypes from 'prop-types';
 import './css/Receipt.css';
 import { context } from '../../../globalState/globalState';

@@ -1,3 +1,6 @@
+/**
+ * This class is used to show veg non veg in dish
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -8,6 +11,9 @@ import CustomerVegSymbol from '../ui/vegSymbol/CustomerVegSymbol';
 const MenuDishInfo = (props) => {
     const { vegetarian, vegan, glutenFree, kosher } = props;
 
+    /**
+     * Used for showing which symbol will be shown
+     */
     const showInfo = () => {
         if (vegetarian && vegetarian !== 'Not Sure') {
             return true;

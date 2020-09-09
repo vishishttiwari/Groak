@@ -1,3 +1,6 @@
+/**
+ * This class is used as each item of cart
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/Cart.css';

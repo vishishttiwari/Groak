@@ -1,3 +1,6 @@
+/**
+ * Used for representing header in requests
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

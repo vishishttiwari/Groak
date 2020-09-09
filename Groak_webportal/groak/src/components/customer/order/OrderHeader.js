@@ -1,3 +1,6 @@
+/**
+ * Used for representing header in order
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

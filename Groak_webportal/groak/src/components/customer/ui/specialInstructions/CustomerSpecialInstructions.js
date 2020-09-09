@@ -1,3 +1,6 @@
+/**
+ * Text field and topic for special instructions
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField } from '@material-ui/core';

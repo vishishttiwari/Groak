@@ -65,12 +65,10 @@ export const updateRequestAPI = async (restaurantId, requestId, data, snackbar) 
 };
 
 /**
- * The function is used for updating request by user
+ * The function is used for updating request by user when user has seen message
  *
  * @param {*} restaurantId id of the restaurant for which request needs to be fetched
  * @param {*} requestId request id of the request that needs to be fetched
- * @param {*} setState used for setting the request
- * @param {*} snackbar used for notifications
  */
 export const updateRequestWhenSeenAPI = async (restaurantId, requestId) => {
     await updateRequestFromUserWhenUserSeenMessageFirestoreAPI(restaurantId, requestId);

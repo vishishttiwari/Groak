@@ -1,3 +1,6 @@
+/**
+ * Class is used to represent header in receipt
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 

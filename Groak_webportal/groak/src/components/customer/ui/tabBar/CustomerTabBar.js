@@ -1,3 +1,6 @@
+/**
+ * Tab bar for customers
+ */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Paper, Tabs, Tab, Badge } from '@material-ui/core';
