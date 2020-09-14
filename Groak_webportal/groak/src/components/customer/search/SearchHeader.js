@@ -10,6 +10,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const SearchHeader = (props) => {
+    // eslint-disable-next-line no-unused-vars
     const { history, restaurantName, state, setState } = props;
 
     return (
@@ -19,7 +20,7 @@ const SearchHeader = (props) => {
                 onClick={() => { history.goBack(); }}
             />
             <div className="header-content">
-                <p className="header-title">{restaurantName}</p>
+                {/* <p className="header-title">{restaurantName}</p> */}
                 <TextField
                     className="header-subtitle-custom"
                     id="standard-basic"

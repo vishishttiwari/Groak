@@ -8,11 +8,13 @@ $cardFullWidth: ($cardWidth + $cardMargin);
         
         .header-subtitle-custom {
             width: 80%;
+            margin: auto;
+            margin-left: 60px;
         }
     }
 
     .content {
-        margin-top: 100px;
+        margin-top: 60px;
 
         .search-items {
             display: flex;

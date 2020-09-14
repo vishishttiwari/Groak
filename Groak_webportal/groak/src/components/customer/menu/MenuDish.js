@@ -1,10 +1,11 @@
 /**
  * This component is used to represent each dish card in customerMenu
  */
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { context } from '../../../globalState/globalState';
 
 import NoImage from '../../../assets/icons/camera.png';
 import CustomerVegSymbol from '../ui/vegSymbol/CustomerVegSymbol';
@@ -12,6 +13,7 @@ import { randomNumber } from '../../../catalog/Others';
 
 const MenuDish = (props) => {
     const { dishItem, highlightText, clickHandler } = props;
+    const { globalState } = useContext(context);
 
     const getInfoSymbols = () => {
         const dom = [];
@@ -48,7 +50,11 @@ const MenuDish = (props) => {
     };
 
     return (
-        <Card className="card" onClick={clickHandler}>
+        <Card
+            className="card"
+            style={globalState && globalState.orderAllowedCustomer ? { cursor: 'pointer' } : { cursor: 'not-allowed' }}
+            onClick={clickHandler}
+        >
             <CardHeader
                 title={highlightDishItem()}
                 subheader={`$ ${dishItem.price.toFixed(2)}`}
