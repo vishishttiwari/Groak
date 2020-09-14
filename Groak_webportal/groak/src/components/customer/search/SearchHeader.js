@@ -24,7 +24,7 @@ const SearchHeader = (props) => {
                 <TextField
                     className="header-subtitle-custom"
                     id="standard-basic"
-                    placeholder="Search"
+                    placeholder={`Search ${restaurantName} Menu`}
                     value={state.searchField}
                     onChange={(event) => { setState({ type: 'setSearchField', searchField: event.target.value }); }}
                     InputProps={{
@@ -33,6 +33,7 @@ const SearchHeader = (props) => {
                                 <SearchIcon />
                             </InputAdornment>
                         ),
+                        style: { fontSize: 20, fontWeight: 100 },
                     }}
                 />
             </div>
