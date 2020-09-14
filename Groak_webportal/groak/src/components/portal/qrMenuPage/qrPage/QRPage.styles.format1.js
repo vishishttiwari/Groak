@@ -10,7 +10,7 @@ Object.keys(fonts).forEach((font) => {
     Font.register({ family: font, format: 'truetype', src: fonts[font] });
 });
 
-const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTable, logoWidth, qrCodes, restaurantImageHeight, restaurantImageWidth, restaurantImageBackgroundColor) => {
+const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTable, suggestionText, logoWidth, qrCodes, restaurantImageHeight, restaurantImageWidth, restaurantImageBackgroundColor) => {
     const height = 50 + (restaurantImageHeight / 2);
     const width = 30 + (restaurantImageWidth / 2);
 
@@ -25,8 +25,8 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             color: `${textColor}`,
         },
         titleView: {
-            height: includeTable ? '18%' : '25%',
-            maxHeight: includeTable ? '18%' : '25%',
+            height: includeTable ? '14%' : '22%',
+            maxHeight: includeTable ? '14%' : '22%',
             width: '100%',
         },
         restaurantTitle: {
@@ -41,8 +41,15 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             marginLeft: 0,
             marginRight: 0,
         },
+        suggestionText: {
+            height: '5%',
+            width: '95%',
+            margin: 'auto',
+            marginTop: 0,
+        },
         qrArea: {
-            height: '75%',
+            height: suggestionText ? '70%' : '75%',
+            maxHeight: suggestionText ? '70%' : '75%',
             marginTop: 10,
             display: 'flex',
             flexDirection: 'row',
@@ -131,6 +138,18 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
                 qrText: { ...styles.qrText, fontSize: 15 },
             };
             break;
+        case 6:
+            styles = { ...styles,
+                qrCode: { ...styles.qrCode, width: '25%', borderRadius: '5', marginBottom: '3px', borderWidth: '1pt' },
+                qrText: { ...styles.qrText, fontSize: 15 },
+            };
+            break;
+        case 7:
+            styles = { ...styles,
+                qrCode: { ...styles.qrCode, width: '25%', borderRadius: '5', marginBottom: '3px', borderWidth: '1pt' },
+                qrText: { ...styles.qrText, fontSize: 15 },
+            };
+            break;
         default:
             styles = { ...styles };
     }
@@ -140,6 +159,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 80 },
                 tableTitle: { ...styles.tableTitle, fontSize: 60 },
+                suggestionText: { ...styles.suggestionText, fontSize: 45 },
                 qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize + 20 },
                 qrCode: { ...styles.qrCode, borderWidth: '3pt' },
             };
@@ -149,6 +169,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 70 },
                 tableTitle: { ...styles.tableTitle, fontSize: 50 },
+                suggestionText: { ...styles.suggestionText, fontSize: 35 },
                 qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize + 10 },
                 qrCode: { ...styles.qrCode, borderWidth: '3pt' },
             };
@@ -158,6 +179,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 60 },
                 tableTitle: { ...styles.tableTitle, fontSize: 40 },
+                suggestionText: { ...styles.suggestionText, fontSize: 25 },
                 qrCode: { ...styles.qrCode, borderWidth: '1pt' },
             };
             break;
@@ -165,6 +187,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 47 },
                 tableTitle: { ...styles.tableTitle, fontSize: 27 },
+                suggestionText: { ...styles.suggestionText, fontSize: 20 },
                 qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize - 5 },
                 qrCode: { ...styles.qrCode, borderRadius: '5', borderWidth: '1pt' },
                 qr: { ...styles.qr, marginBottom: 10 },
@@ -174,7 +197,8 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         case '5x7':
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 22 },
-                tableTitle: { ...styles.tableTitle, fontSize: 18 },
+                tableTitle: { ...styles.tableTitle, fontSize: 20 },
+                suggestionText: { ...styles.suggestionText, fontSize: 18 },
                 qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize - 10 },
                 qrCode: { ...styles.qrCode, borderRadius: '5', marginBottom: 0, borderWidth: '1pt' },
                 qr: { ...styles.qr, marginBottom: 10 },

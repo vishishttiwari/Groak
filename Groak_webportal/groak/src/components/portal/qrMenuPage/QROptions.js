@@ -5,7 +5,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormControlLabel, Checkbox, Select, OutlinedInput, Button, Slider } from '@material-ui/core';
+import { FormControlLabel, Checkbox, Select, OutlinedInput, Button, Slider, TextField } from '@material-ui/core';
 import { CheckBox } from '@material-ui/icons';
 import ColorPicker from 'material-ui-color-picker';
 
@@ -16,7 +16,7 @@ import Spinner from '../../ui/spinner/Spinner';
 
 const QROptions = (props) => {
     const { restaurantReference, tableReference, tableName, state, logo, image, restaurantName, setState, loadingSpinner, goBackHandler, submitHandler } = props;
-    const formats = ['Format 1', 'Format 2', 'Format 3'];
+    const formats = ['Format 1', 'Format 2', 'Format 3', 'Format 4'];
     const pageSizeOptions = ['A2', 'A3', 'A4', 'A5', 'A6', 'LETTER', 'TABLOID', '5x7'];
     const fontOptions = Object.keys(getFonts());
     const qrImages = Object.keys(getQRStyleImages());
@@ -63,6 +63,7 @@ const QROptions = (props) => {
                 marks={[{ value: 0, label: '0%' }, { value: 100, label: '100°%' }]}
                 onChange={(event, value) => { setState({ type: 'setLogoWidth', logoWidth: value }); }}
             />
+            <p>Other Text</p>
             <FormControlLabel
                 style={{ textTransform: 'capitalize' }}
                 control={(
@@ -74,6 +75,15 @@ const QROptions = (props) => {
                     />
                 )}
                 label={tableReference === frontDoorQRMenuPageId ? 'Include instructions' : 'Include table Name'}
+            />
+            <TextField
+                label="Suggestion Text:"
+                type="text"
+                value={state.qrStylePage.suggestionText}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                onChange={(event) => { setState({ type: 'setSuggestionText', suggestionText: event.target.value }); }}
             />
             <p>Page Size</p>
             <Select

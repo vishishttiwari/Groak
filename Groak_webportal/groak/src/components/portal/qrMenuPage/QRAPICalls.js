@@ -19,7 +19,7 @@ export const fetchTableAPI = async (restaurantId, tableId, setState, snackBar) =
     try {
         const doc = await fetchTableFirestoreAPI(restaurantId, tableId);
         if (doc.exists) {
-            setState({ type: 'fetchTable', table: { id: doc.id, ...doc.data(), qrCodes: doc.data().qrCodes.splice(0, 5) } });
+            setState({ type: 'fetchTable', table: { id: doc.id, ...doc.data(), qrCodes: doc.data().qrCodes.splice(0, 7) } });
         } else {
             snackBar(TableNotFound, { variant: 'error' });
             setState({ type: 'error' });

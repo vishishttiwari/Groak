@@ -34,6 +34,9 @@ function reducer(state, action) {
         case 'setIncludeTable':
             newQRStylePage = { ...state.qrStylePage, includeTable: action.includeTable };
             return { ...state, qrStylePage: newQRStylePage, saved: false };
+        case 'setSuggestionText':
+            newQRStylePage = { ...state.qrStylePage, suggestionText: action.suggestionText };
+            return { ...state, qrStylePage: newQRStylePage, saved: false };
         case 'setUseRestaurantImage':
             newQRStylePage = { ...state.qrStylePage, useRestaurantImage: action.useRestaurantImage };
             return { ...state, qrStylePage: newQRStylePage, saved: false };

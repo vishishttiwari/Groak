@@ -250,11 +250,16 @@ html {
 
                     .header-title {
                         margin: 0 auto;
+                        padding-left: 60px;
+                        padding-right: 60px;
                         font-size: 30px;
                         font-weight: 100;
+                        max-width: 400px;
                     }
                     .header-subtitle {
                         margin: 0 auto;
+                        padding-left: 60px;
+                        padding-right: 60px;
                         font-size: 25px;
                         font-weight: 100;
                         color: $primaryColor;

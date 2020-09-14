@@ -30,7 +30,7 @@ function reducerLocal(state, action) {
         case 'setOrderAllowedCustomer':
             return { ...state, orderAllowedCustomer: action.orderAllowed };
         case 'setQRStylePagePortal':
-            updatedRestaurant = { ...state.restaurant, qrStylePage: action.qrStylePage };
+            updatedRestaurant = { ...state.restaurantPortal, qrStylePage: action.qrStylePage };
             return { ...state, restaurantPortal: updatedRestaurant };
         case 'removeUserPortal':
             return { ...state, userPortal: null, restaurantIdPortal: '', emailPortal: '', restaurantPortal: null };
