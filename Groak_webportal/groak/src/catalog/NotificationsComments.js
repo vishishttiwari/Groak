@@ -141,3 +141,4 @@ export const OptionsExceedingMin = (title, min) => {
 };
 
 export const NotAtRestaurant = 'Seems like you are not at the restaurant. Please order while you are at the restaurant.';
+export const VenmoNotSupported = 'Venmo is not supported';

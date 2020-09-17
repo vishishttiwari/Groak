@@ -6,17 +6,19 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
-import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip, FormControl } from '@material-ui/core';
-import { CloseRounded, CloudUpload } from '@material-ui/icons';
+import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip, FormControl, Fab } from '@material-ui/core';
+import { Add, CloseRounded, CloudUpload } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
-import { DemoRestaurantCovidMessage } from '../../../catalog/Demo';
+import { DemoRestaurantCovidGuidelines, DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
 import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
 import { FrontDoorQRMenuPage } from '../../../catalog/Comments';
+import Payments from './Payment';
+import Tips from './Tips';
 
 const RestaurantSettings = (props) => {
     const { history, classes, state, setState } = props;
@@ -125,6 +127,48 @@ const RestaurantSettings = (props) => {
                     );
                 })}
             </Select>
+            <p>Payments:</p>
+            {state.restaurant.payments.map((payment, index) => {
+                return (
+                    payment.id !== 'tips' ? (
+                        <Payments
+                            key={payment.id}
+                            index={index}
+                            title={payment.title}
+                            percentage={payment.percentage}
+                            value={payment.value}
+                            setState={setState}
+                        />
+                    ) : (
+                        <Tips
+                            key={payment.id}
+                            value0={payment.values[0]}
+                            value1={payment.values[1]}
+                            value2={payment.values[2]}
+                            setState={setState}
+                        />
+                    )
+                );
+            })}
+            <Fab
+                className="add"
+                size="small"
+                onClick={() => { setState({ type: 'addPayment' }); }}
+            >
+                <Add />
+            </Fab>
+            <p>Payment Methods:</p>
+            <TextField
+                label="Venmo:"
+                type="text"
+                value={state.restaurant && state.restaurant.paymentMethods && state.restaurant.paymentMethods.venmo ? state.restaurant.paymentMethods.venmo : ''}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                onChange={(event) => { setState({ type: 'setVenmo', venmo: event.target.value }); }}
+                InputLabelProps={textFieldLabelProps(classes)}
+            />
+            <p>Covid:</p>
             <TextField
                 label="Covid Message for Customers:"
                 multiline
@@ -136,6 +180,19 @@ const RestaurantSettings = (props) => {
                 fullWidth
                 variant="outlined"
                 onChange={(event) => { setState({ type: 'setCovidMessage', covidMessage: event.target.value }); }}
+                InputLabelProps={textFieldLabelProps(classes)}
+            />
+            <TextField
+                label="Covid Guidelines in your area:"
+                multiline
+                placeholder={`Ex: ${DemoRestaurantCovidGuidelines}`}
+                rows="5"
+                type="text"
+                value={state.restaurant ? state.restaurant.covidGuidelines : ''}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                onChange={(event) => { setState({ type: 'setCovidGuidelines', covidGuidelines: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
             <p>Allow Ordering:</p>

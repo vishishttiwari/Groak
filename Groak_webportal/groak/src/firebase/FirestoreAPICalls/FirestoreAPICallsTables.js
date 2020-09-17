@@ -59,6 +59,11 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         x: data.x,
         y: data.y,
         qrCodes: [],
+        paymentMethod: 'waiter',
+        tip: {
+            tipValue: -1,
+            tipIndex: -1,
+        },
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), tableData);
@@ -82,6 +87,11 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
         tableOriginalReference: createTableReferenceInTableCollections(tableId),
         requestReference: createRequestReference(restaurantId, tableId),
+        paymentMethod: 'waiter',
+        tip: {
+            tipValue: -1,
+            tipIndex: -1,
+        },
     };
 
     const requestData = {

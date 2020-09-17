@@ -46,7 +46,7 @@ const HomePage = (props) => {
             block: 'center',
             inline: 'start',
         });
-        analytics.logEvent('visit_website_web');
+        analytics.logEvent('visit_website_web_testing');
     }, [top]);
 
     return (

@@ -23,7 +23,7 @@ const ReceiptHeader = (props) => {
                 onClick={() => { history.goBack(); }}
             />
             <div className="header-content">
-                <p className="header-title">{tableReceipt === 'table_receipt' ? 'Table Receipt' : 'Your Receipt'}</p>
+                <p className="header-title">{tableReceipt === 'table' ? 'Table Receipt' : 'Your Receipt'}</p>
             </div>
             <ToggleButtonGroup
                 className="header-toggle-group"
@@ -33,10 +33,10 @@ const ReceiptHeader = (props) => {
                 onChange={handleOrder}
                 aria-label="text alignment"
             >
-                <ToggleButton className="header-toggle" value="table_receipt" aria-label="table receipt">
+                <ToggleButton className="header-toggle" value="table" aria-label="table receipt">
                     Table Receipt
                 </ToggleButton>
-                <ToggleButton className="header-toggle" value="your_receipt" aria-label="your receipt">
+                <ToggleButton className="header-toggle" value="your" aria-label="your receipt">
                     Your Receipt
                 </ToggleButton>
             </ToggleButtonGroup>

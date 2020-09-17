@@ -2,6 +2,7 @@
  * This function creates demo items that are added to the backend whenever an account is created.
  * It also contains items that are added as placeholders in text fields.
  */
+import { v4 as uuidv4 } from 'uuid';
 import { getCurrentDateTime, createGeoPoint } from '../firebase/FirebaseLibrary';
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
@@ -14,7 +15,6 @@ import { createRestaurantReference } from '../firebase/FirestoreAPICalls/Firesto
 import { createQRCodeReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
 export const DemoRestaurantType = ['Pizza'];
-export const DemoRestaurantSalesTax = 9;
 export const DemoRestaurantQRStylePage = {
     format: 'Format 1',
     pageSize: 'A4',
@@ -31,6 +31,17 @@ export const DemoRestaurantQRStylePage = {
 
 export const DemoRestaurantCovidGuidelines = '';
 export const DemoRestaurantCovidMessage = 'We are using Groak to minimize your interaction with waiters and to avoid cross-contamination through menus';
+
+export const DemoRestaurantTips = {
+    id: 'tips',
+    values: [10, 15, 20],
+};
+export const DemoRestaurantSalesTax = {
+    id: uuidv4(),
+    percentage: true,
+    title: 'Sales Tax',
+    value: 9,
+};
 
 export const DemoDishName = 'Tomato Soup';
 export const DemoDishPrice = 5.50;
@@ -103,7 +114,10 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
             restaurant: false,
             groak: true,
         },
-        pos: '',
+        paymentMethods: {
+            venmo: '',
+        },
+        payments: [DemoRestaurantTips, DemoRestaurantSalesTax],
     };
 };
 
@@ -226,6 +240,11 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
         x: 0,
         y: 0,
         qrCodes: [createQRCodeReference(restaurantId, qrCodeId)],
+        paymentMethod: 'waiter',
+        tip: {
+            tipValue: -1,
+            tipIndex: -1,
+        },
     };
 };
 
@@ -257,6 +276,11 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
         tableOriginalReference: createTableReferenceInTableCollections(orderId),
         requestReference: createRequestReference(restaurantId, orderId),
+        paymentMethod: 'waiter',
+        tip: {
+            tipValue: -1,
+            tipIndex: -1,
+        },
     };
 };
 

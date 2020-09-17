@@ -1,8 +1,151 @@
 @import '../../../../globalCSS/globalCSS';
 
-.receipt {
+.popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+    .popup-title {
+        margin: 5px $margin;
+        font-size: 30px;
+        font-weight: 100;
+        min-width: 300px;
+    }
+
+    .popup-content {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 100;
+
+        .popup-tip {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 100;
+            color: black;
+    
+            .popup-tip-content {
+                margin: 0;
+            }
+        }
+
+        .popup-other-tips {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+
+            .popup-other-tip {
+                width: 40%;
+                margin: 0 10px;
+            }
+        }
+
+        .receipt-price-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: silver;
+    
+            .receipt-price-cell-content {
+                margin: 0 $margin;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 25px;
+            }
+    
+            .receipt-price-cell-content-1 {
+                margin: 0 $margin;
+                padding: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 15px;
+            }
+    
+            .receipt-price-cell-title {
+                font-weight: 500;
+                margin: 10px;
+            }
+    
+            .receipt-price-cell-price {
+                font-weight: 100;
+                margin: 0;
+            }
+        }
+    }
+
+    .popup-actions {
+        display: flex;
+        flex-direction: column;
+
+        .popup-button {
+            width: 80%;
+            height: 50px;
+            margin: 5px $margin;
+            background-color: $primaryColor;
+            color: white;
+            font-weight: 500;
+            font-size: $buttonFontSize;
+            border-radius: 5px;
+
+            :hover {
+                cursor: pointer;
+            }
+        }
+
+        .popup-button-cancel {
+            background-color: $redButtonColor;
+        }
+
+        .popup-button-disabled {
+            background-color: silver;
+            color: gray;
+        }
+
+        .popup-venmo-button {
+            width: 80%;
+            height: 50px;
+            margin: 05px $margin;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3d95ce;
+            color: white;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize;
+            border-radius: 5px;
+
+            :hover {
+                cursor: pointer;
+            }
+
+            .popup-venmo-image {
+                height: 40%;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.receipt {
     .content {
+        margin-top: 110px;
 
         .receipt-restaurant-cell {
             width: 100%;
@@ -162,12 +305,32 @@
     }
 
     .footer {
-        .footer-button-custom {
+        .footer-custom-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             width: 80%;
+        }
+
+        .footer-button-custom {
+            min-width: 45%;
             height: 50px;
             margin-top: $margin;
-            margin-left: $margin;
-            margin-right: $margin;
+            background-color: $primaryColor;
+            color: white;
+            font-weight: $buttonFontWeight;
+            font-size: $buttonFontSize - 5;
+
+            :hover {
+                cursor: pointer;
+            }
+        }
+
+        .footer-button-custom2 {
+            min-width: 80%;
+            height: 50px;
+            margin-top: $margin;
+            margin-bottom: $margin;
             background-color: $primaryColor;
             color: white;
             font-weight: $buttonFontWeight;
@@ -176,6 +339,11 @@
             :hover {
                 cursor: pointer;
             }
+        }
+
+        .footer-button-disabled {
+            background-color: silver;
+            color: gray;
         }
     }
 

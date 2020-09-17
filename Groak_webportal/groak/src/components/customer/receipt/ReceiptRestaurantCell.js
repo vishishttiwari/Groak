@@ -11,7 +11,7 @@ const ReceiptRestaurantCell = () => {
 
     return (
         <>
-            {globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.salesTax ? (
+            {globalState && globalState.restaurantCustomer ? (
                 <div className="receipt-restaurant-cell">
                     <img className="receipt-restaurant-cell-image" src={globalState.restaurantCustomer.logo} alt={globalState.restaurantCustomer.name} />
                     <p className="receipt-restaurant-cell-address">{globalState.restaurantCustomer.address.displayAddress}</p>

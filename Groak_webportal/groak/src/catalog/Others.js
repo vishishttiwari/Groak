@@ -102,44 +102,62 @@ export const randomNumber = () => {
  *
  * @param {*} dishes all the dishes for which the total price needs to be added
  */
-export const calculatePriceFromDishes = (dishes) => {
+export const calculatePriceFromDishes = (dishes, tableOrYour) => {
     let price = 0;
     dishes.forEach((dish) => {
-        price += dish.price;
+        if (tableOrYour) {
+            if (tableOrYour === 'table') {
+                price += dish.price;
+            } else if (dish.local) {
+                price += dish.price;
+            }
+        } else {
+            price += dish.price;
+        }
     });
-    return `$${price.toFixed(2)}`;
+    return parseFloat(price.toFixed(2));
 };
 
 /**
- * Calculate sales tax of all dishes
+ * Calculate percentage payments of all dishes
  *
  * @param {*} dishes all the dishes for which the total price needs to be added
- * @param {*} salesTax sales tax of the restaurant
+ * @param {*} payment payment of the restaurant
  */
-export const calculateSalesTaxFromDishes = (dishes, salesTax) => {
-    let price = 0;
-    dishes.forEach((dish) => {
-        price += dish.price;
-    });
-    const totalPrice = price;
-    price += price * (salesTax / 100);
-    price -= totalPrice;
-    return `$${price.toFixed(2)}`;
+export const calculatePriceFromDishesWithPayment = (dishes, payment, tableOrYour) => {
+    const dishesPrices = calculatePriceFromDishes(dishes, tableOrYour);
+    let finalPrice = 0;
+    if (payment.percentage) {
+        finalPrice += dishesPrices * (payment.value / 100);
+    } else {
+        finalPrice += payment.value;
+    }
+    return parseFloat(finalPrice.toFixed(2));
 };
 
 /**
  * Calculate prices of all dishes by adding them and also add the tax at the end
  *
  * @param {*} dishes all the dishes for which the total price needs to be added
- * @param {*} salesTax sales tax of the restaurant
+ * @param {*} payments payments of the restaurant
+ * @param {*} tip tip
  */
-export const calculatePriceFromDishesWithTax = (dishes, salesTax) => {
-    let price = 0;
-    dishes.forEach((dish) => {
-        price += dish.price;
+export const calculatePriceFromDishesWithPayments = (dishes, payments, tip, tableOrYour) => {
+    const dishesPrices = calculatePriceFromDishes(dishes, tableOrYour);
+    let finalPrices = dishesPrices;
+    payments.forEach((payment) => {
+        if (payment.id !== 'tips') {
+            if (tableOrYour === 'your' && payment.percentage) {
+                finalPrices += calculatePriceFromDishesWithPayment(dishes, payment, tableOrYour);
+            } else if (tableOrYour === 'table') {
+                finalPrices += calculatePriceFromDishesWithPayment(dishes, payment, tableOrYour);
+            }
+        }
     });
-    price += price * (salesTax / 100);
-    return `$${price.toFixed(2)}`;
+    if (tableOrYour && tableOrYour === 'table' && tip && tip > 0) {
+        finalPrices += parseFloat(tip);
+    }
+    return parseFloat(finalPrices.toFixed(2));
 };
 
 /**

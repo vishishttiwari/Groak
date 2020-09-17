@@ -61,6 +61,7 @@ export const OrderEmpty = 'You can place your orders from the cart tab';
 export const OrderOrdered = 'Your order has been requested. Pending for approval.';
 export const OrderServed = 'Your order has been served. Enjoy!';
 export const OrderPayment = 'You have requested for payment. Someone will be at your table soon.';
+export const VenmoPayment = 'Please pay the amount in Venmo. We will send a waiter your way, please show them the receipt from Venmo once you are done.';
 export const OrderAvailable = 'You can start ordering. Your orders will appear below.';
 export const OrderApproved = (serveTime) => {
     return `Your order will be served at ${getTimeInAMPMFromTimeStamp(serveTime)}`;
@@ -70,7 +71,9 @@ export const LeaveNoteForKitchen = 'Leave a note for the kitchen';
 export const OtherInstructions = 'Any other instructions? (Ex: Please start with starters)';
 
 export const EmptyCartMessage = 'Would you like to empty the cart?';
-export const PaymentMessage = 'We will send a waiter to your table for payment. Would you like to continue?';
+export const WaiterMessage = 'We will send a waiter to your table for payment. Would you like to continue?';
+export const VenmoMessage = 'We will redirect you to the Venmo app if you have one. Please pay the following amount. We will also send a waiter to your table. Please show them the receipt from Venmo when you are done. If you do not have Venmo app installed then please return by tapping cancel below.';
+export const iPhoneReceiptSave = 'To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll';
 
 export const CovidMessageSubheader = 'Measures taken by restaurant to reduce the spread';
 export const CovidGuidelineSubheader = 'Covid guidelines in your area';

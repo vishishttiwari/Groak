@@ -56,9 +56,9 @@ export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) =
     }
 };
 
-export const updateOrderAPI = async (restaurantId, orderId, newStatus, snackbar) => {
+export const updateOrderAPI = async (restaurantId, orderId, newStatus, tip, paymentMethod, snackbar) => {
     try {
-        await updateOrderFromUserFirestoreAPI(restaurantId, orderId, newStatus);
+        await updateOrderFromUserFirestoreAPI(restaurantId, orderId, newStatus, tip, paymentMethod);
     } catch (error) {
         snackbar(ErrorUpdatingOrder, { variant: 'error' });
     }

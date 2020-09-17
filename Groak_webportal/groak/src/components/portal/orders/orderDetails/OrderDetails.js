@@ -22,13 +22,14 @@ const initialState = {
     comments: [],
     request: [],
     dishes: [],
+    tip: 0,
     loadingSpinner: true,
 };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'fetchOrder':
-            return { ...state, table: action.table, status: action.status, serve: action.serve, comments: action.comments, dishes: action.dishes, loadingSpinner: false };
+            return { ...state, table: action.table, status: action.status, serve: action.serve, comments: action.comments, dishes: action.dishes, tip: action.tip, loadingSpinner: false };
         case 'setStatus':
             return { ...state, status: action.status };
         case 'setServe':
@@ -39,6 +40,8 @@ function reducer(state, action) {
             return { ...state, request: action.request };
         case 'setDishes':
             return { ...state, dishes: action.dishes };
+        case 'setTip':
+            return { ...state, tip: action.tip };
         case 'setLoadingSpinner':
             return { ...state, loadingSpinner: action.loadingSpinner };
         default:
@@ -84,6 +87,7 @@ const OrderDetails = (props) => {
                         comments={state.comments}
                         request={state.request}
                         dishes={state.dishes}
+                        tip={state.tip}
                         serveTimeFromServer={state.serve}
                     />
                 </div>

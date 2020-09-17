@@ -155,6 +155,7 @@ export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) =
                     comments: querySnapshot.data().comments,
                     serve: querySnapshot.data().serveTime,
                     dishes: querySnapshot.data().dishes,
+                    tip: querySnapshot.data().tip && querySnapshot.data().tip.tipValue ? querySnapshot.data().tip.tipValue : 0,
                 });
             } else {
                 snackbar(ErrorFetchingOrder, { variant: 'error' });

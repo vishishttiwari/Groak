@@ -23,6 +23,31 @@
           flex-flow: column;
 }
 
+.settings form .restaurant-settings .restaurant-settings-payment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  width: 50%;
+  min-width: 200px;
+  margin: auto;
+  border-style: solid;
+  padding: 20px;
+  border-width: 1px;
+  border-radius: 10px;
+  border-color: silver;
+  margin-bottom: 20px;
+}
+
+.settings form .restaurant-settings .restaurant-settings-payment .delete {
+  width: 150px;
+  color: white;
+  background-color: #ff1466;
+}
+
 .settings form .restaurant-settings .upload-image-button-label {
   height: 0;
   width: 0;

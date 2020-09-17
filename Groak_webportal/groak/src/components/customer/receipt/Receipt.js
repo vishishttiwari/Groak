@@ -10,7 +10,7 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { randomNumber, TableStatus } from '../../../catalog/Others';
 import './css/Receipt.css';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
-import { CartEmpty, PaymentMessage } from '../../../catalog/Comments';
+import { CartEmpty, iPhoneReceiptSave } from '../../../catalog/Comments';
 import ReceiptHeader from './ReceiptHeader';
 import ReceiptFooter from './ReceiptFooter';
 import OrderDishCell from '../order/OrderDishCell';
@@ -23,17 +23,45 @@ import Groak from '../../../assets/images/powered_by_groak_1.png';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { context } from '../../../globalState/globalState';
 import { isNearRestaurant } from '../../../catalog/Distance';
-import { NotAtRestaurant } from '../../../catalog/NotificationsComments';
-import Decision from '../../ui/decision/Decision';
+import { NotAtRestaurant, VenmoNotSupported } from '../../../catalog/NotificationsComments';
+import PaymentOptions from './PaymentOptions';
+import Tip from './Tip';
+import WaiterPayment from './WaiterPayment';
+import VenmoPayment from './VenmoPayment';
 
-const initialState = { order: {}, paymentConfirmation: false, tableReceipt: 'table_receipt', loadingSpinner: true };
+const initialState = {
+    order: {},
+    tipValue: -1,
+    tipIndex: -1,
+    tipConfirmation: false,
+    paymentConfirmation: false,
+    waiterConfirmation: false,
+    venmoConfirmation: false,
+    tableReceipt: 'table',
+    loadingSpinner: true };
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'changePaymentConfirmation':
-            return { ...state, paymentConfirmation: action.paymentConfirmation };
         case 'fetchOrder':
-            return { ...state, order: action.order, loadingSpinner: false };
+            return { ...state,
+                order: action.order,
+                loadingSpinner: false,
+                tipValue: action.order && action.order.tip && action.order.tip.tipValue ? action.order.tip.tipValue : -1,
+                tipIndex: action.order && action.order.tip && action.order.tip.tipIndex !== null ? action.order.tip.tipIndex : -1 };
+        case 'showHideTip':
+            return { ...state, tipConfirmation: action.show };
+        case 'changeTip':
+            return { ...state, tipIndex: action.tipIndex, tipValue: action.tipValue, tipConfirmation: false };
+        case 'showHidePayment':
+            return { ...state, paymentConfirmation: action.show };
+        case 'showWaiter':
+            return { ...state, paymentConfirmation: false, waiterConfirmation: true };
+        case 'hideWaiter':
+            return { ...state, waiterConfirmation: false };
+        case 'showVenmo':
+            return { ...state, paymentConfirmation: false, venmoConfirmation: true };
+        case 'hideVenmo':
+            return { ...state, venmoConfirmation: false };
         case 'setReceipt':
             return { ...state, tableReceipt: action.tableReceipt };
         case 'setLoadingSpinner':
@@ -50,13 +78,13 @@ const Receipt = (props) => {
     const top = createRef(null);
     const { enqueueSnackbar } = useSnackbar();
 
-    useEffect(() => {
-        top.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'start',
-        });
-    }, [top]);
+    // useEffect(() => {
+    //     top.current.scrollIntoView({
+    //         behavior: 'smooth',
+    //         block: 'center',
+    //         inline: 'start',
+    //     });
+    // }, [top]);
 
     useEffect(() => {
         if (!globalState.scannedCustomer || !globalState.orderAllowedCustomer) {
@@ -77,23 +105,8 @@ const Receipt = (props) => {
         };
     }, [enqueueSnackbar, globalState.orderAllowedCustomer, globalState.scannedCustomer, history, match.params.restaurantid, match.params.tableid]);
 
-    /**
-     * Get total price depending on table receipt or your receipt
-     */
-    const getTotalPrice = () => {
-        let price = 0;
-        state.order.dishes.forEach((dish) => {
-            if (state.tableReceipt === 'table_receipt') {
-                price += parseInt(dish.price, 10);
-            } else if (dish.local) {
-                price += parseInt(dish.price, 10);
-            }
-        });
-        return price;
-    };
-
     const showDishCell = (dish) => {
-        if (state.tableReceipt === 'table_receipt') {
+        if (state.tableReceipt === 'table') {
             return (
                 <OrderDishCell
                     name={dish.name}
@@ -120,23 +133,48 @@ const Receipt = (props) => {
     };
 
     /**
-     * Ask user to confirm if they would like to delete the cart
+     * Function called when paying using venmo
      */
-    const askPaymentHandler = () => {
-        setState({ type: 'changePaymentConfirmation', paymentConfirmation: true });
+    const venmoHandler = async () => {
+        if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.paymentMethods && globalState.restaurantCustomer.paymentMethods.venmo) {
+            if (state.venmoConfirmation) {
+                if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
+                    setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                    isNearRestaurant(globalState.restaurantCustomer.location.latitude, globalState.restaurantCustomer.location.longitude, enqueueSnackbar)
+                        .then(async (nearRestaurant) => {
+                            if (nearRestaurant) {
+                                await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.payment, { tipValue: Math.max(state.tipValue, 0), tipIndex: state.tipIndex }, 'venmo', enqueueSnackbar);
+                                setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+                                history.goBack();
+                                window.location.assign(`https://venmo.com/code?user_id=${globalState.restaurantCustomer.paymentMethods.venmo}`);
+                            } else {
+                                enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
+                                setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                            }
+                        })
+                        .catch(() => {
+                            setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                        });
+                }
+            } else {
+                setState({ type: 'hideWaiter' });
+            }
+        } else {
+            enqueueSnackbar(VenmoNotSupported, { variant: 'error' });
+        }
     };
 
     /**
-     * Function called when ready for payment
+     * Function called when asking for waiter
      */
-    const updateOrderHandler = async (open) => {
-        if (open) {
+    const updateOrderHandler = async () => {
+        if (state.waiterConfirmation) {
             if (globalState && globalState.restaurantCustomer && globalState.restaurantCustomer.location && globalState.restaurantCustomer.location.latitude && globalState.restaurantCustomer.location.longitude) {
                 setState({ type: 'setLoadingSpinner', loadingSpinner: true });
                 isNearRestaurant(globalState.restaurantCustomer.location.latitude, globalState.restaurantCustomer.location.longitude, enqueueSnackbar)
                     .then(async (nearRestaurant) => {
                         if (nearRestaurant) {
-                            await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.payment, enqueueSnackbar);
+                            await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.payment, { tipValue: Math.max(state.tipValue, 0), tipIndex: state.tipIndex }, 'waiter', enqueueSnackbar);
                             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                             history.goBack();
                         } else {
@@ -149,7 +187,7 @@ const Receipt = (props) => {
                     });
             }
         } else {
-            setState({ type: 'changePaymentConfirmation', deletionConfirmation: false });
+            setState({ type: 'hideVenmo' });
         }
     };
 
@@ -164,17 +202,38 @@ const Receipt = (props) => {
                             ? (
                                 <>
                                     <ReceiptHeader tableReceipt={state.tableReceipt} setState={setState} />
-                                    <Decision
-                                        open={state.paymentConfirmation}
-                                        response={updateOrderHandler}
-                                        title="Ready for payment?"
-                                        content={PaymentMessage}
+                                    <Tip
+                                        tableReceipt={state.tableReceipt}
+                                        dishes={state.order.dishes}
+                                        tips={globalState.restaurantCustomer.payments[0]}
+                                        tipIndex={state.tipIndex}
+                                        tipConfirmation={state.tipConfirmation}
+                                        setState={setState}
                                     />
-                                    <div className="receipt-final-message-top">
-                                    </div>
+                                    <PaymentOptions
+                                        tableReceipt={state.tableReceipt}
+                                        paymentMethods={globalState.restaurantCustomer.paymentMethods}
+                                        dishes={state.order.dishes}
+                                        tip={state.tipValue}
+                                        paymentConfirmation={state.paymentConfirmation}
+                                        setState={setState}
+                                    />
+                                    <WaiterPayment
+                                        waiterConfirmation={state.waiterConfirmation}
+                                        askForWaiterHandler={updateOrderHandler}
+                                        setState={setState}
+                                    />
+                                    <VenmoPayment
+                                        tableReceipt={state.tableReceipt}
+                                        dishes={state.order.dishes}
+                                        tip={state.tipValue}
+                                        venmoConfirmation={state.venmoConfirmation}
+                                        venmoHandler={venmoHandler}
+                                        setState={setState}
+                                    />
                                     <div className="content" id="receipt-content">
                                         <ReceiptRestaurantCell />
-                                        <ReceiptPriceCell totalPrice={getTotalPrice()} />
+                                        <ReceiptPriceCell tableReceipt={state.tableReceipt} dishes={state.order.dishes} tip={state.tipValue} />
                                         {state.order.dishes.map((dish) => {
                                             return (
                                                 <div key={randomNumber()}>
@@ -188,10 +247,10 @@ const Receipt = (props) => {
                                     </div>
                                     <div className="receipt-final-message-bottom">
                                         <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
-                                        <p>To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll</p>
+                                        <p>{iPhoneReceiptSave}</p>
                                     </div>
                                     <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
-                                    <ReceiptFooter askPaymentHandler={askPaymentHandler} />
+                                    <ReceiptFooter tipIndex={state.tipIndex} setState={setState} />
                                 </>
                             )
                             : (

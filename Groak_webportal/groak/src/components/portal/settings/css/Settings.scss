@@ -8,6 +8,26 @@
             display: flex;
             flex-flow: column;
 
+            .restaurant-settings-payment {
+                display: flex;
+                flex-flow: column;
+                width: 50%;
+                min-width: 200px;
+                margin: auto;
+                border-style: solid;
+                padding: $padding;
+                border-width: 1px;
+                border-radius: 10px;
+                border-color: silver;
+                margin-bottom: 20px;
+
+                .delete {
+                    width: 150px;
+                    color: white;
+                    background-color: $pinkButtonColor;
+                }
+            }
+
             .upload-image-button-label {
                 height: 0;
                 width: 0;

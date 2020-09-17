@@ -7,7 +7,7 @@ import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Button } from 
 import { context } from '../../../../globalState/globalState';
 
 import { differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { refreshPeriod, useInterval, calculatePriceFromDishesWithTax } from '../../../../catalog/Others';
+import { refreshPeriod, useInterval, getPrice, calculatePriceFromDishesWithPayments } from '../../../../catalog/Others';
 
 const OrdersTable = (props) => {
     const { title, button, orders = [], onClick, onButtonClick, serveTime } = props;
@@ -123,7 +123,7 @@ const OrdersTable = (props) => {
                                             {order.items}
                                         </TableCell>
                                         <TableCell width={columns.price.width} align={columns.price.align}>
-                                            {`${calculatePriceFromDishesWithTax(order.dishes, globalState.restaurantPortal.salesTax)}`}
+                                            {`${getPrice(calculatePriceFromDishesWithPayments(order.dishes, globalState.restaurantPortal.payments, order.tip.tipValue, 'table'))}`}
                                         </TableCell>
                                         {serveTime ? (
                                             <>

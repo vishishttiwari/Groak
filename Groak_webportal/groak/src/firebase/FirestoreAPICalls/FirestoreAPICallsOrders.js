@@ -150,7 +150,7 @@ export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
     });
 };
 
-export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus) => {
+export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus, tip, paymentMethod) => {
     const orderReference = createOrderReference(restaurantId, orderId);
     const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
     const tableOriginalReference = createTableReferenceInTableCollections(orderId);
@@ -164,9 +164,9 @@ export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus
                 transaction.update(tableOriginalReference, { status: newStatus });
                 transaction.update(orderReference, { status: newStatus });
             } else if (status !== TableStatus.payment && newStatus === TableStatus.payment) {
-                transaction.update(tableReference, { status: newStatus });
-                transaction.update(tableOriginalReference, { status: newStatus });
-                transaction.update(orderReference, { status: newStatus });
+                transaction.update(tableReference, { status: newStatus, tip, paymentMethod });
+                transaction.update(tableOriginalReference, { status: newStatus, tip, paymentMethod });
+                transaction.update(orderReference, { status: newStatus, tip, paymentMethod });
             }
         }
     });

@@ -17,7 +17,7 @@ const OrderHeader = (props) => {
     return (
         <div className="header">
             <div className="header-content">
-                <p className="header-title">{tableOrder === 'table_order' ? 'Table Order' : 'Your Order'}</p>
+                <p className="header-title">{tableOrder === 'table' ? 'Table Order' : 'Your Order'}</p>
             </div>
             <ToggleButtonGroup
                 className="header-toggle-group"
@@ -27,10 +27,10 @@ const OrderHeader = (props) => {
                 onChange={handleOrder}
                 aria-label="text alignment"
             >
-                <ToggleButton className="header-toggle" value="table_order" aria-label="table order">
+                <ToggleButton className="header-toggle" value="table" aria-label="table order">
                     Table Order
                 </ToggleButton>
-                <ToggleButton className="header-toggle" value="your_order" aria-label="your order">
+                <ToggleButton className="header-toggle" value="your" aria-label="your order">
                     Your Order
                 </ToggleButton>
             </ToggleButtonGroup>

@@ -93,7 +93,7 @@ const Requests = (props) => {
                         await updateRequestAPI(match.params.restaurantid, match.params.tableid, data, enqueueSnackbar);
                         setState({ type: 'changeRequestField', requestField: '' });
                         setState({ type: 'changeLoadingSpinner1', loadingSpinner: false });
-                        analytics.logEvent('request_from_user_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid });
+                        analytics.logEvent('request_from_user_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid });
                     } else {
                         enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                         setState({ type: 'changeLoadingSpinner1', loadingSpinner: false });

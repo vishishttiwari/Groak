@@ -18,10 +18,10 @@ import ComeImage from '../../../../assets/icons/suggestions/come.png';
 import GetImage from '../../../../assets/icons/suggestions/get.png';
 
 import { getCurrentDateTime, getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
-import { randomNumber, calculatePriceFromDishes, calculateSalesTaxFromDishes, calculatePriceFromDishesWithTax, getPrice, TextFieldLabelStyles, textFieldLabelProps, TableStatus } from '../../../../catalog/Others';
+import { randomNumber, getPrice, TextFieldLabelStyles, textFieldLabelProps, TableStatus, calculatePriceFromDishes, calculatePriceFromDishesWithPayment, calculatePriceFromDishesWithPayments } from '../../../../catalog/Others';
 
 const OrderOthers = (props) => {
-    const { history, classes, orderId, status, comments, request, dishes, serveTimeFromServer } = props;
+    const { history, classes, orderId, status, comments, request, dishes, tip, serveTimeFromServer } = props;
     const { enqueueSnackbar } = useSnackbar();
     const [serveTime, setServeTime] = useState(30);
     const [requestReply, setRequestReply] = useState('');
@@ -129,6 +129,9 @@ const OrderOthers = (props) => {
         await updateOrderAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
     };
 
+    /**
+     * This functionis used for sending requests
+     */
     const sendRequest = async () => {
         if (requestReply && requestReply.length > 0) {
             const requests = [...request, { created: getCurrentDateTime(), request: requestReply, createdByUser: false }];
@@ -136,6 +139,17 @@ const OrderOthers = (props) => {
             await updateRequestAPI(globalState.restaurantIdPortal, orderId, data, enqueueSnackbar);
             setRequestReply('');
         }
+    };
+
+    const getTotalSubtitle = () => {
+        let finalString = `Subtotal: ${getPrice(calculatePriceFromDishes(dishes))}\n`;
+        globalState.restaurantPortal.payments.forEach((payment) => {
+            if (payment.id !== 'tips') {
+                finalString += `${payment.title}: ${getPrice(calculatePriceFromDishesWithPayment(dishes, payment))}\n`;
+            }
+        });
+        finalString += `Tips: ${getPrice(tip)}`;
+        return finalString;
     };
 
     return (
@@ -296,9 +310,9 @@ const OrderOthers = (props) => {
             ) : null}
             <Card className="card">
                 <CardHeader
-                    title="Total"
-                    subheader={`${calculatePriceFromDishes(dishes)} + ${calculateSalesTaxFromDishes(dishes, globalState.restaurantPortal.salesTax)} = ${calculatePriceFromDishesWithTax(dishes, globalState.restaurantPortal.salesTax)}`}
+                    title={`Total: ${getPrice(calculatePriceFromDishesWithPayments(dishes, globalState.restaurantPortal.payments, tip, 'table'))}`}
                 />
+                <p style={{ whiteSpace: 'pre-wrap', marginLeft: '20px', marginRight: '20px', color: 'grey' }}>{getTotalSubtitle()}</p>
                 <CardContent>
                     {dishes.map((dish) => {
                         return (
@@ -342,6 +356,7 @@ OrderOthers.propTypes = {
     comments: PropTypes.array.isRequired,
     request: PropTypes.array,
     dishes: PropTypes.array.isRequired,
+    tip: PropTypes.number.isRequired,
     serveTimeFromServer: PropTypes.object,
 };
 
