@@ -32,6 +32,9 @@ const MenuDish = (props) => {
         if (dishItem.restrictions.kosher === 'Yes') {
             dom.push(<CustomerVegSymbol key={randomNumber()} className="info-symbol" symbol="K" />);
         }
+        if (dishItem.restrictions.seaFood === 'Yes') {
+            dom.push(<CustomerVegSymbol key={randomNumber()} className="info-symbol" symbol="SF" color="blue" />);
+        }
         return dom;
     };
 

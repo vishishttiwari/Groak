@@ -6,17 +6,17 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import { context } from '../../../globalState/globalState';
 
-import { VenmoMessage } from '../../../catalog/Comments';
+import { VenmoMessage, VenmoUsageMessage } from '../../../catalog/Comments';
 import Venmo from '../../../assets/others/venmo_logo_white.png';
 import { calculatePriceFromDishes, calculatePriceFromDishesWithPayment, calculatePriceFromDishesWithPayments, getPrice, randomNumber } from '../../../catalog/Others';
 
 const VenmoPayment = (props) => {
     const { dishes, tip, venmoConfirmation, venmoHandler, setState } = props;
-    const [scroll, setScroll] = React.useState('paper');
+    const [scroll, setScroll] = React.useState('body');
     const { globalState } = useContext(context);
 
     useEffect(() => {
-        setScroll('paper');
+        setScroll('body');
     }, []);
 
     const hideVenmo = () => {
@@ -46,8 +46,7 @@ const VenmoPayment = (props) => {
         >
             <p className="popup-title">Ready for payment?</p>
             <DialogContent dividers={scroll === 'paper'} className="popup-content">
-                {VenmoMessage}
-                <div className="receipt-price-cell">
+                <div className="receipt-price-cell" style={{ marginTop: '20px', borderStyle: 'none' }}>
                     <div className="receipt-price-cell-content">
                         <p className="receipt-price-cell-title">Table Total</p>
                         <p className="receipt-price-cell-price">{getPrice(calculatePriceFromDishesWithPayments(dishes, globalState.restaurantCustomer.payments, tip, 'table'))}</p>
@@ -74,10 +73,11 @@ const VenmoPayment = (props) => {
                             <p className="receipt-price-cell-price">{getPrice(tip)}</p>
                         </div>
                     ) : null}
-                    <div className="receipt-price-cell-content">
+                    <div className="receipt-price-cell-content" style={{ marginBottom: '10px', borderBottomStyle: 'solid', borderWidth: '1px', borderColor: 'silver' }}>
                         <p className="receipt-price-cell-title">Your Full Total</p>
                         <p className="receipt-price-cell-price">{getPrice(calculatePriceFromDishesWithPaymentsIncludingFixedFees())}</p>
                     </div>
+                    {VenmoMessage}
                 </div>
             </DialogContent>
             <DialogActions className="popup-actions">
@@ -87,7 +87,7 @@ const VenmoPayment = (props) => {
                 <div onClick={venmoHandler} className="popup-venmo-button">
                     <img className="popup-venmo-image" src={Venmo} alt="Venmo" />
                 </div>
-                <p style={{ color: 'grey', margin: '20px', textAlign: 'center' }}>Only use Venmo if you have the app installed</p>
+                <p style={{ color: 'grey', margin: '20px', textAlign: 'center' }}>{VenmoUsageMessage}</p>
             </DialogActions>
         </Dialog>
     );

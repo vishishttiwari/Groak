@@ -253,6 +253,9 @@ html {
                         font-size: 30px;
                         font-weight: 100;
                         overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        max-width: 75%;
                     }
                     .header-subtitle {
                         margin: 0 auto;

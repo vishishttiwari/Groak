@@ -8,9 +8,20 @@ import './css/CustomerVegSymbol.css';
 const CustomerVegSymbol = (props) => {
     const { symbol, color } = props;
 
+    const colorClassName = () => {
+        if (color === 'green') {
+            return 'veg-symbol-green';
+        } if (color === 'blue') {
+            return 'veg-symbol-blue';
+        } if (color === 'theme') {
+            return 'veg-symbol-theme';
+        }
+        return 'veg-symbol-theme';
+    };
+
     return (
         <div className="veg-symbol">
-            <p className={color === 'green' ? 'veg-symbol-green' : 'veg-symbol-theme'}>{symbol}</p>
+            <p className={colorClassName()}>{symbol}</p>
         </div>
     );
 };

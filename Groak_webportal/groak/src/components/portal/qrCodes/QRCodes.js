@@ -18,8 +18,8 @@ import SortableList from '../../dnd/SortableList';
 import SortableItem from '../../dnd/SortableItem';
 import Empty from '../../../assets/others/empty.png';
 import { MaximumQRCodeLimitReached } from '../../../catalog/NotificationsComments';
-import { QRCodesOrder, NoQRCodes, QRCodesNotFound, FrontDoorQRMenuPage } from '../../../catalog/Comments';
-import { frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { QRCodesOrder, NoQRCodes, QRCodesNotFound, FrontDoorQRMenuPage, ViewOnlyQRMenuPage } from '../../../catalog/Comments';
+import { frontDoorQRMenuPageId, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 
 const initialState = { qrCodes: [], categoriesMap: new Map(), categories: [], changeOrder: false, loadingSpinner: true };
 
@@ -134,6 +134,18 @@ const QRCodes = (props) => {
     };
 
     /**
+     * This function is used for saving restaurant information
+     *
+     * @param {*} event this is received from the submit button
+     */
+    const viewOnlyQRPage = async (event) => {
+        event.preventDefault();
+        history.push({
+            pathname: `/qrmenupage/${viewOnlyQRMenuPageId}`,
+        });
+    };
+
+    /**
      * This function is called when order toggle is pressed
      *
      * @param {*} checked
@@ -157,6 +169,16 @@ const QRCodes = (props) => {
                         onClick={frontDoorQRPage}
                     >
                         Front Door Menu
+                    </Button>
+                    <p className="text-on-background">
+                        {ViewOnlyQRMenuPage}
+                    </p>
+                    <Button
+                        className="normal-buttons"
+                        type="submit"
+                        onClick={viewOnlyQRPage}
+                    >
+                        View Only Menu
                     </Button>
                     {state.qrCodes && state.qrCodes.length === 0 ? (
                         <>

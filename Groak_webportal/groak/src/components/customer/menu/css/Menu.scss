@@ -7,7 +7,7 @@ $cardFullWidth: ($cardWidth + $cardMargin);
 
     .content {
         margin-top: 80px;
-        margin-bottom: $bottomTabBarHeight;
+        margin-bottom: $bottomTabBarHeight + 100px;
 
         .image-change {
             display: flex;
@@ -108,6 +108,28 @@ $cardFullWidth: ($cardWidth + $cardMargin);
                         margin: 0;
                         font-size: $buttonFontSize - 3px;
                     }
+                }
+            }
+        }
+
+        .dish-restrictions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 auto;
+            width: 300px;
+
+            .dish-restrictions-row {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .dish-restriction {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width: 100px;
                 }
             }
         }

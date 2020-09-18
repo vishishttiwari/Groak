@@ -14,9 +14,9 @@ import { context } from '../../../globalState/globalState';
 import './css/Settings.css';
 import { DemoRestaurantCovidGuidelines, DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { updateRestaurantAPI } from './SettingsAPICalls';
-import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink } from '../../../catalog/Others';
+import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
-import { FrontDoorQRMenuPage } from '../../../catalog/Comments';
+import { FrontDoorQRMenuPage, ViewOnlyQRMenuPage } from '../../../catalog/Comments';
 import Payments from './Payment';
 import Tips from './Tips';
 
@@ -66,6 +66,18 @@ const RestaurantSettings = (props) => {
         event.preventDefault();
         history.push({
             pathname: `/qrmenupage/${frontDoorQRMenuPageId}`,
+        });
+    };
+
+    /**
+     * This function is used for saving restaurant information
+     *
+     * @param {*} event this is received from the submit button
+     */
+    const viewOnlyQRPage = async (event) => {
+        event.preventDefault();
+        history.push({
+            pathname: `/qrmenupage/${viewOnlyQRMenuPageId}`,
         });
     };
 
@@ -183,7 +195,7 @@ const RestaurantSettings = (props) => {
                 InputLabelProps={textFieldLabelProps(classes)}
             />
             <TextField
-                label="Covid Guidelines in your area:"
+                label="Covid Directives in your area:"
                 multiline
                 placeholder={`Ex: ${DemoRestaurantCovidGuidelines}`}
                 rows="5"
@@ -208,6 +220,9 @@ const RestaurantSettings = (props) => {
                 </Select>
             </FormControl>
             <p>
+                QR Menu Pages
+            </p>
+            <p style={{ marginLeft: '40px', fontSize: '15px' }}>
                 Front Door QR Menu Page (
                 {FrontDoorQRMenuPage}
                 ):
@@ -217,7 +232,19 @@ const RestaurantSettings = (props) => {
                 type="submit"
                 onClick={frontDoorQRPage}
             >
-                Get QR Menu Page
+                Front Door Menu
+            </Button>
+            <p style={{ marginLeft: '40px', fontSize: '15px' }}>
+                View Only QR Menu Page (
+                {ViewOnlyQRMenuPage}
+                ):
+            </p>
+            <Button
+                className="normal-buttons"
+                type="submit"
+                onClick={viewOnlyQRPage}
+            >
+                View Only Menu
             </Button>
             <p>Images:</p>
             <input

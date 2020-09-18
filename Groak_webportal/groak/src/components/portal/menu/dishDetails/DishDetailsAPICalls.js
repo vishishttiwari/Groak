@@ -48,6 +48,7 @@ function preProcessData(state) {
             vegan: state.vegan,
             glutenFree: state.glutenFree,
             kosher: state.kosher,
+            seaFood: state.seaFood,
         },
         ingredients: updatedIngredients,
         extras: updatedExtras,
@@ -136,6 +137,7 @@ export const fetchDishAPI = async (restaurantId, dishId, setState, snackbar) => 
                 vegan: doc.data().restrictions.vegan ? doc.data().restrictions.vegan : 'Not Sure',
                 glutenFree: doc.data().restrictions.glutenFree ? doc.data().restrictions.glutenFree : 'Not Sure',
                 kosher: doc.data().restrictions.kosher ? doc.data().restrictions.kosher : 'Not Sure',
+                seaFood: doc.data().restrictions.seaFood ? doc.data().restrictions.seaFood : 'Not Sure',
                 extras: updatedExtras,
                 ingredients: updatedIngredients,
             });

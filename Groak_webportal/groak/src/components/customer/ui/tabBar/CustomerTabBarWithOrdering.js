@@ -13,7 +13,7 @@ import Table from '../../../../assets/icons/tabbar/dinner.png';
 import Covid from '../../../../assets/icons/tabbar/corona.png';
 import { fetchCart } from '../../../../catalog/LocalStorage';
 
-const CustomerTabBar = (props) => {
+const CustomerTabBarWithOrdering = (props) => {
     const { restaurantId, visible } = props;
     const { globalState, setGlobalState } = useContext(context);
 
@@ -52,19 +52,21 @@ const CustomerTabBar = (props) => {
                     )}
                     label="Order"
                 />
-                <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
+                {globalState.covidInformationCustomer ? (
+                    <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
+                ) : null}
             </Tabs>
         </Paper>
     );
 };
 
-CustomerTabBar.propTypes = {
+CustomerTabBarWithOrdering.propTypes = {
     restaurantId: PropTypes.string.isRequired,
     visible: PropTypes.bool,
 };
 
-CustomerTabBar.defaultProps = {
+CustomerTabBarWithOrdering.defaultProps = {
     visible: false,
 };
 
-export default React.memo(CustomerTabBar);
+export default React.memo(CustomerTabBarWithOrdering);

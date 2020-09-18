@@ -6,9 +6,10 @@ import { fetchDishesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICa
 import { fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { ErrorFetchingCategories, ErrorUnsubscribingOrder } from '../../../catalog/NotificationsComments';
 import { fetchQRCodeFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
-import { checkCategoryAvailability, checkQRCodeAvailability, checkDishAvailability, frontDoorQRMenuPageId, TableStatus } from '../../../catalog/Others';
+import { checkCategoryAvailability, checkQRCodeAvailability, checkDishAvailability, frontDoorQRMenuPageId, TableStatus, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { fetchOrderFirestoreAPI, updateOrderFromUserFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { checkOrderLocallity } from '../../../catalog/LocalStorage';
+import { getDay } from '../../../catalog/TimesDates';
 
 let orderSnapshot;
 
@@ -100,6 +101,9 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
     const categories = [];
     const categoryNames = [];
     const menuItems = new Map();
+    const day = getDay();
+    let startTime = 1439;
+    let endTime = 0;
 
     try {
         const restaurant = await fetchRestaurantAPI(restaurantId);
@@ -117,6 +121,8 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                             categoryNames.push(category.name);
                             menuItems.set(doc.id, []);
                         }
+                        startTime = Math.min(startTime, category.startTime[day]);
+                        endTime = Math.max(endTime, category.endTime[day]);
                     }
                 });
 
@@ -134,10 +140,12 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                     menuItems.set(category.id, dishes);
                 }));
                 if (categories.length === 0) {
-                    setState({ type: 'categoriesNotFound' });
+                    setState({ type: 'categoriesNotFound', startTime, endTime });
                 } else {
                     setState({ type: 'fetchMenuItems', categoryNames, menuItems, restaurant });
                     if (tableId === frontDoorQRMenuPageId) {
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+                    } else if (tableId === viewOnlyQRMenuPageId) {
                         setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
                     } else if (!restaurant
                         || !restaurant.allowOrdering
@@ -149,7 +157,16 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                     }
                 }
             } else {
-                setState({ type: 'categoriesNotFound' });
+                const docs = await fetchCategoriesInArrayFirestoreAPI(data.data().categories);
+
+                docs.forEach((doc) => {
+                    if (doc.exists) {
+                        const category = { id: doc.id, ...doc.data() };
+                        startTime = Math.min(startTime, category.startTime[day]);
+                        endTime = Math.max(endTime, category.endTime[day]);
+                    }
+                });
+                setState({ type: 'categoriesNotFound', startTime, endTime });
             }
         } else {
             setState({ type: 'restaurantNotFound' });

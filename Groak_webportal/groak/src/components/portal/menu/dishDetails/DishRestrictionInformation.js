@@ -5,10 +5,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Select, OutlinedInput } from '@material-ui/core';
-import { DishVegetarian, DishVegan, DishGlutenFree, DishKosher } from '../../../../catalog/Comments';
+import { DishVegetarian, DishVegan, DishGlutenFree, DishKosher, DishSeaFood } from '../../../../catalog/Comments';
 
 const DishRestrictionInformation = (props) => {
-    const { vegetarian, vegan, glutenFree, kosher, setState } = props;
+    const { vegetarian, vegan, glutenFree, kosher, seaFood, setState } = props;
 
     const options = ['Not Sure', 'Yes', 'No'];
 
@@ -36,6 +36,12 @@ const DishRestrictionInformation = (props) => {
             title: DishKosher,
             value: kosher,
             onChange: (event) => { setState({ type: 'setKosher', kosher: event.target.value }); },
+        },
+        {
+            key: 'seaFood',
+            title: DishSeaFood,
+            value: seaFood,
+            onChange: (event) => { setState({ type: 'setSeaFood', seaFood: event.target.value }); },
         },
     ];
 
@@ -69,6 +75,7 @@ DishRestrictionInformation.propTypes = {
     vegan: PropTypes.string.isRequired,
     glutenFree: PropTypes.string.isRequired,
     kosher: PropTypes.string.isRequired,
+    seaFood: PropTypes.string.isRequired,
     setState: PropTypes.func.isRequired,
 };
 

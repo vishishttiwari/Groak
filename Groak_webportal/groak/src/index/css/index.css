@@ -329,6 +329,9 @@ html body .customer .header .header-content .header-title {
   font-size: 30px;
   font-weight: 100;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 75%;
 }
 
 html body .customer .header .header-content .header-subtitle {

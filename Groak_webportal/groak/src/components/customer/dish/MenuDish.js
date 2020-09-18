@@ -66,7 +66,7 @@ const MenuDish = (props) => {
                         <MenuDishHeader dishName={state.dish.name} dishPrice={state.dish.price} />
                         <div className="content">
                             <img className="dish-image" src={state.dish.image} alt={state.dish.name || 'Dish Image'} />
-                            <MenuDishInfo vegetarian={state.dish.restrictions.vegetarian} vegan={state.dish.restrictions.vegan} glutenFree={state.dish.restrictions.glutenFree} kosher={state.dish.restrictions.kosher} />
+                            <MenuDishInfo vegetarian={state.dish.restrictions.vegetarian} vegan={state.dish.restrictions.vegan} glutenFree={state.dish.restrictions.glutenFree} kosher={state.dish.restrictions.kosher} seaFood={state.dish.restrictions.seaFood} />
                             <MenuDishContent calories={state.dish.nutrition.calories} fats={state.dish.nutrition.fats} protein={state.dish.nutrition.protein} carbs={state.dish.nutrition.carbs} />
                             {state.dish.description
                                 ? (

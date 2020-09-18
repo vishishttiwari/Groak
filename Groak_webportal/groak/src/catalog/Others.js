@@ -36,6 +36,7 @@ export const TableStatusText = {
 
 export const frontDoorQRMenuPageId = 'front-door-qr-menupage';
 export const frontDoorInstructions = 'Scan to see the menu';
+export const viewOnlyQRMenuPageId = 'view-only-qr-menupage';
 
 export const TableStatusStyle = {
     available: { backgroundColor: CSSVariables.tableGreenColor },
@@ -207,29 +208,32 @@ export const showExtras = (extras, showSpecialInstructions) => {
  * @param {*} dish this is the dish that is passed
  */
 export const showDishDetails = (dish) => {
-    if (dish.calories && dish.calories > 0) {
+    if (dish.nutrition.calories && dish.nutrition.calories > 0) {
         return true;
     }
-    if (dish.fats && dish.fats > 0) {
+    if (dish.nutrition.fats && dish.nutrition.fats > 0) {
         return true;
     }
-    if (dish.protein && dish.protein > 0) {
+    if (dish.nutrition.protein && dish.nutrition.protein > 0) {
         return true;
     }
-    if (dish.carbs && dish.carbs > 0) {
+    if (dish.nutrition.carbs && dish.nutrition.carbs > 0) {
         return true;
     }
 
-    if (dish.vegetarian && dish.vegetarian !== 'Not Sure') {
+    if (dish.restrictions.vegetarian && dish.restrictions.vegetarian !== 'Not Sure') {
         return true;
     }
-    if (dish.vegan && dish.vegan !== 'Not Sure') {
+    if (dish.restrictions.vegan && dish.restrictions.vegan !== 'Not Sure') {
         return true;
     }
-    if (dish.glutenFree && dish.glutenFree !== 'Not Sure') {
+    if (dish.restrictions.glutenFree && dish.restrictions.glutenFree !== 'Not Sure') {
         return true;
     }
-    if (dish.kosher && dish.kosher !== 'Not Sure') {
+    if (dish.restrictions.kosher && dish.restrictions.kosher !== 'Not Sure') {
+        return true;
+    }
+    if (dish.restrictions.seaFood && dish.restrictions.seaFood !== 'Not Sure') {
         return true;
     }
 

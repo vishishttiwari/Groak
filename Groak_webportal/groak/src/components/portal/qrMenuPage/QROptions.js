@@ -10,7 +10,7 @@ import { CheckBox } from '@material-ui/icons';
 import ColorPicker from 'material-ui-color-picker';
 
 import QRPage from './qrPage/QRPage';
-import { getFonts, getQRStyleImages, frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { getFonts, getQRStyleImages, frontDoorQRMenuPageId, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { IncludeLogoMessage, RerenderPDF, IncludeRestaurantImage } from '../../../catalog/Comments';
 import Spinner from '../../ui/spinner/Spinner';
 
@@ -74,7 +74,7 @@ const QROptions = (props) => {
                         onChange={(event) => { setState({ type: 'setIncludeTable', includeTable: event.target.checked }); }}
                     />
                 )}
-                label={tableReference === frontDoorQRMenuPageId ? 'Include instructions' : 'Include table Name'}
+                label={tableReference === frontDoorQRMenuPageId || tableReference === viewOnlyQRMenuPageId ? 'Include instructions' : 'Include table Name'}
             />
             <TextField
                 label="Suggestion Text:"

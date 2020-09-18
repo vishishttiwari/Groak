@@ -9,7 +9,7 @@ import CustomerTopic from '../ui/topic/CustomerTopic';
 import CustomerVegSymbol from '../ui/vegSymbol/CustomerVegSymbol';
 
 const MenuDishInfo = (props) => {
-    const { vegetarian, vegan, glutenFree, kosher } = props;
+    const { vegetarian, vegan, glutenFree, kosher, seaFood } = props;
 
     /**
      * Used for showing which symbol will be shown
@@ -25,6 +25,9 @@ const MenuDishInfo = (props) => {
             return true;
         }
         if (kosher && kosher !== 'Not Sure') {
+            return true;
+        }
+        if (seaFood && seaFood !== 'Not Sure') {
             return true;
         }
         return false;
@@ -66,6 +69,12 @@ const MenuDishInfo = (props) => {
                                 Kosher
                             </div>
                         ) : null}
+                        {seaFood === 'Yes' ? (
+                            <div className="dish-info-info-category">
+                                <CustomerVegSymbol symbol="SF" color="blue" />
+                                Sea Food
+                            </div>
+                        ) : null}
                     </div>
                 </>
             ) : null}
@@ -78,6 +87,11 @@ MenuDishInfo.propTypes = {
     vegan: PropTypes.string.isRequired,
     glutenFree: PropTypes.string.isRequired,
     kosher: PropTypes.string.isRequired,
+    seaFood: PropTypes.string,
+};
+
+MenuDishInfo.defaultProps = {
+    seaFood: 'Not Sure',
 };
 
 export default withRouter(React.memo(MenuDishInfo));

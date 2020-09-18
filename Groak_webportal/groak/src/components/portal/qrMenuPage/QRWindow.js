@@ -15,7 +15,7 @@ import QROptions from './QROptions';
 import { context } from '../../../globalState/globalState';
 
 import { updateRestaurantAPI, fetchQRCodesAPI, fetchTableAPI, updateTableAPI } from './QRAPICalls';
-import { frontDoorQRMenuPageId, frontDoorInstructions } from '../../../catalog/Others';
+import { frontDoorQRMenuPageId, frontDoorInstructions, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { QRMenuPageUpdated } from '../../../catalog/NotificationsComments';
 import { RenderPDF } from '../../../catalog/Comments';
 
@@ -96,7 +96,7 @@ const QRWindow = (props) => {
             await fetchQRCodesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar);
             setState({ type: 'fetchTable', table: { qrCodes: [] } });
         }
-        if (match.params.tableid === frontDoorQRMenuPageId) {
+        if (match.params.tableid === frontDoorQRMenuPageId || match.params.tableid === viewOnlyQRMenuPageId) {
             fetchQRCodes();
         } else {
             fetchQRCodesAndTable();
@@ -117,7 +117,7 @@ const QRWindow = (props) => {
      */
     async function submitHandler(event) {
         event.preventDefault();
-        if (match.params.tableid === frontDoorQRMenuPageId) {
+        if (match.params.tableid === frontDoorQRMenuPageId || match.params.tableid === viewOnlyQRMenuPageId) {
             await updateRestaurantAPI(globalState.restaurantIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar);
         } else {
             await Promise.all([await updateRestaurantAPI(globalState.restaurantIdPortal, state.qrStylePage, setState, setGlobalState, enqueueSnackbar), await updateTableAPI(globalState.restaurantIdPortal, match.params.tableid, state.table, setState, enqueueSnackbar)]);
@@ -136,7 +136,7 @@ const QRWindow = (props) => {
                     <QRPage
                         restaurantReference={globalState.restaurantIdPortal}
                         tableReference={match.params.tableid}
-                        tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
+                        tableName={match.params.tableid === frontDoorQRMenuPageId || match.params.tableid === viewOnlyQRMenuPageId ? frontDoorInstructions : tableName}
                         qrStylePage={state.qrStylePage}
                         table={state.table}
                         qrCodesMap={state.qrCodesMap}
@@ -150,7 +150,7 @@ const QRWindow = (props) => {
                 <QROptions
                     restaurantReference={globalState.restaurantIdPortal}
                     tableReference={match.params.tableid}
-                    tableName={match.params.tableid === frontDoorQRMenuPageId ? frontDoorInstructions : tableName}
+                    tableName={match.params.tableid === frontDoorQRMenuPageId || match.params.tableid === viewOnlyQRMenuPageId ? frontDoorInstructions : tableName}
                     state={state}
                     restaurantName={globalState.restaurantPortal.name}
                     logo={globalState.restaurantPortal.logo}

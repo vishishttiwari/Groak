@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /**
  * This class is used to represent the intro screen including tab bars
  */
@@ -7,7 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { context } from '../../../globalState/globalState';
 
-import CustomerTabBar from '../ui/tabBar/CustomerTabBar';
+import CustomerTabBarWithOrdering from '../ui/tabBar/CustomerTabBarWithOrdering';
+import CustomerTabBarWithoutOrdering from '../ui/tabBar/CustomerTabBarWithoutOrdering';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
 import Menu from '../menu/Menu';
 import Cart from '../cart/Cart';
@@ -22,7 +24,7 @@ import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { deleteAllLocalStorageAfter6Hours } from '../../../catalog/LocalStorage';
 import { analytics } from '../../../firebase/FirebaseLibrary';
 
-const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false, startTime: 0, endTime: 1439 };
 
 function reducer(state, action) {
     switch (action.type) {
@@ -35,7 +37,7 @@ function reducer(state, action) {
         case 'restaurantNotFound':
             return { ...state, restaurantNotFound: true, loadingSpinner: false };
         case 'categoriesNotFound':
-            return { ...state, categoriesNotFound: true, loadingSpinner: false };
+            return { ...state, categoriesNotFound: true, loadingSpinner: false, startTime: action.startTime, endTime: action.endTime };
         default:
             return initialState;
     }
@@ -79,16 +81,42 @@ const CustomerIntro = (props) => {
      * Used for showing which component will be showin in each tab
      */
     const getTabPanel = () => {
-        if (globalState.tabValueCustomer === 0) {
-            return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
-        } if (globalState.tabValueCustomer === 1) {
-            return <Cart setState={setState} />;
-        } if (globalState.tabValueCustomer === 2) {
-            return <Order order={state.order} />;
-        } if (globalState.tabValueCustomer === 3) {
-            return <Covid restaurant={state.restaurant} />;
+        if (globalState) {
+            if (globalState.orderAllowedCustomer) {
+                if (globalState.tabValueCustomer === 0) {
+                    return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
+                } if (globalState.tabValueCustomer === 1) {
+                    return <Cart setState={setState} />;
+                } if (globalState.tabValueCustomer === 2) {
+                    return <Order order={state.order} />;
+                } if (globalState.tabValueCustomer === 3) {
+                    return <Covid restaurant={state.restaurant} />;
+                }
+                return null;
+            }
+            if (globalState.tabValueCustomer === 0) {
+                return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
+            } if (globalState.tabValueCustomer === 1) {
+                return <Covid restaurant={state.restaurant} />;
+            }
+            return null;
         }
         return null;
+    };
+
+    /**
+     * This function converts minutes into AM/PM time format
+     *
+     * @param {*} minutes to be converted
+     */
+    const getTimeInAMPMFromMinutesComplete = (minutes) => {
+        let hour = Math.floor(minutes / 60).toFixed(0);
+        const minute = (minutes % 60).toFixed(0);
+        const PM = hour > 11;
+        if (parseFloat(hour) === 0) {
+            hour = 12;
+        } else { hour -= hour > 12 ? 12 : 0; }
+        return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()}${PM ? 'PM' : 'AM'}`;
     };
 
     return (
@@ -101,16 +129,24 @@ const CustomerIntro = (props) => {
                         <>
                             {state.restaurantNotFound
                                 ? <CustomerNotFound text={RestaurantNotFound} />
-                                : <CustomerNotFound text={CategoriesNotFound} />}
+                                : <CustomerNotFound text={CategoriesNotFound(getTimeInAMPMFromMinutesComplete(state.startTime), getTimeInAMPMFromMinutesComplete(state.endTime), state.startTime, state.endTime)} />}
                         </>
                     ) : (
                         <>
                             {getTabPanel()}
-                            {globalState && globalState.orderAllowedCustomer ? (
+                            {globalState ? (
                                 <>
-                                    <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
-                                    <CustomerTabBar restaurantId={match.params.restaurantid} visible={state && state.order && state.order.newOrderUpdateForUser} />
+                                    {globalState.orderAllowedCustomer ? (
+                                        <>
+                                            <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
+                                            <CustomerTabBarWithOrdering restaurantId={match.params.restaurantid} visible={state && state.order && state.order.newOrderUpdateForUser} />
+                                        </>
+                                    )
+                                        : globalState.covidInformationCustomer
+                                            ? <CustomerTabBarWithoutOrdering />
+                                            : null}
                                 </>
+
                             ) : null}
                         </>
                     )}

@@ -20,7 +20,7 @@ const Covid = (props) => {
                 <CustomerInfo info={restaurant.covidMessage} />
                 {restaurant.covidGuidelines ? (
                     <>
-                        <CustomerTopic header="Covid Guidelines" subheader={CovidGuidelineSubheader} />
+                        <CustomerTopic header="Covid Directives" subheader={CovidGuidelineSubheader} />
                         <CustomerInfo info={restaurant.covidGuidelines} />
                     </>
                 ) : null}

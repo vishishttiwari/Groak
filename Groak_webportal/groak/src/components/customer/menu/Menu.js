@@ -13,6 +13,7 @@ import MenuDish from './MenuDish';
 import { randomNumber, showDishDetails } from '../../../catalog/Others';
 import { ImageSubjectToChange } from '../../../catalog/Comments';
 import MenuHeader from './MenuHeader';
+import DishRestrictionsIndex from './DishRestrictionsIndex';
 
 const initialState = { tabValue: 0 };
 
@@ -132,6 +133,7 @@ const Menu = (props) => {
                         </TabPanel>
                     );
                 })}
+                <DishRestrictionsIndex />
                 <div className="image-change">
                     <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
                     <p>

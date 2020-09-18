@@ -36,6 +36,7 @@ const initialState = {
     vegan: 'Not Sure',
     glutenFree: 'Not Sure',
     kosher: 'Not Sure',
+    seaFood: 'Not Sure',
     extras: [],
     ingredients: [],
     loadingSpinner: true,
@@ -73,6 +74,8 @@ function reducer(state, action) {
             return { ...state, glutenFree: action.glutenFree };
         case 'setKosher':
             return { ...state, kosher: action.kosher };
+        case 'setSeaFood':
+            return { ...state, seaFood: action.seaFood };
         case 'setExtras':
             return { ...state, extras: action.extras };
         case 'setIngredients':
@@ -95,6 +98,7 @@ function reducer(state, action) {
                 vegan: action.vegan,
                 glutenFree: action.glutenFree,
                 kosher: action.kosher,
+                seaFood: action.seaFood,
                 extras: action.extras,
                 ingredients: action.ingredients,
                 loadingSpinner: false };
@@ -241,7 +245,7 @@ const DishDetails = (props) => {
                     <DishImages image={state.image} name={state.name} setState={setState} />
                     <DishInformation checkFields={state.checkFields} name={state.name} price={state.price} shortInfo={state.shortInfo} description={state.description} setState={setState} />
                     <DishNutritionalInformation calories={state.calories} fats={state.fats} protein={state.protein} carbs={state.carbs} setState={setState} />
-                    <DishRestrictionInformation vegetarian={state.vegetarian} vegan={state.vegan} glutenFree={state.glutenFree} kosher={state.kosher} setState={setState} />
+                    <DishRestrictionInformation vegetarian={state.vegetarian} vegan={state.vegan} glutenFree={state.glutenFree} kosher={state.kosher} seaFood={state.seaFood} setState={setState} />
                     <DishIngredientsInformation checkFields={state.checkFields} ingredients={state.ingredients} setState={setState} />
                     <DishExtrasInformation checkFields={state.checkFields} extras={state.extras} setState={setState} />
                     <DishDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newDish={state.newDish} deleteHandler={deleteHandler} />
