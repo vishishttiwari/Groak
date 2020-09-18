@@ -59,7 +59,7 @@ const CustomerIntro = (props) => {
     }, [top]);
 
     useEffect(() => {
-        analytics.logEvent('code_scanned_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+        analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
 
         async function fetchCategoriesAndRestaurant() {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.tableid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);

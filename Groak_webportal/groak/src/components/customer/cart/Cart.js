@@ -97,7 +97,7 @@ const Cart = (props) => {
                             deleteCart(match.params.restaurantid);
                             setState({ type: 'updated' });
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
-                            analytics.logEvent('order_placed_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                            analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
                         } else {
                             enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                         }
