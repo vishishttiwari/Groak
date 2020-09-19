@@ -13,7 +13,7 @@ import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import { DemoRestaurantCovidGuidelines, DemoRestaurantCovidMessage } from '../../../catalog/Demo';
-import { updateRestaurantAPI } from './SettingsAPICalls';
+import { addMissingCategories, addMissingDishes, updateRestaurantAPI } from './SettingsAPICalls';
 import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
 import { FrontDoorQRMenuPage, ViewOnlyQRMenuPage } from '../../../catalog/Comments';
@@ -95,6 +95,16 @@ const RestaurantSettings = (props) => {
         await updateRestaurantAPI(globalState.restaurantIdPortal, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
     };
 
+    const missingDishes = async (event) => {
+        event.preventDefault();
+        await addMissingDishes(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+    };
+
+    const missingCategories = async (event) => {
+        event.preventDefault();
+        await addMissingCategories(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+    };
+
     return (
         <div className="restaurant-settings">
             <h2>Restaurant Information</h2>
@@ -133,7 +143,7 @@ const RestaurantSettings = (props) => {
                 {cuisines.map((cuisine) => {
                     return (
                         <MenuItem key={cuisine} value={cuisine}>
-                            <Checkbox style={{ color: '#800000' }} checked={state.restaurant ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
+                            <Checkbox style={{ color: '#222222' }} checked={state.restaurant && state.restaurant.type ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
                             <ListItemText primary={cuisine} />
                         </MenuItem>
                     );
@@ -246,6 +256,23 @@ const RestaurantSettings = (props) => {
             >
                 View Only Menu
             </Button>
+            <p>Diagnostics:</p>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <Button
+                    className="normal-buttons"
+                    type="button"
+                    onClick={missingDishes}
+                >
+                    Missing Dishes?
+                </Button>
+                <Button
+                    className="normal-buttons"
+                    type="button"
+                    onClick={missingCategories}
+                >
+                    Missing Categories?
+                </Button>
+            </div>
             <p>Images:</p>
             <input
                 accept="image/*"
@@ -300,6 +327,7 @@ const RestaurantSettings = (props) => {
             <Button
                 className="success-buttons"
                 type="submit"
+                style={{ width: '80%', height: '50px' }}
                 onClick={saveChanges}
             >
                 Save Changes

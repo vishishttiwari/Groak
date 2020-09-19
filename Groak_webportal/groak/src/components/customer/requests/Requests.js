@@ -10,7 +10,7 @@ import RequestsHeader from './RequestsHeader';
 import Spinner from '../../ui/spinner/Spinner';
 import { fetchRequestAPI, unsubscribeFetchRequestAPI, updateRequestAPI, updateRequestWhenSeenAPI } from './RequestsAPICalls';
 import RequestsFooter from './RequestsFooter';
-import { randomNumber } from '../../../catalog/Others';
+import { groakTesting, randomNumber } from '../../../catalog/Others';
 import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { getCurrentDateTime, analytics } from '../../../firebase/FirebaseLibrary';
 import { context } from '../../../globalState/globalState';
@@ -93,7 +93,11 @@ const Requests = (props) => {
                         await updateRequestAPI(match.params.restaurantid, match.params.tableid, data, enqueueSnackbar);
                         setState({ type: 'changeRequestField', requestField: '' });
                         setState({ type: 'changeLoadingSpinner1', loadingSpinner: false });
-                        analytics.logEvent('request_from_user_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid });
+                        if (groakTesting) {
+                            analytics.logEvent('request_from_user_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid });
+                        } else {
+                            analytics.logEvent('request_from_user_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid });
+                        }
                     } else {
                         enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                         setState({ type: 'changeLoadingSpinner1', loadingSpinner: false });

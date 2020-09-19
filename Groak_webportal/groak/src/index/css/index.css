@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap");
 :export {
-  primaryColor: #800000;
+  primaryColor: #222222;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -95,7 +95,7 @@ html body .card .actions .buttons {
 }
 
 html body .card .actions .check-box {
-  color: #800000;
+  color: #222222;
 }
 
 html body .card .actions-horizontal {
@@ -129,7 +129,7 @@ html body form {
 }
 
 html body form h2 {
-  color: #800000;
+  color: #222222;
   font-size: 24px;
   font-weight: 100;
 }
@@ -211,11 +211,11 @@ html body .delete-buttons {
   -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
   color: white;
-  background-color: #800000;
+  background-color: #222222;
 }
 
 html body .delete-buttons:hover {
-  background-color: #600000;
+  background-color: #000000;
 }
 
 html body .text-on-background {
@@ -340,7 +340,7 @@ html body .customer .header .header-content .header-subtitle {
   padding-right: 60px;
   font-size: 25px;
   font-weight: 100;
-  color: #800000;
+  color: #222222;
 }
 
 html body .customer .header .header-left-icon {
@@ -349,7 +349,7 @@ html body .customer .header .header-left-icon {
   top: 10px;
   width: 40px;
   height: 40px;
-  color: #800000;
+  color: #222222;
   font-weight: 100;
 }
 
@@ -365,7 +365,7 @@ html body .customer .header .header-right-icon {
           transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  color: #800000;
+  color: #222222;
   font-weight: 100;
 }
 
@@ -413,7 +413,7 @@ html body .customer .footer .footer-button {
   width: 80%;
   height: 50px;
   margin: 20px;
-  background-color: #800000;
+  background-color: #222222;
   color: white;
   font-weight: 300;
   font-size: 18px;
@@ -454,7 +454,7 @@ html body .customer .footer .footer-left-icon {
   margin: 0;
   width: 50px;
   height: 50px;
-  color: #800000;
+  color: #222222;
 }
 
 html body .customer .footer .footer-left-icon :hover {
@@ -466,7 +466,7 @@ html body .customer .footer .footer-right-icon {
   margin: 0;
   width: 50px;
   height: 50px;
-  color: #800000;
+  color: #222222;
 }
 
 html body .customer .footer .footer-right-icon :hover {

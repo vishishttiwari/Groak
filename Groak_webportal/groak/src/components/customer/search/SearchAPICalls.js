@@ -2,7 +2,7 @@
  * This class includes fetching categories and dishes in each categories
  */
 import { fetchCategoriesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
-import { fetchDishesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
+import { fetchDishesFromArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { ErrorFetchingCategories } from '../../../catalog/NotificationsComments';
 import { fetchQRCodeFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
@@ -59,7 +59,7 @@ export const fetchCategoriesAPI = async (restaurantId, qrCodeId, dontCheckAvaila
                 });
 
                 await Promise.all(categories.map(async (category) => {
-                    const docs1 = await fetchDishesInArrayFirestoreAPI(category.dishes);
+                    const docs1 = await fetchDishesFromArrayFirestoreAPI(category.dishes);
                     const dishes = [];
                     docs1.forEach((doc) => {
                         if (doc.exists) {

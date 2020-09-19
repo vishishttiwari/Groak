@@ -18,6 +18,7 @@ import Computer1 from '../../assets/images/homepage/computer_1.png';
 import Computer2 from '../../assets/images/homepage/computer_2.png';
 import Computer3 from '../../assets/images/homepage/computer_3.png';
 import { analytics } from '../../firebase/FirebaseLibrary';
+import { groakTesting } from '../../catalog/Others';
 
 const initialState = {
     videoPopUp: false,
@@ -46,7 +47,11 @@ const HomePage = (props) => {
             block: 'center',
             inline: 'start',
         });
-        analytics.logEvent('visit_website_web');
+        if (groakTesting) {
+            analytics.logEvent('visit_website_web_testing');
+        } else {
+            analytics.logEvent('visit_website_web');
+        }
     }, [top]);
 
     return (

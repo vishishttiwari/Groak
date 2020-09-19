@@ -5,6 +5,8 @@
 import { getUIDFirebaseAPI, signinFirebaseAPI, signupFirebaseAPI, sendEmailVerification, isInitialized, signoutFirebaseAPI, changeEmailFirebaseAPI, changePasswordFirebaseAPI } from '../../../firebase/FirebaseAuthenticationAPICalls';
 import { addRestaurantFirestoreAPI, fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import * as NotificationsComments from '../../../catalog/NotificationsComments';
+import { analytics } from '../../../firebase/FirebaseLibrary';
+import { groakTesting } from '../../../catalog/Others';
 
 /**
  * This function signs out the user and redirects to the signin page.
@@ -46,6 +48,11 @@ export const signinAPICall = async (email, password, history, setState, setGloba
 
             // Check if the restaurant document exists or not. If not then do not sign in the user.
             if (doc.exists) {
+                if (groakTesting) {
+                    analytics.logEvent('restaurant_login_web_testing', { restaurantId });
+                } else {
+                    analytics.logEvent('restaurant_login_web', { restaurantId });
+                }
                 setGlobalState({ type: 'fetchUserPortal', user: userInfo.user, restaurantId, email, restaurant: doc.data() });
                 setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                 history.replace('/orders');
@@ -84,6 +91,11 @@ export const checkAuthentication = async (history, setGlobalState, snackbar) => 
                     const restaurantId = user.uid;
                     const { email } = user;
                     const doc = await fetchRestaurantFirestoreAPI(restaurantId);
+                    if (groakTesting) {
+                        analytics.logEvent('restaurant_return_web_testing', { restaurantId });
+                    } else {
+                        analytics.logEvent('restaurant_return_web', { restaurantId });
+                    }
 
                     // Check if the restaurant document exists or not. If not then do not sign in the user.
                     if (doc.exists) {

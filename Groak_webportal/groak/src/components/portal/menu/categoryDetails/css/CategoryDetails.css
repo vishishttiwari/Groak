@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #222222;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -46,7 +46,7 @@
 }
 
 .category-details form .days .check-box {
-  color: #800000;
+  color: #222222;
 }
 
 .category-details form .category-dishes p {

@@ -114,7 +114,7 @@ const QRCode = (props) => {
                     {getAllCategoryPaths().map((categoryPath) => {
                         return (
                             <MenuItem key={categoryPath} value={categoryPath} onClick={(event) => { event.stopPropagation(); }}>
-                                <Checkbox style={{ color: '#800000' }} checked={getSelectedCategoryPaths().indexOf(categoryPath) > -1} onClick={(event) => { event.stopPropagation(); }} />
+                                <Checkbox style={{ color: '#222222' }} checked={getSelectedCategoryPaths().indexOf(categoryPath) > -1} onClick={(event) => { event.stopPropagation(); }} />
                                 <ListItemText primary={categoriesMap.get(categoryPath).name} onClick={(event) => { event.stopPropagation(); }} />
                             </MenuItem>
                         );

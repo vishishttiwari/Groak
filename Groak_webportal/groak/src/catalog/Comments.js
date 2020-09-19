@@ -80,7 +80,7 @@ export const OtherInstructions = 'Any other instructions? (Ex: Please start with
 
 export const EmptyCartMessage = 'Would you like to empty the cart?';
 export const WaiterMessage = 'We will send a waiter to your table for payment. Would you like to continue?';
-export const VenmoMessage = 'We will redirect you to the Venmo app if you have one. Please pay the amount above. We will also send a waiter to your table. Please show them the receipt from Venmo when you are done. If you do not have Venmo app installed then please return by tapping cancel below.';
+export const VenmoMessage = 'We will redirect you to the Venmo app if you have one. Please pay the amount above. We will also send a waiter to your table. Please show them the receipt from Venmo when you are done.';
 export const iPhoneReceiptSave = 'To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll';
 export const VenmoUsageMessage = 'Only use Venmo if you have the app installed';
 

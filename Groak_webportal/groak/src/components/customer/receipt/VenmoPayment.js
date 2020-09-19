@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import { context } from '../../../globalState/globalState';
 
-import { VenmoMessage, VenmoUsageMessage } from '../../../catalog/Comments';
+import { VenmoMessage } from '../../../catalog/Comments';
 import Venmo from '../../../assets/others/venmo_logo_white.png';
 import { calculatePriceFromDishes, calculatePriceFromDishesWithPayment, calculatePriceFromDishesWithPayments, getPrice, randomNumber } from '../../../catalog/Others';
 
@@ -87,7 +87,7 @@ const VenmoPayment = (props) => {
                 <div onClick={venmoHandler} className="popup-venmo-button">
                     <img className="popup-venmo-image" src={Venmo} alt="Venmo" />
                 </div>
-                <p style={{ color: 'grey', margin: '20px', textAlign: 'center' }}>{VenmoUsageMessage}</p>
+                {/* <p style={{ color: 'grey', margin: '20px', textAlign: 'center' }}>{VenmoUsageMessage}</p> */}
             </DialogActions>
         </Dialog>
     );

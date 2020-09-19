@@ -33,7 +33,7 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
     });
 };
 
-export const fetchDishesInArrayFirestoreAPI = (dishReferences) => {
+export const fetchDishesFromArrayFirestoreAPI = (dishReferences) => {
     return db.runTransaction(async (transaction) => {
         return Promise.all(dishReferences.map(async (dish) => {
             return transaction.get(dish);

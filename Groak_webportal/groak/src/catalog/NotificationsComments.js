@@ -21,6 +21,13 @@ export const NoRestaurantName = 'Restaurant name not entered. Please enter a val
 export const InvalidRestaurantAddress = 'Invalid Restaurant address. Please enter a valid restaurant address from the list';
 export const ErrorUpdatingRestaurant = 'Error updating restaurant';
 export const ErrorFetchingRestaurant = 'Error fetching restaurant';
+export const MissingDishesFound = 'We found some missing dishes that we have added back';
+export const MissingDishesNotFound = 'No missing dishes were found';
+export const MissingCategoriesFound = 'We found some missing categories that we have added back';
+export const MissingCategoriesNotFound = 'No missing categories were found';
+export const ErrorFetchingMissingDishes = 'Error while fetching missing dishes';
+export const ErrorFetchingMissingCategories = 'Error while fetching missing categories';
+export const SettingsUpdated = 'Changes Saved';
 
 export const ErrorChangingAvailability = 'Error changing availability';
 export const ErrorFetchingDishes = 'Error fetching dishes';
@@ -100,8 +107,6 @@ export const ErrorUpdatingRequest = 'Error sending your response. Please try aga
 export const ErrorUnsubscribingRequest = 'Error unsubscribing requests';
 
 export const QRMenuPageUpdated = 'Changes Saved';
-
-export const SettingsUpdated = 'Changes Saved';
 
 export const ErrorContactInfoFirstName = 'Please enter your first name';
 export const ErrorContactInfoLastName = 'Please enter your last name';

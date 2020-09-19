@@ -11,7 +11,7 @@ import CartFooter from './CartFooter';
 import CustomerTopic from '../ui/topic/CustomerTopic';
 import { fetchCart, deleteCart } from '../../../catalog/LocalStorage';
 import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
-import { randomNumber, calculatePriceFromDishes, getPrice } from '../../../catalog/Others';
+import { randomNumber, calculatePriceFromDishes, getPrice, groakTesting } from '../../../catalog/Others';
 import './css/Cart.css';
 import CartItemCell from './CartItemCell';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
@@ -97,7 +97,11 @@ const Cart = (props) => {
                             deleteCart(match.params.restaurantid);
                             setState({ type: 'updated' });
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
-                            analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                            if (groakTesting) {
+                                analytics.logEvent('order_placed_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                            } else {
+                                analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                            }
                         } else {
                             enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
                         }

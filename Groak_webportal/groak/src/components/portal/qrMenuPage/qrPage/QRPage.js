@@ -44,7 +44,7 @@ const QRPage = (props) => {
                         {logo ? <Image src={logo} style={styles1.restaurantTitle} /> : <Text style={styles1.restaurantTitle}>{restaurantName}</Text>}
                     </View>
                     {qrStylePage.includeTable ? <Text style={styles1.tableTitle}>{tableName}</Text> : null}
-                    {qrStylePage.suggestionText.length > 0 ? <Text style={styles1.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
+                    {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles1.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
                     <View style={styles1.qrArea}>
                         <View style={styles1.restaurantImageView}>
                             <Image style={styles1.restaurantImage} src={qrStylePage.useRestaurantImage && image ? image : qrStyleImages[qrStylePage.qrStyleImage]} />

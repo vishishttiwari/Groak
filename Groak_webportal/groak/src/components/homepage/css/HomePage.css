@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #222222;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -205,7 +205,7 @@
   -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
   background-color: white;
-  color: #800000;
+  color: #222222;
   border-style: solid;
   border-width: 2px;
   border-color: white;
@@ -231,7 +231,7 @@
 @media (max-width: 700px) {
   .homepage .firstSection .text .buttons .button:hover {
     background-color: white;
-    color: #800000;
+    color: #222222;
   }
 }
 
@@ -295,7 +295,7 @@
 
 .homepage .whiteBackground {
   background-color: white;
-  color: #800000;
+  color: #222222;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -323,7 +323,7 @@
 }
 
 .homepage .primaryColorBackground {
-  background-color: #800000;
+  background-color: #222222;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;

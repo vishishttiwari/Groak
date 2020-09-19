@@ -17,7 +17,7 @@ import Order from '../order/Order';
 import Covid from '../covid/Covid';
 import { fetchCategoriesAPI, unsubscribeFetchOrderAPI } from './CustomerIntroAPICalls';
 import Spinner from '../../ui/spinner/Spinner';
-import { frontDoorQRMenuPageId } from '../../../catalog/Others';
+import { frontDoorQRMenuPageId, groakTesting } from '../../../catalog/Others';
 import { RestaurantNotFound, CategoriesNotFound } from '../../../catalog/Comments';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
@@ -59,7 +59,11 @@ const CustomerIntro = (props) => {
     }, [top]);
 
     useEffect(() => {
-        analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+        if (groakTesting) {
+            analytics.logEvent('code_scanned_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+        } else {
+            analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+        }
 
         async function fetchCategoriesAndRestaurant() {
             await fetchCategoriesAPI(match.params.restaurantid, match.params.tableid, match.params.qrcodeid, match.params.tableid === frontDoorQRMenuPageId, setState, setGlobalState, enqueueSnackbar);

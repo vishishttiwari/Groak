@@ -146,14 +146,14 @@ const Receipt = (props) => {
                                 await updateOrderAPI(match.params.restaurantid, match.params.tableid, TableStatus.payment, { tipValue: Math.max(state.tipValue, 0), tipIndex: state.tipIndex }, 'venmo', enqueueSnackbar);
                                 setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                                 history.goBack();
-                                window.location.assign(`https://venmo.com/code?user_id=${globalState.restaurantCustomer.paymentMethods.venmo}`);
+                                window.location.assign(`https://venmo.com/${globalState.restaurantCustomer.paymentMethods.venmo}`);
                             } else {
                                 enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
-                                setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                                setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                             }
                         })
                         .catch(() => {
-                            setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                            setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                         });
                 }
             } else {
@@ -179,11 +179,11 @@ const Receipt = (props) => {
                             history.goBack();
                         } else {
                             enqueueSnackbar(NotAtRestaurant, { variant: 'error' });
-                            setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                            setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                         }
                     })
                     .catch(() => {
-                        setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+                        setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                     });
             }
         } else {

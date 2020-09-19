@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import CSSVariables from '../globalCSS/_globalCSS.scss';
 import { getDay, getMinutesFromMidnight } from './TimesDates';
 
+export const groakTesting = true;
+
 export const restaurantName = 'The Yellow Chilli';
 export const androidAppLink = 'android';
 export const iosAppLink = 'https://apps.apple.com/us/app/menu-door-menu-explorer/id1469002039';
