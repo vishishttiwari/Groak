@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -205,7 +205,7 @@
   -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
   background-color: white;
-  color: #222222;
+  color: #800000;
   border-style: solid;
   border-width: 2px;
   border-color: white;
@@ -231,7 +231,7 @@
 @media (max-width: 700px) {
   .homepage .firstSection .text .buttons .button:hover {
     background-color: white;
-    color: #222222;
+    color: #800000;
   }
 }
 
@@ -295,7 +295,7 @@
 
 .homepage .whiteBackground {
   background-color: white;
-  color: #222222;
+  color: #800000;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -323,7 +323,7 @@
 }
 
 .homepage .primaryColorBackground {
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -574,7 +574,7 @@
 }
 
 .lastHomepageSection .lastSectionContent .other-content .sub-content .subtopic {
-  padding-bottom: 7px;
+  margin-bottom: 7px;
   color: gray;
   background-color: transparent;
   -webkit-box-shadow: transparent;

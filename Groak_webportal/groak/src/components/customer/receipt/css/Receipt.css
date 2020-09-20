@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -173,7 +173,7 @@
   width: 80%;
   height: 50px;
   margin: 5px 20px;
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   font-weight: 500;
   font-size: 18px;
@@ -450,7 +450,7 @@
   min-width: 45%;
   height: 50px;
   margin-top: 20px;
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   font-weight: 100;
   font-size: 13px;
@@ -465,7 +465,7 @@
   height: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   font-weight: 100;
   font-size: 18px;

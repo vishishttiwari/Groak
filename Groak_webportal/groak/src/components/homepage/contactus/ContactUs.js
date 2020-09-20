@@ -50,7 +50,7 @@ const ContactUs = (props) => {
     const top = createRef(null);
 
     useEffect(() => {
-        top.current.scrollIntoViewIfNeeded({
+        top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',

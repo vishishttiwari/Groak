@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -37,8 +37,8 @@
   border-style: solid;
   border-top-style: none;
   border-width: 2px;
-  border-color: #222222;
-  color: #222222;
+  border-color: #800000;
+  color: #800000;
   padding: 10px;
 }
 
@@ -46,8 +46,8 @@
   border-style: solid;
   border-top-style: none;
   border-width: 2px;
-  border-color: #222222;
-  color: #222222;
+  border-color: #800000;
+  color: #800000;
   padding: 10px;
 }
 
@@ -55,7 +55,7 @@
   border-style: solid;
   border-top-style: none;
   border-width: 2px;
-  border-color: #222222;
+  border-color: #800000;
   padding: 10px;
   background-color: #DDDDDD;
 }
@@ -76,7 +76,7 @@
   -webkit-box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
           box-shadow: 0px 2px 2px rgba(68, 68, 68, 0.4);
   color: white;
-  background-color: #222222;
+  background-color: #800000;
 }
 
 .authentication form .other-buttons {
@@ -95,7 +95,7 @@
 }
 
 .authentication form .other-buttons button {
-  color: #222222;
+  color: #800000;
   -webkit-box-shadow: 0;
           box-shadow: 0;
   font-size: 13px;

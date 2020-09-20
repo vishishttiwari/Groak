@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -22,7 +22,7 @@
 }
 
 .requests .content .user {
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   margin-left: auto;
   margin-right: 10px;
@@ -73,7 +73,7 @@
 
 .requests .footer .footer-suggestions .footer-suggestion {
   font-size: 20px;
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   border-radius: 20px;
   float: none;

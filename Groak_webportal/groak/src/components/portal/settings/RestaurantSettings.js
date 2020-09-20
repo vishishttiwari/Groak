@@ -143,7 +143,7 @@ const RestaurantSettings = (props) => {
                 {cuisines.map((cuisine) => {
                     return (
                         <MenuItem key={cuisine} value={cuisine}>
-                            <Checkbox style={{ color: '#222222' }} checked={state.restaurant && state.restaurant.type ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
+                            <Checkbox style={{ color: '#800000' }} checked={state.restaurant && state.restaurant.type ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
                             <ListItemText primary={cuisine} />
                         </MenuItem>
                     );

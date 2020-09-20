@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -55,7 +55,7 @@
 }
 
 .qr .qr-content form p {
-  color: #222222;
+  color: #800000;
   font-size: 25px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .qr .qr-content form .check-box {
-  color: #222222;
+  color: #800000;
 }
 
 .qr .qr-content form .qr-buttons {

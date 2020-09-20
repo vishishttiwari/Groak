@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -56,7 +56,7 @@
 }
 
 .top-navigation-items-desktop .top-navigation-item .navigation-item:hover {
-  background-color: #000000;
+  background-color: #600000;
   border-bottom: 1px solid #40A4C8;
 }
 

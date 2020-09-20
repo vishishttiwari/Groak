@@ -42,17 +42,20 @@ const HomePage = (props) => {
     const top = createRef(null);
 
     useEffect(() => {
-        top.current.scrollIntoViewIfNeeded({
+        top.current.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'start',
         });
+    }, [top]);
+
+    useEffect(() => {
         if (groakTesting) {
             analytics.logEvent('visit_website_web_testing');
         } else {
             analytics.logEvent('visit_website_web');
         }
-    }, [top]);
+    }, []);
 
     return (
         <div className="homepage">

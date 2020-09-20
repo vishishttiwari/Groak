@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #222222;
+  primaryColor: #800000;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -52,13 +52,13 @@
 .cart-details .content .cart-details-quantity-wrapper .cart-details-quantity .cart-details-remove {
   width: 50px;
   height: 50px;
-  color: #222222;
+  color: #800000;
 }
 
 .cart-details .content .cart-details-quantity-wrapper .cart-details-quantity .cart-details-add {
   width: 50px;
   height: 50px;
-  color: #222222;
+  color: #800000;
 }
 
 .cart-details .content .cart-details-delete-button {
@@ -75,7 +75,7 @@
   width: 80%;
   height: 50px;
   margin: 20px auto;
-  background-color: #222222;
+  background-color: #800000;
   color: white;
   font-weight: 100;
   font-size: 18px;
