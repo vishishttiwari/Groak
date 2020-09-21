@@ -93,7 +93,7 @@
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 0 -250px;
+  background-position: 0 -150px;
 }
 
 @media (max-width: 1200px) {
@@ -102,7 +102,7 @@
     background-attachment: unset;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 30% 0;
+    background-position: 0 0;
   }
 }
 

@@ -47,7 +47,8 @@ const Layout = (props) => {
         const path = history.location.pathname.split('/')[1];
         const script = document.createElement('script');
         const chatClasses = document.getElementsByClassName('chaport-container');
-        if (path !== 'customer' && (!chatClasses || chatClasses.length === 0)) {
+
+        if (path !== 'customer' && path !== 'customermenu' && (!chatClasses || chatClasses.length === 0)) {
             script.innerHTML = `(function(w,d,v3){
                 w.chaportConfig = {
                 appId : '5f668771f3588379ec598cd1'

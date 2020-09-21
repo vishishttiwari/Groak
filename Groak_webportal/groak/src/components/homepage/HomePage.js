@@ -14,6 +14,7 @@ import Phone3 from '../../assets/images/homepage/phone_3_1.png';
 import Computer1 from '../../assets/images/homepage/computer_1.png';
 import Computer2 from '../../assets/images/homepage/computer_2_1.png';
 import Computer3 from '../../assets/images/homepage/computer_3_1.png';
+import Computer4 from '../../assets/images/homepage/computer_4_1.png';
 import { analytics } from '../../firebase/FirebaseLibrary';
 import { groakTesting } from '../../catalog/Others';
 
@@ -54,6 +55,29 @@ const HomePage = (props) => {
         }
     }, []);
 
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+    //     script.innerHTML = `(function(w,d,v3){
+    //             w.chaportConfig = {
+    //             appId : '5f668771f3588379ec598cd1'
+    //             };
+
+    //             if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);`;
+    //     script.async = true;
+    //     script.defer = true;
+    //     script.id = 'groak-chat';
+
+    //     document.body.appendChild(script);
+
+    //     return () => {
+    //         document.body.removeChild(script);
+    //         const chatClasses = document.getElementsByClassName('chaport-container');
+    //         if (chatClasses && chatClasses.length > 0) {
+    //             document.body.removeChild(chatClasses[0]);
+    //         }
+    //     };
+    // }, []);
+
     return (
         <div className="homepage">
             <div className="pop-up">
@@ -67,7 +91,7 @@ const HomePage = (props) => {
                     <iframe
                         title="Groak Demo Video"
                         className="video"
-                        src="https://www.youtube.com/embed/PUB55HKrhqQ"
+                        src="https://www.youtube.com/embed/kQWfG12INfM"
                         allowFullScreen
                     >
                     </iframe>
@@ -78,7 +102,7 @@ const HomePage = (props) => {
                 <div className="animate__animated animate__fadeInLeft animate__faster firstsection-content">
                     <div className="firstsection-topic">
                         <h1>Your Free Contactless Dining Experience</h1>
-                        <h2>Re-Open Your Restaurant!! Simple, Safe &#38; 100% Touch Free!</h2>
+                        <h2>Re-Open Your Restaurant! Simple, Safe &#38; 100% Touch Free!</h2>
                     </div>
                     <div className="firstsection-buttons">
                         {globalState.userPortal == null || !globalState.userPortal
@@ -135,7 +159,7 @@ const HomePage = (props) => {
                 <img className="animate__animated animate__zoomIn animate__faster" src={Phone3} alt="Groak - Computer demo 2" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
-                <img className="animate__animated animate__zoomIn animate__faster" src={Computer2} alt="Groak - Computer demo 2" />
+                <img className="animate__animated animate__zoomIn animate__faster" src={Computer4} alt="Groak - Computer demo 2" />
                 <div className="animate__animated animate__fadeInRight animate__faster text">
                     <p className="sections-topic">Customize your menu. Anytime, Anywhere, Anyplace!</p>
                     <p className="sections-subtopic">Create a contactless digital menu that customers can explore. Update it anytime from your device, with immediate display of your updates to customers!</p>
