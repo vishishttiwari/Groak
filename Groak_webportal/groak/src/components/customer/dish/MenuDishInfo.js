@@ -53,7 +53,7 @@ const MenuDishInfo = (props) => {
                         ) : null}
                         {vegetarian === 'No' ? (
                             <div className="dish-info-info-category">
-                                <CustomerVegSymbol symbol="NV" />
+                                <CustomerVegSymbol symbol="NV" color="maroon" />
                                 Non Vegetarian
                             </div>
                         ) : null}

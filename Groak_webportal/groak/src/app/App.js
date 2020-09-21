@@ -40,7 +40,7 @@ import Spinner from '../components/ui/spinner/Spinner';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#800000',
+            main: '#D94859',
         },
         secondary: {
             main: '#F0F0F0',

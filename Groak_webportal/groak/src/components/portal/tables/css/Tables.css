@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #D94859;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -17,7 +17,7 @@
   background-color: white;
   border: 1px solid #DDDDDD;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: scroll;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

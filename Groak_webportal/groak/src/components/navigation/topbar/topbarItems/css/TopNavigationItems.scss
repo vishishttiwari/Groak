@@ -20,8 +20,8 @@
             width: $topNavigationItemWidth;
 
             .navigation-button {
-                color: white;
-                font-weight: 100;
+                color: $primaryColor;
+                font-weight: 500;
                 font-size: $optionFontSize;
                 text-transform: none;
                 padding: $topBarHeight/2-$optionFontSize/2 - 2px;
@@ -29,8 +29,7 @@
             }
 
             &:hover {
-                background-color: $primarySelectedColor;
-                border-bottom: 1px solid $blueLineColor;
+                border-bottom: 2px solid $primaryColor;
             }
         }
     }
@@ -45,7 +44,7 @@
 
     .navigation-item {
         .navigation-button {
-            color: white;
+            color: $primaryColor;
         }
     }
 }

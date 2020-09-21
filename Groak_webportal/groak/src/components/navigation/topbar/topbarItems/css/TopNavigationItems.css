@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #D94859;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -47,8 +47,8 @@
 }
 
 .top-navigation-items-desktop .top-navigation-item .navigation-item .navigation-button {
-  color: white;
-  font-weight: 100;
+  color: #D94859;
+  font-weight: 500;
   font-size: 18px;
   text-transform: none;
   padding: 17px;
@@ -56,8 +56,7 @@
 }
 
 .top-navigation-items-desktop .top-navigation-item .navigation-item:hover {
-  background-color: #600000;
-  border-bottom: 1px solid #40A4C8;
+  border-bottom: 2px solid #D94859;
 }
 
 .top-navigation-items-mobile {
@@ -71,6 +70,6 @@
 }
 
 .top-navigation-items-mobile .navigation-item .navigation-button {
-  color: white;
+  color: #D94859;
 }
 /*# sourceMappingURL=TopNavigationItems.css.map */

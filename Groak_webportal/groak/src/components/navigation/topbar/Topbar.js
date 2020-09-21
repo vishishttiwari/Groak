@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import TopNavigationItems from './topbarItems/TopNavigationItems';
 import './css/Topbar.css';
-import Icon from '../../../assets/images/white_name_icon.png';
+import Icon from '../../../assets/images/orange_name_icon.png';
 
 const Topbar = (props) => {
     const { history, exact } = props;

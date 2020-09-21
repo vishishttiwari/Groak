@@ -13,6 +13,8 @@ const CustomerVegSymbol = (props) => {
             return 'veg-symbol-green';
         } if (color === 'blue') {
             return 'veg-symbol-blue';
+        } if (color === 'maroon') {
+            return 'veg-symbol-maroon';
         } if (color === 'theme') {
             return 'veg-symbol-theme';
         }

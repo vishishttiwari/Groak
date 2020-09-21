@@ -123,7 +123,7 @@ const OrdersTable = (props) => {
                                             {order.items}
                                         </TableCell>
                                         <TableCell width={columns.price.width} align={columns.price.align}>
-                                            {`${getPrice(calculatePriceFromDishesWithPayments(order.dishes, globalState.restaurantPortal.payments, order.tip.tipValue, 'table'))}`}
+                                            {`${getPrice(calculatePriceFromDishesWithPayments(order.dishes, globalState.restaurantPortal.payments, order.tip ? order.tip.tipValue : 0, 'table'))}`}
                                         </TableCell>
                                         {serveTime ? (
                                             <>

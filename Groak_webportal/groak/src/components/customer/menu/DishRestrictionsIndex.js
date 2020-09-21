@@ -20,7 +20,7 @@ const DishRestrictionsIndex = () => {
             </div>
             <div className="dish-restrictions-row">
                 <div className="dish-restriction">
-                    <CustomerVegSymbol symbol="NV" />
+                    <CustomerVegSymbol symbol="NV" color="maroon" />
                     Non Vegetarian
                 </div>
                 <div className="dish-restriction">

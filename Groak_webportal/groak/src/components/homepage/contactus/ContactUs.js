@@ -13,7 +13,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import Spinner from '../../ui/spinner/Spinner';
 import * as NotificationsComments from '../../../catalog/NotificationsComments';
-import { checkEmailValidity } from '../../../catalog/Validity';
+// import { checkEmailValidity } from '../../../catalog/Validity';
 
 const initialState = {
     firstName: '',
@@ -64,35 +64,35 @@ const ContactUs = (props) => {
      */
     async function sendContactInfo(event) {
         event.preventDefault();
-        if (state.firstName.length === 0) {
-            enqueueSnackbar(NotificationsComments.ErrorContactInfoFirstName, { variant: 'error' });
-            return;
-        }
-        if (state.lastName.length === 0) {
-            enqueueSnackbar(NotificationsComments.ErrorContactInfoLastName, { variant: 'error' });
-            return;
-        }
-        if (state.email.length === 0) {
-            enqueueSnackbar(NotificationsComments.ErrorContactInfoEmailName, { variant: 'error' });
-            return;
-        }
-        if (state.phone.length < 6) {
-            enqueueSnackbar(NotificationsComments.ErrorContactInfoPhoneName, { variant: 'error' });
-            return;
-        }
-        if (state.message.length === 0) {
-            enqueueSnackbar(NotificationsComments.ErrorContactInfoMessageName, { variant: 'error' });
-            return;
-        }
-        if (checkEmailValidity(state.email, setState, enqueueSnackbar)) {
-            emailjs.send('gmail', 'template_Pyu60ksL', state, 'user_ESRgcuOOSQDmfF2WelZzP')
-                .then(() => {
-                    enqueueSnackbar(NotificationsComments.MessageSent, { variant: 'success' });
-                    history.replace('/');
-                }, () => {
-                    enqueueSnackbar(NotificationsComments.ErrorMessageSent, { variant: 'error' });
-                });
-        }
+        // if (state.firstName.length === 0) {
+        //     enqueueSnackbar(NotificationsComments.ErrorContactInfoFirstName, { variant: 'error' });
+        //     return;
+        // }
+        // if (state.lastName.length === 0) {
+        //     enqueueSnackbar(NotificationsComments.ErrorContactInfoLastName, { variant: 'error' });
+        //     return;
+        // }
+        // if (state.email.length === 0) {
+        //     enqueueSnackbar(NotificationsComments.ErrorContactInfoEmailName, { variant: 'error' });
+        //     return;
+        // }
+        // if (state.phone.length < 6) {
+        //     enqueueSnackbar(NotificationsComments.ErrorContactInfoPhoneName, { variant: 'error' });
+        //     return;
+        // }
+        // if (state.message.length === 0) {
+        //     enqueueSnackbar(NotificationsComments.ErrorContactInfoMessageName, { variant: 'error' });
+        //     return;
+        // }
+        // if (checkEmailValidity(state.email, setState, enqueueSnackbar)) {
+        emailjs.send('gmail', 'template_Pyu60ksL', state, 'user_ESRgcuOOSQDmfF2WelZzP')
+            .then(() => {
+                enqueueSnackbar(NotificationsComments.MessageSent, { variant: 'success' });
+                history.replace('/');
+            }, () => {
+                enqueueSnackbar(NotificationsComments.ErrorMessageSent, { variant: 'error' });
+            });
+        // }
     }
 
     return (
@@ -110,7 +110,6 @@ const ContactUs = (props) => {
                             <TextField
                                 value={state.firstName}
                                 onChange={(event) => { setState({ type: 'setFirstName', firstName: event.target.value }); }}
-                                required
                                 fullWidth
                                 type="text"
                                 margin="normal"
@@ -121,7 +120,6 @@ const ContactUs = (props) => {
                             <TextField
                                 value={state.lastName}
                                 onChange={(event) => { setState({ type: 'setLastName', lastName: event.target.value }); }}
-                                required
                                 fullWidth
                                 type="text"
                                 margin="normal"
@@ -132,7 +130,6 @@ const ContactUs = (props) => {
                             <TextField
                                 value={state.email}
                                 onChange={(event) => { setState({ type: 'setEmail', email: event.target.value }); }}
-                                required
                                 fullWidth
                                 type="email"
                                 margin="normal"
@@ -146,14 +143,12 @@ const ContactUs = (props) => {
                                 country="us"
                                 value={state.phone}
                                 onChange={(phone) => { setState({ type: 'setPhone', phone }); }}
-                                required
                                 fullWidth
                                 type="number"
                             />
                             <TextField
                                 value={state.message}
                                 onChange={(event) => { setState({ type: 'setMessage', message: event.target.value }); }}
-                                required
                                 fullWidth
                                 type="text"
                                 margin="normal"

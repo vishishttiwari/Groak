@@ -9,7 +9,7 @@ import { getDay, getMinutesFromMidnight } from './TimesDates';
 
 export const groakTesting = true;
 
-export const restaurantName = 'The Yellow Chilli';
+export const restaurantName = 'The Little Diner';
 export const androidAppLink = 'android';
 export const iosAppLink = 'https://apps.apple.com/us/app/menu-door-menu-explorer/id1469002039';
 export const refreshPeriod = 5000;

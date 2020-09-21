@@ -1,7 +1,7 @@
 /**
  * This page is used for the bottom section in different screens.
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -11,25 +11,6 @@ import GoogleDownload from '../../assets/images/homepage/google_download.png';
 
 const BottomSection = (props) => {
     const { history } = props;
-
-    useEffect(() => {
-        const script = document.createElement('script');
-
-        script.innerHTML = `(function(w,d,v3){
-            w.chaportConfig = {
-            appId : '5f668771f3588379ec598cd1'
-            };
-            
-            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);`;
-        script.async = true;
-        script.defer = true;
-
-        document.body.appendChild(script);
-
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
 
     const shouldBeVisible = () => {
         const path = history.location.pathname.split('/')[1];
@@ -59,25 +40,28 @@ const BottomSection = (props) => {
                             </div>
                             <div className="other-content">
                                 <div className="sub-content">
-                                    <button onClick={() => { history.push('/contactus'); }} type="button" className="topic">Contact Us</button>
-                                    <button onClick={() => { history.push('/requestademo'); }} type="button" className="subtopic">Request A Demo</button>
+                                    <button onClick={() => { history.push('/contactus'); }} type="button" className="lastsection-topic">Contact Us</button>
+                                    <button onClick={() => { history.push('/requestademo'); }} type="button" className="lastsection-subtopic">Request A Demo</button>
                                     <a href="mailto:contact@groakapp.com">
-                                        <button type="button" className="subtopic">
+                                        <button type="button" className="lastsection-subtopic">
                                             contact@groakapp.com
                                         </button>
                                     </a>
                                     <a href="tel:3177480254">
-                                        <button type="button" className="subtopic">
-                                            (317)-748-0245
+                                        <button type="button" className="lastsection-subtopic">
+                                            (607) - 279 - 2474
                                         </button>
                                     </a>
                                 </div>
                                 <div className="sub-content">
-                                    <button onClick={() => { history.push('/'); }} type="button" className="topic">Company</button>
-                                    <button onClick={() => { history.push('/'); }} type="button" className="subtopic">About</button>
-                                    <button onClick={() => { history.push('/privacypolicy'); }} type="button" className="subtopic">Privacy Policy</button>
+                                    <button onClick={() => { history.push('/'); }} type="button" className="lastsection-topic">Company</button>
+                                    <button onClick={() => { history.push('/'); }} type="button" className="lastsection-subtopic">About</button>
+                                    <button onClick={() => { history.push('/privacypolicy'); }} type="button" className="lastsection-subtopic">Privacy Policy</button>
                                 </div>
                             </div>
+                        </div>
+                        <div className="copyright">
+                            Groak &#169; 2020
                         </div>
                     </footer>
                 ) : null}

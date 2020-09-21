@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #D94859;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -20,6 +20,7 @@ header .topbar {
       -ms-flex-align: center;
           align-items: center;
   height: 56px;
+  background-color: white;
 }
 
 header .topbar .logo {
@@ -37,6 +38,7 @@ header .topbar-customer {
       -ms-flex-align: center;
           align-items: center;
   height: 56px;
+  background-color: white;
 }
 
 header .topbar-customer .logo {

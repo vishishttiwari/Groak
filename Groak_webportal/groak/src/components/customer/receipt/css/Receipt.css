@@ -1,5 +1,5 @@
 :export {
-  primaryColor: #800000;
+  primaryColor: #D94859;
   secondaryColor: #F0F0F0;
   margin: 20px;
   padding: 20px;
@@ -173,7 +173,7 @@
   width: 80%;
   height: 50px;
   margin: 5px 20px;
-  background-color: #800000;
+  background-color: #D94859;
   color: white;
   font-weight: 500;
   font-size: 18px;
@@ -185,7 +185,7 @@
 }
 
 .popup .popup-actions .popup-button-cancel {
-  background-color: #f4511e;
+  background-color: #FF0000;
 }
 
 .popup .popup-actions .popup-button-disabled {
@@ -450,7 +450,7 @@
   min-width: 45%;
   height: 50px;
   margin-top: 20px;
-  background-color: #800000;
+  background-color: #D94859;
   color: white;
   font-weight: 100;
   font-size: 13px;
@@ -465,7 +465,7 @@
   height: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #800000;
+  background-color: #D94859;
   color: white;
   font-weight: 100;
   font-size: 18px;

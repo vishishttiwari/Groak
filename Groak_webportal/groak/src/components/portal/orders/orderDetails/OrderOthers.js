@@ -144,11 +144,13 @@ const OrderOthers = (props) => {
     const getTotalSubtitle = () => {
         let finalString = `Subtotal: ${getPrice(calculatePriceFromDishes(dishes))}\n`;
         globalState.restaurantPortal.payments.forEach((payment) => {
-            if (payment.id !== 'tips') {
+            if (payment.id !== 'tips' && payment.value > 0) {
                 finalString += `${payment.title}: ${getPrice(calculatePriceFromDishesWithPayment(dishes, payment))}\n`;
             }
         });
-        finalString += `Tips: ${getPrice(tip)}`;
+        if (tip.value > 0) {
+            finalString += `Tips: ${getPrice(tip)}`;
+        }
         return finalString;
     };
 

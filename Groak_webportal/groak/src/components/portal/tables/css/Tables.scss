@@ -14,7 +14,7 @@ $imageWidth: 40px;
         background-color: white;
         border: $border;
         border-radius: $borderRadius;
-        overflow: hidden;
+        overflow: scroll;
         display: flex;
         flex-flow: column;
         margin: 0 auto;

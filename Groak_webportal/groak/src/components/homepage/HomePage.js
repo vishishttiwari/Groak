@@ -9,14 +9,11 @@ import './css/HomePage.css';
 import { Button, IconButton } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
 import { context } from '../../globalState/globalState';
-import Groak from '../../assets/images/white_name_icon.png';
-import AppleDownload from '../../assets/images/homepage/apple_download_white.png';
-import GoogleDownload from '../../assets/images/homepage/google_download.png';
-import Phone2 from '../../assets/images/homepage/phone_2.png';
-import Phone3 from '../../assets/images/homepage/phone_3.png';
+import Phone2 from '../../assets/images/homepage/phone_2_1.png';
+import Phone3 from '../../assets/images/homepage/phone_3_1.png';
 import Computer1 from '../../assets/images/homepage/computer_1.png';
-import Computer2 from '../../assets/images/homepage/computer_2.png';
-import Computer3 from '../../assets/images/homepage/computer_3.png';
+import Computer2 from '../../assets/images/homepage/computer_2_1.png';
+import Computer3 from '../../assets/images/homepage/computer_3_1.png';
 import { analytics } from '../../firebase/FirebaseLibrary';
 import { groakTesting } from '../../catalog/Others';
 
@@ -70,20 +67,20 @@ const HomePage = (props) => {
                     <iframe
                         title="Groak Demo Video"
                         className="video"
-                        src="https://www.youtube.com/embed/J4VUeuBOu8g"
+                        src="https://www.youtube.com/embed/PUB55HKrhqQ"
                         allowFullScreen
                     >
                     </iframe>
                 </div>
             </div>
-            <div className="firstSection">
+            <div className="firstsection">
                 <p ref={top}> </p>
-                <img className="name-icon" src={Groak} alt="Groak" />
-                <div className="text">
-                    <h1>
-                        Your Free Contactless Dining Experience to Re-Open Your Restaurant!! Simple, Safe &#38; 100% Touch Free!
-                    </h1>
-                    <div className="buttons">
+                <div className="animate__animated animate__fadeInLeft animate__faster firstsection-content">
+                    <div className="firstsection-topic">
+                        <h1>Your Free Contactless Dining Experience</h1>
+                        <h2>Re-Open Your Restaurant!! Simple, Safe &#38; 100% Touch Free!</h2>
+                    </div>
+                    <div className="firstsection-buttons">
                         {globalState.userPortal == null || !globalState.userPortal
                             ? (
                                 <>
@@ -121,55 +118,49 @@ const HomePage = (props) => {
                                 </>
                             ) }
                     </div>
-                    <div className="apps">
-                        <div className="appDownload">
-                            <a href="https://apps.apple.com/in/app/groak-app/id1513988662">
-                                <img className="download" src={AppleDownload} alt="Download on the App Store" />
-                            </a>
-                        </div>
-                        <div className="appDownload">
-                            <a href="https://play.google.com/store/apps/details?id=com.groak.groak&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                                <img className="download" alt="Get it on Google Play" src={GoogleDownload} />
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className="whiteBackground sections verticallyCenter">
-                <img src={Computer1} alt="Groak - Computer demo 2" />
-                <div className="text">
-                    <p>Create a customizable QR menu that customers can explore. Customize and update your menu anytime from any device</p>
+                <img className="animate__animated animate__zoomIn animate__faster" src={Computer1} alt="Groak - Computer demo 2" />
+                <div className="animate__animated animate__fadeInRight animate__faster text">
+                    <p className="sections-topic">Customizable QR Menu Page</p>
+                    <p className="sections-subtopic">Create a customizable QR menu that customers can explore. Customize and update your menu anytime from any device</p>
                 </div>
             </div>
-            <div className="primaryColorBackground sections verticallyCenter">
-                <div className="text">
-                    <p>Connect your customers directly to your digital menu so they can view, order, and check-out on their own device</p>
+            <div className="primaryColorBackground sections verticallyCenter left">
+                <div className="animate__animated animate__fadeInLeft animate__faster text">
+                    <p className="sections-topic">Digital Menus</p>
+                    <p className="sections-subtopic">Connect your customers directly to your digital menu so they can view, order, and check-out on their own device</p>
                 </div>
-                <img src={Phone3} alt="Groak - Computer demo 2" />
-            </div>
-            <div className="whiteBackground sections verticallyCenter">
-                <img src={Computer2} alt="Groak - Computer demo 2" />
-                <div className="text">
-                    <p>Create a contactless digital menu that customers can explore. Update it anytime from your device, with immediate display of your updates to customers!</p>
-                </div>
-            </div>
-            <div className="primaryColorBackground sections verticallyCenter">
-                <div className="text">
-                    <p>Promote Safety and Wellbeing for your Customers! Interact with your customers at each table with our live chat feature to minimize health and safety risks</p>
-                </div>
-                <img src={Computer3} alt="Groak - Computer demo 3" />
+                <img className="animate__animated animate__zoomIn animate__faster" src={Phone3} alt="Groak - Computer demo 2" />
             </div>
             <div className="whiteBackground sections verticallyCenter">
-                <img src={Computer2} alt="Groak - Computer demo 3" />
-                <div className="text">
-                    <p>View real time order updates from each table using the device of your choice. Orders are automatically added and available in our webportal. This feature gives you a clear view into your customer’s recent orders, table occupancy, and order payment alerts</p>
+                <img className="animate__animated animate__zoomIn animate__faster" src={Computer2} alt="Groak - Computer demo 2" />
+                <div className="animate__animated animate__fadeInRight animate__faster text">
+                    <p className="sections-topic">Customize your menu. Anytime, Anywhere, Anyplace!</p>
+                    <p className="sections-subtopic">Create a contactless digital menu that customers can explore. Update it anytime from your device, with immediate display of your updates to customers!</p>
                 </div>
             </div>
-            <div className="primaryColorBackground sections verticallyCenter">
-                <div className="text">
-                    <p>Automated receipt generation, sent directly to your customer&#39;s phone</p>
+            <div className="primaryColorBackground sections verticallyCenter right">
+                <div className="animate__animated animate__fadeInLeft animate__faster text">
+                    <p className="sections-topic">Chat with customers on each table</p>
+                    <p className="sections-subtopic">Promote Safety and Wellbeing for your Customers! Interact with your customers at each table with our live chat feature to minimize health and safety risks</p>
                 </div>
-                <img src={Phone2} alt="Groak - Phone demo 2" />
+                <img className="animate__animated animate__zoomIn animate__faster" src={Computer3} alt="Groak - Computer demo 3" />
+            </div>
+            <div className="whiteBackground sections verticallyCenter">
+                <img className="animate__animated animate__zoomIn animate__faster" src={Computer2} alt="Groak - Computer demo 3" />
+                <div className="animate__animated animate__fadeInRight animate__faster text">
+                    <p className="sections-topic">Best in class table-management!</p>
+                    <p className="sections-subtopic">View real time order updates from each table using the device of your choice. Orders are automatically added and available in our webportal. This feature gives you a clear view into your customer’s recent orders, table occupancy, and order payment alerts</p>
+                </div>
+            </div>
+            <div className="primaryColorBackground sections verticallyCenter left">
+                <div className="animate__animated animate__fadeInLeft animate__faster text">
+                    <p className="sections-topic">Automatic receipt generation!</p>
+                    <p className="sections-subtopic">Automated receipt generation, sent directly to your customer&#39;s phone</p>
+                </div>
+                <img className="animate__animated animate__zoomIn animate__faster" src={Phone2} alt="Groak - Phone demo 2" />
             </div>
         </div>
     );
