@@ -78,7 +78,7 @@ const QRPage = (props) => {
                         <Image style={styles2.restaurantImage} src={qrStylePage.useRestaurantImage && image ? image : qrStyleImages[qrStylePage.qrStyleImage]} />
                     </View>
                     {qrStylePage.includeTable ? <Text style={styles2.tableTitle}>{tableName}</Text> : null}
-                    {qrStylePage.suggestionText.length > 0 ? <Text style={styles2.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
+                    {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles2.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
                     <View style={styles2.qrCodes}>
                         {table && table.qrCodes
                             ? table.qrCodes.map((qrCode) => {
@@ -107,7 +107,7 @@ const QRPage = (props) => {
                         <Image style={styles3.restaurantImage} src={qrStylePage.useRestaurantImage && image ? image : qrStyleImages[qrStylePage.qrStyleImage]} />
                     </View>
                     {qrStylePage.includeTable ? <Text style={styles3.tableTitle}>{tableName}</Text> : null}
-                    {qrStylePage.suggestionText.length > 0 ? <Text style={styles3.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
+                    {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles3.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
                     <View style={styles3.qrCodes}>
                         {table && table.qrCodes
                             ? table.qrCodes.map((qrCode) => {
@@ -139,7 +139,7 @@ const QRPage = (props) => {
                     </View>
                     <View style={styles4.qrCodesArea}>
                         {qrStylePage.includeTable ? <Text style={styles4.tableTitle}>{tableName}</Text> : null}
-                        {qrStylePage.suggestionText.length > 0 ? <Text style={styles4.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
+                        {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles4.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
                         <View style={styles4.qrCodes}>
                             {table && table.qrCodes
                                 ? table.qrCodes.map((qrCode) => {

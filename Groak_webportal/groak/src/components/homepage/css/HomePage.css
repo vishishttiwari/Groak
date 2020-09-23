@@ -11,6 +11,7 @@
 
 .homepage {
   margin-top: -10px;
+  background-color: #E0E0E0;
 }
 
 .homepage .pop-up .content {
@@ -274,7 +275,7 @@
 }
 
 .homepage .whiteBackground {
-  background-color: transparent;
+  background-color: white;
   color: #D94859;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -344,6 +345,8 @@
   overflow-y: hidden;
   position: -webkit-sticky;
   position: sticky;
+  -webkit-box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 700px) {

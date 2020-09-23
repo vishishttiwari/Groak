@@ -9,7 +9,6 @@ import { fetchQRCodeFirestoreAPI } from '../../../firebase/FirestoreAPICalls/Fir
 import { checkCategoryAvailability, checkQRCodeAvailability, checkDishAvailability, frontDoorQRMenuPageId, TableStatus, viewOnlyQRMenuPageId } from '../../../catalog/Others';
 import { fetchOrderFirestoreAPI, updateOrderFromUserFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { checkOrderLocallity } from '../../../catalog/LocalStorage';
-import { getDay } from '../../../catalog/TimesDates';
 
 let orderSnapshot;
 
@@ -101,9 +100,8 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
     const categories = [];
     const categoryNames = [];
     const menuItems = new Map();
-    const day = getDay();
-    let startTime = 1439;
-    let endTime = 0;
+    const startTimeMap = new Map();
+    const endTimeMap = new Map();
 
     try {
         const restaurant = await fetchRestaurantAPI(restaurantId);
@@ -121,8 +119,22 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                             categoryNames.push(category.name);
                             menuItems.set(doc.id, []);
                         }
-                        startTime = Math.min(startTime, category.startTime[day]);
-                        endTime = Math.max(endTime, category.endTime[day]);
+                        // startTime = Math.min(startTime, category.startTime[day]);
+                        // endTime = Math.max(endTime, category.endTime[day]);
+                        category.days.forEach((tempDay) => {
+                            const startTime = startTimeMap.get(tempDay);
+                            const endTime = endTimeMap.get(tempDay);
+                            if (startTime) {
+                                startTimeMap.set(tempDay, Math.min(startTime, category.startTime[tempDay]));
+                            } else {
+                                startTimeMap.set(tempDay, category.startTime[tempDay]);
+                            }
+                            if (endTime) {
+                                endTimeMap.set(tempDay, Math.max(endTime, category.endTime[tempDay]));
+                            } else {
+                                endTimeMap.set(tempDay, category.endTime[tempDay]);
+                            }
+                        });
                     }
                 });
 
@@ -140,7 +152,7 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                     menuItems.set(category.id, dishes);
                 }));
                 if (categories.length === 0) {
-                    setState({ type: 'categoriesNotFound', startTime, endTime });
+                    setState({ type: 'categoriesNotFound', startTimeMap, endTimeMap });
                 } else {
                     setState({ type: 'fetchMenuItems', categoryNames, menuItems, restaurant });
                     if (tableId === frontDoorQRMenuPageId) {
@@ -162,11 +174,23 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                 docs.forEach((doc) => {
                     if (doc.exists) {
                         const category = { id: doc.id, ...doc.data() };
-                        startTime = Math.min(startTime, category.startTime[day]);
-                        endTime = Math.max(endTime, category.endTime[day]);
+                        category.days.forEach((tempDay) => {
+                            const startTime = startTimeMap.get(tempDay);
+                            const endTime = endTimeMap.get(tempDay);
+                            if (startTime) {
+                                startTimeMap.set(tempDay, Math.min(startTime, category.startTime[tempDay]));
+                            } else {
+                                startTimeMap.set(tempDay, category.startTime[tempDay]);
+                            }
+                            if (endTime) {
+                                endTimeMap.set(tempDay, Math.max(endTime, category.endTime[tempDay]));
+                            } else {
+                                endTimeMap.set(tempDay, category.endTime[tempDay]);
+                            }
+                        });
                     }
                 });
-                setState({ type: 'categoriesNotFound', startTime, endTime });
+                setState({ type: 'categoriesNotFound', startTimeMap, endTimeMap });
             }
         } else {
             setState({ type: 'restaurantNotFound' });

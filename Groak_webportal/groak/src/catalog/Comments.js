@@ -1,4 +1,4 @@
-import { getMinutesFromMidnight, getTimeInAMPMFromTimeStamp } from './TimesDates';
+import { getAbbreviatedDay, getDay, getMinutesFromMidnight, getTimeInAMPMFromMinutesComplete, getTimeInAMPMFromTimeStamp } from './TimesDates';
 
 /**
  * Random comments used through out the project.
@@ -31,12 +31,35 @@ export const CategoryDishesOrder = 'Dishes in this category will be shown in the
 export const DishOrder = 'Dishes will be shown in the same order as below. To change order, toggle the change order switch and then drag and drop each dish card.';
 
 export const QRCodesNotFound = 'QR Codes Not Found';
-export const CategoriesNotFound = (startTimeString, endTimeString, startTime, endTime) => {
+export const CategoriesNotFound = (startTimeMap, endTimeMap) => {
+    const weekday = new Array(7);
+    weekday[0] = 'sunday';
+    weekday[1] = 'monday';
+    weekday[2] = 'tuesday';
+    weekday[3] = 'wednesday';
+    weekday[4] = 'thursday';
+    weekday[5] = 'friday';
+    weekday[6] = 'saturday';
+
     const mins = getMinutesFromMidnight();
-    if (mins >= startTime && mins <= endTime) {
+    const day = getDay();
+    if (mins >= startTimeMap.get(day) && mins <= endTimeMap.get(day)) {
         return 'Menu not available at the moment';
     }
-    return `Menu not available at the moment. This menu will be available from ${startTimeString} to ${endTimeString}`;
+    let str = 'Menu not available at the moment. This menu is available on the following days:\n';
+    weekday.forEach((dayTemp) => {
+        const startTimeTemp = startTimeMap.get(dayTemp);
+        const endTimeTemp = endTimeMap.get(dayTemp);
+
+        if (startTimeTemp !== undefined && endTimeTemp !== undefined) {
+            if (startTimeTemp === 0 && (endTimeTemp === 1439 || endTimeTemp === 1440)) {
+                str += `${dayTemp.charAt(0).toUpperCase()}${dayTemp.slice(1)}\n`;
+            } else {
+                str += `${getAbbreviatedDay(dayTemp)}: ${getTimeInAMPMFromMinutesComplete(startTimeTemp)} - ${getTimeInAMPMFromMinutesComplete(endTimeTemp)}\n`;
+            }
+        }
+    });
+    return str;
 };
 export const DishesNotFound = 'Dishes Not Found';
 export const RestaurantNotFound = 'Restaurant Not Found';
@@ -84,5 +107,7 @@ export const VenmoMessage = 'We will redirect you to the Venmo app if you have o
 export const iPhoneReceiptSave = 'To save the receipt on iphone, press save receipt below and then long press the screen to save receipt in camera roll';
 export const VenmoUsageMessage = 'Only use Venmo if you have the app installed';
 
-export const CovidMessageSubheader = 'Measures taken by restaurant to reduce the spread';
+export const CovidMessageSubheader = (restaurantName) => {
+    return `Measures taken by ${restaurantName} to reduce the spread`;
+};
 export const CovidGuidelineSubheader = 'Covid directives in your area';

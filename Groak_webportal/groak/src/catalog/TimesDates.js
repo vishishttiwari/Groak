@@ -56,6 +56,28 @@ export const getDay = () => {
 };
 
 /**
+ * This function gets the abbreviated day
+ */
+export const getAbbreviatedDay = (day) => {
+    if (day === 'sunday') {
+        return 'Sun';
+    } if (day === 'monday') {
+        return 'Mon';
+    } if (day === 'tuesday') {
+        return 'Tue';
+    } if (day === 'wednesday') {
+        return 'Wed';
+    } if (day === 'thursday') {
+        return 'Thu';
+    } if (day === 'friday') {
+        return 'Fri';
+    } if (day === 'saturday') {
+        return 'Sat';
+    }
+    return '';
+};
+
+/**
  * This function gets minutes from midnight
  */
 export const getMinutesFromMidnight = () => {

@@ -24,7 +24,7 @@ import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { deleteAllLocalStorageAfter6Hours } from '../../../catalog/LocalStorage';
 import { analytics } from '../../../firebase/FirebaseLibrary';
 
-const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false, startTime: 0, endTime: 1439 };
+const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false, startTimeMap: new Map(), endTimeMap: new Map() };
 
 function reducer(state, action) {
     switch (action.type) {
@@ -37,7 +37,7 @@ function reducer(state, action) {
         case 'restaurantNotFound':
             return { ...state, restaurantNotFound: true, loadingSpinner: false };
         case 'categoriesNotFound':
-            return { ...state, categoriesNotFound: true, loadingSpinner: false, startTime: action.startTime, endTime: action.endTime };
+            return { ...state, categoriesNotFound: true, loadingSpinner: false, startTimeMap: action.startTimeMap, endTimeMap: action.endTimeMap };
         default:
             return initialState;
     }
@@ -108,21 +108,6 @@ const CustomerIntro = (props) => {
         return null;
     };
 
-    /**
-     * This function converts minutes into AM/PM time format
-     *
-     * @param {*} minutes to be converted
-     */
-    const getTimeInAMPMFromMinutesComplete = (minutes) => {
-        let hour = Math.floor(minutes / 60).toFixed(0);
-        const minute = (minutes % 60).toFixed(0);
-        const PM = hour > 11;
-        if (parseFloat(hour) === 0) {
-            hour = 12;
-        } else { hour -= hour > 12 ? 12 : 0; }
-        return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()}${PM ? 'PM' : 'AM'}`;
-    };
-
     return (
         <div className="customer intro">
             <p ref={top}> </p>
@@ -133,7 +118,7 @@ const CustomerIntro = (props) => {
                         <>
                             {state.restaurantNotFound
                                 ? <CustomerNotFound text={RestaurantNotFound} />
-                                : <CustomerNotFound text={CategoriesNotFound(getTimeInAMPMFromMinutesComplete(state.startTime), getTimeInAMPMFromMinutesComplete(state.endTime), state.startTime, state.endTime)} />}
+                                : <CustomerNotFound text={CategoriesNotFound(state.startTimeMap, state.endTimeMap)} />}
                         </>
                     ) : (
                         <>

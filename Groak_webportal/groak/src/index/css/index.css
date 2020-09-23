@@ -236,8 +236,12 @@ html body .not-found {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   max-width: 500px;
   display: block;
@@ -246,7 +250,7 @@ html body .not-found {
 
 @media (max-width: 700px) {
   html body .not-found {
-    width: 70%;
+    width: 90%;
   }
 }
 
@@ -255,17 +259,32 @@ html body .not-found .not-found-text {
   margin: 0 auto;
   text-align: center;
   font-weight: 100;
-  font-size: 90px;
+  font-size: 30px;
+  white-space: pre-wrap;
 }
 
 @media (max-width: 700px) {
   html body .not-found .not-found-text {
-    font-size: 30px;
+    font-size: 20px;
   }
 }
 
 html body .not-found .not-found-image {
-  width: 100%;
+  width: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
 }
 
 html body .order-change-toggle {

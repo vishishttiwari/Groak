@@ -2,9 +2,10 @@
  * This class includes restaurant related functions such as fetching a restaurant or updating a restaurant
  */
 import { updateRestaurantFirestoreAPI, addRestaurantLogoFirestoreAPI, getRestaurantLogoURLFirestoreAPI, addRestaurantImageFirestoreAPI, getRestaurantImageURLFirestoreAPI, fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
-import { ErrorUpdatingRestaurant, MissingDishesFound, MissingDishesNotFound, SettingsUpdated, ErrorFetchingMissingDishes, MissingCategoriesFound, MissingCategoriesNotFound, ErrorFetchingMissingCategories } from '../../../catalog/NotificationsComments';
+import { ErrorUpdatingRestaurant, MissingDishesFound, MissingDishesNotFound, SettingsUpdated, ErrorFetchingMissingDishes, MissingCategoriesFound, MissingCategoriesNotFound, ErrorFetchingMissingCategories, MissingQRCodesNotFound, MissingQRCodesFound } from '../../../catalog/NotificationsComments';
 import { fetchDishesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { fetchCategoriesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
+import { fetchQRCodesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
 
 /**
  * This function first checks if an image needs to be uploaded. If yes then it uploads image, then gets the reference,
@@ -148,10 +149,63 @@ export const addMissingCategories = async (restaurantId, data, setState, setGlob
         if (initialCount !== categoryReferences.length) {
             const updatedData = { categories: categoryReferences };
             await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-            setGlobalState({ type: 'setRestaurantPortal', restaurant: updatedData, restaurantId });
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...data, categories: categoryReferences }, restaurantId });
             snackbar(MissingCategoriesFound, { variant: 'success' });
         } else {
             snackbar(MissingCategoriesNotFound, { variant: 'info' });
+        }
+    } catch (error) {
+        snackbar(ErrorFetchingMissingCategories, { variant: 'error' });
+    }
+    setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+};
+
+/**
+ * Because this qr codes are saved as an array in restaurant doc, sometimes the array might lose few qr codes.
+ * This function goes through all the qr codes in the qr codes collection, finds any qr codes that ae not in
+ * restaurant doc and adds them to it
+ *
+ * @param {*} restaurantId
+ * @param {*} setState
+ * @param {*} setGlobalState
+ * @param {*} snackbar
+ */
+export const addMissingQRCodes = async (restaurantId, data, setState, setGlobalState, snackbar) => {
+    setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+    try {
+        const qrCodeReferences = [];
+        const qrCodePaths = [];
+        let initialCount = 0;
+
+        const restaurantDoc = await fetchRestaurantFirestoreAPI(restaurantId);
+        if (restaurantDoc.exists && restaurantDoc.data() && restaurantDoc.data().qrCodes) {
+            const { qrCodes } = restaurantDoc.data();
+            qrCodes.forEach((qrCode) => {
+                qrCodeReferences.push(qrCode);
+                qrCodePaths.push(qrCode.path);
+            });
+        }
+
+        initialCount = qrCodeReferences.length;
+
+        await fetchQRCodesFromCollectionFirestoreAPI(restaurantId)
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (!qrCodePaths.includes(doc.data().reference.path)) {
+                        qrCodeReferences.push(doc.data().reference);
+                    }
+                });
+            })
+            .catch(() => {
+                snackbar(ErrorFetchingMissingCategories, { variant: 'error' });
+            });
+        if (initialCount !== qrCodeReferences.length) {
+            const updatedData = { qrCodes: qrCodeReferences };
+            await updateRestaurantFirestoreAPI(restaurantId, updatedData);
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...data, qrCodes: qrCodeReferences }, restaurantId });
+            snackbar(MissingQRCodesFound, { variant: 'success' });
+        } else {
+            snackbar(MissingQRCodesNotFound, { variant: 'info' });
         }
     } catch (error) {
         snackbar(ErrorFetchingMissingCategories, { variant: 'error' });

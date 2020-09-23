@@ -16,7 +16,7 @@ const Covid = (props) => {
         <div className="covid">
             <CovidHeader />
             <div className="content">
-                <CustomerTopic header="Restaurant Message" subheader={CovidMessageSubheader} />
+                <CustomerTopic header="Restaurant Message" subheader={CovidMessageSubheader(restaurant.name)} />
                 <CustomerInfo info={restaurant.covidMessage} />
                 {restaurant.covidGuidelines ? (
                     <>

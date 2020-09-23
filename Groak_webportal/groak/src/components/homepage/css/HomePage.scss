@@ -2,6 +2,7 @@
 
 .homepage {
     margin-top: - 10px;
+    background-color: #E0E0E0;
 
     .pop-up {
         .content {
@@ -199,7 +200,7 @@
     }
 
     .whiteBackground {
-        background-color: transparent;
+        background-color: white;
         color: $primaryColor;
 
         display: flex;
@@ -239,6 +240,8 @@
         overflow-y: hidden;
 
         position: sticky;
+
+        box-shadow: 0 5px 30px rgba(0,0,0,0.30);
 
         @media (max-width: $phoneMaxWidth) {
             height: 600px;

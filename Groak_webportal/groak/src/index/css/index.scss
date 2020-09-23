@@ -185,14 +185,15 @@ html {
         .not-found {
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
             width: 100%;
             max-width: 500px;
             display: block;
             margin: 50px auto;
     
             @media (max-width: $phoneMaxWidth) {
-                width: 70%;
+                width: 90%;
             }
     
             .not-found-text {
@@ -200,15 +201,21 @@ html {
                 margin: 0 auto;
                 text-align: center;
                 font-weight: 100;
-                font-size: 90px;
+                font-size: 30px;
+                white-space: pre-wrap;
     
                 @media (max-width: $phoneMaxWidth) {
-                    font-size: 30px;
+                    font-size: 20px;
                 }
             }
     
             .not-found-image {
-                width: 100%;
+                width: 70%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                margin: auto;
             }
         }
 

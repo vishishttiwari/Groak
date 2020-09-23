@@ -128,7 +128,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         case 3:
             styles = { ...styles,
                 qr: { ...styles.qr, height: 'auto', width: '30%' },
-                qrCode: { ...styles.qrCode, height: '45%', borderRadius: '5', borderWidth: '1pt' },
+                qrCode: { ...styles.qrCode, height: '55%', borderRadius: '5', borderWidth: '1pt' },
                 qrText: { ...styles.qrText, fontSize: 20 },
             };
             break;

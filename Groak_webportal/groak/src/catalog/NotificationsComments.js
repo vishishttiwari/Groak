@@ -25,8 +25,11 @@ export const MissingDishesFound = 'We found some missing dishes that we have add
 export const MissingDishesNotFound = 'No missing dishes were found';
 export const MissingCategoriesFound = 'We found some missing categories that we have added back';
 export const MissingCategoriesNotFound = 'No missing categories were found';
+export const MissingQRCodesFound = 'We found some missing QR codes that we have added back';
+export const MissingQRCodesNotFound = 'No missing QR codes were found';
 export const ErrorFetchingMissingDishes = 'Error while fetching missing dishes';
 export const ErrorFetchingMissingCategories = 'Error while fetching missing categories';
+export const ErrorFetchingMissingQRCodes = 'Error while fetching missing QR codes';
 export const SettingsUpdated = 'Changes Saved';
 
 export const ErrorChangingAvailability = 'Error changing availability';

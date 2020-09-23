@@ -13,8 +13,8 @@ import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import { DemoRestaurantCovidGuidelines, DemoRestaurantCovidMessage } from '../../../catalog/Demo';
-import { addMissingCategories, addMissingDishes, updateRestaurantAPI } from './SettingsAPICalls';
-import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink, viewOnlyQRMenuPageId } from '../../../catalog/Others';
+import { addMissingCategories, addMissingDishes, addMissingQRCodes, updateRestaurantAPI } from './SettingsAPICalls';
+import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink, viewOnlyQRMenuPageId, groakTesting } from '../../../catalog/Others';
 import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
 import { FrontDoorQRMenuPage, ViewOnlyQRMenuPage } from '../../../catalog/Comments';
 import Payments from './Payment';
@@ -103,6 +103,11 @@ const RestaurantSettings = (props) => {
     const missingCategories = async (event) => {
         event.preventDefault();
         await addMissingCategories(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+    };
+
+    const missingQRCodes = async (event) => {
+        event.preventDefault();
+        await addMissingQRCodes(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
     };
 
     return (
@@ -256,23 +261,34 @@ const RestaurantSettings = (props) => {
             >
                 View Only Menu
             </Button>
-            <p>Diagnostics:</p>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Button
-                    className="normal-buttons"
-                    type="button"
-                    onClick={missingDishes}
-                >
-                    Missing Dishes?
-                </Button>
-                <Button
-                    className="normal-buttons"
-                    type="button"
-                    onClick={missingCategories}
-                >
-                    Missing Categories?
-                </Button>
-            </div>
+            {groakTesting ? (
+                <>
+                    <p>Diagnostics:</p>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Button
+                            className="normal-buttons"
+                            type="button"
+                            onClick={missingDishes}
+                        >
+                            Missing Dishes?
+                        </Button>
+                        <Button
+                            className="normal-buttons"
+                            type="button"
+                            onClick={missingCategories}
+                        >
+                            Missing Categories?
+                        </Button>
+                        <Button
+                            className="normal-buttons"
+                            type="button"
+                            onClick={missingQRCodes}
+                        >
+                            Missing QR Codes?
+                        </Button>
+                    </div>
+                </>
+            ) : null}
             <p>Images:</p>
             <input
                 accept="image/*"
