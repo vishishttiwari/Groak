@@ -72,7 +72,7 @@ const MenuDish = (props) => {
                 />
             ) : null}
             <CardContent style={{ padding: '10px' }}>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography style={{ whiteSpace: 'pre-wrap' }} variant="body2" color="textSecondary" component="p">
                     {dishItem.shortInfo}
                 </Typography>
                 <div className="info-content">

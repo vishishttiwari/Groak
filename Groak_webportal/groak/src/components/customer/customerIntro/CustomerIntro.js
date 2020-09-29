@@ -23,6 +23,7 @@ import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import { deleteAllLocalStorageAfter6Hours } from '../../../catalog/LocalStorage';
 import { analytics } from '../../../firebase/FirebaseLibrary';
+import { incrementCodeScannedWebFirestoreAPI, incrementUserWebFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsAnalytics';
 
 const initialState = { menuItems: new Map(), categoryNames: [], restaurant: {}, order: {}, updated: true, loadingSpinner: true, restaurantNotFound: false, categoriesNotFound: false, startTimeMap: new Map(), endTimeMap: new Map() };
 
@@ -59,8 +60,15 @@ const CustomerIntro = (props) => {
     }, [top]);
 
     useEffect(() => {
+        async function incrememntCodeScanned() {
+            if (!globalState.scannedCustomer) {
+                await incrementCodeScannedWebFirestoreAPI(match.params.restaurantid, match.params.tableid, match.params.qrcodeid);
+                await incrementUserWebFirestoreAPI(match.params.restaurantid);
+            }
+        }
         if (groakTesting) {
             analytics.logEvent('code_scanned_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+            incrememntCodeScanned();
         } else {
             analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
         }

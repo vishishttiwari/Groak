@@ -32,7 +32,7 @@ export const fetchCategoriesFirestoreAPI = (restaurantId) => {
     });
 };
 
-export const fetchCategoriesInArrayFirestoreAPI = (categoryReferences) => {
+export const fetchCategoriesFromArrayFirestoreAPI = (categoryReferences) => {
     return db.runTransaction(async (transaction) => {
         return Promise.all(categoryReferences.map(async (category) => {
             return transaction.get(category);

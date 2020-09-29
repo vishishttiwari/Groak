@@ -3,9 +3,9 @@
  */
 
 /**
-  * 10 mins
+  * 20 mins
   */
-export const timeoutValueForCustomer = 10 * 1000 * 60;
+export const timeoutValueForCustomer = 20 * 1000 * 60;
 
 /**
  * This function gets the current date and time
@@ -36,6 +36,47 @@ export const getCurrentDateTimeInStringFormat = () => {
     month[10] = 'Nov';
     month[11] = 'Dec';
     return `${myDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} ${month[myDate.getMonth()]} ${myDate.getDate()}, ${myDate.getFullYear()}`;
+};
+
+/**
+ * This function gets the current date in string in beautiful format
+ */
+export const getCurrentDateInStringFormat = () => {
+    const myDate = new Date();
+    const month = [];
+    month[0] = 'Jan';
+    month[1] = 'Feb';
+    month[2] = 'Mar';
+    month[3] = 'Apr';
+    month[4] = 'May';
+    month[5] = 'Jun';
+    month[6] = 'Jul';
+    month[7] = 'Aug';
+    month[8] = 'Sep';
+    month[9] = 'Oct';
+    month[10] = 'Nov';
+    month[11] = 'Dec';
+    return `${month[myDate.getMonth()]} ${myDate.getDate()}, ${myDate.getFullYear()}`;
+};
+
+/**
+ * This function gets the date in string in beautiful format
+ */
+export const getDateInStringFormat = (myDate) => {
+    const month = [];
+    month[0] = 'Jan';
+    month[1] = 'Feb';
+    month[2] = 'Mar';
+    month[3] = 'Apr';
+    month[4] = 'May';
+    month[5] = 'Jun';
+    month[6] = 'Jul';
+    month[7] = 'Aug';
+    month[8] = 'Sep';
+    month[9] = 'Oct';
+    month[10] = 'Nov';
+    month[11] = 'Dec';
+    return `${month[myDate.getMonth()]} ${myDate.getDate()}, ${myDate.getFullYear()}`;
 };
 
 /**
@@ -168,4 +209,11 @@ export const getTimeIn24FromMinutes = (minutes) => {
  */
 export const getTimeInAMPMFromTimeStamp = (timeStamp) => {
     return getTimeInAMPM(getDateTimeFromTimeStamp(timeStamp));
+};
+
+export const getDateTodayMidnight = () => {
+    const date = getCurrentDateTime();
+    date.setHours(0);
+    date.setMinutes(0);
+    return date;
 };

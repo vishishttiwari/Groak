@@ -7,6 +7,7 @@ import { Card, CardHeader, CardMedia, CardActions, Checkbox } from '@material-ui
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons';
 
 import NoImage from '../../../../../assets/icons/camera.png';
+import { getPrice } from '../../../../../catalog/Others';
 
 const Dish = (props) => {
     const { dishItem, alreadyChecked, checkDishHandler, clickHandler } = props;
@@ -16,7 +17,7 @@ const Dish = (props) => {
             <Card className="card card-gray" onClick={clickHandler}>
                 <CardHeader
                     title={dishItem.name}
-                    subheader={`$ ${dishItem.price}`}
+                    subheader={getPrice(dishItem.price)}
                 />
                 <CardMedia
                     className="media"

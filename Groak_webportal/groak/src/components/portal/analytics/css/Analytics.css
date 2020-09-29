@@ -1,0 +1,148 @@
+:export {
+  primaryColor: #D94859;
+  secondaryColor: #F0F0F0;
+  margin: 20px;
+  padding: 20px;
+  tableWhiteColor: white;
+  tableGreenColor: rgba(0, 255, 0, 0.5);
+  tableOrangeColor: rgba(255, 255, 0, 0.5);
+  tableRedColor: rgba(255, 0, 0, 0.5);
+}
+
+.analytics {
+  margin: 20px;
+}
+
+.analytics .analytics-select {
+  min-width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.analytics .datepicker {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  top: 50px;
+  right: 20px;
+  max-width: 800px;
+  z-index: 99;
+}
+
+@media (max-width: 700px) {
+  .analytics .datepicker {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+}
+
+.analytics .datepicker .datepicker-button {
+  min-width: 300px;
+  visibility: visible;
+  margin-right: 0;
+}
+
+@media (max-width: 700px) {
+  .analytics .datepicker .datepicker-button {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.analytics .datepicker .datepicker-datepicker {
+  visibility: visible;
+  max-width: 600px;
+}
+
+@media (max-width: 700px) {
+  .analytics .datepicker .datepicker-datepicker {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.analytics .datepicker .datepicker-select {
+  min-width: 300px;
+  display: none;
+  visibility: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .analytics .datepicker .datepicker-select {
+    visibility: visible;
+  }
+}
+
+.analytics .analytics-content {
+  position: relative;
+  max-width: 800px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+}
+
+.analytics .analytics-content .horizontal-line {
+  border-top-style: solid;
+  border-top-color: gray;
+  border-top-width: 1px;
+  width: 100%;
+  margin: 0;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  padding: 0;
+}
+
+.analytics .analytics-content h2 {
+  color: #D94859;
+  font-size: 24px;
+  font-weight: 100;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.analytics .analytics-content p {
+  color: #555555;
+  padding: 0;
+  margin: 5px 0 5px 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200;
+  letter-spacing: 0.15px;
+}
+/*# sourceMappingURL=Analytics.css.map */

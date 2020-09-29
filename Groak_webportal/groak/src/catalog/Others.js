@@ -101,6 +101,18 @@ export const randomNumber = () => {
 };
 
 /**
+ * This function gets total quantity from cart
+ * @param {*} cart
+ */
+export const getTotalQuantityFromCart = (cart) => {
+    let quantity = 0;
+    cart.forEach((item) => {
+        quantity += item.quantity;
+    });
+    return quantity;
+};
+
+/**
  * Calculate prices of all dishes by adding them
  *
  * @param {*} dishes all the dishes for which the total price needs to be added

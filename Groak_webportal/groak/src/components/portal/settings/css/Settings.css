@@ -23,6 +23,29 @@
           flex-flow: column;
 }
 
+.settings form .restaurant-settings .restaurant-settings-diagnotics {
+  display: 'flex';
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: 'row';
+          flex-direction: 'row';
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 700px) {
+  .settings form .restaurant-settings .restaurant-settings-diagnotics {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: 'column';
+            flex-direction: 'column';
+  }
+}
+
 .settings form .restaurant-settings .restaurant-settings-payment {
   display: -webkit-box;
   display: -ms-flexbox;

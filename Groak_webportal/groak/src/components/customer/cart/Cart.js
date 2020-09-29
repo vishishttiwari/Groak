@@ -11,7 +11,7 @@ import CartFooter from './CartFooter';
 import CustomerTopic from '../ui/topic/CustomerTopic';
 import { fetchCart, deleteCart } from '../../../catalog/LocalStorage';
 import CustomerSpecialInstructions from '../ui/specialInstructions/CustomerSpecialInstructions';
-import { randomNumber, calculatePriceFromDishes, getPrice, groakTesting } from '../../../catalog/Others';
+import { randomNumber, calculatePriceFromDishes, getPrice, groakTesting, getTotalQuantityFromCart } from '../../../catalog/Others';
 import './css/Cart.css';
 import CartItemCell from './CartItemCell';
 import CustomerNotFound from '../ui/notFound/CustomerNotFound';
@@ -23,6 +23,7 @@ import Spinner from '../../ui/spinner/Spinner';
 import { analytics } from '../../../firebase/FirebaseLibrary';
 import { addOrderAPI } from './CartAPICalls';
 import { NotAtRestaurant } from '../../../catalog/NotificationsComments';
+import { orderPlacedWebFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsAnalytics';
 
 const initialState = { specialInstructions: '', deletionConfirmation: false, loadingSpinner: false };
 
@@ -98,9 +99,10 @@ const Cart = (props) => {
                             setState({ type: 'updated' });
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
                             if (groakTesting) {
-                                analytics.logEvent('order_placed_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                                analytics.logEvent('order_placed_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: getTotalQuantityFromCart(cart), price: calculatePriceFromDishes(cart) });
+                                await orderPlacedWebFirestoreAPI(match.params.restaurantid, match.params.tableid, cart, calculatePriceFromDishes(cart));
                             } else {
-                                analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: cart.length, price: calculatePriceFromDishes(cart) });
+                                analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: getTotalQuantityFromCart(cart), price: calculatePriceFromDishes(cart) });
                             }
                         } else {
                             enqueueSnackbar(NotAtRestaurant, { variant: 'error' });

@@ -17,7 +17,7 @@ import Spinner from '../../ui/spinner/Spinner';
 const QROptions = (props) => {
     const { restaurantReference, tableReference, tableName, state, logo, image, restaurantName, setState, loadingSpinner, goBackHandler, submitHandler } = props;
     const formats = ['Format 1', 'Format 2', 'Format 3', 'Format 4'];
-    const pageSizeOptions = ['A2', 'A3', 'A4', 'A5', 'A6', 'LETTER', 'TABLOID', '5x7'];
+    const pageSizeOptions = ['A2', 'A3', 'A4', 'A5', 'A6', 'LETTER', 'TABLOID', '5x7', 'HALF-LETTER'];
     const fontOptions = Object.keys(getFonts());
     const qrImages = Object.keys(getQRStyleImages());
 

@@ -87,7 +87,7 @@ const QRCodes = (props) => {
      */
     function addQRCodeHandler() {
         if (!state.loadingSpinner) {
-            if (state.qrCodes.length >= 7) {
+            if (state.qrCodes.length >= 8) {
                 enqueueSnackbar(MaximumQRCodeLimitReached, { variant: 'error' });
             } else {
                 history.push('/qrcodes/addQRCode');

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { createOrderReference } from './FirestoreAPICallsOrders';
 import { createRequestReference } from './FirestoreAPICallsRequests';
@@ -55,6 +56,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        tableAvailabilityId: uuidv4(),
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: data.x,
         y: data.y,
@@ -80,6 +82,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        tableAvailabilityId: uuidv4(),
         table: data.name,
         reference: createOrderReference(restaurantId, tableId),
         restaurantReference: createRestaurantReference(restaurantId),

@@ -1,7 +1,7 @@
 /**
  * This class includes fetching categories and dishes in each categories
  */
-import { fetchCategoriesInArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
+import { fetchCategoriesFromArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { fetchDishesFromArrayFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import { ErrorFetchingCategories, ErrorUnsubscribingOrder } from '../../../catalog/NotificationsComments';
@@ -109,7 +109,7 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
 
         if (data.exists && data.data()) {
             if (dontCheckAvailability || checkQRCodeAvailability(data.data())) {
-                const docs = await fetchCategoriesInArrayFirestoreAPI(data.data().categories);
+                const docs = await fetchCategoriesFromArrayFirestoreAPI(data.data().categories);
 
                 docs.forEach((doc) => {
                     if (doc.exists) {
@@ -119,8 +119,6 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                             categoryNames.push(category.name);
                             menuItems.set(doc.id, []);
                         }
-                        // startTime = Math.min(startTime, category.startTime[day]);
-                        // endTime = Math.max(endTime, category.endTime[day]);
                         category.days.forEach((tempDay) => {
                             const startTime = startTimeMap.get(tempDay);
                             const endTime = endTimeMap.get(tempDay);
@@ -169,7 +167,7 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                     }
                 }
             } else {
-                const docs = await fetchCategoriesInArrayFirestoreAPI(data.data().categories);
+                const docs = await fetchCategoriesFromArrayFirestoreAPI(data.data().categories);
 
                 docs.forEach((doc) => {
                     if (doc.exists) {

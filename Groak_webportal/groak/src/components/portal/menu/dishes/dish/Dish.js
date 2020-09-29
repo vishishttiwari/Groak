@@ -26,7 +26,7 @@ const Dish = (props) => {
                 draggable="false"
             />
             <CardContent onClick={clickHandler}>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography style={{ whiteSpace: 'pre-wrap' }} variant="body2" color="textSecondary" component="p">
                     {dishItem.shortInfo}
                 </Typography>
             </CardContent>

@@ -137,6 +137,30 @@ export const deleteOrder = (restaurantId) => {
 };
 
 /**
+ * New order id is refreshed every time a table becomes available. This checks if a newOrderId already exists or not.
+ * If not then it adds it else it says that user is returning by returning boolean
+ *
+ * @param {*} restaurantId
+ * @param {*} newOrderId
+ */
+export const saveAndCheckNewUser = (restaurantId) => {
+    const lastScanTimeString = localStorage.getItem(`groak-${restaurantId}-lastScanTime`);
+    if (lastScanTimeString === null) {
+        localStorage.setItem(`groak-${restaurantId}-lastScanTime`, JSON.stringify(getCurrentDateTime()));
+        localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
+        return true;
+    }
+    const lastScanTime = new Date(lastScanTimeString);
+    lastScanTime.setHours(lastScanTime.getHours() + 2);
+    if (lastScanTime <= getCurrentDateTime()) {
+        localStorage.setItem(`groak-${restaurantId}-lastScanTime`, JSON.stringify(getCurrentDateTime()));
+        localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
+        return true;
+    }
+    return false;
+};
+
+/**
  * Delete all orders if the last update was more than 6 hours ago
  *
  * @param {*} restaurantId

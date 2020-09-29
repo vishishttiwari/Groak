@@ -2,10 +2,32 @@
  * This class includes restaurant related functions such as fetching a restaurant or updating a restaurant
  */
 import { updateRestaurantFirestoreAPI, addRestaurantLogoFirestoreAPI, getRestaurantLogoURLFirestoreAPI, addRestaurantImageFirestoreAPI, getRestaurantImageURLFirestoreAPI, fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
-import { ErrorUpdatingRestaurant, MissingDishesFound, MissingDishesNotFound, SettingsUpdated, ErrorFetchingMissingDishes, MissingCategoriesFound, MissingCategoriesNotFound, ErrorFetchingMissingCategories, MissingQRCodesNotFound, MissingQRCodesFound } from '../../../catalog/NotificationsComments';
+import { ErrorUpdatingRestaurant, MissingDishesFound, MissingDishesNotFound, SettingsUpdated, ErrorFetchingMissingDishes, MissingCategoriesFound, MissingCategoriesNotFound, ErrorFetchingMissingCategories, MissingQRCodesNotFound, MissingQRCodesFound, ErrorFetchingRestaurant } from '../../../catalog/NotificationsComments';
 import { fetchDishesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { fetchCategoriesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
 import { fetchQRCodesFromCollectionFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsQRCodes';
+
+/**
+ * This function fetches restaurant everytime you open the settings tab
+ *
+ * @param {*} restaurantId
+ * @param {*} setState
+ * @param {*} setGlobalState
+ * @param {*} snackbar
+ */
+export const fetchRestaurantAPI = async (restaurantId, setState, setGlobalState, snackbar) => {
+    setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+
+    const doc = await fetchRestaurantFirestoreAPI(restaurantId);
+
+    // Check if the restaurant document exists or not.
+    if (doc.exists) {
+        setGlobalState({ type: 'setRestaurantPortal', restaurantId, restaurant: doc.data() });
+    } else {
+        snackbar(ErrorFetchingRestaurant, { variant: 'error' });
+    }
+    setState({ type: 'setLoadingSpinner', loadingSpinner: false });
+};
 
 /**
  * This function first checks if an image needs to be uploaded. If yes then it uploads image, then gets the reference,
@@ -21,35 +43,41 @@ import { fetchQRCodesFromCollectionFirestoreAPI } from '../../../firebase/Firest
 export const updateRestaurantAPI = async (restaurantId, data, logo, image, setState, setGlobalState, snackbar) => {
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
 
-    try {
-        let updatedData;
+    const restaurantDoc = await fetchRestaurantFirestoreAPI(restaurantId);
+    // Check if the restaurant document exists or not.
+    if (restaurantDoc.exists) {
+        try {
+            let updatedData;
 
-        // If logo is updated then upload logo and add url to the data
-        if (logo && logo.file) {
-            const { ref, promise } = addRestaurantLogoFirestoreAPI(restaurantId, data.name, logo.file);
-            await promise;
-            const url = await getRestaurantLogoURLFirestoreAPI(ref);
-            updatedData = { ...data, logo: url };
-        } else {
-            updatedData = { ...data, logo: logo.link };
+            // If logo is updated then upload logo and add url to the data
+            if (logo && logo.file) {
+                const { ref, promise } = addRestaurantLogoFirestoreAPI(restaurantId, data.name, logo.file);
+                await promise;
+                const url = await getRestaurantLogoURLFirestoreAPI(ref);
+                updatedData = { ...data, logo: url, dishes: restaurantDoc.data().dishes, categories: restaurantDoc.data().categories, qrCodes: restaurantDoc.data().qrCodes };
+            } else {
+                updatedData = { ...data, logo: logo.link, dishes: restaurantDoc.data().dishes, categories: restaurantDoc.data().categories, qrCodes: restaurantDoc.data().qrCodes };
+            }
+
+            // If image is updated then upload image and add url to the data
+            if (image && image.file) {
+                const { refImage, promiseImage } = addRestaurantImageFirestoreAPI(restaurantId, data.name, image.file);
+                await promiseImage;
+                const urlImage = await getRestaurantImageURLFirestoreAPI(refImage);
+
+                updatedData = { ...updatedData, image: urlImage };
+            } else {
+                updatedData = { ...updatedData, image: image.link };
+            }
+
+            await updateRestaurantFirestoreAPI(restaurantId, updatedData);
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: updatedData, restaurantId });
+            snackbar(SettingsUpdated, { variant: 'success' });
+        } catch (error) {
+            snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
         }
-
-        // If image is updated then upload image and add url to the data
-        if (image && image.file) {
-            const { refImage, promiseImage } = addRestaurantImageFirestoreAPI(restaurantId, data.name, image.file);
-            await promiseImage;
-            const urlImage = await getRestaurantImageURLFirestoreAPI(refImage);
-
-            updatedData = { ...updatedData, image: urlImage };
-        } else {
-            updatedData = { ...updatedData, image: image.link };
-        }
-
-        await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-        setGlobalState({ type: 'setRestaurantPortal', restaurant: updatedData, restaurantId });
-        snackbar(SettingsUpdated, { variant: 'success' });
-    } catch (error) {
-        snackbar(ErrorUpdatingRestaurant, { variant: 'error' });
+    } else {
+        snackbar(ErrorFetchingRestaurant, { variant: 'error' });
     }
     setState({ type: 'setLoadingSpinner', loadingSpinner: false });
 };
@@ -64,7 +92,7 @@ export const updateRestaurantAPI = async (restaurantId, data, logo, image, setSt
  * @param {*} setGlobalState
  * @param {*} snackbar
  */
-export const addMissingDishes = async (restaurantId, data, setState, setGlobalState, snackbar) => {
+export const addMissingDishes = async (restaurantId, setState, setGlobalState, snackbar) => {
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
     try {
         const dishReferences = [];
@@ -96,7 +124,7 @@ export const addMissingDishes = async (restaurantId, data, setState, setGlobalSt
         if (initialCount !== dishReferences.length) {
             const updatedData = { dishes: dishReferences };
             await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...data, dishes: dishReferences }, restaurantId });
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...restaurantDoc.data(), dishes: dishReferences }, restaurantId });
             snackbar(MissingDishesFound, { variant: 'success' });
         } else {
             snackbar(MissingDishesNotFound, { variant: 'info' });
@@ -117,7 +145,7 @@ export const addMissingDishes = async (restaurantId, data, setState, setGlobalSt
  * @param {*} setGlobalState
  * @param {*} snackbar
  */
-export const addMissingCategories = async (restaurantId, data, setState, setGlobalState, snackbar) => {
+export const addMissingCategories = async (restaurantId, setState, setGlobalState, snackbar) => {
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
     try {
         const categoryReferences = [];
@@ -149,7 +177,7 @@ export const addMissingCategories = async (restaurantId, data, setState, setGlob
         if (initialCount !== categoryReferences.length) {
             const updatedData = { categories: categoryReferences };
             await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...data, categories: categoryReferences }, restaurantId });
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...restaurantDoc.data(), categories: categoryReferences }, restaurantId });
             snackbar(MissingCategoriesFound, { variant: 'success' });
         } else {
             snackbar(MissingCategoriesNotFound, { variant: 'info' });
@@ -170,7 +198,7 @@ export const addMissingCategories = async (restaurantId, data, setState, setGlob
  * @param {*} setGlobalState
  * @param {*} snackbar
  */
-export const addMissingQRCodes = async (restaurantId, data, setState, setGlobalState, snackbar) => {
+export const addMissingQRCodes = async (restaurantId, setState, setGlobalState, snackbar) => {
     setState({ type: 'setLoadingSpinner', loadingSpinner: true });
     try {
         const qrCodeReferences = [];
@@ -202,7 +230,7 @@ export const addMissingQRCodes = async (restaurantId, data, setState, setGlobalS
         if (initialCount !== qrCodeReferences.length) {
             const updatedData = { qrCodes: qrCodeReferences };
             await updateRestaurantFirestoreAPI(restaurantId, updatedData);
-            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...data, qrCodes: qrCodeReferences }, restaurantId });
+            setGlobalState({ type: 'setRestaurantPortal', restaurant: { ...restaurantDoc.data(), qrCodes: qrCodeReferences }, restaurantId });
             snackbar(MissingQRCodesFound, { variant: 'success' });
         } else {
             snackbar(MissingQRCodesNotFound, { variant: 'info' });

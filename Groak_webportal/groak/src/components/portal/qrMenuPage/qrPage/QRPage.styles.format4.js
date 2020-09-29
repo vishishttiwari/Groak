@@ -210,6 +210,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             break;
         case 'A6':
         case '5x7':
+        case 'HALF-LETTER':
             styles = { ...styles,
             };
             break;

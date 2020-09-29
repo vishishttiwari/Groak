@@ -1,8 +1,9 @@
 /**
  * This component is used for the settings page.
  */
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useSnackbar } from 'notistack';
 import RestaurantSettings from './RestaurantSettings';
 
 import Heading from '../../ui/heading/Heading';
@@ -11,6 +12,7 @@ import { context } from '../../../globalState/globalState';
 
 import './css/Settings.css';
 import AccountSettings from './AccountSettings';
+import { fetchRestaurantAPI } from './SettingsAPICalls';
 
 function localReducer(state, action) {
     let updatedRestaurant;
@@ -87,8 +89,13 @@ function localReducer(state, action) {
 }
 
 const Settings = () => {
-    const { globalState } = useContext(context);
+    const { globalState, setGlobalState } = useContext(context);
     const [state, setState] = useReducer(localReducer, { restaurant: globalState.restaurantPortal, logo: { file: null, link: globalState.restaurantPortal.logo }, image: { file: null, link: globalState.restaurantPortal.image }, email: globalState.emailPortal, loadingSpinner: false });
+    const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        fetchRestaurantAPI(globalState.restaurantIdPortal, setState, setGlobalState, enqueueSnackbar);
+    }, []);
 
     return (
         <div className="settings">

@@ -25,8 +25,8 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             color: `${textColor}`,
         },
         titleView: {
-            height: includeTable ? '14%' : '22%',
-            maxHeight: includeTable ? '14%' : '22%',
+            height: includeTable ? '17%' : '25%',
+            maxHeight: includeTable ? '17%' : '25%',
             width: '100%',
         },
         restaurantTitle: {
@@ -37,7 +37,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             height: '7%',
             maxHeight: '7%',
             width: '95%',
-            marginTop: 10,
+            marginTop: 5,
             marginLeft: 0,
             marginRight: 0,
         },
@@ -48,9 +48,9 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             marginTop: 0,
         },
         qrArea: {
-            height: suggestionText ? '70%' : '75%',
-            maxHeight: suggestionText ? '70%' : '75%',
-            marginTop: 10,
+            height: suggestionText ? '67%' : '72%',
+            maxHeight: suggestionText ? '67%' : '72%',
+            marginTop: 5,
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
@@ -99,7 +99,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         advertisement: {
             position: 'absolute',
             right: 10,
-            bottom: 10,
+            bottom: 5,
             left: '80%',
         },
         advertisementImage: {
@@ -201,6 +201,16 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
                 suggestionText: { ...styles.suggestionText, fontSize: 18 },
                 qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize - 10 },
                 qrCode: { ...styles.qrCode, borderRadius: '5', marginBottom: 0, borderWidth: '1pt' },
+                qr: { ...styles.qr, marginBottom: 10 },
+            };
+            break;
+        case 'HALF-LETTER':
+            styles = { ...styles,
+                restaurantTitle: { ...styles.restaurantTitle, fontSize: 17 },
+                tableTitle: { ...styles.tableTitle, fontSize: 15 },
+                suggestionText: { ...styles.suggestionText, fontSize: 12 },
+                qrText: { ...styles.qrText, fontSize: styles.qrText.fontSize - 12 },
+                qrCode: { ...styles.qrCode, borderRadius: '2', marginBottom: 0, borderWidth: '0.33pt' },
                 qr: { ...styles.qr, marginBottom: 10 },
             };
             break;

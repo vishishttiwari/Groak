@@ -8,6 +8,17 @@
             display: flex;
             flex-flow: column;
 
+            .restaurant-settings-diagnotics {
+                display: 'flex';
+                flex-direction: 'row';
+                justify-content: center;
+                align-items: center;
+
+                @media (max-width: $phoneMaxWidth) {
+                    flex-direction: 'column';
+                }
+            }
+
             .restaurant-settings-payment {
                 display: flex;
                 flex-flow: column;

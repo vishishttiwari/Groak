@@ -30,6 +30,7 @@ const CustomerRequests = lazy(() => { return import('../components/customer/requ
 const CustomerReceipt = lazy(() => { return import('../components/customer/receipt/Receipt'); });
 const QRCodes = lazy(() => { return import('../components/portal/qrCodes/QRCodes'); });
 const QRCodesDetails = lazy(() => { return import('../components/portal/qrCodes/qrCodeDetails/QRCodeDetails'); });
+const Analytics = lazy(() => { return import('../components/portal/analytics/Analytics'); });
 
 import { defaultState, reducer, Provider } from '../globalState/globalState';
 import Layout from '../components/layout/Layout';
@@ -76,6 +77,7 @@ function App() {
                                         <Route path="/categories" exact render={() => { return <Categories />; }} />
                                         <Route path="/qrcodes" exact render={() => { return <QRCodes />; }} />
                                         <Route path="/qrcodes/:qrcodeid" exact render={() => { return <QRCodesDetails />; }} />
+                                        <Route path="/analytics" exact render={() => { return <Analytics />; }} />
                                         <Route path="/settings" exact render={() => { return <Settings />; }} />
                                         <Route path="/qrmenupage/:tableid" exact render={() => { return <QRWindow />; }} />
                                         <Route path="/customer/menu/:restaurantid/:tableid/:qrcodeid" exact render={() => { return <CustomerIntro />; }} />

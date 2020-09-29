@@ -9,6 +9,10 @@ export const createQRCodeReference = (restaurantId, qrCodeId) => {
     return db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId);
 };
 
+export const fetchQRCodeFirestoreAPI = (restaurantId, qrCodeId) => {
+    return db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId).get();
+};
+
 export const fetchQRCodesFromCollectionFirestoreAPI = (restaurantId) => {
     return db.collection(`restaurants/${restaurantId}/qrcodes`).get();
 };
@@ -30,10 +34,6 @@ export const fetchQRCodesFirestoreAPI = (restaurantId) => {
         }
         return Promise.resolve();
     });
-};
-
-export const fetchQRCodeFirestoreAPI = (restaurantId, qrCodeId) => {
-    return db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId).get();
 };
 
 export const updateQRCodeFirestoreAPI = (restaurantId, qrCodeId, data) => {

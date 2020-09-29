@@ -97,17 +97,17 @@ const RestaurantSettings = (props) => {
 
     const missingDishes = async (event) => {
         event.preventDefault();
-        await addMissingDishes(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+        await addMissingDishes(globalState.restaurantIdPortal, setState, setGlobalState, enqueueSnackbar);
     };
 
     const missingCategories = async (event) => {
         event.preventDefault();
-        await addMissingCategories(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+        await addMissingCategories(globalState.restaurantIdPortal, setState, setGlobalState, enqueueSnackbar);
     };
 
     const missingQRCodes = async (event) => {
         event.preventDefault();
-        await addMissingQRCodes(globalState.restaurantIdPortal, state.restaurant, setState, setGlobalState, enqueueSnackbar);
+        await addMissingQRCodes(globalState.restaurantIdPortal, setState, setGlobalState, enqueueSnackbar);
     };
 
     return (
@@ -264,9 +264,10 @@ const RestaurantSettings = (props) => {
             {groakTesting ? (
                 <>
                     <p>Diagnostics:</p>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className="restaurant-settings-diagnotics">
                         <Button
                             className="normal-buttons"
+                            style={{ marginRight: '20px' }}
                             type="button"
                             onClick={missingDishes}
                         >
@@ -274,6 +275,7 @@ const RestaurantSettings = (props) => {
                         </Button>
                         <Button
                             className="normal-buttons"
+                            style={{ marginRight: '20px' }}
                             type="button"
                             onClick={missingCategories}
                         >
@@ -281,6 +283,7 @@ const RestaurantSettings = (props) => {
                         </Button>
                         <Button
                             className="normal-buttons"
+                            style={{ marginRight: '20px' }}
                             type="button"
                             onClick={missingQRCodes}
                         >

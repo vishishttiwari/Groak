@@ -26,6 +26,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
+export const increment = firebase.firestore.FieldValue.increment(1);
+export const decrement = firebase.firestore.FieldValue.increment(-1);
 export const analytics = firebase.analytics();
 export const createGeoPoint = (latitude, longitude) => {
     return new firebase.firestore.GeoPoint(latitude, longitude);
