@@ -48,7 +48,7 @@ const DishInformation = (props) => {
         {
             key: 'info',
             multiline: false,
-            rows: '2',
+            rows: '4',
             title: 'Short Info',
             type: 'text',
             value: shortInfo,

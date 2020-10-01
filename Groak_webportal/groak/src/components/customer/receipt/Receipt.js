@@ -19,7 +19,7 @@ import { fetchOrderAPI, unsubscribeFetchOrderAPI, updateOrderAPI } from './Recei
 import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../catalog/TimesDates';
 import ReceiptPriceCell from './ReceiptPriceCell';
 import ReceiptRestaurantCell from './ReceiptRestaurantCell';
-import Groak from '../../../assets/images/powered_by_groak_1.png';
+import Groak from '../../../assets/images/powered_by_groak_2.png';
 import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
 import { context } from '../../../globalState/globalState';
 import { isNearRestaurant } from '../../../catalog/Distance';
@@ -109,12 +109,15 @@ const Receipt = (props) => {
         if (state.tableReceipt === 'table') {
             return (
                 <OrderDishCell
+                    restaurantId={match.params.restaurantid}
+                    dishId={dish.dishReference.id}
                     name={dish.name}
                     price={dish.price}
                     quantity={dish.quantity}
                     extras={dish.extras}
                     localBadge={dish.local}
                     created={getTimeInAMPMFromTimeStamp(dish.created)}
+                    showLikes
                 />
             );
         } if (dish.local) {
@@ -126,6 +129,7 @@ const Receipt = (props) => {
                     extras={dish.extras}
                     localBadge={dish.local}
                     created={getTimeInAMPMFromTimeStamp(dish.created)}
+                    showLikes
                 />
             );
         }

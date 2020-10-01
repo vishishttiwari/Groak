@@ -4,16 +4,21 @@
 /**
  * This component is used for the order analytics in analytics page
  */
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Line, Doughnut } from 'react-chartjs-2';
 import './css/Analytics.css';
+import { context } from '../../../globalState/globalState';
 
 const OrdersAnalytics = (props) => {
     const { totalOrders, priceOrders, totalOrdersData, priceOrdersData, dishesOrdersTotalData, dishesOrdersPriceData, tableOrdersTotalData, tableOrdersPriceData } = props;
+    const { globalState } = useContext(context);
 
     return (
         <>
+            {!globalState.restaurantPortal || !globalState.restaurantPortal.allowOrdering || !globalState.restaurantPortal.allowOrdering.restaurant ? (
+                <p>These analytics are only available if you have subscribed to our ordering model. To get these analytics, use Groak for ordering at your restaurant.</p>
+            ) : null}
             <h2 style={{ marginTop: '0px' }}>{`Total Dishes Ordered: ${totalOrders}`}</h2>
             <Line
                 data={totalOrdersData}
@@ -38,7 +43,7 @@ const OrdersAnalytics = (props) => {
                     maintainAspectRatio: true }}
             />
             <div className="horizontal-line" />
-            <h2>{`Price of Dishes Ordered: $${priceOrders}`}</h2>
+            <h2>{`Total Price of Dishes Ordered: $${priceOrders}`}</h2>
             <Line
                 data={priceOrdersData}
                 redraw
@@ -73,58 +78,88 @@ const OrdersAnalytics = (props) => {
                     maintainAspectRatio: true }}
             />
             {dishesOrdersTotalData.labels && dishesOrdersTotalData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>Total Dishes</h2>
+                <div className="horizontal-line" />
+            ) : null}
+            {dishesOrdersTotalData.labels && dishesOrdersTotalData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total Orders for Every Dish</h2>
                     <Doughnut
+                        width={300}
+                        height={400}
                         data={dishesOrdersTotalData}
+                        options={{
+                            responsive: false,
+                            maintainAspectRatio: false }}
                     />
-                </>
+                </div>
             ) : null}
             {dishesOrdersPriceData.labels && dishesOrdersPriceData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>Dish Prices</h2>
+                <div className="horizontal-line" />
+            ) : null}
+            {dishesOrdersPriceData.labels && dishesOrdersPriceData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total Price Ordered for Every Dish</h2>
                     <Doughnut
+                        width={300}
+                        height={400}
                         data={dishesOrdersPriceData}
                         options={{
+                            responsive: false,
+                            maintainAspectRatio: false,
                             tooltips: {
                                 callbacks: {
                                     label: function(tooltipItem, data) {
+                                        const label = data.labels[tooltipItem.index];
                                         const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                        return `$${value}`;
+                                        return `${label}: $${value}`;
                                     },
                                 },
                             },
                         }}
                     />
-                </>
+                </div>
             ) : null}
             {tableOrdersTotalData.labels && tableOrdersTotalData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>Total Tables</h2>
-                    <Doughnut data={tableOrdersTotalData} />
-                </>
+                <div className="horizontal-line" />
+            ) : null}
+            {tableOrdersTotalData.labels && tableOrdersTotalData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total Orders for every Menu/Table</h2>
+                    <Doughnut
+                        width={300}
+                        height={400}
+                        data={tableOrdersTotalData}
+                        options={{
+                            responsive: false,
+                            maintainAspectRatio: false }}
+                    />
+                </div>
             ) : null}
             {tableOrdersPriceData.labels && tableOrdersPriceData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>Table Prices</h2>
+                <div className="horizontal-line" />
+            ) : null}
+            {tableOrdersPriceData.labels && tableOrdersPriceData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total Price Ordered for every Menu/Table</h2>
                     <Doughnut
+                        width={300}
+                        height={400}
                         data={tableOrdersPriceData}
                         options={{
+                            responsive: false,
+                            maintainAspectRatio: false,
                             tooltips: {
                                 callbacks: {
                                     label: function(tooltipItem, data) {
+                                        const label = data.labels[tooltipItem.index];
                                         const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                        return `$${value}`;
+                                        return `${label}: $${value}`;
                                     },
                                 },
                             },
                         }}
                     />
-                </>
+                </div>
             ) : null}
         </>
 

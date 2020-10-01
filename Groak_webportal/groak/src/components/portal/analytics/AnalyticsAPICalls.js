@@ -60,12 +60,25 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     const tableOrdersPriceLabels = [];
     const tableOrdersPriceValues = [];
 
+    // Dishes
+    const dishesIds = [];
+    const dishesLabels = [];
+    const dishesLikes = [];
+
+    // Restaurant
+    let toalRatingEntries = 0;
+    let totalRating = 0;
+    const totalRatingEntriesArray = new Array(labels.length).fill(0);
+    const totalRatingArray = new Array(labels.length).fill(0);
+    const messages = [];
+
     const qrCodesMap = new Map();
     const tableCodesMap = new Map();
     const dishesOrdersTotalMap = new Map();
     const dishesOrdersPriceMap = new Map();
     const tableOrdersTotalMap = new Map();
     const tableOrdersPriceMap = new Map();
+    const dishesMap = new Map();
     await fetchAnalyticsFirestoreAPI(restaurantId, dateRange)
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -142,6 +155,28 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
                         }
                     });
                 }
+
+                // Dishes
+                if (doc.data().dishes) {
+                    const { dishes } = doc.data();
+                    Object.keys(dishes).forEach((dishId) => {
+                        if (dishesMap.get(dishId)) {
+                            dishesMap.set(dishId, { likes: dishesMap.get(dishId).likes + dishes[dishId].likes, dislikes: dishesMap.get(dishId).dislikes + dishes[dishId].dislikes });
+                        } else {
+                            dishesMap.set(dishId, { likes: dishes[dishId].likes, dislikes: dishes[dishId].dislikes });
+                        }
+                    });
+                }
+
+                // Restaurant
+                if (doc.data().restaurant) {
+                    const { restaurant } = doc.data();
+                    totalRating = ((restaurant.rating * restaurant.totalRatingEntries) + (totalRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
+                    toalRatingEntries += restaurant.totalRatingEntries;
+                    totalRatingEntriesArray[labels.indexOf(doc.id)] = restaurant.totalRatingEntries;
+                    totalRatingArray[labels.indexOf(doc.id)] = restaurant.rating;
+                    messages.push(...restaurant.messages.reverse());
+                }
             });
         })
         .catch(() => {
@@ -172,6 +207,10 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     tableOrdersPriceMap.forEach((value, id) => {
         tableOrdersPriceValues.push(value);
         tableOrdersPriceIds.push(id);
+    });
+    dishesMap.forEach((value, id) => {
+        dishesLikes.push(value);
+        dishesIds.push(id);
     });
 
     // Users
@@ -243,8 +282,17 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
             dishesOrdersPriceLabels.push('Unavaialable');
         }
     }));
+    await Promise.all(dishesIds.map(async (dishId) => {
+        const dishDoc = await fetchDishFirestoreAPI(restaurantId, dishId);
+        if (dishDoc && dishDoc.data() && dishDoc.data().name) {
+            dishesLabels.push(dishDoc.data());
+        } else {
+            dishesLabels.push({ name: 'Unavaialable', reference: null });
+        }
+    }));
+
     setState({
-        type: 'setQRCodeScannedTable',
+        type: 'setAnalytics',
         labels,
         totalUsers,
         totalScans,
@@ -267,5 +315,14 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
         tableOrdersTotalValues,
         tableOrdersPriceLabels,
         tableOrdersPriceValues,
+
+        dishesLabels,
+        dishesLikes,
+
+        totalRating,
+        toalRatingEntries,
+        totalRatingEntriesArray,
+        totalRatingArray,
+        messages,
     });
 };

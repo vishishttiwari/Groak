@@ -18,9 +18,11 @@ import Computer3 from '../../assets/images/homepage/computer_3_1.png';
 import Computer4 from '../../assets/images/homepage/computer_4_1.png';
 import { analytics } from '../../firebase/FirebaseLibrary';
 import { groakTesting } from '../../catalog/Others';
+import AfterRestaurantPopUp from './AfterRestaurantPopUp';
 
 const initialState = {
     videoPopUp: false,
+    afterRestaurantPopUp: true,
 };
 
 function reducer(state, action) {
@@ -29,6 +31,10 @@ function reducer(state, action) {
             return { ...state, videoPopUp: true };
         case 'hideVideo':
             return { ...state, videoPopUp: false };
+        case 'showAfterRestaurantPopUp':
+            return { ...state, afterRestaurantPopUp: true };
+        case 'hideAfterRestaurantPopUp':
+            return { ...state, afterRestaurantPopUp: false };
         default:
             return { ...state };
     }
@@ -98,6 +104,16 @@ const HomePage = (props) => {
                     </iframe>
                 </div>
             </div>
+            {globalState.scannedCustomer ? (
+                <AfterRestaurantPopUp
+                    restaurantId={globalState.restaurantIdCustomer}
+                    restaurantName={globalState.restaurantCustomer.name}
+                    orderingAllowed={globalState.orderAllowedCustomer}
+                    afterRestaurantPopUp={state.afterRestaurantPopUp}
+                    setState={setState}
+                />
+            ) : null}
+
             <div className="firstsection">
                 <p ref={top}> </p>
                 <Fade left>

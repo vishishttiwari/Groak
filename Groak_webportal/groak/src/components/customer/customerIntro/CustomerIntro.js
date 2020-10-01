@@ -68,9 +68,9 @@ const CustomerIntro = (props) => {
         }
         if (groakTesting) {
             analytics.logEvent('code_scanned_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
-            incrememntCodeScanned();
         } else {
             analytics.logEvent('code_scanned_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, qrCodeId: match.params.qrcodeid });
+            incrememntCodeScanned();
         }
 
         async function fetchCategoriesAndRestaurant() {

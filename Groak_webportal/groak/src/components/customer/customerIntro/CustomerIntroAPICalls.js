@@ -75,17 +75,17 @@ export const fetchOrderAPI = async (restaurant, restaurantId, orderId, setState,
                     type: 'fetchOrder',
                     order: { ...querySnapshot.data(), dishes: updatedDishes, comments: updatedComments },
                 });
-                setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: true });
+                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: true });
                 await updateOrderAPI(restaurantId, orderId, TableStatus.seated);
             } else {
                 setState({ type: 'fetchOrder', order: {} });
-                setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
             }
         };
         orderSnapshot = await fetchOrderFirestoreAPI(restaurantId, orderId, getOrder);
     } catch (error) {
         setState({ type: 'fetchOrder', order: {} });
-        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
     }
 };
 
@@ -154,14 +154,14 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                 } else {
                     setState({ type: 'fetchMenuItems', categoryNames, menuItems, restaurant });
                     if (tableId === frontDoorQRMenuPageId) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
                     } else if (tableId === viewOnlyQRMenuPageId) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
                     } else if (!restaurant
                         || !restaurant.allowOrdering
                         || !restaurant.allowOrdering.restaurant
                         || !restaurant.allowOrdering.groak) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
                     } else {
                         await fetchOrderAPI(restaurant, restaurantId, tableId, setState, setGlobalState);
                     }

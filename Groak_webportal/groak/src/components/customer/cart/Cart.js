@@ -100,9 +100,9 @@ const Cart = (props) => {
                             setGlobalState({ type: 'setTabValueCustomer', tabValue: 2 });
                             if (groakTesting) {
                                 analytics.logEvent('order_placed_web_testing', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: getTotalQuantityFromCart(cart), price: calculatePriceFromDishes(cart) });
-                                await orderPlacedWebFirestoreAPI(match.params.restaurantid, match.params.tableid, cart, calculatePriceFromDishes(cart));
                             } else {
                                 analytics.logEvent('order_placed_web', { restaurantId: match.params.restaurantid, tableId: match.params.tableid, items: getTotalQuantityFromCart(cart), price: calculatePriceFromDishes(cart) });
+                                await orderPlacedWebFirestoreAPI(match.params.restaurantid, match.params.tableid, cart, calculatePriceFromDishes(cart));
                             }
                         } else {
                             enqueueSnackbar(NotAtRestaurant, { variant: 'error' });

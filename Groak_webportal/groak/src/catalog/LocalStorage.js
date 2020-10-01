@@ -161,6 +161,49 @@ export const saveAndCheckNewUser = (restaurantId) => {
 };
 
 /**
+ * This function is used for saving liked images
+ *
+ * @param {*} restaurantId
+ * @param {*} dishId
+ * @param {*} like
+ */
+export const saveLikedDishes = (restaurantId, dishId, like) => {
+    let items = JSON.parse(localStorage.getItem(`groak-${restaurantId}-likes`));
+    if (!items) {
+        items = [];
+    }
+    const item = {};
+    item.dishId = dishId;
+    item.like = like;
+    items.push(item);
+    localStorage.setItem(`groak-${restaurantId}-likes`, JSON.stringify(items));
+    localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
+};
+
+/**
+ * This function is used to see if a feed back for a dish Id has already been provided
+ *
+ * @param {*} restaurantId
+ * @param {*} dishId
+ */
+export const fetchLikedImages = (restaurantId, dishId) => {
+    let items = JSON.parse(localStorage.getItem(`groak-${restaurantId}-likes`));
+    if (!items) {
+        items = [];
+    }
+    let finalItem = {};
+    items.forEach((item) => {
+        if (item.dishId === dishId) {
+            finalItem = item;
+        }
+    });
+    if (finalItem.dishId) {
+        return finalItem;
+    }
+    return null;
+};
+
+/**
  * Delete all orders if the last update was more than 6 hours ago
  *
  * @param {*} restaurantId

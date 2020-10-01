@@ -12,7 +12,7 @@ const UsersAnalytics = (props) => {
     return (
         <>
             <h2 style={{ marginTop: '0px' }}>{`Total Users: ${totalUsers}`}</h2>
-            <p>Total dishes ordered</p>
+            <p>Total users that scanned the QR Code.</p>
             <Line
                 data={totalUsersData}
                 redraw
@@ -37,7 +37,7 @@ const UsersAnalytics = (props) => {
             />
             <div className="horizontal-line" />
             <h2>{`Total QR Code Scanned: ${totalScans}`}</h2>
-            <p>This is the total number of times a QR code from your restaurant was scanned. Note: One user normally scans more than one QR Codes</p>
+            <p>This is the total number of times a QR code from your restaurant was scanned. Note: One user normally scans more than one QR Codes.</p>
             <Line
                 data={totalScansData}
                 redraw
@@ -61,18 +61,36 @@ const UsersAnalytics = (props) => {
                     maintainAspectRatio: true }}
             />
             {qrCodesData.labels && qrCodesData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>QR Code wise scans</h2>
-                    <Doughnut data={qrCodesData} />
-                </>
+                <div className="horizontal-line" />
+            ) : null}
+            {qrCodesData.labels && qrCodesData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total scans for every QR Code type</h2>
+                    <Doughnut
+                        width={300}
+                        height={400}
+                        data={qrCodesData}
+                        options={{
+                            responsive: false,
+                            maintainAspectRatio: false }}
+                    />
+                </div>
             ) : null}
             {tableCodesData.labels && tableCodesData.labels.length > 0 ? (
-                <>
-                    <div className="horizontal-line" />
-                    <h2>Scans per Table</h2>
-                    <Doughnut data={tableCodesData} />
-                </>
+                <div className="horizontal-line" />
+            ) : null}
+            {tableCodesData.labels && tableCodesData.labels.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 'auto' }}>
+                    <h2>Total scans for every Menu/Table</h2>
+                    <Doughnut
+                        width={300}
+                        height={400}
+                        data={tableCodesData}
+                        options={{
+                            responsive: false,
+                            maintainAspectRatio: false }}
+                    />
+                </div>
             ) : null}
         </>
 

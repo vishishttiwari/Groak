@@ -145,7 +145,7 @@
 
 .receipt {
     .content {
-        margin-top: 110px;
+        padding-top: 95px;
 
         .receipt-restaurant-cell {
             width: 100%;
@@ -286,6 +286,46 @@
                     text-align: right;
                     margin-left: auto;
                     margin-right: $margin;
+                }
+            }
+
+            .order-dish-cell-content-2 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin: 0 $margin;
+                margin-top: 5px;
+                font-size: 15px;
+                font-weight: 300;
+                color: gray;
+
+                .order-dish-cell-like-symbols {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .order-dish-cell-like-symbol-clicked {
+                        margin: 0 $margin;
+                        color: $primaryColor;
+                    }
+
+                    .order-dish-cell-like-symbol {
+                        margin: 0 $margin;
+                    }
+                }
+
+                .order-dish-cell-like-symbol-clicked-done {
+                    margin: 0 $margin;
+                    color: $primaryColor;
+                    animation: bounce 1s;
+                    
+                    @keyframes bounce {
+                        0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
+                        40% {transform: translateY(-30px);} 
+                        60% {transform: translateY(-15px);} 
+                    } 
                 }
             }
         }

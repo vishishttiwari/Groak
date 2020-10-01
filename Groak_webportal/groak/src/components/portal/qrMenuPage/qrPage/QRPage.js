@@ -32,7 +32,7 @@ const QRPage = (props) => {
     let pageSize = 'A4';
     if (qrStylePage.pageSize === '5x7') {
         pageSize = [360, 480];
-    } if (qrStylePage.pageSize === 'HALF-LETTER') {
+    } else if (qrStylePage.pageSize === 'HALF-LETTER') {
         pageSize = [168, 272];
     } else {
         pageSize = qrStylePage.pageSize;

@@ -134,7 +134,7 @@
   font-size: 24px;
   font-weight: 100;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 .analytics .analytics-content p {
@@ -144,5 +144,66 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
   letter-spacing: 0.15px;
+}
+
+@media (max-width: 700px) {
+  .analytics .analytics-content p {
+    font-size: 12px;
+  }
+}
+
+.analytics .analytics-content .dishes-analytics-heading {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.analytics .analytics-content .dishes-analytics-row :hover {
+  cursor: pointer;
+}
+
+.analytics .analytics-content .dishes-analytics-row .dishes-analytics-text {
+  font-size: 17px;
+  font-weight: 200;
+}
+
+.analytics .analytics-content .dishes-analytics-thumbs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.analytics .analytics-content .dishes-analytics-thumbs .dishes-analytics-thumb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: silver;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.analytics .analytics-content .dishes-analytics-linear-progress {
+  height: 10px;
+  color: #D94859;
+  border-radius: 5px;
 }
 /*# sourceMappingURL=Analytics.css.map */

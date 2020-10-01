@@ -93,7 +93,7 @@
             font-size: 24px;
             font-weight: 100;
             margin-top: 0px;
-            margin-bottom: 0px;
+            margin-bottom: 5px;
         }
 
         p {
@@ -103,6 +103,51 @@
             font-family: 'Roboto', sans-serif;
             font-weight: 200;
             letter-spacing: 0.15px;
+
+            @media (max-width: $phoneMaxWidth) {
+                font-size: 12px;
+            }
+        }
+
+        
+
+        .dishes-analytics-heading {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .dishes-analytics-row {
+            :hover {
+                cursor: pointer;
+            }
+
+            .dishes-analytics-text {
+                font-size: 17px;
+                font-weight: 200;
+            }
+        }
+
+        .dishes-analytics-thumbs {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .dishes-analytics-thumb {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                color: silver;
+                font-size: 15px;
+                font-weight: 300;
+            }
+        }
+
+        .dishes-analytics-linear-progress {
+            height: 10px;
+            color: $primaryColor;
+            border-radius: 5px;
         }
     }
 }

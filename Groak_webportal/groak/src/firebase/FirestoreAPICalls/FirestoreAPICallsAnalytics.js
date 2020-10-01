@@ -62,7 +62,8 @@ export const incrementUserWebFirestoreAPI = (restaurantId) => {
                 dishesTotal: { },
                 dishesPrice: { },
             };
-            return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, timestamp: getCurrentDateTime() });
+            const newDishes = {};
+            return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, timestamp: getCurrentDateTime() });
         });
     }
     return null;
@@ -102,7 +103,123 @@ export const incrementCodeScannedWebFirestoreAPI = (restaurantId, tableId, qrCod
             dishesTotal: { },
             dishesPrice: { },
         };
-        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, timestamp: getCurrentDateTime() });
+        const newDishes = {};
+        const newRestaurant = {};
+        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
+    });
+};
+
+export const restaurantFeedbackSubmitted = (restaurantId, rating, message) => {
+    const analyticsReference = createAnalyticsReference(restaurantId);
+    return db.runTransaction(async (transaction) => {
+        const analyticsDoc = await transaction.get(analyticsReference);
+
+        // If the document for code scanning exists
+        if (analyticsDoc.exists) {
+            const { restaurant } = analyticsDoc.data();
+            if (restaurant) {
+                let newRating = restaurant.rating ? restaurant.rating : 0;
+                let newTotalRatingEntries = restaurant.totalRatingEntries ? restaurant.totalRatingEntries : 0;
+                newRating = ((newRating * newTotalRatingEntries) + rating) / (newTotalRatingEntries + 1);
+                newTotalRatingEntries += 1;
+                if (message && message.length > 0) {
+                    const newMessages = restaurant.messages ? restaurant.messages : [];
+                    newMessages.push({ message, created: getCurrentDateTime() });
+                    const newRestaurant = { ...restaurant, rating: newRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
+                    return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant });
+                }
+                const newRestaurant = { ...restaurant, rating: newRating, totalRatingEntries: newTotalRatingEntries };
+                return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant });
+            }
+            let newRating = 0;
+            let newTotalRatingEntries = 0;
+            newRating = ((newRating * newTotalRatingEntries) + rating) / (newTotalRatingEntries + 1);
+            newTotalRatingEntries += 1;
+            if (message && message.length > 0) {
+                const newMessages = [];
+                newMessages.push({ message, created: getCurrentDateTime() });
+                const newRestaurant = { rating: newRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
+                return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant });
+            }
+            const newRestaurant = { rating: newRating, totalRatingEntries: newTotalRatingEntries };
+            return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant });
+        }
+        const newQRCodeScannedWeb = {
+            total: 1,
+            tables: { },
+            qrCodes: { } };
+        const newUserWeb = { total: 0 };
+        const newOrderPlacedWeb = {
+            total: 0,
+            price: 0,
+            tablesTotal: { },
+            tablesPrice: { },
+            dishesTotal: { },
+            dishesPrice: { },
+        };
+        const newDishes = {};
+        let newRestaurant = {};
+        if (message && message.length > 0) {
+            newRestaurant = { rating, totalRatingEntries: 1, messages: [{ message, created: getCurrentDateTime() }] };
+        } else {
+            newRestaurant = { rating, totalRatingEntries: 1, messages: [] };
+        }
+        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
+    });
+};
+
+export const dishLikedFirestoreAPI = (restaurantId, dishId, like) => {
+    const analyticsReference = createAnalyticsReference(restaurantId);
+    return db.runTransaction(async (transaction) => {
+        const analyticsDoc = await transaction.get(analyticsReference);
+
+        // If the document for code scanning exists
+        if (analyticsDoc.exists) {
+            const { dishes } = analyticsDoc.data();
+            if (dishes) {
+                if (dishes[dishId]) {
+                    if (like) {
+                        const newDishes = { ...dishes, [dishId]: { ...dishes[dishId], likes: dishes[dishId].likes ? dishes[dishId].likes + 1 : 1 } };
+                        return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+                    }
+                    const newDishes = { ...dishes, [dishId]: { ...dishes[dishId], dislikes: dishes[dishId].dislikes ? dishes[dishId].dislikes + 1 : 1 } };
+                    return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+                }
+                if (like) {
+                    const newDishes = { ...dishes, [dishId]: { likes: 1, dislikes: 0 } };
+                    return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+                }
+                const newDishes = { ...dishes, [dishId]: { likes: 0, dislikes: 1 } };
+                return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+            }
+            if (like) {
+                const newDishes = { [dishId]: { likes: 1, dislikes: 0 } };
+                return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+            }
+            const newDishes = { [dishId]: { likes: 0, dislikes: 1 } };
+            return transaction.update(createAnalyticsReference(restaurantId), { dishes: newDishes });
+        }
+        const newQRCodeScannedWeb = {
+            total: 1,
+            tables: { },
+            qrCodes: { } };
+        const newUserWeb = { total: 0 };
+        const newOrderPlacedWeb = {
+            total: 0,
+            price: 0,
+            tablesTotal: { },
+            tablesPrice: { },
+            dishesTotal: { },
+            dishesPrice: { },
+        };
+        const newDishes = {};
+        if (like) {
+            newDishes[dishId] = { likes: 1, dislikes: 0 };
+        } else {
+            newDishes[dishId] = { likes: 0, dislikes: 1 };
+        }
+        const newRestaurant = {};
+        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
     });
 };
 
@@ -169,6 +286,8 @@ export const orderPlacedWebFirestoreAPI = (restaurantId, tableId, cart, price) =
                 newOrderPlacedWeb.dishesPrice[item.dishId] = item.price;
             }
         });
-        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, timestamp: getCurrentDateTime() });
+        const newDishes = {};
+        const newRestaurant = {};
+        return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
     });
 };

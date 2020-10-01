@@ -80,6 +80,27 @@ export const getDateInStringFormat = (myDate) => {
 };
 
 /**
+ * This function gets the current date and time in string in beautiful format
+ */
+export const getDateTimeInStringFormat = (date) => {
+    const myDate = date.toDate();
+    const month = [];
+    month[0] = 'Jan';
+    month[1] = 'Feb';
+    month[2] = 'Mar';
+    month[3] = 'Apr';
+    month[4] = 'May';
+    month[5] = 'Jun';
+    month[6] = 'Jul';
+    month[7] = 'Aug';
+    month[8] = 'Sep';
+    month[9] = 'Oct';
+    month[10] = 'Nov';
+    month[11] = 'Dec';
+    return `${myDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} ${month[myDate.getMonth()]} ${myDate.getDate()}, ${myDate.getFullYear()}`;
+};
+
+/**
  * This function gets the current day
  */
 export const getDay = () => {
