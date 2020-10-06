@@ -19,4 +19,24 @@ $cardFullWidth: ($cardWidth + $cardMargin);
             }
         }
     }
+
+    .dish-items-list-view {
+        .dish-item-list-view-row {
+            :hover {
+                cursor: pointer;
+            }
+        }
+
+        .dish-item-list-view-row-image {
+            width: 108px;
+            background-color: $secondaryColor;
+            height: 72px;
+            border-radius: 20px;
+        }
+
+        .dish-items-list-view-heading {
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
 }

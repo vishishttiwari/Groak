@@ -3,9 +3,9 @@
  */
 
 /**
-  * 20 mins
+  * 10 mins
   */
-export const timeoutValueForCustomer = 20 * 1000 * 60;
+export const timeoutValueForCustomer = 10 * 1000 * 60;
 
 /**
  * This function gets the current date and time

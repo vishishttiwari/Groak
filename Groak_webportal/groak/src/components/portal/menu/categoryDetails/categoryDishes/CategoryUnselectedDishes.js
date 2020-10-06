@@ -5,7 +5,15 @@ import React, { useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SearchBar from 'material-ui-search-bar';
-import Dish from './Dish';
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import ListDish from './ListDish';
 
 const initialState = {
     searchField: '',
@@ -59,18 +67,37 @@ const CategoryUnselectedDishes = (props) => {
                     setState({ type: 'setSearchField', searchField: newValue });
                 }}
             />
-            <div className="dishes">
-                {allDishes.map((dish) => {
-                    return (isDishVisible(dish) ? (
-                        <Dish
-                            key={dish.id}
-                            dishItem={dish}
-                            alreadyChecked={false}
-                            checkDishHandler={checkDishHandler}
-                            clickHandler={() => { dishDetailHandler(dish.id); }}
-                        />
-                    ) : null);
-                })}
+            <div className="dishes-list-view">
+                <Paper>
+                    <TableContainer>
+                        <Table size="small" aria-label="dishes table">
+                            <TableHead style={{ overflowX: 'scroll' }}>
+                                <TableRow>
+                                    <TableCell width="200px" className="dish-items-list-view-heading">Name</TableCell>
+                                    <TableCell width="150px" className="dish-items-list-view-heading" align="center">Price</TableCell>
+                                    <TableCell width="150px" className="dish-items-list-view-heading" align="center">Photo</TableCell>
+                                    <TableCell width="500px" className="dish-items-list-view-heading" align="center">Description</TableCell>
+                                    <TableCell width="50px" className="dish-items-list-view-heading" align="center">Select</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {allDishes.map((dish) => {
+                                    return (isDishVisible(dish)
+                                        ? (
+                                            <ListDish
+                                                key={dish.id}
+                                                dishItem={dish}
+                                                dishDetailHandler={() => { return dishDetailHandler(dish.id); }}
+                                                checked={false}
+                                                addToCheckedDish={checkDishHandler}
+                                            />
+                                        ) : null
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             </div>
         </div>
     );

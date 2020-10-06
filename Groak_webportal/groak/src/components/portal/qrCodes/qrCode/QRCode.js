@@ -30,27 +30,6 @@ const QRCode = (props) => {
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
 
-    // function getSelectedCategoryPaths() {
-    //     return qrCodeItem.categories.map((category) => {
-    //         return (category.path);
-    //     });
-    // }
-
-    // function getAllCategoryPaths() {
-    //     return categories.map((category) => {
-    //         return (category.reference.path);
-    //     });
-    // }
-
-    // function updateQRCodeCategoriesHandler(newCategories) {
-    //     updateQRCodeLocallyHandler({ ...qrCodeItem,
-    //         categories:
-    //         newCategories.map((category) => {
-    //             return createCategoryReferenceFromPath(category);
-    //         }),
-    //     });
-    // }
-
     return (
         <Card className="card card-white" onClick={clickHandler}>
             <CardHeader

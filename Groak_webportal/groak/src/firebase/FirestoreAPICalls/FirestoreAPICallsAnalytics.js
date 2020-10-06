@@ -63,7 +63,8 @@ export const incrementUserWebFirestoreAPI = (restaurantId) => {
                 dishesPrice: { },
             };
             const newDishes = {};
-            return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, timestamp: getCurrentDateTime() });
+            const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
+            return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
         });
     }
     return null;
@@ -104,7 +105,7 @@ export const incrementCodeScannedWebFirestoreAPI = (restaurantId, tableId, qrCod
             dishesPrice: { },
         };
         const newDishes = {};
-        const newRestaurant = {};
+        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
     });
 };
@@ -218,7 +219,7 @@ export const dishLikedFirestoreAPI = (restaurantId, dishId, like) => {
         } else {
             newDishes[dishId] = { likes: 0, dislikes: 1 };
         }
-        const newRestaurant = {};
+        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
     });
 };
@@ -287,7 +288,7 @@ export const orderPlacedWebFirestoreAPI = (restaurantId, tableId, cart, price) =
             }
         });
         const newDishes = {};
-        const newRestaurant = {};
+        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), { qrCodeScannedWeb: newQRCodeScannedWeb, userWeb: newUserWeb, orderPlacedWeb: newOrderPlacedWeb, dishes: newDishes, restaurant: newRestaurant, timestamp: getCurrentDateTime() });
     });
 };

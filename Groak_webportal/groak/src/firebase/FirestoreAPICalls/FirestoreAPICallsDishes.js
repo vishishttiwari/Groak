@@ -33,6 +33,10 @@ export const fetchDishesFirestoreAPI = (restaurantId) => {
     });
 };
 
+export const fetchDishesSnapshotFirestoreAPI = (restaurantId, getDishesFunction) => {
+    return db.collection(`restaurants/${restaurantId}/dishes`).onSnapshot(getDishesFunction);
+};
+
 export const fetchDishesFromArrayFirestoreAPI = (dishReferences) => {
     return db.runTransaction(async (transaction) => {
         return Promise.all(dishReferences.map(async (dish) => {
@@ -49,8 +53,8 @@ export const fetchDishFirestoreAPI = (restaurantId, dishId) => {
  * This function does much more than adding a dish. It adds the dish document
  * in the dishes colletions and also adds it to the dishes array in restaurant document
  *
- * @param {*} restaurantId restaurant for which dish needs to be deleted
- * @param {*} dishId dish id that needs to be deleted
+ * @param {*} restaurantId restaurant for which dish needs to be added
+ * @param {*} dishId dish id that needs to be added
  * @param {*} data dish data
  */
 export const addDishFirestoreAPI = (restaurantId, dishId, data) => {
@@ -61,10 +65,46 @@ export const addDishFirestoreAPI = (restaurantId, dishId, data) => {
         if (restaurantDoc.exists) {
             const { dishes } = restaurantDoc.data();
             if (dishes) {
-                dishes.push(dishRef);
+                dishes.unshift(dishRef);
                 transaction.update(restaurantReference, { dishes });
             }
             transaction.set(createDishReference(restaurantId, dishId), data);
+        }
+    });
+};
+
+/**
+ * This function does much more than adding a dish. It adds the dish document
+ * in the dishes colletions and also adds it to the dishes array in restaurant document
+ *
+ * @param {*} restaurantId restaurant for which dish needs to be added
+ * @param {*} dishId dish ids that needs to be added
+ * @param {*} data dish datas
+ */
+export const addDishesFirestoreAPI = (restaurantId, dishIds, dishDatas) => {
+    const restaurantReference = createRestaurantReference(restaurantId);
+    const dishRefs = [];
+    const dishRefsPaths = [];
+
+    dishIds.forEach((dishId) => {
+        dishRefs.push(createDishReference(restaurantId, dishId));
+        dishRefsPaths.push(createDishReference(restaurantId, dishId).path);
+    });
+
+    return db.runTransaction(async (transaction) => {
+        const restaurantDoc = await transaction.get(restaurantReference);
+        if (restaurantDoc.exists) {
+            const { dishes } = restaurantDoc.data();
+            if (dishes) {
+                dishRefs.forEach((dishRef) => {
+                    dishes.unshift(dishRef);
+                });
+            }
+            transaction.update(restaurantReference, { dishes });
+
+            dishRefs.forEach((dishRef, index) => {
+                transaction.set(dishRef, dishDatas[index]);
+            });
         }
     });
 };
@@ -125,6 +165,121 @@ export const deleteDishFirestoreAPI = (restaurantId, dishId, categories) => {
             }
 
             transaction.delete(dishRef);
+        }
+    });
+};
+
+export const updateDishesFromArrayFirestoreAPI = (restaurantId, dishIds, category, data) => {
+    const dishRefs = [];
+    const dishRefsPaths = [];
+    const dishDocsData = new Map();
+    dishIds.forEach((dishId) => {
+        dishRefs.push(createDishReference(restaurantId, dishId));
+        dishRefsPaths.push(createDishReference(restaurantId, dishId).path);
+    });
+
+    return db.runTransaction(async (transaction) => {
+        await Promise.all(dishRefs.map(async (dishRef) => {
+            const dishDoc = await transaction.get(dishRef);
+            dishDocsData.set(dishRef.path, dishDoc.data());
+        }));
+
+        if (category === 'info') {
+            dishRefs.forEach((dishRef) => {
+                let newShortInfo = dishDocsData.get(dishRef.path).shortInfo;
+                let newData = data;
+                if (newShortInfo.length === 0) {
+                    while (newData.indexOf('\n') === 0) {
+                        newData = newData.substring(1, newData.length);
+                    }
+                }
+                newShortInfo += newData;
+                transaction.update(dishRef, { shortInfo: newShortInfo });
+            });
+        } else if (category === 'description') {
+            dishRefs.forEach((dishRef) => {
+                let newDescription = dishDocsData.get(dishRef.path).description;
+                let newData = data;
+                if (newDescription.length === 0) {
+                    while (newData.indexOf('\n') === 0) {
+                        newData = newData.substring(1, newData.length);
+                    }
+                }
+                newDescription += newData;
+                transaction.update(dishRef, { description: newDescription });
+            });
+        } else if (category === 'price') {
+            dishRefs.forEach((dishRef) => {
+                let newPrice = dishDocsData.get(dishRef.path).price;
+                newPrice = parseFloat(data);
+                transaction.update(dishRef, { price: newPrice });
+            });
+        } else if (category === 'restrictions') {
+            dishRefs.forEach((dishRef) => {
+                let newRestrictions = dishDocsData.get(dishRef.path).restrictions;
+                newRestrictions = data;
+                transaction.update(dishRef, { restrictions: newRestrictions });
+            });
+        } else if (category === 'ingredients') {
+            dishRefs.forEach((dishRef) => {
+                let newIngredients = dishDocsData.get(dishRef.path).ingredients;
+                newIngredients = newIngredients.concat(data);
+                transaction.update(dishRef, { ingredients: newIngredients });
+            });
+        } else if (category === 'extras') {
+            dishRefs.forEach((dishRef) => {
+                let newExtras = dishDocsData.get(dishRef.path).extras;
+                newExtras = newExtras.concat(data);
+                transaction.update(dishRef, { extras: newExtras });
+            });
+        }
+    });
+};
+
+/**
+ * Function called for deleting bulk dishIds in array
+ *
+ * @param {*} restaurantId
+ * @param {*} dishIds
+ * @param {*} categories
+ */
+export const deleteDishesFromArrayFirestoreAPI = (restaurantId, dishIds, categories) => {
+    const restaurantReference = createRestaurantReference(restaurantId);
+    const dishRefs = [];
+    const dishRefsPaths = [];
+    dishIds.forEach((dishId) => {
+        dishRefs.push(createDishReference(restaurantId, dishId));
+        dishRefsPaths.push(createDishReference(restaurantId, dishId).path);
+    });
+    return db.runTransaction(async (transaction) => {
+        const restaurantDoc = await transaction.get(restaurantReference);
+        if (restaurantDoc.exists) {
+            const { dishes } = restaurantDoc.data();
+            categories.forEach((doc) => {
+                const category = doc.data();
+                if (category.dishes) {
+                    const dishes1 = category.dishes;
+                    if (dishes1) {
+                        const updatedDishes = dishes1.filter((dish) => {
+                            if (dishRefsPaths.includes(dish.path)) return false;
+                            return true;
+                        });
+                        transaction.update(category.reference, { dishes: updatedDishes });
+                    }
+                }
+            });
+
+            if (dishes) {
+                const updatedDishes = dishes.filter((dish) => {
+                    if (dishRefsPaths.includes(dish.path)) return false;
+                    return true;
+                });
+                transaction.update(restaurantReference, { dishes: updatedDishes });
+            }
+
+            dishRefs.forEach((dish) => {
+                transaction.delete(dish);
+            });
         }
     });
 };

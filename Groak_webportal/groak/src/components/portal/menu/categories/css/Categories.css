@@ -328,4 +328,20 @@
     width: 16000px;
   }
 }
+
+.categories .category-items-list-view .category-item-list-view-row :hover {
+  cursor: pointer;
+}
+
+.categories .category-items-list-view .category-item-list-view-row-image {
+  width: 108px;
+  background-color: #F0F0F0;
+  height: 72px;
+  border-radius: 20px;
+}
+
+.categories .category-items-list-view .category-items-list-view-heading {
+  font-size: 20px;
+  font-weight: 500;
+}
 /*# sourceMappingURL=Categories.css.map */

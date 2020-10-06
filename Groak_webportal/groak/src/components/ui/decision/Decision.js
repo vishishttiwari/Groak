@@ -4,7 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, DialogActions, Button, IconButton } from '@material-ui/core';
+import { CloseRounded } from '@material-ui/icons';
 
 const Decision = (props) => {
     const {
@@ -13,8 +14,17 @@ const Decision = (props) => {
 
     return (
         <div>
-            <Dialog onClose={() => { response(false); }} open={open}>
-                <DialogTitle>{title}</DialogTitle>
+            <Dialog className="pop-up-after-restaurant" onClose={() => { response(false); }} open={open}>
+                <div className="pop-up-after-restaurant-title">
+                    <p>{title}</p>
+                    <IconButton onClick={(
+                        () => {
+                            response(false);
+                        })}
+                    >
+                        <CloseRounded className="pop-up-after-restaurant-title-close" />
+                    </IconButton>
+                </div>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {content}

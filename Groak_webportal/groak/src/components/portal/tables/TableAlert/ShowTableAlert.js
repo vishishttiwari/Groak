@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
-import { DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField, IconButton } from '@material-ui/core';
+import { CloseRounded } from '@material-ui/icons';
 import { context } from '../../../../globalState/globalState';
 
 import { fetchTableAPI } from '../TablesAPICalls';
@@ -65,10 +66,13 @@ const ShowTableAlert = (props) => {
     }
 
     return (
-        <Dialog open={open} onClose={closeHandler}>
-            <DialogTitle>
-                {(state.initialName) || 'Loading'}
-            </DialogTitle>
+        <Dialog className="pop-up-after-restaurant" open={open} onClose={closeHandler}>
+            <div className="pop-up-after-restaurant-title">
+                <p>{(state.initialName) || 'Loading'}</p>
+                <IconButton onClick={closeHandler}>
+                    <CloseRounded className="pop-up-after-restaurant-title-close" />
+                </IconButton>
+            </div>
             <DialogContent>
                 <DialogContentText>
                     {ShowTableMessage}

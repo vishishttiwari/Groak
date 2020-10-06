@@ -373,6 +373,38 @@
   }
 }
 
+.category-details form .category-dishes .dishes-list-view {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  overflow-x: scroll;
+}
+
+.category-details form .category-dishes .dishes-list-view .dish-item-list-view-row :hover {
+  cursor: pointer;
+}
+
+.category-details form .category-dishes .dishes-list-view .dish-item-list-view-row-image {
+  width: 108px;
+  background-color: #F0F0F0;
+  height: 72px;
+  border-radius: 20px;
+}
+
+.category-details form .category-dishes .dishes-list-view .dish-items-list-view-heading {
+  font-size: 20px;
+  font-weight: 500;
+}
+
 .category-details form .category-details-main-buttons {
   margin-top: 50px;
   display: -webkit-box;

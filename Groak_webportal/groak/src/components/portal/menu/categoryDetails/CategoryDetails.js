@@ -205,6 +205,16 @@ const CategoryDetails = (props) => {
     };
 
     /**
+     * This function is called when mass mutations are made in the dishes of categories like change in price or add short info
+     */
+    const refresh = async () => {
+        setState({ type: 'setLoadingSpinner', loadingSpinner: true });
+        setTimeout(async () => {
+            await Promise.all([await fetchCategoryAPI(globalState.restaurantIdPortal, match.params.categoryid, setState, enqueueSnackbar), await fetchDishesAPI(globalState.restaurantIdPortal, setState, enqueueSnackbar)]);
+        }, 3000);
+    };
+
+    /**
      * This function is called to go back when the cancel button is pressed
      */
     const goBackHandler = () => {
@@ -219,7 +229,7 @@ const CategoryDetails = (props) => {
                 <form>
                     <CategoryTitle checkFields={state.checkFields} name={state.name} setState={setState} />
                     <CategoryDays days={state.days} startTime={state.startTime} endTime={state.endTime} setState={setState} />
-                    <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} />
+                    <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} refresh={refresh} />
                     <CategoryUnselectedDishes selectedDishesPath={state.selectedDishesPath} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
                     <CategoryDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newCategory={state.newCategory} deleteHandler={deleteHandler} />
                 </form>

@@ -4,7 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@material-ui/core';
+import { CloseRounded } from '@material-ui/icons';
 import Venmo from '../../../assets/others/venmo_logo_white.png';
 import ReceiptPriceCell from './ReceiptPriceCell';
 // import { VenmoUsageMessage } from '../../../catalog/Comments';
@@ -26,11 +27,16 @@ const PaymentOptions = (props) => {
 
     return (
         <Dialog
-            className="popup"
+            className="popup pop-up-after-restaurant"
             open={paymentConfirmation}
             onClose={close}
         >
-            <p className="popup-title">Payment Options</p>
+            <div className="pop-up-after-restaurant-title">
+                <p>Payment Options</p>
+                <IconButton onClick={close}>
+                    <CloseRounded className="pop-up-after-restaurant-title-close" />
+                </IconButton>
+            </div>
             <DialogContent className="popup-content">
                 <ReceiptPriceCell tableReceipt="table" dishes={dishes} tip={tip} />
             </DialogContent>

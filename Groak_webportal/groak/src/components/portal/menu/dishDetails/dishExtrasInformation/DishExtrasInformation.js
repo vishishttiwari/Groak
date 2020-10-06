@@ -11,7 +11,7 @@ import DishExtrasMainInformation from './DishExtrasMainInformation';
 import DishExtrasOptionsInformation from './DishExtrasOptionsInformation';
 
 const DishExtrasInformation = (props) => {
-    const { extras, checkFields, setState } = props;
+    const { extras, showTitle, checkFields, setState } = props;
 
     /**
      * This function is used for adding extras
@@ -30,7 +30,7 @@ const DishExtrasInformation = (props) => {
 
     return (
         <div className="dish-extras-information">
-            <h2>Extras:</h2>
+            {showTitle ? <h2>Extras:</h2> : null}
             {extras.map((extra, index) => {
                 return (
                     <div className="extra-element" key={extra.id}>
@@ -51,6 +51,7 @@ const DishExtrasInformation = (props) => {
 };
 
 DishExtrasInformation.propTypes = {
+    showTitle: PropTypes.bool.isRequired,
     extras: PropTypes.array.isRequired,
     checkFields: PropTypes.bool.isRequired,
     setState: PropTypes.func.isRequired,

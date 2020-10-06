@@ -8,7 +8,7 @@ import { Select, OutlinedInput } from '@material-ui/core';
 import { DishVegetarian, DishVegan, DishGlutenFree, DishKosher, DishSeaFood } from '../../../../catalog/Comments';
 
 const DishRestrictionInformation = (props) => {
-    const { vegetarian, vegan, glutenFree, kosher, seaFood, setState } = props;
+    const { showTitle, vegetarian, vegan, glutenFree, kosher, seaFood, setState } = props;
 
     const options = ['Not Sure', 'Yes', 'No'];
 
@@ -47,7 +47,7 @@ const DishRestrictionInformation = (props) => {
 
     return (
         <div className="dish-restriction-information">
-            <h2>Other Info:</h2>
+            {showTitle ? <h2>Other Info:</h2> : null}
             {allergies.map((allergy) => {
                 return (
                     <React.Fragment key={allergy.key}>
@@ -71,6 +71,7 @@ const DishRestrictionInformation = (props) => {
 };
 
 DishRestrictionInformation.propTypes = {
+    showTitle: PropTypes.bool.isRequired,
     vegetarian: PropTypes.string.isRequired,
     vegan: PropTypes.string.isRequired,
     glutenFree: PropTypes.string.isRequired,

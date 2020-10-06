@@ -328,4 +328,20 @@
     width: 16000px;
   }
 }
+
+.dishes .dish-items-list-view .dish-item-list-view-row :hover {
+  cursor: pointer;
+}
+
+.dishes .dish-items-list-view .dish-item-list-view-row-image {
+  width: 108px;
+  background-color: #F0F0F0;
+  height: 72px;
+  border-radius: 20px;
+}
+
+.dishes .dish-items-list-view .dish-items-list-view-heading {
+  font-size: 20px;
+  font-weight: 500;
+}
 /*# sourceMappingURL=Dishes.css.map */

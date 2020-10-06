@@ -213,7 +213,7 @@ const DishDetails = (props) => {
         }
         setTimeout(() => {
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
-            history.replace('/dishes');
+            history.goBack();
         }, 3000);
     };
 
@@ -225,7 +225,7 @@ const DishDetails = (props) => {
             setState({ type: 'setLoadingSpinner', loadingSpinner: true });
             await deleteDishAPI(globalState.restaurantIdPortal, match.params.dishid, enqueueSnackbar);
             setState({ type: 'setLoadingSpinner', loadingSpinner: false });
-            history.replace('/dishes');
+            history.goBack();
         }
     };
 
@@ -245,9 +245,9 @@ const DishDetails = (props) => {
                     <DishImages image={state.image} name={state.name} setState={setState} />
                     <DishInformation checkFields={state.checkFields} name={state.name} price={state.price} shortInfo={state.shortInfo} description={state.description} setState={setState} />
                     <DishNutritionalInformation calories={state.calories} fats={state.fats} protein={state.protein} carbs={state.carbs} setState={setState} />
-                    <DishRestrictionInformation vegetarian={state.vegetarian} vegan={state.vegan} glutenFree={state.glutenFree} kosher={state.kosher} seaFood={state.seaFood} setState={setState} />
-                    <DishIngredientsInformation checkFields={state.checkFields} ingredients={state.ingredients} setState={setState} />
-                    <DishExtrasInformation checkFields={state.checkFields} extras={state.extras} setState={setState} />
+                    <DishRestrictionInformation showTitle vegetarian={state.vegetarian} vegan={state.vegan} glutenFree={state.glutenFree} kosher={state.kosher} seaFood={state.seaFood} setState={setState} />
+                    <DishIngredientsInformation showTitle checkFields={state.checkFields} ingredients={state.ingredients} setState={setState} />
+                    <DishExtrasInformation showTitle checkFields={state.checkFields} extras={state.extras} setState={setState} />
                     <DishDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newDish={state.newDish} deleteHandler={deleteHandler} />
                 </form>
             ) : null}

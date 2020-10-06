@@ -3,7 +3,8 @@
  */
 import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, IconButton } from '@material-ui/core';
+import { CloseRounded } from '@material-ui/icons';
 import { context } from '../../../globalState/globalState';
 
 import { VenmoMessage } from '../../../catalog/Comments';
@@ -39,12 +40,17 @@ const VenmoPayment = (props) => {
 
     return (
         <Dialog
-            className="popup"
+            className="popup pop-up-after-restaurant"
             open={venmoConfirmation}
             onClose={hideVenmo}
             scroll={scroll}
         >
-            <p className="popup-title">Ready for payment?</p>
+            <div className="pop-up-after-restaurant-title">
+                <p>Ready for payment?</p>
+                <IconButton onClick={hideVenmo}>
+                    <CloseRounded className="pop-up-after-restaurant-title-close" />
+                </IconButton>
+            </div>
             <DialogContent dividers={scroll === 'paper'} className="popup-content">
                 <div className="receipt-price-cell" style={{ marginTop: '20px', borderStyle: 'none' }}>
                     <div className="receipt-price-cell-content">

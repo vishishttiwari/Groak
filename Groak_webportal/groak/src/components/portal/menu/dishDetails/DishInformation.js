@@ -95,7 +95,7 @@ const DishInformation = (props) => {
             shrink: inputField.shrink.toString(),
             variant: 'outlined',
             InputLabelProps: textFieldLabelProps(classes),
-            InputProps: inputField.money ? ({ endAdornment: (<InputAdornment position="end"><AttachMoney /></InputAdornment>) }) : null,
+            InputProps: inputField.money ? ({ startAdornment: (<InputAdornment position="start"><AttachMoney /></InputAdornment>) }) : null,
         };
     };
 

@@ -4,8 +4,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField, IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { CloseRounded } from '@material-ui/icons';
 import { AddTableMessage } from '../../../../catalog/Comments';
 import { TextFieldLabelStyles, textFieldLabelProps } from '../../../../catalog/Others';
 import { DemoTableName } from '../../../../catalog/Demo';
@@ -33,10 +34,13 @@ const AddTableAlert = (props) => {
     }
 
     return (
-        <Dialog open={open} onClose={closeHandler}>
-            <DialogTitle>
-                Add Table
-            </DialogTitle>
+        <Dialog className="pop-up-after-restaurant" open={open} onClose={closeHandler}>
+            <div className="pop-up-after-restaurant-title">
+                <p>Add Table</p>
+                <IconButton onClick={closeHandler}>
+                    <CloseRounded className="pop-up-after-restaurant-title-close" />
+                </IconButton>
+            </div>
             <DialogContent>
                 <DialogContentText>
                     {AddTableMessage}

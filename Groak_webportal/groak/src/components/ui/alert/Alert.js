@@ -4,7 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DialogTitle, Dialog, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, DialogActions, Button, IconButton } from '@material-ui/core';
+import { CloseRounded } from '@material-ui/icons';
 
 const Alert = (props) => {
     const {
@@ -12,8 +13,14 @@ const Alert = (props) => {
     } = props;
     return (
         <div>
-            <Dialog onClose={() => { setOpen(false); }} open={open}>
-                <DialogTitle>{title}</DialogTitle>
+            <Dialog className="pop-up-after-restaurant" onClose={() => { setOpen(false); }} open={open}>
+                closeHandler
+                <div className="pop-up-after-restaurant-title">
+                    <p>{title}</p>
+                    <IconButton onClick={() => { setOpen(false); }}>
+                        <CloseRounded className="pop-up-after-restaurant-title-close" />
+                    </IconButton>
+                </div>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {content}

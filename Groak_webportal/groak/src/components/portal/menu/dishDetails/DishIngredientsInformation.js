@@ -10,9 +10,8 @@ import { InvalidDishIngredientsIndividual } from '../../../../catalog/Notificati
 
 import { randomNumber, TextFieldLabelStyles, textFieldLabelProps } from '../../../../catalog/Others';
 
-
 const DishIngredientsInformation = (props) => {
-    const { classes, checkFields, ingredients, setState } = props;
+    const { classes, showTitle, checkFields, ingredients, setState } = props;
 
     /**
      * This function is used for adding ingredients
@@ -46,7 +45,7 @@ const DishIngredientsInformation = (props) => {
 
     return (
         <div className="dish-ingredients-information">
-            <h2>Ingredients:</h2>
+            {showTitle ? <h2>Ingredients:</h2> : null}
             {ingredients.map((ingredient, index) => {
                 return (
                     <div className="ingredient-element" key={ingredient.id}>
@@ -85,6 +84,7 @@ const DishIngredientsInformation = (props) => {
 
 DishIngredientsInformation.propTypes = {
     classes: PropTypes.object.isRequired,
+    showTitle: PropTypes.bool.isRequired,
     checkFields: PropTypes.bool.isRequired,
     ingredients: PropTypes.array.isRequired,
     setState: PropTypes.func.isRequired,

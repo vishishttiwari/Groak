@@ -171,11 +171,17 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
                 // Restaurant
                 if (doc.data().restaurant) {
                     const { restaurant } = doc.data();
-                    totalRating = ((restaurant.rating * restaurant.totalRatingEntries) + (totalRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
-                    toalRatingEntries += restaurant.totalRatingEntries;
+                    if (restaurant.rating && restaurant.totalRatingEntries) {
+                        totalRating = ((restaurant.rating * restaurant.totalRatingEntries) + (totalRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
+                    }
+                    if (restaurant.totalRatingEntries) {
+                        toalRatingEntries += restaurant.totalRatingEntries;
+                    }
                     totalRatingEntriesArray[labels.indexOf(doc.id)] = restaurant.totalRatingEntries;
                     totalRatingArray[labels.indexOf(doc.id)] = restaurant.rating;
-                    messages.push(...restaurant.messages.reverse());
+                    if (restaurant && restaurant.messages) {
+                        messages.push(...restaurant.messages.reverse());
+                    }
                 }
             });
         })

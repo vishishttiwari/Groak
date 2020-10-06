@@ -98,7 +98,7 @@ const DishExtrasOptionsInformation = (props) => {
                             error={option.price < 0}
                             onChange={(event) => { optionsPriceAltered(event, indexOptions); }}
                             InputLabelProps={textFieldLabelProps(classes)}
-                            InputProps={{ endAdornment: <InputAdornment position="end"><AttachMoney /></InputAdornment> }}
+                            InputProps={{ startAdornment: <InputAdornment position="start"><AttachMoney /></InputAdornment> }}
                         />
                     </div>
                 );

@@ -1,8 +1,35 @@
 /**
  * This class includes categories related functions such as fetching all categories and changing the availability of category etc.
  */
-import { fetchCategoriesFirestoreAPI, updateCategoryFirestoreAPI, changeOrderOfDishesFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
-import { ErrorFetchingCategories, ErrorChangingAvailability, ErrorChangingCategoryOrder, CategoryOrderChanged, CategoryUpdated } from '../../../../catalog/NotificationsComments';
+import { fetchCategoriesFirestoreAPI, updateCategoryFirestoreAPI, changeOrderOfDishesFirestoreAPI, deleteCategoriesFromArrayFirestoreAPI, updateCategoriesFromArrayFirestoreAPI, addCategoriesFirestoreAPI, createCategoryReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
+import { ErrorFetchingCategories, ErrorChangingAvailability, ErrorChangingCategoryOrder, CategoryOrderChanged, CategoryUpdated, CategoriesDeleted, ErrorDeletingCategories, CategoriesUpdated, ErrorUpdatingCategories, ErrorUpdatingCategory, CategoriesAdded, ErrorAddingCategories } from '../../../../catalog/NotificationsComments';
+import { randomNumber } from '../../../../catalog/Others';
+import { createRestaurantReference } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { getCurrentDateTime } from '../../../../firebase/FirebaseLibrary';
+
+/**
+ * This function is used for adding categories to the backend. This creates the dishId as well
+ *
+ * @param {*} restaurantId id of the restaurant for which dish needs to be fetched
+ * @param {*} state this stores the information saved in the state of component
+ * @param {*} snackbar this is used for notifications
+ */
+export const addCategoriesAPI = async (restaurantId, datas, snackbar) => {
+    const categoryIds = [];
+    const newDatas = [];
+    try {
+        await Promise.all(datas.map(async (data) => {
+            const categoryId = randomNumber();
+            const newData = { restaurantReference: createRestaurantReference(restaurantId), reference: createCategoryReference(restaurantId, categoryId), available: true, created: getCurrentDateTime(), ...data };
+            newDatas.push(newData);
+            categoryIds.push(categoryId);
+        }));
+        await addCategoriesFirestoreAPI(restaurantId, categoryIds.reverse(), newDatas.reverse());
+        snackbar(CategoriesAdded, { variant: 'success' });
+    } catch (error) {
+        snackbar(ErrorAddingCategories, { variant: 'error' });
+    }
+};
 
 /**
  * This is used for fetching the categories
@@ -66,5 +93,48 @@ export const changeCategoryOrderAPI = async (restaurantId, categoryReferences, s
         snackbar(CategoryOrderChanged, { variant: 'success' });
     } catch (error) {
         snackbar(ErrorChangingCategoryOrder, { variant: 'error' });
+    }
+};
+
+/**
+ * When delete button is pressed this is called
+ *
+ * @param {*} restaurantId
+ * @param {*} categoryIds
+ * @param {*} snackbar
+ */
+export const deleteSelectedCategoriesAPI = async (restaurantId, categoryIds, snackbar) => {
+    try {
+        const categories = await fetchCategoriesFirestoreAPI(restaurantId);
+        await deleteCategoriesFromArrayFirestoreAPI(restaurantId, categoryIds, categories);
+        snackbar(CategoriesDeleted, { variant: 'success' });
+    } catch (error) {
+        snackbar(ErrorDeletingCategories, { variant: 'error' });
+    }
+};
+
+/**
+ * This function updates a category
+ *
+ * @param {*} restaurantId id of the restaurant for which category needs to be fetched
+ * @param {*} categoryId id of the category that needs to be fetched
+ * @param {*} changedCategory this stores the information saved in the state of component
+ * @param {*} snackbar this is used for notifications
+ */
+export const updateCategoryAPI = async (restaurantId, categoryId, changedCategory, snackbar) => {
+    try {
+        await updateCategoryFirestoreAPI(restaurantId, categoryId, changedCategory);
+        snackbar(CategoryUpdated, { variant: 'success' });
+    } catch (error) {
+        snackbar(ErrorUpdatingCategory, { variant: 'error' });
+    }
+};
+
+export const updateCategoriesFromArrayAPI = async (restaurantId, categoryIds, category, data, snackbar) => {
+    try {
+        await updateCategoriesFromArrayFirestoreAPI(restaurantId, categoryIds, category, data);
+        snackbar(CategoriesUpdated, { variant: 'success' });
+    } catch (error) {
+        snackbar(ErrorUpdatingCategories, { variant: 'error' });
     }
 };
