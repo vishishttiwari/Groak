@@ -10,6 +10,7 @@ import { updateDishesFromArrayAPI } from './DishesAPICalls';
 import DishRestrictionInformation from '../dishDetails/DishRestrictionInformation';
 import DishIngredientsInformation from '../dishDetails/DishIngredientsInformation';
 import DishExtrasInformation from '../dishDetails/dishExtrasInformation/DishExtrasInformation';
+import { InvalidDishPrice } from '../../../../catalog/NotificationsComments';
 
 const initialState = {
     text: '',
@@ -123,9 +124,17 @@ const DishModificationPopUp = (props) => {
 
     const submit = async () => {
         if (category === 'info' || category === 'description') {
-            await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.text, enqueueSnackbar);
+            if (state.text && state.text.length > 0) {
+                await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.text, enqueueSnackbar);
+                await popUpSubmit();
+            }
         } else if (category === 'price') {
-            await updateDishesFromArrayAPI(restaurantId, dishIds, category, parseFloat(state.text), enqueueSnackbar);
+            if (state.text && state.text.length > 0) {
+                await updateDishesFromArrayAPI(restaurantId, dishIds, category, parseFloat(state.text), enqueueSnackbar);
+                await popUpSubmit();
+            } else {
+                enqueueSnackbar(InvalidDishPrice, { variant: 'error' });
+            }
         } else if (category === 'restrictions') {
             await updateDishesFromArrayAPI(restaurantId, dishIds, category, {
                 vegetarian: state.vegetarian,
@@ -134,26 +143,32 @@ const DishModificationPopUp = (props) => {
                 kosher: state.kosher,
                 seaFood: state.seaFood,
             }, enqueueSnackbar);
+            await popUpSubmit();
         } else if (category === 'ingredients') {
-            await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.ingredients.map((ingredient) => {
-                return ingredient.title;
-            }), enqueueSnackbar);
+            if (state.ingredients && state.ingredients.length > 0) {
+                await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.ingredients.map((ingredient) => {
+                    return ingredient.title;
+                }), enqueueSnackbar);
+                await popUpSubmit();
+            }
         } else if (category === 'extras') {
-            await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.extras.map((extra) => {
-                const updatedExtra = { ...extra };
-                delete updatedExtra.id;
-                updatedExtra.minOptionsSelect = extra.minOptionsSelect ? parseFloat(extra.minOptionsSelect) : 0;
-                updatedExtra.maxOptionsSelect = extra.maxOptionsSelect ? parseFloat(extra.maxOptionsSelect) : updatedExtra.options.length;
-                updatedExtra.options = extra.options.map((option) => {
-                    const updatedOption = { ...option };
-                    delete updatedOption.id;
-                    updatedOption.price = option.price ? parseFloat(option.price) : 0;
-                    return updatedOption;
-                });
-                return updatedExtra;
-            }), enqueueSnackbar);
+            if (state.extras && state.extras.length > 0) {
+                await updateDishesFromArrayAPI(restaurantId, dishIds, category, state.extras.map((extra) => {
+                    const updatedExtra = { ...extra };
+                    delete updatedExtra.id;
+                    updatedExtra.minOptionsSelect = extra.minOptionsSelect ? parseFloat(extra.minOptionsSelect) : 0;
+                    updatedExtra.maxOptionsSelect = extra.maxOptionsSelect ? parseFloat(extra.maxOptionsSelect) : updatedExtra.options.length;
+                    updatedExtra.options = extra.options.map((option) => {
+                        const updatedOption = { ...option };
+                        delete updatedOption.id;
+                        updatedOption.price = option.price ? parseFloat(option.price) : 0;
+                        return updatedOption;
+                    });
+                    return updatedExtra;
+                }), enqueueSnackbar);
+                await popUpSubmit();
+            }
         }
-        await popUpSubmit();
     };
 
     return (

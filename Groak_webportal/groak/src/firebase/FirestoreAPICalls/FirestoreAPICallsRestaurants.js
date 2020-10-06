@@ -85,7 +85,7 @@ export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, address)
     batch.set(db.collection(`restaurants/${restaurantId}/dishes`).doc(dishId), createDemoDish(restaurantId, restaurantName, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/categories`).doc(categoryId), createDemoCategory(restaurantId, restaurantName, categoryId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), createDemoTable(restaurantId, restaurantName, tableId, qrCodeId));
-    batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, restaurantName, tableId, qrCodeId));
+    // batch.set(db.collection('tables/').doc(tableId), createDemoTable(restaurantId, restaurantName, tableId, qrCodeId));
     batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), createDemoOrder(restaurantId, restaurantName, tableId, dishId));
     batch.set(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), createDemoRequest(restaurantId, restaurantName, tableId));
     batch.set(db.collection(`restaurants/${restaurantId}/qrcodes`).doc(qrCodeId), createDemoQRCode(restaurantId, restaurantName, qrCodeId, categoryId));

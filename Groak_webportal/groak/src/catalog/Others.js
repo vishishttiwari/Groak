@@ -48,6 +48,7 @@ export const TableStatusStyle = {
     approved: { backgroundColor: CSSVariables.tableOrangeColor },
     served: { backgroundColor: CSSVariables.tableOrangeColor },
     payment: { backgroundColor: CSSVariables.tableRedColor },
+    notAllowed: { backgroundColor: CSSVariables.tableGrayColor },
 };
 
 export const checkQRCodeAvailability = (qrCode) => {

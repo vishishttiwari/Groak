@@ -37,13 +37,42 @@ const Table = (props) => {
         }
     }, refreshPeriod);
 
+    const getStyles = (overdueHere, tableHere) => {
+        if (tableHere.allowOrdering !== undefined ? tableHere.allowOrdering : true) {
+            if (overdueHere) {
+                return TableStatusStyle.requested;
+            }
+            return TableStatusStyle[tableHere.status];
+        }
+        return TableStatusStyle.notAllowed;
+    };
+
+    const getTableDescription = (overdueHere, tableHere) => {
+        if (tableHere.allowOrdering !== undefined ? tableHere.allowOrdering : true) {
+            if (overdueHere) {
+                return 'Order Overdue';
+            }
+            return TableStatusText[table.status];
+        }
+        return 'Ordering Unavailable';
+    };
+
+    const getTableStatus = (tableHere) => {
+        if (tableHere.allowOrdering !== undefined ? tableHere.allowOrdering : true) {
+            if (tableHere.status === TableStatus.approved && tableHere.serveTime) {
+                return (<p className="table-time">{getTimeInAMPMFromTimeStamp(table.serveTime)}</p>);
+            }
+        }
+        return null;
+    };
+
     return (
-        <div className="table" style={overdue || table.newRequest ? TableStatusStyle.requested : TableStatusStyle[table.status]}>
+        <div className="table" style={getStyles(overdue, table)}>
             <Badge badgeContent={<TableBadge table={table} overdue={overdue} />} color="primary" invisible={table.status === TableStatus.available && !overdue && !table.newRequest}>
                 <div className="table-inside">
                     <p className="table-name">{table.name}</p>
-                    <p className="table-desc">{overdue ? 'Order Overdue' : TableStatusText[table.status]}</p>
-                    {table.status === TableStatus.approved && table.serveTime ? <p className="table-time">{getTimeInAMPMFromTimeStamp(table.serveTime)}</p> : null}
+                    <p className="table-desc">{getTableDescription(overdue, table)}</p>
+                    {getTableStatus(table)}
                     <img draggable="false" className="table-image" src={TableImage} alt={table.name} />
                 </div>
             </Badge>

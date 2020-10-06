@@ -57,12 +57,16 @@ const TablesCanvas = (props) => {
         }
     };
 
-    const clickHandler = async (status, id) => {
+    const clickHandler = async (status, id, allowOrdering) => {
         if (!dragged) {
-            if (status === TableStatus.available) {
-                tableClickHandler(id);
+            if (allowOrdering || false) {
+                if (status === TableStatus.available || status === TableStatus.seated) {
+                    tableClickHandler(id);
+                } else {
+                    history.push(`/orders/${id}`);
+                }
             } else {
-                history.push(`/orders/${id}`);
+                tableClickHandler(id);
             }
         }
     };
@@ -76,8 +80,8 @@ const TablesCanvas = (props) => {
                 return (
                     <div
                         key={table.id}
-                        onTouchEnd={() => { clickHandler(table.status, table.id); }}
-                        onClick={() => { clickHandler(table.status, table.id); }}
+                        onTouchEnd={() => { clickHandler(table.status, table.id, table.allowOrdering); }}
+                        onClick={() => { clickHandler(table.status, table.id, table.allowOrdering); }}
                     >
                         <Draggable
                             enableUserSelectHack={false}

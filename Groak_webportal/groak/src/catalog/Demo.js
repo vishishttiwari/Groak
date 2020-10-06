@@ -7,7 +7,7 @@ import { getCurrentDateTime, createGeoPoint } from '../firebase/FirebaseLibrary'
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
-import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
+import { createTableReferenceInRestaurantCollections } from '../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
 import { createRequestReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { TableStatus } from './Others';
 import { getCurrentDateTimePlusMinutes } from './TimesDates';
@@ -221,11 +221,12 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
     // Whenever you change anything here, also change it in FirestoreAPICallsTables in addTableFirestoreAPI
     return {
         name: DemoTableName,
+        allowOrdering: true,
         created: getCurrentDateTime(),
         restaurantId,
         id: tableId,
         reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
-        originalReference: createTableReferenceInTableCollections(tableId),
+        // originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
@@ -260,6 +261,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
     // Whenever you change anything here, also change it in FirestoreAPICallsTables in addTableFirestoreAPI
     return {
         comments: DemoOrderComments,
+        allowOrdering: true,
         dishes: createDemoOrderDishes(restaurantId, dishId),
         items: 0,
         updated: getCurrentDateTime(),
@@ -275,7 +277,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, orderId),
-        tableOriginalReference: createTableReferenceInTableCollections(orderId),
+        // tableOriginalReference: createTableReferenceInTableCollections(orderId),
         requestReference: createRequestReference(restaurantId, orderId),
         paymentMethod: 'waiter',
         tip: {

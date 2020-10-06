@@ -75,7 +75,8 @@ export const fetchOrderAPI = async (restaurant, restaurantId, orderId, setState,
                     type: 'fetchOrder',
                     order: { ...querySnapshot.data(), dishes: updatedDishes, comments: updatedComments },
                 });
-                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: true });
+                const allowOrdering = querySnapshot.data() && querySnapshot.data().allowOrdering !== null && querySnapshot.data().allowOrdering !== undefined ? querySnapshot.data().allowOrdering : false;
+                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: allowOrdering });
                 await updateOrderAPI(restaurantId, orderId, TableStatus.seated);
             } else {
                 setState({ type: 'fetchOrder', order: {} });

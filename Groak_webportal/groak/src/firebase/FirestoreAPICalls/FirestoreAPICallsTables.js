@@ -10,9 +10,9 @@ export const createRestaurantReference = (restaurantId) => {
     return db.collection('restaurants').doc(restaurantId);
 };
 
-export const createTableReferenceInTableCollections = (tableId) => {
-    return db.collection('tables').doc(tableId);
-};
+// export const createTableReferenceInTableCollections = (tableId) => {
+//     return db.collection('tables').doc(tableId);
+// };
 
 export const createTableReferenceInRestaurantCollections = (restaurantId, tableId) => {
     return db.collection(`restaurants/${restaurantId}/tables`).doc(tableId);
@@ -42,11 +42,12 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
 
     const tableData = {
         name: data.name,
+        allowOrdering: true,
         created: getCurrentDateTime(),
         restaurantId,
         id: tableId,
         reference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
-        originalReference: createTableReferenceInTableCollections(tableId),
+        // originalReference: createTableReferenceInTableCollections(tableId),
         restaurantReference: createRestaurantReference(restaurantId),
         orderReference: createOrderReference(restaurantId, tableId),
         requestReference: createRequestReference(restaurantId, tableId),
@@ -69,10 +70,11 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), tableData);
-    batch.set(db.collection('tables/').doc(tableId), tableData);
+    // batch.set(db.collection('tables/').doc(tableId), tableData);
 
     const orderData = {
         comments: [],
+        allowOrdering: true,
         dishes: [],
         items: 0,
         updated: getCurrentDateTime(),
@@ -88,7 +90,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
         tableReference: createTableReferenceInRestaurantCollections(restaurantId, tableId),
-        tableOriginalReference: createTableReferenceInTableCollections(tableId),
+        // tableOriginalReference: createTableReferenceInTableCollections(tableId),
         requestReference: createRequestReference(restaurantId, tableId),
         paymentMethod: 'waiter',
         tip: {
@@ -121,9 +123,13 @@ export const updateTableFirestoreAPI = (restaurantId, tableId, data) => {
     const batch = db.batch();
 
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId), data);
-    batch.update(db.collection('tables/').doc(tableId), data);
-    if (data.name) {
+    // batch.update(db.collection('tables/').doc(tableId), data);
+    if (data.name && data.allowOrdering !== undefined) {
+        batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { table: data.name, allowOrdering: data.allowOrdering });
+    } else if (data.name) {
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { table: data.name });
+    } else if (data.allowOrdering !== undefined) {
+        batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { allowOrdering: data.allowOrdering });
     }
 
     return batch.commit();
@@ -139,7 +145,7 @@ export const deleteTableFirestoreAPI = (restaurantId, tableId) => {
     const batch = db.batch();
 
     batch.delete(db.collection(`restaurants/${restaurantId}/tables`).doc(tableId));
-    batch.delete(db.collection('tables/').doc(tableId));
+    // batch.delete(db.collection('tables/').doc(tableId));
     batch.delete(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId));
     batch.delete(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId));
 

@@ -49,6 +49,7 @@ $tableWhiteColor: rgb(255, 255, 255);
 $tableGreenColor: rgba(0, 255, 0, 0.5);
 $tableOrangeColor: rgba(255, 255, 0, 0.5);
 $tableRedColor: rgba(255, 0, 0, 0.5);
+$tableGrayColor: rgba(150, 150, 150, 0.5);
 
 :export {
     primaryColor: $primaryColor;
@@ -59,4 +60,5 @@ $tableRedColor: rgba(255, 0, 0, 0.5);
     tableGreenColor: $tableGreenColor;
     tableOrangeColor: $tableOrangeColor;
     tableRedColor: $tableRedColor;
+    tableGrayColor: $tableGrayColor;
 }

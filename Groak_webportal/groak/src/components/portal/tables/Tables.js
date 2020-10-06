@@ -101,7 +101,7 @@ const Tables = () => {
             enqueueSnackbar(InvalidTableName, { variant: 'error' });
             return;
         }
-        const toBeUpdatedData = { name: table.name };
+        const toBeUpdatedData = { name: table.name, allowOrdering: (table.allowOrdering === undefined ? true : table.allowOrdering) };
         let newTables = [...state.tables];
         await updateTableAPI(globalState.restaurantIdPortal, table.id, toBeUpdatedData, setState, enqueueSnackbar);
         newTables = newTables.map((eachTable) => {

@@ -12,7 +12,7 @@ export const updateRequestFirestoreAPI = (restaurantId, requestId, data) => {
     const batch = db.batch();
 
     batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(requestId), data);
-    batch.update(db.collection('tables').doc(requestId), { newRequest: false, newRequestForUser: true });
+    // batch.update(db.collection('tables').doc(requestId), { newRequest: false, newRequestForUser: true });
     batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(requestId), { newRequest: false, newRequestForUser: true });
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(requestId), { newRequest: false, newRequestForUser: true });
 
@@ -23,7 +23,7 @@ export const updateRequestFromUserFirestoreAPI = (restaurantId, requestId, data)
     const batch = db.batch();
 
     batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(requestId), data);
-    batch.update(db.collection('tables').doc(requestId), { newRequest: true, newRequestForUser: false });
+    // batch.update(db.collection('tables').doc(requestId), { newRequest: true, newRequestForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(requestId), { newRequest: true, newRequestForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(requestId), { newRequest: true, newRequestForUser: false });
 
@@ -33,7 +33,7 @@ export const updateRequestFromUserFirestoreAPI = (restaurantId, requestId, data)
 export const updateRequestFromUserWhenUserSeenMessageFirestoreAPI = (restaurantId, requestId) => {
     const batch = db.batch();
 
-    batch.update(db.collection('tables').doc(requestId), { newRequestForUser: false });
+    // batch.update(db.collection('tables').doc(requestId), { newRequestForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(requestId), { newRequestForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(requestId), { newRequestForUser: false });
 

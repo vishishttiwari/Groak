@@ -3,7 +3,7 @@ import { db, getCurrentDateTime } from '../FirebaseLibrary';
 import { TableStatus } from '../../catalog/Others';
 import { DemoRequest } from '../../catalog/Demo';
 import { createDishReference } from './FirestoreAPICallsDishes';
-import { createTableReferenceInTableCollections, createTableReferenceInRestaurantCollections } from './FirestoreAPICallsTables';
+import { createTableReferenceInRestaurantCollections } from './FirestoreAPICallsTables';
 import { getCurrentDateTimePlusMinutes } from '../../catalog/TimesDates';
 import { saveOrder } from '../../catalog/LocalStorage';
 
@@ -24,28 +24,28 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
 
     if (data.status === TableStatus.available) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], tableAvailabilityId: uuidv4() });
-        batch.update(db.collection('tables').doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], tableAvailabilityId: uuidv4() });
+        // batch.update(db.collection('tables').doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], tableAvailabilityId: uuidv4() });
         const newData = { ...data, updated: getCurrentDateTime(), comments: [], dishes: [], items: 0, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], tableAvailabilityId: uuidv4() };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
         batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(orderId), { requests: DemoRequest, sessionIds: [] });
     } else if (data.status === TableStatus.approved) {
         if (data.serveTime) {
             batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, serveTime: data.serveTime, newOrderUpdateForUser: true });
-            batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: data.serveTime, newOrderUpdateForUser: true });
+            // batch.update(db.collection('tables').doc(orderId), { status: data.status, serveTime: data.serveTime, newOrderUpdateForUser: true });
         } else {
             batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newOrderUpdateForUser: true });
-            batch.update(db.collection('tables').doc(orderId), { status: data.status, newOrderUpdateForUser: true });
+            // batch.update(db.collection('tables').doc(orderId), { status: data.status, newOrderUpdateForUser: true });
         }
         const newData = { ...data, updated: getCurrentDateTime(), newOrderUpdateForUser: true };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
     } else if (data.status === TableStatus.served || data.status === TableStatus.payment) {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newOrderUpdateForUser: true });
-        batch.update(db.collection('tables').doc(orderId), { status: data.status, newOrderUpdateForUser: true });
+        // batch.update(db.collection('tables').doc(orderId), { status: data.status, newOrderUpdateForUser: true });
         const newData = { ...data, updated: getCurrentDateTime(), newOrderUpdateForUser: true };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
     } else {
         batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status });
-        batch.update(db.collection('tables').doc(orderId), { status: data.status });
+        // batch.update(db.collection('tables').doc(orderId), { status: data.status });
         const newData = { ...data, updated: getCurrentDateTime() };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
     }
@@ -85,7 +85,7 @@ export const addOrderFirestoreAPI = (restaurantId, orderId, cart, comment) => {
 
     const orderReference = createOrderReference(restaurantId, orderId);
     const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
-    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    // const tableOriginalReference = createTableReferenceInTableCollections(orderId);
     return db.runTransaction(async (transaction) => {
         const orderDoc = await transaction.get(orderReference);
         if (orderDoc.exists) {
@@ -113,7 +113,7 @@ export const addOrderFirestoreAPI = (restaurantId, orderId, cart, comment) => {
             }
 
             transaction.update(tableReference, { status: TableStatus.ordered });
-            transaction.update(tableOriginalReference, { status: TableStatus.ordered });
+            // transaction.update(tableOriginalReference, { status: TableStatus.ordered });
         }
     });
 };
@@ -132,7 +132,7 @@ export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
 
     const orderReference = createOrderReference(restaurantId, orderId);
     const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
-    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    // const tableOriginalReference = createTableReferenceInTableCollections(orderId);
     return db.runTransaction(async (transaction) => {
         const orderDoc = await transaction.get(orderReference);
         if (orderDoc.exists) {
@@ -145,7 +145,7 @@ export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
             transaction.update(orderReference, { comments, status: TableStatus.ordered, updated });
 
             transaction.update(tableReference, { status: TableStatus.ordered });
-            transaction.update(tableOriginalReference, { status: TableStatus.ordered });
+            // transaction.update(tableOriginalReference, { status: TableStatus.ordered });
         }
     });
 };
@@ -153,7 +153,7 @@ export const addCommentFirestoreAPI = (restaurantId, orderId, comment) => {
 export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus, tip, paymentMethod) => {
     const orderReference = createOrderReference(restaurantId, orderId);
     const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
-    const tableOriginalReference = createTableReferenceInTableCollections(orderId);
+    // const tableOriginalReference = createTableReferenceInTableCollections(orderId);
     return db.runTransaction(async (transaction) => {
         const orderDoc = await transaction.get(orderReference);
         if (orderDoc.exists) {
@@ -161,11 +161,11 @@ export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus
 
             if (status === TableStatus.available && newStatus === TableStatus.seated) {
                 transaction.update(tableReference, { status: newStatus });
-                transaction.update(tableOriginalReference, { status: newStatus });
+                // transaction.update(tableOriginalReference, { status: newStatus });
                 transaction.update(orderReference, { status: newStatus });
             } else if (status !== TableStatus.payment && newStatus === TableStatus.payment) {
                 transaction.update(tableReference, { status: newStatus, tip, paymentMethod });
-                transaction.update(tableOriginalReference, { status: newStatus, tip, paymentMethod });
+                // transaction.update(tableOriginalReference, { status: newStatus, tip, paymentMethod });
                 transaction.update(orderReference, { status: newStatus, tip, paymentMethod });
             }
         }
@@ -175,7 +175,7 @@ export const updateOrderFromUserFirestoreAPI = (restaurantId, orderId, newStatus
 export const updateOrderFromUserWhenUserSeenOrderFirestoreAPI = (restaurantId, orderId) => {
     const batch = db.batch();
 
-    batch.update(db.collection('tables').doc(orderId), { newOrderUpdateForUser: false });
+    // batch.update(db.collection('tables').doc(orderId), { newOrderUpdateForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), { newOrderUpdateForUser: false });
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { newOrderUpdateForUser: false });
 

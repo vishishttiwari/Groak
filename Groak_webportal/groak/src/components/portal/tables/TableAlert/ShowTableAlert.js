@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
-import { Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField, IconButton } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, DialogActions, Button, TextField, IconButton, Switch } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
 import { context } from '../../../../globalState/globalState';
 
@@ -23,6 +23,8 @@ function reducer(state, action) {
             return { ...state, table: action.table, initialName: action.initialName };
         case 'setTable':
             return { ...state, table: action.table };
+        case 'setAllowOrdering':
+            return { ...state, table: { ...state.table, allowOrdering: action.allowOrdering } };
         default:
             return initialState;
     }
@@ -97,6 +99,17 @@ const ShowTableAlert = (props) => {
                 <Button className="table-alert-button" onClick={qrCodeHandler} variant="outlined" disabled={!state || !state.initialName || state.initialName.length === 0}>
                     QR Code
                 </Button>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Switch
+                        checked={state.table && state.table.allowOrdering !== null ? state.table.allowOrdering : false}
+                        size="medium"
+                        onChange={(event) => { setState({ type: 'setAllowOrdering', allowOrdering: event.target.checked }); }}
+                        name="edit"
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                        color="primary"
+                    />
+                    <p style={{ margin: 0, textAlign: 'center' }} className="toggle-label">Allow Ordering</p>
+                </div>
                 <Button className="table-alert-button" onClick={() => { updateHandler(state.table); }} variant="outlined" disabled={!state.table}>
                     Update
                 </Button>
