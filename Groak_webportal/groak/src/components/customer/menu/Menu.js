@@ -1,10 +1,10 @@
 /**
  * The cart is used for representing menu
  */
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import './css/Menu.css';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { context } from '../../../globalState/globalState';
@@ -55,17 +55,11 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `scrollable-force-tab-${index}`,
-        'aria-controls': `scrollable-force-tabpanel-${index}`,
-    };
-}
-
 const Menu = (props) => {
     const { history, match, menuItems, categoryNames, restaurant } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
+    const top = createRef(null);
 
     /**
      * This function is called when each dish is pressed.
@@ -89,33 +83,28 @@ const Menu = (props) => {
         history.push(`/customer/search/${match.params.restaurantid}/${match.params.tableid}/${match.params.qrcodeid}`);
     };
 
+    const changeTab = (newValue) => {
+        setState({ type: 'changeTabValue', tabValue: newValue });
+        top.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'start',
+        });
+    };
+
     return (
         <div className="menu">
-            <MenuHeader restaurantName={restaurant.name} searchHandler={searchHandler} />
+            <MenuHeader
+                restaurantName={restaurant.name}
+                searchHandler={searchHandler}
+                tabValue={state.tabValue}
+                changeTab={changeTab}
+                categoryNames={categoryNames}
+            />
             <div className="content">
+                <p ref={top}> </p>
                 {restaurant.logo ? <img className="menu-restaurant-logo" src={restaurant.logo} alt={restaurant.name} /> : null }
-                <AppBar className="menu-appbar" position="static" color="secondary">
-                    <Tabs
-                        value={state.tabValue}
-                        onChange={(event, newValue) => { setState({ type: 'changeTabValue', tabValue: newValue }); }}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="scrollable"
-                        scrollButtons="on"
-                        aria-label="scrollable force tabs example"
-                    >
-                        {Array.from(categoryNames).map((categoryName, index) => {
-                            return (
-                                <Tab
-                                    style={{ paddingLeft: '30px', paddingRight: '30px' }}
-                                    key={randomNumber()}
-                                    label={categoryName}
-                                    {...a11yProps(index)}
-                                />
-                            );
-                        })}
-                    </Tabs>
-                </AppBar>
+
                 {Array.from(menuItems.keys()).map((menuItem, index) => {
                     return (
                         <TabPanel key={randomNumber()} value={state.tabValue} index={index}>

@@ -3,7 +3,7 @@
  * It also contains items that are added as placeholders in text fields.
  */
 import { v4 as uuidv4 } from 'uuid';
-import { getCurrentDateTime, createGeoPoint } from '../firebase/FirebaseLibrary';
+import { getCurrentDateTime, createGeoPoint, fetchRegistrationToken } from '../firebase/FirebaseLibrary';
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 import { createCategoryReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsCategories';
@@ -27,6 +27,13 @@ export const DemoRestaurantQRStylePage = {
     restaurantImageWidth: 50,
     restaurantImageHeight: 100,
     restaurantImageBackgroundColor: '#808080',
+};
+export const DemoRegistrationTokens = () => {
+    const token = fetchRegistrationToken();
+    if (token !== undefined && token !== null && token.length > 0) {
+        return [token];
+    }
+    return [];
 };
 
 export const DemoRestaurantCovidGuidelines = '';
@@ -117,6 +124,7 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
             venmo: '',
         },
         payments: [DemoRestaurantTips, DemoRestaurantSalesTax],
+        registrationTokens: DemoRegistrationTokens(),
     };
 };
 
@@ -236,6 +244,7 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: 0,
@@ -271,6 +280,7 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),
         table: DemoTableName,
         reference: createOrderReference(restaurantId, orderId),
@@ -302,6 +312,8 @@ export const createDemoRequest = (restaurantId, restaurantName, requestId) => {
         restaurantName,
         requests: DemoRequest,
         sessionIds: [],
+        table: DemoTableName,
+        registrationTokensCustomers: [],
     };
 };
 

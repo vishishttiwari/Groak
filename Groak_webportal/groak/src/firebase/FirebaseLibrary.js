@@ -9,6 +9,7 @@ import 'firebase/storage'; // for storage
 import 'firebase/database'; // for realtime database
 import 'firebase/firestore'; // for cloud firestore
 import 'firebase/analytics'; // for analytics
+import 'firebase/messaging'; // for messaging
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -38,3 +39,26 @@ export const storageRef = firebase.storage().ref();
 export const getCurrentDateTime = () => {
     return firebase.firestore.Timestamp.fromDate(new Date());
 };
+
+let registrationToken = '';
+
+export const fetchRegistrationToken = () => {
+    return registrationToken;
+};
+
+if (firebase.messaging.isSupported()) {
+    const messaging = firebase.messaging();
+    messaging.requestPermission()
+        .then(() => {
+            return messaging.getToken();
+        })
+        .then((token) => {
+            registrationToken = token;
+        })
+        .catch(() => {
+        });
+
+    messaging.onMessage((payload) => {
+        console.log(payload);
+    });
+}

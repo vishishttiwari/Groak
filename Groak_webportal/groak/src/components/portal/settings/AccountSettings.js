@@ -30,7 +30,7 @@ const AccountSettings = (props) => {
      * This function logs out the user, redirects to signin and sets the global state to null.
      */
     const logout = async () => {
-        await signoutAPICall(history, setGlobalState, enqueueSnackbar);
+        await signoutAPICall(history, setGlobalState, enqueueSnackbar, globalState.restaurantIdPortal);
     };
 
     return (

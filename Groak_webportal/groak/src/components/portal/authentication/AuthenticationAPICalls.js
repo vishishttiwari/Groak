@@ -3,9 +3,9 @@
  * the user, creates a demo restaurant and then takes the user to sign up screen.
  */
 import { getUIDFirebaseAPI, signinFirebaseAPI, signupFirebaseAPI, sendEmailVerification, isInitialized, signoutFirebaseAPI, changeEmailFirebaseAPI, changePasswordFirebaseAPI } from '../../../firebase/FirebaseAuthenticationAPICalls';
-import { addRestaurantFirestoreAPI, fetchRestaurantFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
+import { addRegistrationTokenFirestoreAPI, addRestaurantFirestoreAPI, fetchRestaurantFirestoreAPI, removeRegistrationTokenFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRestaurants';
 import * as NotificationsComments from '../../../catalog/NotificationsComments';
-import { analytics } from '../../../firebase/FirebaseLibrary';
+import { analytics, fetchRegistrationToken } from '../../../firebase/FirebaseLibrary';
 import { groakTesting } from '../../../catalog/Others';
 
 /**
@@ -15,11 +15,12 @@ import { groakTesting } from '../../../catalog/Others';
  * @param {*} setGlobalState sets the state of the whole application
  * @param {*} snackbar used for notifications
  */
-export const signoutAPICall = async (history, setGlobalState, snackbar) => {
+export const signoutAPICall = async (history, setGlobalState, snackbar, restaurantId) => {
     try {
         await signoutFirebaseAPI();
         history.replace('/');
         setGlobalState({ type: 'removeUserPortal' });
+        removeRegistrationTokenFirestoreAPI(restaurantId, fetchRegistrationToken());
     } catch (error) {
         snackbar(error.message, { variant: 'error' });
     }
@@ -56,18 +57,19 @@ export const signinAPICall = async (email, password, history, setState, setGloba
                 setGlobalState({ type: 'fetchUserPortal', user: userInfo.user, restaurantId, email, restaurant: doc.data() });
                 setState({ type: 'setLoadingSpinner', loadingSpinner: false });
                 history.replace('/orders');
+                addRegistrationTokenFirestoreAPI(restaurantId, fetchRegistrationToken());
             } else {
-                await signoutAPICall(history, setGlobalState, snackbar);
+                await signoutAPICall(history, setGlobalState, snackbar, restaurantId);
                 snackbar(NotificationsComments.NotFoundRestaurant, { variant: 'error' });
                 setState({ type: 'error' });
             }
         } else {
-            await signoutAPICall(history, setGlobalState, snackbar);
+            await signoutAPICall(history, setGlobalState, snackbar, null);
             snackbar(NotificationsComments.NotVerifiedEmail, { variant: 'error' });
             setState({ type: 'error' });
         }
     } catch (error) {
-        await signoutAPICall(history, setGlobalState, snackbar);
+        await signoutAPICall(history, setGlobalState, snackbar, null);
         snackbar(error.message, { variant: 'error' });
         setState({ type: 'error' });
     }
@@ -85,7 +87,7 @@ export const checkAuthentication = async (history, setGlobalState, snackbar) => 
         isInitialized().then(async (user) => {
             // If user is not verified then redirect to sign in page.
             if (user === null) {
-                await signoutAPICall(history, setGlobalState, snackbar);
+                await signoutAPICall(history, setGlobalState, snackbar, null);
             } else if (user !== null && user !== false) {
                 if (user.emailVerified) {
                     const restaurantId = user.uid;
@@ -100,18 +102,19 @@ export const checkAuthentication = async (history, setGlobalState, snackbar) => 
                     // Check if the restaurant document exists or not. If not then do not sign in the user.
                     if (doc.exists) {
                         setGlobalState({ type: 'fetchUserPortal', user, restaurantId, email, restaurant: doc.data() });
+                        addRegistrationTokenFirestoreAPI(restaurantId, fetchRegistrationToken());
                     } else {
-                        await signoutAPICall(history, setGlobalState, snackbar);
+                        await signoutAPICall(history, setGlobalState, snackbar, restaurantId);
                         snackbar(NotificationsComments.NotFoundRestaurant, { variant: 'error' });
                     }
                 } else {
-                    await signoutAPICall(history, setGlobalState, snackbar);
+                    await signoutAPICall(history, setGlobalState, snackbar, null);
                     snackbar(NotificationsComments.NotVerifiedEmail, { variant: 'error' });
                 }
             }
         });
     } catch (error) {
-        await signoutAPICall(history, setGlobalState, snackbar);
+        await signoutAPICall(history, setGlobalState, snackbar, null);
         snackbar(error.message, { variant: 'error' });
     }
 };
@@ -133,6 +136,7 @@ export const signupAPICall = async (history, state, setState, snackbar) => {
         await addRestaurantFirestoreAPI(restaurantId, state.restaurantName, state.address);
         await sendEmailVerification();
         await signoutFirebaseAPI();
+        removeRegistrationTokenFirestoreAPI(restaurantId, fetchRegistrationToken());
         setState({ type: 'setLoadingSpinner', loadingSpinner: false });
         snackbar(NotificationsComments.VerificationEmailSent, { variant: 'success' });
         history.replace('/signin');

@@ -5,6 +5,7 @@ const initialState = {
     restaurantIdPortal: '',
     emailPortal: '',
     restaurantPortal: null,
+    registrationTokenPortal: '',
 
     scannedCustomer: false,
     tabValueCustomer: 0,
@@ -22,6 +23,8 @@ function reducerLocal(state, action) {
             return { ...state, userPortal: action.user, restaurantIdPortal: action.restaurantId, emailPortal: action.email, restaurantPortal: action.restaurant };
         case 'setRestaurantPortal':
             return { ...state, restaurantPortal: action.restaurant, restaurantIdPortal: action.restaurantId };
+        case 'setRegistrationTokenPortal':
+            return { ...state, registrationTokenPortal: action.registrationToken };
         case 'setRestaurantCustomer':
             updatedCovidInformation = ((action.restaurant.covidMessage && action.restaurant.covidMessage.length > 0) || (action.restaurant.covidGuidelines && action.restaurant.covidGuidelines.length > 0));
             return { ...state, restaurantCustomer: action.restaurant, restaurantIdCustomer: action.restaurantId, orderAllowedCustomer: action.orderAllowed, scannedCustomer: true, covidInformationCustomer: updatedCovidInformation };

@@ -60,7 +60,7 @@ const TablesCanvas = (props) => {
     const clickHandler = async (status, id, allowOrdering) => {
         if (!dragged) {
             if (allowOrdering || false) {
-                if (status === TableStatus.available || status === TableStatus.seated) {
+                if (status === TableStatus.available) {
                     tableClickHandler(id);
                 } else {
                     history.push(`/orders/${id}`);

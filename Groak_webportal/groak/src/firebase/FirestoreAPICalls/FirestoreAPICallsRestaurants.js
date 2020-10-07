@@ -92,3 +92,50 @@ export const addRestaurantFirestoreAPI = (restaurantId, restaurantName, address)
 
     return batch.commit();
 };
+
+export const addRegistrationTokenFirestoreAPI = (restaurantId, registrationToken) => {
+    if (restaurantId === undefined || restaurantId === null || restaurantId.length <= 0) {
+        return null;
+    }
+    const restaurantReference = createRestaurantReference(restaurantId);
+    return db.runTransaction(async (transaction) => {
+        const restaurantDoc = await transaction.get(restaurantReference);
+        if (restaurantDoc.exists) {
+            const { registrationTokens } = restaurantDoc.data();
+            if (registrationTokens === undefined || registrationTokens === null) {
+                transaction.update(restaurantReference, { registrationTokens: [registrationToken] });
+            } else {
+                let newRegistrationTokens = registrationTokens;
+                if (!registrationTokens.includes(registrationToken)
+                && registrationToken !== undefined
+                && registrationToken !== null
+                && registrationToken.length > 0) {
+                    newRegistrationTokens.unshift(registrationToken);
+                }
+                newRegistrationTokens = newRegistrationTokens.slice(0, 10);
+                transaction.update(restaurantReference, { registrationTokens: newRegistrationTokens });
+            }
+        }
+    });
+};
+
+export const removeRegistrationTokenFirestoreAPI = (restaurantId, registrationToken) => {
+    if (restaurantId === undefined || restaurantId === null || restaurantId.length <= 0) {
+        return null;
+    }
+    const restaurantReference = createRestaurantReference(restaurantId);
+    return db.runTransaction(async (transaction) => {
+        const restaurantDoc = await transaction.get(restaurantReference);
+        if (restaurantDoc.exists) {
+            const { registrationTokens } = restaurantDoc.data();
+            if (registrationTokens === undefined || registrationTokens === null) {
+                transaction.update(restaurantReference, { registrationTokens: [] });
+            } else {
+                const newRegistrationTokens = registrationTokens.filter((token) => {
+                    return registrationToken !== token;
+                });
+                transaction.update(restaurantReference, { registrationTokens: newRegistrationTokens });
+            }
+        }
+    });
+};

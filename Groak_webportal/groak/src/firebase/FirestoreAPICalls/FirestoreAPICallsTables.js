@@ -57,6 +57,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),
         serveTime: getCurrentDateTimePlusMinutes(30),
         x: data.x,
@@ -84,6 +85,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         newRequestForUser: true,
         newOrderUpdateForUser: false,
         sessionIds: [],
+        registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),
         table: data.name,
         reference: createOrderReference(restaurantId, tableId),
@@ -105,6 +107,7 @@ export const addTableFirestoreAPI = (restaurantId, restaurantName, tableId, data
         restaurantReference: createRestaurantReference(restaurantId),
         restaurantName,
         sessionIds: [],
+        table: data.name,
     };
 
     batch.set(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), orderData);
@@ -126,8 +129,10 @@ export const updateTableFirestoreAPI = (restaurantId, tableId, data) => {
     // batch.update(db.collection('tables/').doc(tableId), data);
     if (data.name && data.allowOrdering !== undefined) {
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { table: data.name, allowOrdering: data.allowOrdering });
+        batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), { table: data.name });
     } else if (data.name) {
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { table: data.name });
+        batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(tableId), { table: data.name });
     } else if (data.allowOrdering !== undefined) {
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(tableId), { allowOrdering: data.allowOrdering });
     }

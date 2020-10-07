@@ -14,30 +14,98 @@ const TableStatus = {
     payment: 'payment',
 };
 
+exports.restaurantOrders = functions.firestore
+    .document('restaurants/{restaurantId}/orders/{orderId}')
+    .onUpdate((change, context) => {
+        const before = change.before.data()
+        const after = change.after.data()
+		
+		const restaurant = db.collection('restaurants').doc(context.params.restaurantId).get()
+			.then((querySnapshot) => {
+				if (querySnapshot) {
+					const registrationTokens = querySnapshot.data().registrationTokens
+					if (registrationTokens && change.before.exists) {
+						if (before.status === TableStatus.available && after.status === TableStatus.seated) {
+							sendNotificationToDevices(`Customers seated at ${change.after.data().table}`, `Customers are now seated at ${change.after.data().table}`, 'order', registrationTokens)
+						}
+						if (after.status === TableStatus.ordered) {
+							sendNotificationToDevices(`Order placed at ${change.after.data().table}`, `Customers have placed order at ${change.after.data().table}`, 'order', registrationTokens)
+						}
+						if (after.status === TableStatus.payment) {
+							sendNotificationToDevices(`Payment at ${change.after.data().table}`, `Customers have asked for payment at ${change.after.data().table}`, 'order', registrationTokens)
+						}
+					}
+				}
+				
+				return;
+		    })
+			.catch((error) => {
+		        console.log("Error getting documents: ", error);
+				throw error;
+		    });
+		
+        return true
+    })
+	
+exports.restaurantRequests = functions.firestore
+    .document('restaurants/{restaurantId}/requests/{requestId}')
+    .onUpdate((change, context) => {
+        const before = change.before.data()
+        const after = change.after.data()
+        const beforeRequests = before.requests
+        const afterRequests = after.requests
+		
+		console.log('1')
+		
+		const restaurant = db.collection('restaurants').doc(context.params.restaurantId).get()
+			.then((querySnapshot) => {
+				console.log('2')
+				if (querySnapshot) {
+					console.log('3')
+					const registrationTokens = querySnapshot.data().registrationTokens
+					if (registrationTokens && change.before.exists) {
+						console.log('4')
+						if (beforeRequests.length !== afterRequests.length) {
+							console.log('5')
+							if (afterRequests[afterRequests.length - 1].createdByUser) {
+								console.log('6')
+								sendNotificationToDevices(`New request from customers at ${change.after.data().table}`, `New request from customers at ${change.after.data().table}`, 'request', registrationTokens)
+							}
+						}
+					}
+				}
+				
+				return;
+		    })
+			.catch((error) => {
+		        console.log("Error getting documents: ", error);
+				throw error;
+		    });
+		
+        return true
+    })
+	
+
+
+
 exports.orderServeTimeChanged = functions.firestore
     .document('restaurants/{restaurantId}/orders/{orderId}')
     .onUpdate((change, context) => {
         const before = change.before.data()
         const after = change.after.data()
         const newServeTime = after.serveTime
-        const orderId = context.params.orderId
+        const registrationTokens = change.after.data().registrationTokensCustomers
 		const restaurantName = change.before.data().restaurantName
 
         if (change.before.exists) {
             if (before.status === TableStatus.ordered && after.status === TableStatus.approved) {
-				before.sessionIds.forEach((sessionId) => {
-					sendNotification(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, sessionId, 'order')
-				})
+				sendNotificationToDevices(`Order approved by ${restaurantName}`, `Order will be served in ${getDifferenceInMinutes(newServeTime)} minutes`, 'order', registrationTokens)
             }
             if (before.status === TableStatus.approved && after.status === TableStatus.approved && getDifferenceInMinutes(before.serveTime) !== getDifferenceInMinutes(after.serveTime)) {
-				before.sessionIds.forEach((sessionId) => {
-					sendNotification('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, sessionId, 'order')
-				})
+				sendNotificationToDevices('Serve time updated', `Your serve time has been updated. Your order will now be served in ${getDifferenceInMinutes(newServeTime)} minutes`, 'order', registrationTokens)
             }
 			if (before.status !== TableStatus.available && after.status === TableStatus.available) {
-				before.sessionIds.forEach((sessionId) => {
-					sendNotification(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, sessionId, 'reset')
-				})
+				sendNotificationToDevices(`Thank you for visiting ${restaurantName}`, `Thank you for visiting ${restaurantName}. Please come again.`, 'reset', registrationTokens)
 			}
         }
 		
@@ -50,12 +118,11 @@ exports.orderServed = functions.firestore
         const before = change.before.data()
         const after = change.after.data()
         const orderId = context.params.orderId
+		const registrationTokens = change.after.data().registrationTokensCustomers
 
         if (change.before.exists) {
             if (before.status !== TableStatus.served && after.status === TableStatus.served) {
-				before.sessionIds.forEach((sessionId) => {
-					sendNotification('Your order has been served', 'Enjoy', sessionId, 'order')
-				})
+				sendNotificationToDevices('Your order has been served', 'Enjoy', 'order', registrationTokens)
             }
         }
 
@@ -68,15 +135,13 @@ exports.userReceivesRequest = functions.firestore
 		const before = change.before.data();
         const beforeRequests = before.requests
         const afterRequests = change.after.data().requests
-        const orderId = context.params.requestId
+        const registrationTokens = change.after.data().registrationTokensCustomers
 		const restaurantName = before.restaurantName
 
         if (change.before.exists && afterRequests.length > 1) {
             if (beforeRequests.length !== afterRequests.length) {
                 if (!afterRequests[afterRequests.length - 1].createdByUser) {
-					before.sessionIds.forEach((sessionId) => {
-						sendNotification(`From ${restaurantName}`, `${afterRequests[afterRequests.length - 1].request}`, sessionId, 'request')
-					})
+					sendNotificationToDevices(`From ${restaurantName}`, `${afterRequests[afterRequests.length - 1].request}`, 'request', registrationTokens)
                 }
             }
         }
@@ -99,6 +164,37 @@ function sendNotification(title, body, orderId, category) {
 
     let topic = orderId
     admin.messaging().sendToTopic(topic, payload)
+}
+
+function sendNotificationToDevices(title, body, category, registrationTokens) {
+    let message = {
+        data: {
+            title,
+            body,
+            sound: 'default',
+            content_available: 'true',
+            category,
+			android_channel_id: "groak_channel_id",
+			tag: category,
+        },
+		tokens: registrationTokens
+    }
+
+    admin.messaging().sendMulticast(message)
+}
+
+function fetchRegistrationTokens(restaurantId) {
+	console.log(restaurantId)
+	const restaurant = db.collection('restaurants').doc(restaurantId).get()
+		.then((querySnapshot) => {
+			const registrationTokens = querySnapshot.data().registrationTokens
+	        console.log(registrationTokens)
+			return;
+	    })
+		.catch((error) => {
+	        console.log("Error getting documents: ", error);
+			throw error;
+	    });
 }
 
 /**
