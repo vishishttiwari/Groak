@@ -29,7 +29,7 @@
 .popup .popup-title {
   margin: 5px 20px;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
   min-width: 300px;
 }
 
@@ -49,7 +49,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .popup .popup-content .popup-tip {
@@ -67,7 +67,7 @@
       -ms-flex-align: center;
           align-items: center;
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   color: black;
 }
 
@@ -156,7 +156,7 @@
 }
 
 .popup .popup-content .receipt-price-cell .receipt-price-cell-price {
-  font-weight: 100;
+  font-weight: 300;
   margin: 0;
 }
 
@@ -209,7 +209,7 @@
           justify-content: center;
   background-color: #3d95ce;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 18px;
   border-radius: 5px;
 }
@@ -326,7 +326,7 @@
 }
 
 .receipt .content .receipt-price-cell .receipt-price-cell-price {
-  font-weight: 100;
+  font-weight: 300;
   margin: 0;
 }
 
@@ -366,21 +366,21 @@
 
 .receipt .content .order-dish-cell .order-dish-cell-content .order-dish-cell-name {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-left: 20px;
   margin-right: 20px;
 }
 
 .receipt .content .order-dish-cell .order-dish-cell-content .order-dish-cell-price {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-right: 20px;
   margin-left: auto;
 }
 
 .receipt .content .order-dish-cell .order-dish-cell-extras {
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   margin: 0 20px;
   color: gray;
   white-space: pre-wrap;
@@ -412,7 +412,7 @@
 
 .receipt .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-created {
   font-size: 12px;
-  font-weight: 100;
+  font-weight: 300;
   text-align: right;
   margin-left: auto;
   margin-right: 20px;
@@ -536,7 +536,7 @@
   margin-top: 20px;
   background-color: #D94859;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 13px;
 }
 
@@ -551,7 +551,7 @@
   margin-bottom: 20px;
   background-color: #D94859;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 18px;
 }
 

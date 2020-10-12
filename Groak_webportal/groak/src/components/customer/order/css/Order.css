@@ -51,21 +51,21 @@
 
 .order .content .order-dish-cell .order-dish-cell-content .order-dish-cell-name {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-left: 20px;
   margin-right: 20px;
 }
 
 .order .content .order-dish-cell .order-dish-cell-content .order-dish-cell-price {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-right: 20px;
   margin-left: auto;
 }
 
 .order .content .order-dish-cell .order-dish-cell-extras {
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   margin: 0 20px;
   color: gray;
   white-space: pre-wrap;
@@ -97,7 +97,7 @@
 
 .order .content .order-dish-cell .order-dish-cell-content-1 .order-dish-cell-created {
   font-size: 12px;
-  font-weight: 100;
+  font-weight: 300;
   text-align: right;
   margin-left: auto;
   margin-right: 20px;
@@ -120,7 +120,7 @@
 
 .order .content .order-comment-cell .order-comment-cell-comment {
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -151,7 +151,7 @@
 
 .order .content .order-comment-cell .order-comment-cell-content .order-comment-cell-created {
   font-size: 12px;
-  font-weight: 100;
+  font-weight: 300;
   text-align: right;
   margin-left: auto;
   margin-right: 20px;
@@ -169,7 +169,7 @@
   margin-top: 10px;
   margin-bottom: 0;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .order .footer .footer-button-custom {
@@ -179,7 +179,7 @@
   margin-top: 10px;
   background-color: #D94859;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 18px;
 }
 

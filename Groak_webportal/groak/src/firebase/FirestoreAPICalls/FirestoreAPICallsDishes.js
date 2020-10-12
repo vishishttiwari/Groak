@@ -141,10 +141,9 @@ export const deleteDishFirestoreAPI = (restaurantId, dishId, categories) => {
         const restaurantDoc = await transaction.get(restaurantReference);
         if (restaurantDoc.exists) {
             const { dishes } = restaurantDoc.data();
-
             categories.forEach((doc) => {
                 const category = doc.data();
-                if (category.dishes) {
+                if (category && category.dishes) {
                     const dishes1 = category.dishes;
                     if (dishes1) {
                         const updatedDishes = dishes1.filter((dish) => {
@@ -257,7 +256,7 @@ export const deleteDishesFromArrayFirestoreAPI = (restaurantId, dishIds, categor
             const { dishes } = restaurantDoc.data();
             categories.forEach((doc) => {
                 const category = doc.data();
-                if (category.dishes) {
+                if (category && category.dishes) {
                     const dishes1 = category.dishes;
                     if (dishes1) {
                         const updatedDishes = dishes1.filter((dish) => {

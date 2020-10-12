@@ -9,7 +9,7 @@
     .popup-title {
         margin: 5px $margin;
         font-size: 30px;
-        font-weight: 100;
+        font-weight: 300;
         min-width: 300px;
     }
 
@@ -20,7 +20,7 @@
         align-items: center;
         justify-content: center;
         font-size: 20px;
-        font-weight: 100;
+        font-weight: 300;
 
         .popup-tip {
             display: flex;
@@ -28,7 +28,7 @@
             justify-content: center;
             align-items: center;
             font-size: 15px;
-            font-weight: 100;
+            font-weight: 300;
             color: black;
     
             .popup-tip-content {
@@ -84,7 +84,7 @@
             }
     
             .receipt-price-cell-price {
-                font-weight: 100;
+                font-weight: 300;
                 margin: 0;
             }
         }
@@ -216,7 +216,7 @@
             }
 
             .receipt-price-cell-price {
-                font-weight: 100;
+                font-weight: 300;
                 margin: 0;
             }
         }
@@ -243,14 +243,14 @@
         
                 .order-dish-cell-name {
                     font-size: 20px;
-                    font-weight: 100;
+                    font-weight: 300;
                     margin-left: $margin;
                     margin-right: $margin;
                 }
         
                 .order-dish-cell-price {
                     font-size: 20px;
-                    font-weight: 100;
+                    font-weight: 300;
                     margin-right: $margin;
                     margin-left: auto;
                 }
@@ -258,7 +258,7 @@
         
             .order-dish-cell-extras {
                 font-size: 15px;
-                font-weight: 100;
+                font-weight: 300;
                 margin: 0 $margin;
                 color: gray;
                 white-space: pre-wrap;
@@ -282,7 +282,7 @@
 
                 .order-dish-cell-created {
                     font-size: 12px;
-                    font-weight: 100;
+                    font-weight: 300;
                     text-align: right;
                     margin-left: auto;
                     margin-right: $margin;

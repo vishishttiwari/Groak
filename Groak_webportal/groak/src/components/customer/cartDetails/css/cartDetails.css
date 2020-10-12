@@ -17,7 +17,7 @@
 
 .cart-details .content .cart-details-extras {
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   margin: 0;
   padding: 20px 20px 20px 20px;
   color: gray;
@@ -47,7 +47,7 @@
   margin: 0 auto;
   width: 80%;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .cart-details .content .cart-details-quantity-wrapper .cart-details-quantity .cart-details-remove {
@@ -78,7 +78,7 @@
   margin: 20px auto;
   background-color: #D94859;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 18px;
 }
 /*# sourceMappingURL=CartDetails.css.map */

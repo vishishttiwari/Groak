@@ -127,7 +127,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         case 2:
             styles = { ...styles,
                 tableTitle: { ...styles.tableTitle, fontSize: 30 },
-                suggestionText: { ...styles.suggestionText, fontSize: 25 },
+                suggestionText: { ...styles.suggestionText, fontSize: 20 },
                 qrCodes: { ...styles.qrCodes, flexDirection: 'column' },
                 qr: { ...styles.qr, width: '100%', height: '50%' },
                 qrCode: { ...styles.qrCode, width: '65%', borderRadius: '20', borderWidth: '1pt' },

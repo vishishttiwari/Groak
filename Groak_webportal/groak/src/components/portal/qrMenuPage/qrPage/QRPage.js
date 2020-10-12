@@ -141,19 +141,21 @@ const QRPage = (props) => {
                     </View>
                     <View style={styles4.qrCodesArea}>
                         {qrStylePage.includeTable ? <Text style={styles4.tableTitle}>{tableName}</Text> : null}
-                        {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles4.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
                         <View style={styles4.qrCodes}>
-                            {table && table.qrCodes
-                                ? table.qrCodes.map((qrCode) => {
-                                    return (qrCode
-                                        ? (
-                                            <View key={qrCode.path} style={styles4.qr}>
-                                                <Image style={styles4.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=https://groakapp.com/customer/menu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
-                                                <Text style={styles4.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
-                                            </View>
-                                        ) : null
-                                    );
-                                }) : null}
+                            <>
+                                {qrStylePage.suggestionText && qrStylePage.suggestionText.length > 0 ? <Text style={styles4.suggestionText}>{qrStylePage.suggestionText}</Text> : null}
+                                {table && table.qrCodes
+                                    ? table.qrCodes.map((qrCode) => {
+                                        return (qrCode
+                                            ? (
+                                                <View key={qrCode.path} style={styles4.qr}>
+                                                    <Image style={styles4.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=https://groakapp.com/customer/menu/${restaurantReference}/${tableReference}/${qrCodesMap.get(qrCode.path).id}`} />
+                                                    <Text style={styles4.qrText}>{qrCodesMap.get(qrCode.path).name}</Text>
+                                                </View>
+                                            ) : null
+                                        );
+                                    }) : null}
+                            </>
                         </View>
                     </View>
                     <View style={styles3.advertisement}>

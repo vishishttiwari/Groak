@@ -55,21 +55,21 @@
 
 .cart .content .cart-item-cell .cart-item-cell-content .cart-item-cell-name {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-left: 20px;
   margin-right: 20px;
 }
 
 .cart .content .cart-item-cell .cart-item-cell-content .cart-item-cell-price {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   margin-right: 20px;
   margin-left: auto;
 }
 
 .cart .content .cart-item-cell .cart-item-cell-extras {
   font-size: 15px;
-  font-weight: 100;
+  font-weight: 300;
   margin: 0 20px;
   color: gray;
   white-space: pre-wrap;
@@ -87,7 +87,7 @@
   margin-top: 10px;
   margin-bottom: 0;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .cart .footer .footer-button-custom {
@@ -97,7 +97,7 @@
   margin-top: 10px;
   background-color: #D94859;
   color: white;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 18px;
 }
 

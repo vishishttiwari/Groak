@@ -79,6 +79,7 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     const tableOrdersTotalMap = new Map();
     const tableOrdersPriceMap = new Map();
     const dishesMap = new Map();
+
     await fetchAnalyticsFirestoreAPI(restaurantId, dateRange)
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

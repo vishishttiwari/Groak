@@ -30,7 +30,7 @@ const CustomerRequestButton = (props) => {
                 color="primary"
                 invisible={!visible}
             >
-                <QuestionAnswerIcon color="primary" />
+                <QuestionAnswerIcon color="primary" style={{ color: '#D94859' }} />
             </Badge>
         </Fab>
     );

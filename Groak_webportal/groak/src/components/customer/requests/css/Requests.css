@@ -37,12 +37,12 @@
 
 .requests .content .request-request {
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .requests .content .request-created {
   font-size: 12px;
-  font-weight: 100;
+  font-weight: 300;
   text-align: right;
 }
 

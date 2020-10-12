@@ -28,14 +28,14 @@
         
                 .order-dish-cell-name {
                     font-size: 20px;
-                    font-weight: 100;
+                    font-weight: 300;
                     margin-left: $margin;
                     margin-right: $margin;
                 }
         
                 .order-dish-cell-price {
                     font-size: 20px;
-                    font-weight: 100;
+                    font-weight: 300;
                     margin-right: $margin;
                     margin-left: auto;
                 }
@@ -43,7 +43,7 @@
         
             .order-dish-cell-extras {
                 font-size: 15px;
-                font-weight: 100;
+                font-weight: 300;
                 margin: 0 $margin;
                 color: gray;
                 white-space: pre-wrap;
@@ -67,7 +67,7 @@
 
                 .order-dish-cell-created {
                     font-size: 12px;
-                    font-weight: 100;
+                    font-weight: 300;
                     text-align: right;
                     margin-left: auto;
                     margin-right: $margin;
@@ -86,7 +86,7 @@
     
             .order-comment-cell-comment {
                 font-size: 15px;
-                font-weight: 100;
+                font-weight: 300;
                 margin-left: $margin;
                 margin-right: $margin;
             }
@@ -109,7 +109,7 @@
     
                 .order-comment-cell-created {
                     font-size: 12px;
-                    font-weight: 100;
+                    font-weight: 300;
                     text-align: right;
                     margin-left: auto;
                     margin-right: $margin;
@@ -129,7 +129,7 @@
             margin-top: 10px;
             margin-bottom: 0;
             font-size: 30px;
-            font-weight: 100;
+            font-weight: 300;
         }
 
         .footer-button-custom {

@@ -73,7 +73,7 @@
 
 .tables .tables-canvas .table .table-inside .table-name {
   display: block;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 15px;
   height: 40px;
   margin: 10px 10px 0 10px;
@@ -84,7 +84,7 @@
 
 .tables .tables-canvas .table .table-inside .table-desc {
   display: none;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 15px;
   margin: 10px;
   text-align: center;
@@ -92,7 +92,7 @@
 
 .tables .tables-canvas .table .table-inside .table-time {
   display: none;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 15px;
   margin: 0;
 }

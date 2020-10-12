@@ -37,7 +37,11 @@ export const deleteField = firebase.firestore.FieldValue.delete();
 export const auth = firebase.auth();
 export const storageRef = firebase.storage().ref();
 export const getCurrentDateTime = () => {
-    return firebase.firestore.Timestamp.fromDate(new Date());
+    // return firebase.firestore.Timestamp.fromDate(new Date());
+    return firebase.firestore.Timestamp.now();
+};
+export const getDateTimeInFirebaseFromNormal = (date) => {
+    return firebase.firestore.Timestamp.fromDate(date);
 };
 
 let registrationToken = '';
@@ -47,6 +51,7 @@ export const fetchRegistrationToken = () => {
 };
 
 if (firebase.messaging.isSupported()) {
+    console.log('supported');
     const messaging = firebase.messaging();
     messaging.requestPermission()
         .then(() => {
@@ -61,4 +66,6 @@ if (firebase.messaging.isSupported()) {
     messaging.onMessage((payload) => {
         console.log(payload);
     });
+} else {
+    console.log('no-support :(');
 }
