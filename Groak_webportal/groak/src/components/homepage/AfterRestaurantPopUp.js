@@ -18,6 +18,7 @@ import './css/HomePage.css';
 import { restaurantFeedbackSubmitted } from '../../firebase/FirestoreAPICalls/FirestoreAPICallsAnalytics';
 import { groakTesting } from '../../catalog/Others';
 import { analytics } from '../../firebase/FirebaseLibrary';
+import { AfterRestaurantPopUpOrderingAllowed, AfterRestaurantPopUpOrderingNotAllowed, FeedbackMessagePlaceholder } from '../../catalog/Comments';
 
 const initialState = {
     rating: 3,
@@ -92,7 +93,7 @@ const AfterRestaurantPopUp = (props) => {
         setState({ type: 'hideAfterRestaurantPopUp' });
     };
 
-    const sumbitFeedback = () => {
+    const submitFeedback = () => {
         enqueueSnackbar('Thank you for your feedback', { variant: 'success' });
         setState({ type: 'hideAfterRestaurantPopUp' });
         if (restaurantId && restaurantId.length) {
@@ -120,8 +121,8 @@ const AfterRestaurantPopUp = (props) => {
             </div>
             <DialogContent className="pop-up-after-restaurant-content">
                 {orderingAllowed
-                    ? 'If you would like to pay, have a look at your order again or download your receipt then please scan any QR Code on the table again.'
-                    : ''}
+                    ? AfterRestaurantPopUpOrderingAllowed
+                    : AfterRestaurantPopUpOrderingNotAllowed}
             </DialogContent>
             <DialogActions className="pop-up-after-restaurant-actions">
                 <Box
@@ -154,7 +155,7 @@ const AfterRestaurantPopUp = (props) => {
                 <TextField
                     className="pop-up-after-restaurant-actions-message"
                     label="Message for Restaurant?"
-                    placeholder="Great food, nice ambience :)"
+                    placeholder={FeedbackMessagePlaceholder}
                     fullWidth
                     multiline
                     variant="filled"
@@ -166,7 +167,7 @@ const AfterRestaurantPopUp = (props) => {
                 <Button
                     className="pop-up-after-restaurant-actions-button"
                     type="button"
-                    onClick={sumbitFeedback}
+                    onClick={submitFeedback}
                 >
                     Submit feedback
                 </Button>

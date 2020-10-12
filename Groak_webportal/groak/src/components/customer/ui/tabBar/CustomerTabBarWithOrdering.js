@@ -11,6 +11,7 @@ import Menu from '../../../../assets/icons/tabbar/menu.png';
 import Cart from '../../../../assets/icons/tabbar/waiter.png';
 import Table from '../../../../assets/icons/tabbar/dinner.png';
 import Covid from '../../../../assets/icons/tabbar/corona.png';
+import Rating from '../../../../assets/icons/tabbar/evaluate.png';
 import { fetchCart } from '../../../../catalog/LocalStorage';
 
 const CustomerTabBarWithOrdering = (props) => {
@@ -54,6 +55,9 @@ const CustomerTabBarWithOrdering = (props) => {
                 />
                 {globalState.covidInformationCustomer ? (
                     <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
+                ) : null}
+                {globalState.ratingAllowedCustomer ? (
+                    <Tab icon={<img className="icons" src={Rating} alt="Covid" />} label="Rating" />
                 ) : null}
             </Tabs>
         </Paper>

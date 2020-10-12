@@ -35,7 +35,7 @@ function reducer(state, action) {
 }
 
 const OrderDishCell = (props) => {
-    const { restaurantId, dishId, name, price, quantity, extras, localBadge, created, showLikes } = props;
+    const { restaurantId, dishId, name, price, quantity, extras, localBadge, created, showLikes, ratingAllowedCustomer } = props;
     const [state, setState] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const OrderDishCell = (props) => {
                 {localBadge ? <p className="order-dish-cell-local-badge">Your Order</p> : null}
                 <p className="order-dish-cell-created">{created}</p>
             </div>
-            {showLikes ? (
+            {showLikes && ratingAllowedCustomer ? (
                 <div className="order-dish-cell-content-2">
                     {state.responded
                         ? (
@@ -154,12 +154,14 @@ OrderDishCell.propTypes = {
     localBadge: PropTypes.bool.isRequired,
     created: PropTypes.string.isRequired,
     showLikes: PropTypes.bool,
+    ratingAllowedCustomer: PropTypes.bool,
 };
 
 OrderDishCell.defaultProps = {
     restaurantId: '',
     dishId: '',
     showLikes: false,
+    ratingAllowedCustomer: false,
 };
 
 export default React.memo(OrderDishCell);

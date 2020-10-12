@@ -118,6 +118,7 @@ const Receipt = (props) => {
                     localBadge={dish.local}
                     created={getTimeInAMPMFromTimeStamp(dish.created)}
                     showLikes
+                    ratingAllowedCustomer={globalState.ratingAllowedCustomer}
                 />
             );
         } if (dish.local) {
@@ -130,6 +131,7 @@ const Receipt = (props) => {
                     localBadge={dish.local}
                     created={getTimeInAMPMFromTimeStamp(dish.created)}
                     showLikes
+                    ratingAllowedCustomer={globalState.ratingAllowedCustomer}
                 />
             );
         }

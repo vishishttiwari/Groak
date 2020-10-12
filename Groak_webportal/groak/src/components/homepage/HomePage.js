@@ -19,6 +19,7 @@ import Computer4 from '../../assets/images/homepage/computer_4_1.png';
 import { analytics } from '../../firebase/FirebaseLibrary';
 import { groakTesting } from '../../catalog/Others';
 import AfterRestaurantPopUp from './AfterRestaurantPopUp';
+import { fetchRestaurantFeedback } from '../../catalog/LocalStorage';
 
 const initialState = {
     videoPopUp: false,
@@ -81,7 +82,7 @@ const HomePage = (props) => {
                     </iframe>
                 </div>
             </div>
-            {globalState.scannedCustomer ? (
+            {globalState.ratingAllowedCustomer && globalState.scannedCustomer && !fetchRestaurantFeedback(globalState.restaurantIdCustomer) ? (
                 <AfterRestaurantPopUp
                     restaurantId={globalState.restaurantIdCustomer}
                     restaurantName={globalState.restaurantCustomer.name}

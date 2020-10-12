@@ -12,12 +12,14 @@ const initialState = {
     restaurantIdCustomer: '',
     restaurantCustomer: null,
     orderAllowedCustomer: false,
+    ratingAllowedCustomer: false,
     covidInformationCustomer: false,
 };
 
 function reducerLocal(state, action) {
     let updatedRestaurant;
     let updatedCovidInformation;
+    let updatedRatingInformation = false;
     switch (action.type) {
         case 'fetchUserPortal':
             return { ...state, userPortal: action.user, restaurantIdPortal: action.restaurantId, emailPortal: action.email, restaurantPortal: action.restaurant };
@@ -27,7 +29,12 @@ function reducerLocal(state, action) {
             return { ...state, registrationTokenPortal: action.registrationToken };
         case 'setRestaurantCustomer':
             updatedCovidInformation = ((action.restaurant.covidMessage && action.restaurant.covidMessage.length > 0) || (action.restaurant.covidGuidelines && action.restaurant.covidGuidelines.length > 0));
-            return { ...state, restaurantCustomer: action.restaurant, restaurantIdCustomer: action.restaurantId, orderAllowedCustomer: action.orderAllowed, scannedCustomer: true, covidInformationCustomer: updatedCovidInformation };
+            if (action.restaurant.allowRating) {
+                if (action.restaurant.allowRating.restaurant && action.restaurant.allowRating.groak) {
+                    updatedRatingInformation = true;
+                }
+            }
+            return { ...state, restaurantCustomer: action.restaurant, restaurantIdCustomer: action.restaurantId, orderAllowedCustomer: action.orderAllowed, ratingAllowedCustomer: updatedRatingInformation, scannedCustomer: true, covidInformationCustomer: updatedCovidInformation };
         case 'setTabValueCustomer':
             if (action.tabValue !== state.tabValueCustomer) {
                 return { ...state, tabValueCustomer: action.tabValue };

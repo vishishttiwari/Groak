@@ -8,6 +8,7 @@ import { context } from '../../../../globalState/globalState';
 import './css/CustomTabBar.css';
 import Menu from '../../../../assets/icons/tabbar/menu.png';
 import Covid from '../../../../assets/icons/tabbar/corona.png';
+import Rating from '../../../../assets/icons/tabbar/evaluate.png';
 
 const CustomerTabBarWithoutOrdering = () => {
     const { globalState, setGlobalState } = useContext(context);
@@ -25,7 +26,12 @@ const CustomerTabBarWithoutOrdering = () => {
                 aria-label="icon label tabs example"
             >
                 <Tab icon={<img className="icons" src={Menu} alt="Menu" />} label="Menu" />
-                <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
+                {globalState.covidInformationCustomer ? (
+                    <Tab icon={<img className="icons" src={Covid} alt="Covid" />} label="Covid" />
+                ) : null}
+                {globalState.ratingAllowedCustomer ? (
+                    <Tab icon={<img className="icons" src={Rating} alt="Covid" />} label="Rating" />
+                ) : null}
             </Tabs>
         </Paper>
     );

@@ -204,6 +204,33 @@ export const fetchLikedImages = (restaurantId, dishId) => {
 };
 
 /**
+ * This function is used for saving restaurant feedback
+ *
+ * @param {*} restaurantId
+ */
+export const saveRestaurantFeedback = (restaurantId) => {
+    let feedback = JSON.parse(localStorage.getItem(`groak-${restaurantId}-feedback`));
+    if (feedback === undefined || feedback === null) {
+        feedback = true;
+    }
+    localStorage.setItem(`groak-${restaurantId}-feedback`, JSON.stringify(feedback));
+    localStorage.setItem(`groak-${restaurantId}-time`, JSON.stringify(getCurrentDateTime()));
+};
+
+/**
+ * This function is used to see if a feed back for a restaurant has already been provided
+ *
+ * @param {*} restaurantId
+ */
+export const fetchRestaurantFeedback = (restaurantId) => {
+    let feedback = JSON.parse(localStorage.getItem(`groak-${restaurantId}-feedback`));
+    if (feedback === undefined || feedback === null) {
+        feedback = false;
+    }
+    return feedback;
+};
+
+/**
  * Delete all orders if the last update was more than 6 hours ago
  *
  * @param {*} restaurantId

@@ -234,6 +234,18 @@ const RestaurantSettings = (props) => {
                     <MenuItem value={false}>No</MenuItem>
                 </Select>
             </FormControl>
+            <p>Allow Rating:</p>
+            <FormControl disabled={state.restaurant.allowRating ? !state.restaurant.allowRating.groak : false}>
+                <Select
+                    value={state.restaurant.allowRating ? state.restaurant.allowRating.restaurant : false}
+                    onChange={(event) => { setState({ type: 'setAllowRating', allowRating: event.target.value }); }}
+                    label="Age"
+                    variant="outlined"
+                >
+                    <MenuItem value>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                </Select>
+            </FormControl>
             <p>
                 QR Menu Pages
             </p>

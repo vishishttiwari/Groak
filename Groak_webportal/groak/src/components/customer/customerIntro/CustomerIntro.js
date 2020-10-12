@@ -15,6 +15,7 @@ import Menu from '../menu/Menu';
 import Cart from '../cart/Cart';
 import Order from '../order/Order';
 import Covid from '../covid/Covid';
+import Rating from '../rating/Rating';
 import { fetchCategoriesAPI, unsubscribeFetchOrderAPI } from './CustomerIntroAPICalls';
 import Spinner from '../../ui/spinner/Spinner';
 import { frontDoorQRMenuPageId, groakTesting } from '../../../catalog/Others';
@@ -94,6 +95,30 @@ const CustomerIntro = (props) => {
      */
     const getTabPanel = () => {
         if (globalState) {
+            if (globalState.covidInformationCustomer) {
+                if (globalState.orderAllowedCustomer) {
+                    if (globalState.tabValueCustomer === 0) {
+                        return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
+                    } if (globalState.tabValueCustomer === 1) {
+                        return <Cart setState={setState} />;
+                    } if (globalState.tabValueCustomer === 2) {
+                        return <Order order={state.order} />;
+                    } if (globalState.tabValueCustomer === 3) {
+                        return <Covid restaurant={state.restaurant} />;
+                    } if (globalState.tabValueCustomer === 4) {
+                        return <Rating restaurantId={state.restaurant.id} />;
+                    }
+                    return null;
+                }
+                if (globalState.tabValueCustomer === 0) {
+                    return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
+                } if (globalState.tabValueCustomer === 1) {
+                    return <Covid restaurant={state.restaurant} />;
+                } if (globalState.tabValueCustomer === 2) {
+                    return <Rating restaurantId={state.restaurant.id} />;
+                }
+                return null;
+            }
             if (globalState.orderAllowedCustomer) {
                 if (globalState.tabValueCustomer === 0) {
                     return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
@@ -102,14 +127,14 @@ const CustomerIntro = (props) => {
                 } if (globalState.tabValueCustomer === 2) {
                     return <Order order={state.order} />;
                 } if (globalState.tabValueCustomer === 3) {
-                    return <Covid restaurant={state.restaurant} />;
+                    return <Rating restaurantId={state.restaurant.id} />;
                 }
                 return null;
             }
             if (globalState.tabValueCustomer === 0) {
                 return <Menu menuItems={state.menuItems} categoryNames={state.categoryNames} restaurant={state.restaurant} />;
             } if (globalState.tabValueCustomer === 1) {
-                return <Covid restaurant={state.restaurant} />;
+                return <Rating restaurantId={state.restaurant.id} />;
             }
             return null;
         }
@@ -139,7 +164,7 @@ const CustomerIntro = (props) => {
                                             <CustomerTabBarWithOrdering restaurantId={match.params.restaurantid} visible={state && state.order && state.order.newOrderUpdateForUser} />
                                         </>
                                     )
-                                        : globalState.covidInformationCustomer
+                                        : globalState.covidInformationCustomer || globalState.ratingAllowedCustomer
                                             ? <CustomerTabBarWithoutOrdering />
                                             : null}
                                 </>

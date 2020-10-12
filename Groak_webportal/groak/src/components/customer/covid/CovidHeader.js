@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-const MenuHeader = () => {
+const CovidHeader = () => {
     return (
         <div className="header">
             <div className="header-content">
@@ -13,4 +13,4 @@ const MenuHeader = () => {
     );
 };
 
-export default React.memo(MenuHeader);
+export default React.memo(CovidHeader);

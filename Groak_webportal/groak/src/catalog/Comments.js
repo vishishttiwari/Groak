@@ -88,6 +88,7 @@ export const ImageSubjectToChange = 'Disclaimer: The images depicted are not rep
 
 export const CartEmpty = 'You can add dishes from the menu tab';
 export const OrderEmpty = 'You can place your orders from the cart tab';
+export const FeedbackSubmitted = 'Thank you for your feedback!';
 
 export const OrderOrdered = 'Your order has been requested. Pending for approval.';
 export const OrderServed = 'Your order has been served. Enjoy!';
@@ -111,3 +112,7 @@ export const CovidMessageSubheader = (restaurantName) => {
     return `Measures taken by ${restaurantName} to reduce the spread`;
 };
 export const CovidGuidelineSubheader = 'Covid directives in your area';
+
+export const AfterRestaurantPopUpOrderingAllowed = 'If you would like to pay, have a look at your order again or download your receipt then please scan any QR Code on the table again.';
+export const AfterRestaurantPopUpOrderingNotAllowed = 'To view the menu, scan the QR code again.';
+export const FeedbackMessagePlaceholder = 'Great food, nice ambience! The server was very friendly.';

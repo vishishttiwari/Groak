@@ -75,6 +75,13 @@ function localReducer(state, action) {
         case 'setAllowOrdering':
             updatedRestaurant = { ...state.restaurant, allowOrdering: { restaurant: action.allowOrdering, groak: state.restaurant.allowOrdering.groak } };
             return { ...state, restaurant: updatedRestaurant };
+        case 'setAllowRating':
+            if (state.restaurant.allowRating) {
+                updatedRestaurant = { ...state.restaurant, allowRating: { restaurant: action.allowRating, groak: state.restaurant.allowRating.groak } };
+            } else {
+                updatedRestaurant = { ...state.restaurant, allowRating: { restaurant: action.allowRating, groak: true } };
+            }
+            return { ...state, restaurant: updatedRestaurant };
         case 'setLogo':
             return { ...state, logo: action.logo };
         case 'setImage':
