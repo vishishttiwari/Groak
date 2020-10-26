@@ -3,7 +3,7 @@ import { getDistance } from 'geolib';
 /**
  * 200 meters
  */
-const distanceThresholdMeters = 1000;
+const distanceThresholdMeters = 200;
 
 /**
  * Checks if the coordinate is near 200 meters to current location
