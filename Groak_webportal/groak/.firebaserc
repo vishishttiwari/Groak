@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "groak-1"
+  },
+  "targets": {
+    "groak-1": {
+      "hosting": {
+        "groak-test": [
+          "groak-test"
+        ]
+      }
+    }
   }
 }

@@ -24,8 +24,28 @@ export const updateOrderFirestoreAPI = (restaurantId, orderId, data) => {
     const batch = db.batch();
 
     if (data.status === TableStatus.available) {
-        batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status: data.status, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], registrationTokensCustomers: [], tableAvailabilityId: uuidv4() });
-        const newData = { ...data, updated: getCurrentDateTime(), comments: [], dishes: [], items: 0, newRequest: false, newRequestForUser: true, newOrderUpdateForUser: false, sessionIds: [], registrationTokensCustomers: [], tableAvailabilityId: uuidv4() };
+        batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { status:
+        data.status,
+        newRequest: false,
+        newRequestForUser: true,
+        newOrderUpdateForUser: false,
+        callWaiter: false,
+        sessionIds: [],
+        registrationTokensCustomers: [],
+        tableAvailabilityId: uuidv4() });
+        const newData = { ...data,
+            updated: getCurrentDateTime(),
+            comments: [],
+            dishes: [],
+            items: 0,
+            newRequest: false,
+            newRequestForUser: true,
+            newOrderUpdateForUser: false,
+            callWaiter: false,
+            callWaiterCount: 0,
+            sessionIds: [],
+            registrationTokensCustomers: [],
+            tableAvailabilityId: uuidv4() };
         batch.update(db.collection(`restaurants/${restaurantId}/orders`).doc(orderId), newData);
         batch.update(db.collection(`restaurants/${restaurantId}/requests`).doc(orderId), { requests: DemoRequest, sessionIds: [], registrationTokensCustomers: [] });
     } else if (data.status === TableStatus.approved) {
@@ -207,4 +227,24 @@ export const updateOrderFromUserWhenUserSeenOrderFirestoreAPI = (restaurantId, o
     batch.update(db.collection(`restaurants/${restaurantId}/tables`).doc(orderId), { newOrderUpdateForUser: false });
 
     return batch.commit();
+};
+
+export const updateOrderWhenWaiterIsCalledFirestoreAPI = (restaurantId, orderId, callWaiterNew) => {
+    const orderReference = createOrderReference(restaurantId, orderId);
+    const tableReference = createTableReferenceInRestaurantCollections(restaurantId, orderId);
+
+    return db.runTransaction(async (transaction) => {
+        const orderDoc = await transaction.get(orderReference);
+        if (orderDoc.exists) {
+            const { callWaiterCount } = orderDoc.data();
+
+            if (callWaiterNew) {
+                transaction.update(tableReference, { callWaiter: callWaiterNew, callWaiterCount: callWaiterCount + 1 });
+                transaction.update(orderReference, { callWaiter: callWaiterNew, callWaiterCount: callWaiterCount + 1 });
+            } else {
+                transaction.update(tableReference, { callWaiter: callWaiterNew });
+                transaction.update(orderReference, { callWaiter: callWaiterNew });
+            }
+        }
+    });
 };

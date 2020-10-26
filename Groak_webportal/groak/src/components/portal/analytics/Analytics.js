@@ -157,6 +157,8 @@ const initialState = {
     dishesLikes: [],
 
     totalRating: 0,
+    totalFoodRating: 0,
+    totalServerRating: 0,
     toalRatingEntries: 0,
     totalRatingEntriesArray: {
         labels: [],
@@ -173,6 +175,34 @@ const initialState = {
         ],
     },
     totalRatingArray: {
+        labels: [],
+        datasets: [
+            {
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: 'rgba(255,99,132,1)',
+                borderColor: 'rgba(255,99,132,1)',
+                hoverBackgroundColor: 'rgba(255,99,132,1)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+                data: [],
+            },
+        ],
+    },
+    totalFoodRatingArray: {
+        labels: [],
+        datasets: [
+            {
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: 'rgba(255,99,132,1)',
+                borderColor: 'rgba(255,99,132,1)',
+                hoverBackgroundColor: 'rgba(255,99,132,1)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+                data: [],
+            },
+        ],
+    },
+    totalServerRatingArray: {
         labels: [],
         datasets: [
             {
@@ -205,6 +235,8 @@ function reducer(state, action) {
     let newTableOrdersPriceData;
     let newTotalRatingEntriesArray;
     let newTotalRatingArray;
+    let newTotalFoodRatingArray;
+    let newTotalServerRatingArray;
     switch (action.type) {
         case 'setAnalyticsType':
             return { ...state, analyticsType: action.analyticsType };
@@ -227,6 +259,8 @@ function reducer(state, action) {
 
             newTotalRatingEntriesArray = { ...state.totalRatingEntriesArray, labels: action.labels, datasets: [{ ...(state.totalRatingEntriesArray.datasets[0]), data: action.totalRatingEntriesArray }] };
             newTotalRatingArray = { ...state.totalRatingArray, labels: action.labels, datasets: [{ ...(state.totalRatingArray.datasets[0]), data: action.totalRatingArray }] };
+            newTotalFoodRatingArray = { ...state.totalFoodRatingArray, labels: action.labels, datasets: [{ ...(state.totalFoodRatingArray.datasets[0]), data: action.totalFoodRatingArray }] };
+            newTotalServerRatingArray = { ...state.totalServerRatingArray, labels: action.labels, datasets: [{ ...(state.totalServerRatingArray.datasets[0]), data: action.totalServerRatingArray }] };
 
             return { ...state,
                 totalUsers: action.totalUsers,
@@ -249,9 +283,13 @@ function reducer(state, action) {
                 dishesLikes: action.dishesLikes,
 
                 totalRating: action.totalRating,
+                totalFoodRating: action.totalFoodRating,
+                totalServerRating: action.totalServerRating,
                 toalRatingEntries: action.toalRatingEntries,
                 totalRatingEntriesArray: newTotalRatingEntriesArray,
                 totalRatingArray: newTotalRatingArray,
+                totalFoodRatingArray: newTotalFoodRatingArray,
+                totalServerRatingArray: newTotalServerRatingArray,
                 messages: action.messages,
 
                 loadingSpinner: false };
@@ -305,9 +343,13 @@ const Analytics = () => {
             return (
                 <RestaurantAnalytics
                     totalRating={state.totalRating}
+                    totalFoodRating={state.totalFoodRating}
+                    totalServerRating={state.totalServerRating}
                     toalRatingEntries={state.toalRatingEntries}
                     totalRatingEntriesArray={state.totalRatingEntriesArray}
                     totalRatingArray={state.totalRatingArray}
+                    totalFoodRatingArray={state.totalFoodRatingArray}
+                    totalServerRatingArray={state.totalServerRatingArray}
                     messages={state.messages}
                 />
             );

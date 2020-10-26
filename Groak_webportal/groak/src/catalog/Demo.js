@@ -3,6 +3,7 @@
  * It also contains items that are added as placeholders in text fields.
  */
 import { v4 as uuidv4 } from 'uuid';
+import * as moment from 'moment-timezone';
 import { getCurrentDateTime, createGeoPoint, fetchRegistrationToken } from '../firebase/FirebaseLibrary';
 import { createOrderReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 import { createDishReference } from '../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
@@ -125,6 +126,38 @@ export const createDemoRestaurant = (restaurantId, restaurantName, address, qrCo
         },
         payments: [DemoRestaurantTips, DemoRestaurantSalesTax],
         registrationTokens: DemoRegistrationTokens(),
+        timezone: moment.tz.guess(true) ? moment.tz.guess(true) : 'America/Los_Angeles',
+        smsNotificationRestaurant: { restaurant: false,
+            groak: true,
+            phones: [],
+            cases: [
+                {
+                    title: 'Upon waiter requested',
+                    id: 'waiter_called',
+                    allowed: false,
+                },
+                {
+                    title: 'Upon customers seating',
+                    id: 'customers_seated',
+                    allowed: false,
+                },
+                {
+                    title: 'Upon order placed',
+                    id: 'order_placed',
+                    allowed: false,
+                },
+                {
+                    title: 'Upon request received',
+                    id: 'request_received',
+                    allowed: false,
+                },
+                {
+                    title: 'Upon payment',
+                    id: 'payment_asked',
+                    allowed: false,
+                },
+            ],
+        },
     };
 };
 
@@ -243,6 +276,8 @@ export const createDemoTable = (restaurantId, restaurantName, tableId, qrCodeId)
         newRequest: false,
         newRequestForUser: true,
         newOrderUpdateForUser: false,
+        callWaiter: false,
+        callWaiterCount: 0,
         sessionIds: [],
         registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),
@@ -279,6 +314,8 @@ export const createDemoOrder = (restaurantId, restaurantName, orderId, dishId) =
         newRequest: false,
         newRequestForUser: true,
         newOrderUpdateForUser: false,
+        callWaiter: false,
+        callWaiterCount: 0,
         sessionIds: [],
         registrationTokensCustomers: [],
         tableAvailabilityId: uuidv4(),

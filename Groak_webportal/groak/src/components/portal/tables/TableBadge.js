@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { TableStatus } from '../../../catalog/Others';
 import FoodBadgeImage from '../../../assets/icons/tableBadge/food6.png';
 import RequestBadgeImage from '../../../assets/icons/tableBadge/request1.png';
+import WaiterBadgeImage from '../../../assets/icons/tableBadge/waiter1.png';
 import PaymentBadgeImage from '../../../assets/icons/tableBadge/payment1.png';
 import OverdueBadgeImage from '../../../assets/icons/tableBadge/overdue1.png';
 import SeatedBadgeImage from '../../../assets/icons/tableBadge/seated.png';
@@ -22,6 +23,8 @@ const TableBadge = (props) => {
         image = <img draggable="false" className="table-badge-image" src={FoodBadgeImage} alt="foodBadgeImage" />;
     } else if (table.status !== TableStatus.ordered && table.status !== TableStatus.payment && table.newRequest) {
         image = <img draggable="false" className="table-badge-image" src={RequestBadgeImage} alt="requestbadgeImage" />;
+    } else if (table.status !== TableStatus.ordered && table.status !== TableStatus.payment && table.callWaiter) {
+        image = <img draggable="false" className="table-badge-image" src={WaiterBadgeImage} alt="waiterbadgeImage" />;
     } else if (table.status === TableStatus.payment) {
         if (table.paymentMethod && table.paymentMethod === 'venmo') {
             image = <img draggable="false" className="table-badge-image" src={VenmoBadgeIcon} alt="venmobadgeImage" />;

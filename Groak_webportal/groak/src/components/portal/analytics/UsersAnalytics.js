@@ -36,7 +36,7 @@ const UsersAnalytics = (props) => {
                     maintainAspectRatio: true }}
             />
             <div className="horizontal-line" />
-            <h2>{`Total QR Code Scanned: ${totalScans}`}</h2>
+            <h2>{`Total QR Codes Scanned: ${totalScans}`}</h2>
             <p>This is the total number of times a QR code from your restaurant was scanned. Note: One user normally scans more than one QR Codes.</p>
             <Line
                 data={totalScansData}

@@ -24,7 +24,8 @@ import CustomerNotFound from '../ui/notFound/CustomerNotFound';
 import { FeedbackMessagePlaceholder, FeedbackSubmitted } from '../../../catalog/Comments';
 
 const initialState = {
-    rating: 3,
+    foodRating: 5,
+    serverRating: 5,
     rated: false,
     message: '',
     submitted: false,
@@ -32,8 +33,10 @@ const initialState = {
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'setRating':
-            return { ...state, rating: action.rating };
+        case 'setFoodRating':
+            return { ...state, foodRating: action.rating };
+        case 'setServerRating':
+            return { ...state, serverRating: action.rating };
         case 'setMessage':
             return { ...state, message: action.message };
         case 'setSubmitted':
@@ -46,7 +49,7 @@ function reducer(state, action) {
 const customIcons = {
     1: {
         icon: <SentimentVeryDissatisfiedIcon
-            style={{ height: '80px', width: '50px' }}
+            style={{ height: '50px', width: '50px' }}
         />,
         label: 'Very Dissatisfied',
     },
@@ -86,7 +89,7 @@ IconContainer.propTypes = {
 };
 
 const Covid = (props) => {
-    const { restaurantId } = props;
+    const { restaurantId, scrollHandler } = props;
     const [state, setStateLocal] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -96,16 +99,16 @@ const Covid = (props) => {
         setStateLocal({ type: 'setSubmitted', submitted: true });
         if (restaurantId && restaurantId.length) {
             if (groakTesting) {
-                analytics.logEvent('restaurant_feedback_submitted_web_testing', { restaurantId, rating: state.rating, messageWritten: state.message && state.message.length > 0 });
+                analytics.logEvent('restaurant_feedback_submitted_web_testing', { restaurantId, foodRating: state.foodRating, serverRating: state.serverRating, messageWritten: state.message && state.message.length > 0 });
             } else {
-                restaurantFeedbackSubmitted(restaurantId, state.rating, state.message);
-                analytics.logEvent('restaurant_feedback_submitted_web', { restaurantId, rating: state.rating, messageWritten: state.message && state.message.length > 0 });
+                restaurantFeedbackSubmitted(restaurantId, state.foodRating, state.serverRating, state.message);
+                analytics.logEvent('restaurant_feedback_submitted_web', { restaurantId, foodRating: state.foodRating, serverRating: state.serverRating, messageWritten: state.message && state.message.length > 0 });
             }
         }
     };
 
     return (
-        <div className="rating">
+        <div className="rating" onPointerDown={scrollHandler}>
             <RatingHeader />
             {state.submitted || fetchRestaurantFeedback(restaurantId) ? (
                 <div className="content-not-found">
@@ -114,7 +117,7 @@ const Covid = (props) => {
             ) : (
                 <>
                     <div className="content">
-                        <CustomerTopic header="Please rate your visit!" />
+                        <CustomerTopic header="Please rate food and drinks!" />
                         <Box
                             className="ratings-box"
                             component="fieldset"
@@ -125,13 +128,35 @@ const Covid = (props) => {
                                 <Rating
                                     name="restaurant-rating"
                                     className="rating"
-                                    value={state.rating}
-                                    defaultValue={3}
+                                    value={state.foodRating}
+                                    defaultValue={5}
                                     size="large"
                                     getLabelText={(value) => { return customIcons[value].label; }}
                                     IconContainerComponent={IconContainer}
                                     onChange={(event, newValue) => {
-                                        setStateLocal({ type: 'setRating', rating: newValue });
+                                        setStateLocal({ type: 'setFoodRating', rating: newValue });
+                                    }}
+                                />
+                            </div>
+                        </Box>
+                        <CustomerTopic header="Please rate your server!" />
+                        <Box
+                            className="ratings-box"
+                            component="fieldset"
+                            mb={3}
+                            borderColor="transparent"
+                        >
+                            <div className="ratings">
+                                <Rating
+                                    name="restaurant-rating"
+                                    className="rating"
+                                    value={state.serverRating}
+                                    defaultValue={5}
+                                    size="large"
+                                    getLabelText={(value) => { return customIcons[value].label; }}
+                                    IconContainerComponent={IconContainer}
+                                    onChange={(event, newValue) => {
+                                        setStateLocal({ type: 'setServerRating', rating: newValue });
                                     }}
                                 />
                             </div>
@@ -162,6 +187,7 @@ const Covid = (props) => {
 
 Covid.propTypes = {
     restaurantId: PropTypes.string.isRequired,
+    scrollHandler: PropTypes.func.isRequired,
 };
 
 export default React.memo(Covid);

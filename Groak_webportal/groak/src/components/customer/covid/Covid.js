@@ -10,10 +10,10 @@ import CustomerInfo from '../ui/info/CustomerInfo';
 import { CovidMessageSubheader, CovidGuidelineSubheader } from '../../../catalog/Comments';
 
 const Covid = (props) => {
-    const { restaurant } = props;
+    const { restaurant, scrollHandler } = props;
 
     return (
-        <div className="covid">
+        <div className="covid" onPointerDown={scrollHandler}>
             <CovidHeader />
             <div className="content">
                 <CustomerTopic header="Restaurant Message" subheader={CovidMessageSubheader(restaurant.name)} />
@@ -32,6 +32,7 @@ const Covid = (props) => {
 
 Covid.propTypes = {
     restaurant: PropTypes.object.isRequired,
+    scrollHandler: PropTypes.func.isRequired,
 };
 
 export default React.memo(Covid);

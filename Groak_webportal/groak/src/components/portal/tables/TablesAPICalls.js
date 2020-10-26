@@ -2,7 +2,7 @@
  * This class includes tables related functions such as fetching table, updating table etc.
  */
 import { addTableFirestoreAPI, fetchTablesRealtimeFirestoreAPI, fetchTableFirestoreAPI, updateTableFirestoreAPI, deleteTableFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsTables';
-import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest } from '../../../catalog/NotificationsComments';
+import { ErrorAddingTable, ErrorFetchingTables, ErrorFetchingTable, ErrorUpdatingTable, ErrorDeletingTable, TableNotFound, OrderAdded, OrderReadyForPayment, ErrorUnsubscribingTables, SpecialRequest, WaiterCalled } from '../../../catalog/NotificationsComments';
 import { TableStatus } from '../../../catalog/Others';
 
 let tablesSnapshot;
@@ -65,7 +65,7 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
                 });
                 newTables.push({ id: change.doc.id, ...change.doc.data() });
                 if (change.type === 'modified') {
-                    const { status, newRequest } = change.doc.data();
+                    const { status, newRequest, callWaiter } = change.doc.data();
                     // This if is used to check if changes have occurred in status. We dont
                     // want to report any changes that occur on lets say the x and y coordinates of the table etc.
                     if (oldStatus !== status) {
@@ -77,6 +77,9 @@ export const fetchTablesAPI = async (restaurantId, setState, snackbar) => {
                     }
                     if (oldNewRequest !== newRequest) {
                         snackbar(SpecialRequest(change.doc.data().name), { variant: 'success' });
+                    }
+                    if (callWaiter) {
+                        snackbar(WaiterCalled(change.doc.data().name), { variant: 'success' });
                     }
                 }
             });

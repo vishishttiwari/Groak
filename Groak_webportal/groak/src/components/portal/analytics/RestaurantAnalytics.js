@@ -16,13 +16,15 @@ import { randomNumber } from '../../../catalog/Others';
 import { getDateTimeInStringFormat } from '../../../catalog/TimesDates';
 
 const RestaurantAnalytics = (props) => {
-    const { totalRating, toalRatingEntries, totalRatingEntriesArray, totalRatingArray, messages } = props;
+    const { totalRating, totalFoodRating, totalServerRating, toalRatingEntries, totalRatingEntriesArray, totalRatingArray, totalFoodRatingArray, totalServerRatingArray, messages } = props;
+
+    console.log(totalServerRatingArray);
 
     return (
         <>
-            <h2 style={{ marginTop: '0px' }}>{`Final Average Rating: ${totalRating.toFixed(2)}/5`}</h2>
+            <h2 style={{ marginTop: '0px' }}>{`Final Average Food Rating: ${totalFoodRating.toFixed(2)}/5`}</h2>
             <Line
-                data={totalRatingArray}
+                data={totalFoodRatingArray}
                 redraw
                 legend={{
                     display: false,
@@ -44,7 +46,31 @@ const RestaurantAnalytics = (props) => {
                     maintainAspectRatio: true }}
             />
             <div className="horizontal-line" />
-            <h2>{`Total Rating Submitted: ${toalRatingEntries}`}</h2>
+            <h2 style={{ marginTop: '0px' }}>{`Final Average Server Rating: ${totalServerRating.toFixed(2)}/5`}</h2>
+            <Line
+                data={totalServerRatingArray}
+                redraw
+                legend={{
+                    display: false,
+                }}
+                options={{
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: 'rgba(0, 0, 0, 0)',
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                precision: 0,
+                            },
+                        }],
+                    },
+                    maintainAspectRatio: true }}
+            />
+            <div className="horizontal-line" />
+            <h2>{`Total Ratings Submitted: ${toalRatingEntries}`}</h2>
             <Line
                 data={totalRatingEntriesArray}
                 redraw
@@ -102,9 +128,13 @@ const RestaurantAnalytics = (props) => {
 
 RestaurantAnalytics.propTypes = {
     totalRating: PropTypes.number.isRequired,
+    totalFoodRating: PropTypes.number.isRequired,
+    totalServerRating: PropTypes.number.isRequired,
     toalRatingEntries: PropTypes.number.isRequired,
     totalRatingEntriesArray: PropTypes.object.isRequired,
     totalRatingArray: PropTypes.object.isRequired,
+    totalFoodRatingArray: PropTypes.object.isRequired,
+    totalServerRatingArray: PropTypes.object.isRequired,
     messages: PropTypes.array.isRequired,
 };
 

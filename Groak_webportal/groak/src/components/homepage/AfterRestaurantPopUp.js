@@ -21,15 +21,18 @@ import { analytics } from '../../firebase/FirebaseLibrary';
 import { AfterRestaurantPopUpOrderingAllowed, AfterRestaurantPopUpOrderingNotAllowed, FeedbackMessagePlaceholder } from '../../catalog/Comments';
 
 const initialState = {
-    rating: 3,
+    foodRating: 5,
+    serverRating: 5,
     rated: false,
     message: '',
 };
 
 function reducer(state, action) {
     switch (action.type) {
-        case 'setRating':
-            return { ...state, rating: action.rating };
+        case 'setFoodRating':
+            return { ...state, foodRating: action.rating };
+        case 'setServerRating':
+            return { ...state, serverRating: action.rating };
         case 'setMessage':
             return { ...state, message: action.message };
         default:
@@ -98,10 +101,10 @@ const AfterRestaurantPopUp = (props) => {
         setState({ type: 'hideAfterRestaurantPopUp' });
         if (restaurantId && restaurantId.length) {
             if (groakTesting) {
-                analytics.logEvent('restaurant_feedback_submitted_web_testing', { restaurantId, rating: state.rating, messageWritten: state.message && state.message.length > 0 });
+                analytics.logEvent('restaurant_feedback_submitted_web_testing', { restaurantId, foodRating: state.foodRating, serverRating: state.serverRating, messageWritten: state.message && state.message.length > 0 });
             } else {
-                restaurantFeedbackSubmitted(restaurantId, state.rating, state.message);
-                analytics.logEvent('restaurant_feedback_submitted_web', { restaurantId, rating: state.rating, messageWritten: state.message && state.message.length > 0 });
+                restaurantFeedbackSubmitted(restaurantId, state.foodRating, state.serverRating, state.message);
+                analytics.logEvent('restaurant_feedback_submitted_web', { restaurantId, foodRating: state.foodRating, serverRating: state.serverRating, messageWritten: state.message && state.message.length > 0 });
             }
         }
     };
@@ -135,19 +138,46 @@ const AfterRestaurantPopUp = (props) => {
                         className="pop-up-after-restaurant-actions-box-typography"
                         component="legend"
                     >
-                        Please rate your visit!
+                        Please rate food and drinks!
                     </Typography>
                     <div className="pop-up-after-restaurant-actions-box-rating-and-text">
                         <Rating
                             name="restaurant-rating"
                             className="pop-up-after-restaurant-actions-box-rating"
-                            value={state.rating}
-                            defaultValue={3}
+                            value={state.foodRating}
+                            defaultValue={5}
                             size="large"
                             getLabelText={(value) => { return customIcons[value].label; }}
                             IconContainerComponent={IconContainer}
                             onChange={(event, newValue) => {
-                                setStateLocal({ type: 'setRating', rating: newValue });
+                                setStateLocal({ type: 'setFoodRating', rating: newValue });
+                            }}
+                        />
+                    </div>
+                </Box>
+                <Box
+                    className="pop-up-after-restaurant-actions-box"
+                    component="fieldset"
+                    mb={3}
+                    borderColor="transparent"
+                >
+                    <Typography
+                        className="pop-up-after-restaurant-actions-box-typography"
+                        component="legend"
+                    >
+                        Please rate your server!
+                    </Typography>
+                    <div className="pop-up-after-restaurant-actions-box-rating-and-text">
+                        <Rating
+                            name="restaurant-rating"
+                            className="pop-up-after-restaurant-actions-box-rating"
+                            value={state.serverRating}
+                            defaultValue={5}
+                            size="large"
+                            getLabelText={(value) => { return customIcons[value].label; }}
+                            IconContainerComponent={IconContainer}
+                            onChange={(event, newValue) => {
+                                setStateLocal({ type: 'setServerRating', rating: newValue });
                             }}
                         />
                     </div>

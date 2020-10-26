@@ -18,6 +18,14 @@ html body {
   overflow: auto;
 }
 
+html body .horizontal-line {
+  margin: 70px auto;
+  width: 100%;
+  border-bottom-style: solid;
+  border-bottom-color: gray;
+  border-bottom-width: 1px;
+}
+
 html body .pop-up-after-restaurant {
   display: -webkit-box;
   display: -ms-flexbox;

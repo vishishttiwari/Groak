@@ -39,7 +39,7 @@ const Table = (props) => {
 
     const getStyles = (overdueHere, tableHere) => {
         if (tableHere.allowOrdering !== undefined ? tableHere.allowOrdering : true) {
-            if (overdueHere) {
+            if (tableHere.newRequest || tableHere.callWaiter || overdueHere) {
                 return TableStatusStyle.requested;
             }
             return TableStatusStyle[tableHere.status];
@@ -51,6 +51,12 @@ const Table = (props) => {
         if (tableHere.allowOrdering !== undefined ? tableHere.allowOrdering : true) {
             if (overdueHere) {
                 return 'Order Overdue';
+            }
+            if (tableHere.callWaiter) {
+                return 'Server Called';
+            }
+            if (tableHere.newRequest) {
+                return 'New Request';
             }
             return TableStatusText[table.status];
         }

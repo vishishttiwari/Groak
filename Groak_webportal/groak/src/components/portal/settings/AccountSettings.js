@@ -50,6 +50,7 @@ const AccountSettings = (props) => {
             >
                 Reset Password
             </Button>
+            <div className="horizontal-line"></div>
             <Button
                 className="delete-buttons"
                 variant="contained"

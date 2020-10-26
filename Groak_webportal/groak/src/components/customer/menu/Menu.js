@@ -56,7 +56,7 @@ TabPanel.propTypes = {
 };
 
 const Menu = (props) => {
-    const { history, match, menuItems, categoryNames, restaurant } = props;
+    const { history, match, menuItems, categoryNames, restaurant, scrollHandler } = props;
     const [state, setState] = useReducer(reducer, initialState);
     const { globalState } = useContext(context);
     const top = createRef(null);
@@ -93,7 +93,7 @@ const Menu = (props) => {
     };
 
     return (
-        <div className="menu">
+        <div className="menu" onPointerDown={scrollHandler}>
             <MenuHeader
                 restaurantName={restaurant.name}
                 searchHandler={searchHandler}
@@ -140,6 +140,7 @@ Menu.propTypes = {
     restaurant: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
+    scrollHandler: PropTypes.func.isRequired,
 };
 
 export default withRouter(React.memo(Menu));

@@ -5,7 +5,7 @@ import { fetchOrdersFirestoreAPI, fetchOrderFirestoreAPI, updateOrderFirestoreAP
 import { fetchRequestFirestoreAPI, updateRequestFirestoreAPI } from '../../../firebase/FirestoreAPICalls/FirestoreAPICallsRequests';
 import { differenceInMinutesFromNow } from '../../../catalog/TimesDates';
 import { TableStatus } from '../../../catalog/Others';
-import { ErrorFetchingOrders, ErrorFetchingOrder, ErrorUpdatingOrder, ErrorUnsubscribingOrders, ErrorUnsubscribingOrder, OrderAdded, OrderUpdated, OrderReadyForPayment, ErrorFetchingRequest, ErrorUnsubscribingRequest, ErrorUpdatingRequest } from '../../../catalog/NotificationsComments';
+import { ErrorFetchingOrders, ErrorFetchingOrder, ErrorUpdatingOrder, ErrorUnsubscribingOrders, ErrorUnsubscribingOrder, OrderAdded, OrderReadyForPayment, ErrorFetchingRequest, ErrorUnsubscribingRequest, ErrorUpdatingRequest, WaiterCalled, SpecialRequest } from '../../../catalog/NotificationsComments';
 
 let ordersSnapshot;
 let orderSnapshot;
@@ -78,7 +78,7 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                         newPaymentOrders.unshift({ id: change.doc.id, ...change.doc.data() });
                     }
                 } else if (change.type === 'modified') {
-                    const { status, newRequest } = change.doc.data();
+                    const { status, newRequest, callWaiter } = change.doc.data();
                     // First delete this order from every other table and then add it to whichever table it needs to be added
                     newNewOrders = newNewOrders.filter((order) => {
                         return (order.id !== change.doc.id);
@@ -104,7 +104,9 @@ export const fetchOrdersAPI = async (restaurantId, state, setState, snackbar) =>
                         snackbar(OrderAdded(change.doc.data().table), { variant: 'success' });
                     } else if (status !== TableStatus.ordered && status !== TableStatus.payment && newRequest) {
                         newNewRequests.unshift({ id: change.doc.id, ...change.doc.data() });
-                        snackbar(OrderUpdated(change.doc.data().table), { variant: 'info' });
+                        snackbar(SpecialRequest(change.doc.data().table), { variant: 'info' });
+                    } else if (status !== TableStatus.ordered && status !== TableStatus.payment && callWaiter) {
+                        snackbar(WaiterCalled(change.doc.data().table), { variant: 'info' });
                     } else if (status === TableStatus.approved) {
                         if (differenceInMinutesFromNow(change.doc.data().serveTime) < 0) {
                             newOverdueOrders.unshift({ id: change.doc.id, ...change.doc.data() });
@@ -155,6 +157,7 @@ export const fetchOrderAPI = async (restaurantId, orderId, setState, snackbar) =
                     comments: querySnapshot.data().comments,
                     serve: querySnapshot.data().serveTime,
                     dishes: querySnapshot.data().dishes,
+                    callWaiter: querySnapshot.data().callWaiter,
                     tip: querySnapshot.data().tip && querySnapshot.data().tip.tipValue ? querySnapshot.data().tip.tipValue : 0,
                 });
             } else {

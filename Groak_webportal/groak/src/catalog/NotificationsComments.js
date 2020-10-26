@@ -18,6 +18,7 @@ export const VerificationEmailSent = 'Email sent. Please verify your email addre
 export const NotFoundRestaurant = 'Restaurant not found';
 export const InvalidRestaurantName = 'Invalid Restaurant name. Please enter a valid restaurant name';
 export const NoRestaurantName = 'Restaurant name not entered. Please enter a valid restaurant name';
+export const InvalidPhoneNumber = 'Please enter a valid phone number';
 export const InvalidRestaurantAddress = 'Invalid Restaurant address. Please enter a valid restaurant address from the list';
 export const ErrorUpdatingRestaurant = 'Error updating restaurant';
 export const ErrorFetchingRestaurant = 'Error fetching restaurant';
@@ -143,6 +144,9 @@ export const OrderUpdated = (table) => {
 export const SpecialRequest = (table) => {
     return `Special request at ${table}`;
 };
+export const WaiterCalled = (table) => {
+    return `Waiter Called at ${table}`;
+};
 export const OrderReadyForPayment = (table) => {
     return `${table} ready for payment`;
 };
@@ -165,5 +169,6 @@ export const OptionsExceedingMin = (title, min) => {
 
 export const NotAtRestaurant = 'Seems like you are not at the restaurant. Please order while you are at the restaurant.';
 export const VenmoNotSupported = 'Venmo is not supported';
+export const WaiterSent = 'One of our servers will be at your table soon';
 
 export const ErrorFetchingAnalytics = 'Error fetching analytics';

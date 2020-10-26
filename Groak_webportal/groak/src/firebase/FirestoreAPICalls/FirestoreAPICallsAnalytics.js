@@ -63,7 +63,7 @@ export const incrementUserWebFirestoreAPI = (restaurantId) => {
                 dishesPrice: { },
             };
             const newDishes = {};
-            const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
+            const newRestaurant = { foodRating: 0, serverRating: 0, totalRatingEntries: 0, messages: [] };
             return transaction.set(createAnalyticsReference(restaurantId), {
                 qrCodeScannedWeb: newQRCodeScannedWeb,
                 userWeb: newUserWeb,
@@ -111,7 +111,7 @@ export const incrementCodeScannedWebFirestoreAPI = (restaurantId, tableId, qrCod
             dishesPrice: { },
         };
         const newDishes = {};
-        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
+        const newRestaurant = { foodRating: 0, serverRating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), {
             qrCodeScannedWeb: newQRCodeScannedWeb,
             userWeb: newUserWeb,
@@ -122,7 +122,7 @@ export const incrementCodeScannedWebFirestoreAPI = (restaurantId, tableId, qrCod
     });
 };
 
-export const restaurantFeedbackSubmitted = (restaurantId, rating, message) => {
+export const restaurantFeedbackSubmitted = (restaurantId, foodRating, serverRating, message) => {
     const analyticsReference = createAnalyticsReference(restaurantId);
     return db.runTransaction(async (transaction) => {
         const analyticsDoc = await transaction.get(analyticsReference);
@@ -131,30 +131,35 @@ export const restaurantFeedbackSubmitted = (restaurantId, rating, message) => {
         if (analyticsDoc.exists) {
             const { restaurant } = analyticsDoc.data();
             if (restaurant) {
-                let newRating = restaurant.rating ? restaurant.rating : 0;
+                let newFoodRating = restaurant.foodRating ? restaurant.foodRating : 0;
+                let newServerRating = restaurant.serverRating ? restaurant.serverRating : 0;
                 let newTotalRatingEntries = restaurant.totalRatingEntries ? restaurant.totalRatingEntries : 0;
-                newRating = ((newRating * newTotalRatingEntries) + rating) / (newTotalRatingEntries + 1);
+                newFoodRating = ((newFoodRating * newTotalRatingEntries) + newFoodRating) / (newTotalRatingEntries + 1);
+                newServerRating = ((newServerRating * newTotalRatingEntries) + newServerRating) / (newTotalRatingEntries + 1);
+
                 newTotalRatingEntries += 1;
                 if (message && message.length > 0) {
                     const newMessages = restaurant.messages ? restaurant.messages : [];
                     newMessages.push({ message, created: getCurrentDateTime() });
-                    const newRestaurant = { ...restaurant, rating: newRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
+                    const newRestaurant = { ...restaurant, foodRating: newFoodRating, serverRating: newServerRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
                     return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant, timestamp: getCurrentDateTime() });
                 }
-                const newRestaurant = { ...restaurant, rating: newRating, totalRatingEntries: newTotalRatingEntries };
+                const newRestaurant = { ...restaurant, foodRating: newFoodRating, serverRating: newServerRating, totalRatingEntries: newTotalRatingEntries };
                 return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant, timestamp: getCurrentDateTime() });
             }
-            let newRating = 0;
+            let newFoodRating = 0;
+            let newServerRating = 0;
             let newTotalRatingEntries = 0;
-            newRating = ((newRating * newTotalRatingEntries) + rating) / (newTotalRatingEntries + 1);
+            newFoodRating = ((newFoodRating * newTotalRatingEntries) + newFoodRating) / (newTotalRatingEntries + 1);
+            newServerRating = ((newServerRating * newTotalRatingEntries) + newServerRating) / (newTotalRatingEntries + 1);
             newTotalRatingEntries += 1;
             if (message && message.length > 0) {
                 const newMessages = [];
                 newMessages.push({ message, created: getCurrentDateTime() });
-                const newRestaurant = { rating: newRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
+                const newRestaurant = { foodRating: newFoodRating, serverRating: newServerRating, totalRatingEntries: newTotalRatingEntries, messages: newMessages };
                 return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant, timestamp: getCurrentDateTime() });
             }
-            const newRestaurant = { rating: newRating, totalRatingEntries: newTotalRatingEntries };
+            const newRestaurant = { foodRating: newFoodRating, serverRating: newServerRating, totalRatingEntries: newTotalRatingEntries };
             return transaction.update(createAnalyticsReference(restaurantId), { restaurant: newRestaurant, timestamp: getCurrentDateTime() });
         }
         const newQRCodeScannedWeb = {
@@ -173,9 +178,9 @@ export const restaurantFeedbackSubmitted = (restaurantId, rating, message) => {
         const newDishes = {};
         let newRestaurant = {};
         if (message && message.length > 0) {
-            newRestaurant = { rating, totalRatingEntries: 1, messages: [{ message, created: getCurrentDateTime() }] };
+            newRestaurant = { foodRating, serverRating, totalRatingEntries: 1, messages: [{ message, created: getCurrentDateTime() }] };
         } else {
-            newRestaurant = { rating, totalRatingEntries: 1, messages: [] };
+            newRestaurant = { foodRating, serverRating, totalRatingEntries: 1, messages: [] };
         }
         return transaction.set(createAnalyticsReference(restaurantId), {
             qrCodeScannedWeb: newQRCodeScannedWeb,
@@ -237,7 +242,7 @@ export const dishLikedFirestoreAPI = (restaurantId, dishId, like) => {
         } else {
             newDishes[dishId] = { likes: 0, dislikes: 1 };
         }
-        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
+        const newRestaurant = { foodRating: 0, serverRating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), {
             qrCodeScannedWeb: newQRCodeScannedWeb,
             userWeb: newUserWeb,
@@ -312,7 +317,7 @@ export const orderPlacedWebFirestoreAPI = (restaurantId, tableId, cart, price) =
             }
         });
         const newDishes = {};
-        const newRestaurant = { rating: 0, totalRatingEntries: 0, messages: [] };
+        const newRestaurant = { foodRating: 0, serverRating: 0, totalRatingEntries: 0, messages: [] };
         return transaction.set(createAnalyticsReference(restaurantId), {
             qrCodeScannedWeb: newQRCodeScannedWeb,
             userWeb: newUserWeb,

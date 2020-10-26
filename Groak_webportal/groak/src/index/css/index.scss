@@ -13,6 +13,14 @@ html {
         // height: 100%;
         overflow: auto;
 
+        .horizontal-line {
+            margin: 70px auto;
+            width: 100%;
+            border-bottom-style: solid;
+            border-bottom-color: gray;
+            border-bottom-width: 1px;
+        }
+
         .pop-up-after-restaurant {
             display: flex;
             flex-direction: column;

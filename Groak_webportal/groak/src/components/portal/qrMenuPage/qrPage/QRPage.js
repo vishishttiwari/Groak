@@ -31,7 +31,7 @@ const QRPage = (props) => {
     // this size is better for 5x7 because it does not cut from top and bottom
     let pageSize = 'A4';
     if (qrStylePage.pageSize === '5x7') {
-        pageSize = [360, 480];
+        pageSize = [360, 500];
     } else if (qrStylePage.pageSize === 'HALF-LETTER') {
         pageSize = [168, 272];
     } else {

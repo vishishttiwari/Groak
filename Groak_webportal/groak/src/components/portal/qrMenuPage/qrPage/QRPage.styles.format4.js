@@ -84,8 +84,9 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         qrCodes: {
             width: '100%',
             height: includeTable ? '86%' : '92%',
+            paddingBottom: 20,
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'top',
             alignItems: 'center',
             margin: 'auto',
         },
@@ -210,8 +211,17 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             break;
         case 'A6':
         case '5x7':
+            styles = { ...styles,
+                tableTitle: { ...styles.tableTitle, fontSize: 30 },
+                suggestionText: { ...styles.suggestionText, fontSize: 25 },
+            };
+            break;
         case 'HALF-LETTER':
             styles = { ...styles,
+                tableTitle: { ...styles.tableTitle, fontSize: 15 },
+                suggestionText: { ...styles.suggestionText, fontSize: 12 },
+                qrText: { ...styles.qrText, fontSize: 8 },
+                qrCode: { ...styles.qrCode, borderRadius: '5', borderWidth: '1pt' },
             };
             break;
         default:

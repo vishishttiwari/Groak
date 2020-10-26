@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import * as moment from 'moment-timezone';
 
 import { TextField, Select, OutlinedInput, MenuItem, Button, IconButton, Checkbox, ListItemText, Chip, FormControl, Fab } from '@material-ui/core';
 import { Add, CloseRounded, CloudUpload } from '@material-ui/icons';
@@ -15,10 +16,12 @@ import './css/Settings.css';
 import { DemoRestaurantCovidGuidelines, DemoRestaurantCovidMessage } from '../../../catalog/Demo';
 import { addMissingCategories, addMissingDishes, addMissingQRCodes, updateRestaurantAPI } from './SettingsAPICalls';
 import { cuisines, TextFieldLabelStyles, textFieldLabelProps, uploadButtonStyle, frontDoorQRMenuPageId, getImageLink, viewOnlyQRMenuPageId, groakTesting } from '../../../catalog/Others';
-import { InvalidRestaurantName } from '../../../catalog/NotificationsComments';
+import CSSVariables from '../../../globalCSS/_globalCSS.scss';
+import { InvalidRestaurantName, InvalidPhoneNumber } from '../../../catalog/NotificationsComments';
 import { FrontDoorQRMenuPage, ViewOnlyQRMenuPage } from '../../../catalog/Comments';
 import Payments from './Payment';
 import Tips from './Tips';
+import SMSNotificationSettings from './SMSNotificationSettings';
 
 const RestaurantSettings = (props) => {
     const { history, classes, state, setState } = props;
@@ -92,6 +95,20 @@ const RestaurantSettings = (props) => {
             enqueueSnackbar(InvalidRestaurantName, { variant: 'error' });
             return;
         }
+        if (state.restaurant.smsNotificationRestaurant) {
+            let phoneValid = true;
+            state.restaurant.smsNotificationRestaurant.phones.forEach((phoneObject) => {
+                if (phoneObject.phone.length < 6 || phoneObject.phone.charAt(0) !== '+') {
+                    phoneValid = false;
+                }
+            });
+
+            if (!phoneValid) {
+                enqueueSnackbar(InvalidPhoneNumber, { variant: 'error' });
+                return;
+            }
+        }
+
         await updateRestaurantAPI(globalState.restaurantIdPortal, state.restaurant, state.logo, state.image, setState, setGlobalState, enqueueSnackbar);
     };
 
@@ -113,6 +130,7 @@ const RestaurantSettings = (props) => {
     return (
         <div className="restaurant-settings">
             <h2>Restaurant Information</h2>
+            <h3>Restaurant Info</h3>
             <TextField
                 label="Restaurant Name:"
                 type="text"
@@ -148,12 +166,38 @@ const RestaurantSettings = (props) => {
                 {cuisines.map((cuisine) => {
                     return (
                         <MenuItem key={cuisine} value={cuisine}>
-                            <Checkbox style={{ color: '#D94859' }} checked={state.restaurant && state.restaurant.type ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
+                            <Checkbox style={{ color: CSSVariables.primaryColor }} checked={state.restaurant && state.restaurant.type ? state.restaurant.type.indexOf(cuisine) > -1 : false} />
                             <ListItemText primary={cuisine} />
                         </MenuItem>
                     );
                 })}
             </Select>
+            <p>Time zone:</p>
+            <Select
+                value={state.restaurant.timezone ? state.restaurant.timezone : 'America/Los_Angeles'}
+                onChange={(event) => { setState({ type: 'setTimezone', timezone: event.target.value }); }}
+                label="Time zone"
+                variant="outlined"
+            >
+                {moment.tz.names().map((timezone) => {
+                    return (
+                        <MenuItem key={timezone} value={timezone}>{timezone}</MenuItem>
+                    );
+                })}
+            </Select>
+            <div className="horizontal-line"></div>
+            <h3>Payments</h3>
+            <p>Payment Methods:</p>
+            <TextField
+                label="Venmo:"
+                type="text"
+                value={state.restaurant && state.restaurant.paymentMethods && state.restaurant.paymentMethods.venmo ? state.restaurant.paymentMethods.venmo : ''}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                onChange={(event) => { setState({ type: 'setVenmo', venmo: event.target.value }); }}
+                InputLabelProps={textFieldLabelProps(classes)}
+            />
             <p>Payments:</p>
             {state.restaurant.payments.map((payment, index) => {
                 return (
@@ -184,18 +228,8 @@ const RestaurantSettings = (props) => {
             >
                 <Add />
             </Fab>
-            <p>Payment Methods:</p>
-            <TextField
-                label="Venmo:"
-                type="text"
-                value={state.restaurant && state.restaurant.paymentMethods && state.restaurant.paymentMethods.venmo ? state.restaurant.paymentMethods.venmo : ''}
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                onChange={(event) => { setState({ type: 'setVenmo', venmo: event.target.value }); }}
-                InputLabelProps={textFieldLabelProps(classes)}
-            />
-            <p>Covid:</p>
+            <div className="horizontal-line"></div>
+            <h3>Covid</h3>
             <TextField
                 label="Covid Message for Customers:"
                 multiline
@@ -222,12 +256,14 @@ const RestaurantSettings = (props) => {
                 onChange={(event) => { setState({ type: 'setCovidGuidelines', covidGuidelines: event.target.value }); }}
                 InputLabelProps={textFieldLabelProps(classes)}
             />
+            <div className="horizontal-line"></div>
+            <h3>Additions</h3>
             <p>Allow Ordering:</p>
             <FormControl disabled={!state.restaurant.allowOrdering.groak}>
                 <Select
                     value={state.restaurant.allowOrdering.restaurant}
                     onChange={(event) => { setState({ type: 'setAllowOrdering', allowOrdering: event.target.value }); }}
-                    label="Age"
+                    label="Allow Ordering"
                     variant="outlined"
                 >
                     <MenuItem value>Yes</MenuItem>
@@ -239,16 +275,28 @@ const RestaurantSettings = (props) => {
                 <Select
                     value={state.restaurant.allowRating ? state.restaurant.allowRating.restaurant : false}
                     onChange={(event) => { setState({ type: 'setAllowRating', allowRating: event.target.value }); }}
-                    label="Age"
+                    label="Allow Rating"
                     variant="outlined"
                 >
                     <MenuItem value>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                 </Select>
             </FormControl>
-            <p>
-                QR Menu Pages
-            </p>
+            <p>Allow Calling Server:</p>
+            <FormControl disabled={state.restaurant.allowWaiter ? !state.restaurant.allowWaiter.groak : false}>
+                <Select
+                    value={state.restaurant.allowWaiter ? state.restaurant.allowWaiter.restaurant : false}
+                    onChange={(event) => { setState({ type: 'setAllowWaiter', allowWaiter: event.target.value }); }}
+                    label="Allow Rating"
+                    variant="outlined"
+                >
+                    <MenuItem value>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                </Select>
+            </FormControl>
+            <SMSNotificationSettings smsNotificationRestaurant={state.restaurant.smsNotificationRestaurant} setState={setState} />
+            <div className="horizontal-line"></div>
+            <h3>QR Menu Pages</h3>
             <p style={{ marginLeft: '40px', fontSize: '15px' }}>
                 Front Door QR Menu Page (
                 {FrontDoorQRMenuPage}
@@ -275,7 +323,8 @@ const RestaurantSettings = (props) => {
             </Button>
             {groakTesting ? (
                 <>
-                    <p>Diagnostics:</p>
+                    <div className="horizontal-line"></div>
+                    <h3>Diagnostics</h3>
                     <div className="restaurant-settings-diagnotics">
                         <Button
                             className="normal-buttons"
@@ -304,7 +353,8 @@ const RestaurantSettings = (props) => {
                     </div>
                 </>
             ) : null}
-            <p>Images:</p>
+            <div className="horizontal-line"></div>
+            <h3>Images</h3>
             <input
                 accept="image/*"
                 id="icon-button-photo"
@@ -355,6 +405,7 @@ const RestaurantSettings = (props) => {
                     <img src={getImageLink(state.image.link)} alt={state.restaurant.name || 'Restaurant Image'} />
                 </div>
             ) : null}
+            <div className="horizontal-line"></div>
             <Button
                 className="success-buttons"
                 type="submit"
@@ -363,6 +414,7 @@ const RestaurantSettings = (props) => {
             >
                 Save Changes
             </Button>
+            <div className="horizontal-line"></div>
         </div>
     );
 };

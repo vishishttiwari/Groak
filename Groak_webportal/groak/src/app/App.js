@@ -55,7 +55,10 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <SnackbarProvider maxSnack={10}>
+                <SnackbarProvider
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    maxSnack={10}
+                >
                     <ThemeProvider theme={theme}>
                         <Provider value={{ globalState, setGlobalState }}>
                             <Layout allowedURLSegments={['privacypolicy', 'menu', 'customermenu', 'customer', 'signin', 'signup', 'contactus', 'requestademo']}>

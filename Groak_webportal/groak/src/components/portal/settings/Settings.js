@@ -26,6 +26,9 @@ function localReducer(state, action) {
         case 'setType':
             updatedRestaurant = { ...state.restaurant, type: action.cuisineType };
             return { ...state, restaurant: updatedRestaurant };
+        case 'setTimezone':
+            updatedRestaurant = { ...state.restaurant, timezone: action.timezone };
+            return { ...state, restaurant: updatedRestaurant };
         case 'setTips':
             updatedPayments = state.restaurant.payments.filter((payment) => {
                 if (payment.id === 'tips') {
@@ -81,6 +84,16 @@ function localReducer(state, action) {
             } else {
                 updatedRestaurant = { ...state.restaurant, allowRating: { restaurant: action.allowRating, groak: true } };
             }
+            return { ...state, restaurant: updatedRestaurant };
+        case 'setAllowWaiter':
+            if (state.restaurant.allowWaiter) {
+                updatedRestaurant = { ...state.restaurant, allowWaiter: { restaurant: action.allowWaiter, groak: state.restaurant.allowWaiter.groak } };
+            } else {
+                updatedRestaurant = { ...state.restaurant, allowWaiter: { restaurant: action.allowWaiter, groak: true } };
+            }
+            return { ...state, restaurant: updatedRestaurant };
+        case 'setSMSNotificationRestaurant':
+            updatedRestaurant = { ...state.restaurant, smsNotificationRestaurant: action.smsNotificationRestaurant };
             return { ...state, restaurant: updatedRestaurant };
         case 'setLogo':
             return { ...state, logo: action.logo };

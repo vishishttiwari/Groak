@@ -116,3 +116,7 @@ export const CovidGuidelineSubheader = 'Covid directives in your area';
 export const AfterRestaurantPopUpOrderingAllowed = 'If you would like to pay, have a look at your order again or download your receipt then please scan any QR Code on the table again.';
 export const AfterRestaurantPopUpOrderingNotAllowed = 'To view the menu, scan the QR code again.';
 export const FeedbackMessagePlaceholder = 'Great food, nice ambience! The server was very friendly.';
+
+export const CallWaiter = 'Would you like to call the server?';
+export const CallOrChatWithWaiter = 'Would you like to call the server or would you like to chat with them using your phone?';
+export const addTimeForSMSNotifications = '- Add days and times when this number will receive notifications(The above times might need to be changed depending on when daylight savings begins or ends)';

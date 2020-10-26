@@ -20,7 +20,7 @@ import { getTimeInAMPMFromTimeStamp, timeoutValueForCustomer } from '../../../ca
 import ReceiptPriceCell from './ReceiptPriceCell';
 import ReceiptRestaurantCell from './ReceiptRestaurantCell';
 import Groak from '../../../assets/images/powered_by_groak_2.png';
-import CustomerRequestButton from '../ui/requestButton/CustomerRequestButton';
+import CustomerWaiterRequestButton from '../ui/waiterRequestButton/CustomerWaiterRequestButton';
 import { context } from '../../../globalState/globalState';
 import { isNearRestaurant } from '../../../catalog/Distance';
 import { NotAtRestaurant, VenmoNotSupported } from '../../../catalog/NotificationsComments';
@@ -255,7 +255,11 @@ const Receipt = (props) => {
                                         <ErrorOutlineIcon style={{ marginRight: '5px', marginLeft: '5px' }} />
                                         <p>{iPhoneReceiptSave}</p>
                                     </div>
-                                    <CustomerRequestButton restaurantId={match.params.restaurantid} tableId={match.params.tableid} visible={state && state.order && state.order.newRequestForUser} />
+                                    <CustomerWaiterRequestButton
+                                        restaurantId={match.params.restaurantid}
+                                        tableId={match.params.tableid}
+                                        visible={state && state.order && state.order.newRequestForUser && globalState.orderAllowedCustomer}
+                                    />
                                     <ReceiptFooter tipIndex={state.tipIndex} setState={setState} />
                                 </>
                             )

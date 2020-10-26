@@ -180,8 +180,22 @@ export const differenceInMinutesFromNow = (timeStamp) => {
     return parseFloat(((getDateTimeFromTimeStamp(timeStamp) - getCurrentDateTime()) / 60000).toFixed(0));
 };
 
+/**
+ * This function can handle both normal date and firebase date. This is normally for the select time
+ * component of material ui
+ *
+ * @param {*} date
+ */
 export const getTimeIn24 = (date) => {
-    return `${date.getHours()}:${date.getMinutes()}`;
+    try {
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()}`;
+    } catch {
+        const hour = date.toDate().getHours();
+        const minute = date.toDate().getMinutes();
+        return `${hour < 10 ? '0' : ''}${hour.toString()}:${minute < 10 ? '0' : ''}${minute.toString()}`;
+    }
 };
 
 /**
@@ -236,5 +250,36 @@ export const getDateTodayMidnight = () => {
     const date = getCurrentDateTime();
     date.setHours(0);
     date.setMinutes(0);
+    return date;
+};
+
+export const getDateTodayElevenFiftyNine = () => {
+    const date = getCurrentDateTime();
+    date.setHours(23);
+    date.setMinutes(59);
+    return date;
+};
+
+/**
+ * In this case the date is current date. Used in case of comparing just times
+ */
+export const getFirstDateMidnight = () => {
+    const date = new Date();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+
+    return date;
+};
+
+/**
+ * In this case the date is current date. Used in case of comparing just times
+ */
+export const getFirstDateElevenFiftyNine = () => {
+    const date = new Date();
+    date.setHours(23);
+    date.setMinutes(59);
+    date.setSeconds(59);
+
     return date;
 };

@@ -37,7 +37,7 @@ function reducer(state, action) {
 }
 
 const Order = (props) => {
-    const { match, order } = props;
+    const { match, order, scrollHandler } = props;
     const { globalState } = useContext(context);
     const [state, setState] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
@@ -158,7 +158,7 @@ const Order = (props) => {
     };
 
     return (
-        <div className="order">
+        <div className="order" onPointerDown={scrollHandler}>
             <OrderHeader tableOrder={state.tableOrder} setState={setState} />
             {order && order.dishes ? (
                 <>
@@ -217,6 +217,7 @@ const Order = (props) => {
 Order.propTypes = {
     match: PropTypes.object.isRequired,
     order: PropTypes.object,
+    scrollHandler: PropTypes.func.isRequired,
 };
 
 Order.defaultProps = {

@@ -41,7 +41,7 @@ function reducer(state, action) {
 }
 
 const Cart = (props) => {
-    const { history, match, setState } = props;
+    const { history, match, setState, scrollHandler } = props;
     const { globalState, setGlobalState } = useContext(context);
     const [state, setStateHere] = useReducer(reducer, initialState);
     const { enqueueSnackbar } = useSnackbar();
@@ -121,7 +121,7 @@ const Cart = (props) => {
     };
 
     return (
-        <div className="cart">
+        <div className="cart" onPointerDown={scrollHandler}>
             <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <>
@@ -178,6 +178,7 @@ Cart.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     setState: PropTypes.func.isRequired,
+    scrollHandler: PropTypes.func.isRequired,
 };
 
 export default withRouter(React.memo(Cart));

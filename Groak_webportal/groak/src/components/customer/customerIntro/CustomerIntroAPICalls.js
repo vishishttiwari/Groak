@@ -75,18 +75,29 @@ export const fetchOrderAPI = async (restaurant, restaurantId, orderId, setState,
                     type: 'fetchOrder',
                     order: { ...querySnapshot.data(), dishes: updatedDishes, comments: updatedComments },
                 });
-                const allowOrdering = querySnapshot.data() && querySnapshot.data().allowOrdering !== null && querySnapshot.data().allowOrdering !== undefined ? querySnapshot.data().allowOrdering : false;
-                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: allowOrdering });
+                let allowOrdering = querySnapshot.data() && querySnapshot.data().allowOrdering !== null && querySnapshot.data().allowOrdering !== undefined ? querySnapshot.data().allowOrdering : false;
+                if (allowOrdering) {
+                    allowOrdering = restaurant && restaurant.allowOrdering && restaurant.allowOrdering.restaurant && restaurant.allowOrdering.groak;
+                }
+                setGlobalState({ type: 'setRestaurantCustomer',
+                    restaurant,
+                    restaurantId,
+                    orderAllowed: allowOrdering,
+                    waiterAllowed: restaurant && restaurant.allowWaiter && restaurant.allowWaiter.restaurant && restaurant.allowWaiter.groak });
                 await updateOrderAPI(restaurantId, orderId, TableStatus.seated);
             } else {
                 setState({ type: 'fetchOrder', order: {} });
-                setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
+                setGlobalState({ type: 'setRestaurantCustomer',
+                    restaurant,
+                    restaurantId,
+                    orderAllowed: false,
+                    waiterAllowed: restaurant && restaurant.allowWaiter && restaurant.allowWaiter.restaurant && restaurant.allowWaiter.groak });
             }
         };
         orderSnapshot = await fetchOrderFirestoreAPI(restaurantId, orderId, getOrder);
     } catch (error) {
         setState({ type: 'fetchOrder', order: {} });
-        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
+        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false, waiterAllowed: false });
     }
 };
 
@@ -155,14 +166,18 @@ export const fetchCategoriesAPI = async (restaurantId, tableId, qrCodeId, dontCh
                 } else {
                     setState({ type: 'fetchMenuItems', categoryNames, menuItems, restaurant });
                     if (tableId === frontDoorQRMenuPageId) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false, waiterAllowed: false });
                     } else if (tableId === viewOnlyQRMenuPageId) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false, waiterAllowed: false });
                     } else if (!restaurant
                         || !restaurant.allowOrdering
                         || !restaurant.allowOrdering.restaurant
                         || !restaurant.allowOrdering.groak) {
-                        setGlobalState({ type: 'setRestaurantCustomer', restaurant, restaurantId, orderAllowed: false });
+                        setGlobalState({ type: 'setRestaurantCustomer',
+                            restaurant,
+                            restaurantId,
+                            orderAllowed: false,
+                            waiterAllowed: restaurant && restaurant.allowWaiter && restaurant.allowWaiter.restaurant && restaurant.allowWaiter.groak });
                     } else {
                         await fetchOrderAPI(restaurant, restaurantId, tableId, setState, setGlobalState);
                     }

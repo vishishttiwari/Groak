@@ -28,6 +28,39 @@ export const getDatesInArray = (dateRange) => {
     return dates;
 };
 
+export const getDatesInArrayWithDays = (dateRange) => {
+    const month = [];
+    month[0] = 'Jan';
+    month[1] = 'Feb';
+    month[2] = 'Mar';
+    month[3] = 'Apr';
+    month[4] = 'May';
+    month[5] = 'Jun';
+    month[6] = 'Jul';
+    month[7] = 'Aug';
+    month[8] = 'Sep';
+    month[9] = 'Oct';
+    month[10] = 'Nov';
+    month[11] = 'Dec';
+
+    const weekday = new Array(7);
+    weekday[0] = 'Sun';
+    weekday[1] = 'Mon';
+    weekday[2] = 'Tue';
+    weekday[3] = 'Wed';
+    weekday[4] = 'Thu';
+    weekday[5] = 'Fri';
+    weekday[6] = 'Sat';
+
+    const dates = [];
+    const currentDate = new Date(dateRange.startDate);
+    while (currentDate <= dateRange.endDate) {
+        dates.push(`${month[currentDate.getMonth()]}-${currentDate.getDate()}-${currentDate.getFullYear()} (${weekday[currentDate.getDay()]})`);
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+};
+
 export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snackbar) => {
     const labels = getDatesInArray(dateRange);
     // Users
@@ -68,8 +101,12 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     // Restaurant
     let toalRatingEntries = 0;
     let totalRating = 0;
+    let totalFoodRating = 0;
+    let totalServerRating = 0;
     const totalRatingEntriesArray = new Array(labels.length).fill(0);
     const totalRatingArray = new Array(labels.length).fill(0);
+    const totalFoodRatingArray = new Array(labels.length).fill(0);
+    const totalServerRatingArray = new Array(labels.length).fill(0);
     const messages = [];
 
     const qrCodesMap = new Map();
@@ -175,11 +212,19 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
                     if (restaurant.rating && restaurant.totalRatingEntries) {
                         totalRating = ((restaurant.rating * restaurant.totalRatingEntries) + (totalRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
                     }
+                    if (restaurant.foodRating && restaurant.totalRatingEntries) {
+                        totalFoodRating = ((restaurant.foodRating * restaurant.totalRatingEntries) + (totalFoodRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
+                    }
+                    if (restaurant.serverRating && restaurant.totalRatingEntries) {
+                        totalServerRating = ((restaurant.serverRating * restaurant.totalRatingEntries) + (totalServerRating * toalRatingEntries)) / (toalRatingEntries + restaurant.totalRatingEntries);
+                    }
                     if (restaurant.totalRatingEntries) {
                         toalRatingEntries += restaurant.totalRatingEntries;
                     }
-                    totalRatingEntriesArray[labels.indexOf(doc.id)] = restaurant.totalRatingEntries;
-                    totalRatingArray[labels.indexOf(doc.id)] = restaurant.rating;
+                    totalRatingEntriesArray[labels.indexOf(doc.id)] = restaurant.totalRatingEntries ? restaurant.totalRatingEntries : 0;
+                    totalRatingArray[labels.indexOf(doc.id)] = restaurant.rating ? restaurant.rating : 0;
+                    totalFoodRatingArray[labels.indexOf(doc.id)] = restaurant.foodRating ? restaurant.foodRating : 0;
+                    totalServerRatingArray[labels.indexOf(doc.id)] = restaurant.serverRating ? restaurant.serverRating : 0;
                     if (restaurant && restaurant.messages) {
                         messages.push(...restaurant.messages.reverse());
                     }
@@ -300,7 +345,7 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
 
     setState({
         type: 'setAnalytics',
-        labels,
+        labels: getDatesInArrayWithDays(dateRange),
         totalUsers,
         totalScans,
         totalUsersArray,
@@ -327,9 +372,13 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
         dishesLikes,
 
         totalRating,
+        totalFoodRating,
+        totalServerRating,
         toalRatingEntries,
         totalRatingEntriesArray,
         totalRatingArray,
+        totalFoodRatingArray,
+        totalServerRatingArray,
         messages,
     });
 };

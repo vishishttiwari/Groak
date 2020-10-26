@@ -15,12 +15,12 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
     const width = restaurantImageWidth;
 
     let qrCodeHeights = `${78 - height}%`;
-    if (includeTable) {
+    if (includeTable && !suggestionText) {
         qrCodeHeights = `${68 - height}%`;
-    } else if (suggestionText) {
+    } else if (!includeTable && suggestionText) {
         qrCodeHeights = `${68 - height}%`;
     } else if (includeTable && suggestionText) {
-        qrCodeHeights = `${58 - height}%`;
+        qrCodeHeights = `${63 - height}%`;
     }
 
     let styles = StyleSheet.create({
@@ -77,7 +77,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             width: '100%',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
             marginBottom: '20px',
@@ -105,7 +105,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         advertisement: {
             position: 'absolute',
             right: 10,
-            bottom: 10,
+            bottom: 20,
             left: '80%',
         },
         advertisementImage: {
@@ -141,6 +141,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             break;
         case 5:
             styles = { ...styles,
+                qrCodes: { ...styles.qrCodes, justifyContent: 'center' },
                 qr: { ...styles.qr, height: 'auto', width: '30%' },
                 qrCode: { ...styles.qrCode, height: '35%', borderRadius: '5', marginTop: '10px', marginBottom: '3px', borderWidth: '1pt' },
                 qrText: { ...styles.qrText, fontSize: 15 },
@@ -205,14 +206,24 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
             break;
         case 'A6':
         case '5x7':
+            styles = { ...styles,
+                restaurantTitle: { ...styles.restaurantTitle, fontSize: 22 },
+                tableTitle: { ...styles.tableTitle, fontSize: 30 },
+                suggestionText: { ...styles.suggestionText, fontSize: 15 },
+                qrText: { ...styles.qrText, fontSize: 15 },
+                qrCode: { ...styles.qrCode, borderRadius: '5', marginBottom: 0, borderWidth: '1pt' },
+                qr: { ...styles.qr, marginBottom: 0 },
+            };
+            break;
         case 'HALF-LETTER':
             styles = { ...styles,
                 restaurantTitle: { ...styles.restaurantTitle, fontSize: 22 },
-                tableTitle: { ...styles.tableTitle, fontSize: 18 },
-                suggestionText: { ...styles.suggestionText, fontSize: 15 },
-                qrText: { ...styles.qrText, fontSize: 12 },
+                tableTitle: { ...styles.tableTitle, fontSize: 12 },
+                suggestionText: { ...styles.suggestionText, fontSize: 8 },
+                qrText: { ...styles.qrText, fontSize: 7 },
                 qrCode: { ...styles.qrCode, borderRadius: '5', marginBottom: 0, borderWidth: '1pt' },
                 qr: { ...styles.qr, marginBottom: 0 },
+                advertisement: { ...styles.advertisement, right: 5, bottom: 10 },
             };
             break;
         default:

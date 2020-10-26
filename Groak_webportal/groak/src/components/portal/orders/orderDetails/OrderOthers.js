@@ -19,9 +19,10 @@ import GetImage from '../../../../assets/icons/suggestions/get.png';
 
 import { getCurrentDateTime, getTimeInAMPM, getCurrentDateTimePlusMinutes, differenceInMinutesFromNow, getTimeInAMPMFromTimeStamp } from '../../../../catalog/TimesDates';
 import { randomNumber, getPrice, TextFieldLabelStyles, textFieldLabelProps, TableStatus, calculatePriceFromDishes, calculatePriceFromDishesWithPayment, calculatePriceFromDishesWithPayments } from '../../../../catalog/Others';
+import { updateOrderWhenWaiterIsCalledFirestoreAPI } from '../../../../firebase/FirestoreAPICalls/FirestoreAPICallsOrders';
 
 const OrderOthers = (props) => {
-    const { history, classes, orderId, status, comments, request, dishes, tip, serveTimeFromServer } = props;
+    const { history, classes, orderId, status, comments, request, dishes, tip, serveTimeFromServer, callWaiter } = props;
     const { enqueueSnackbar } = useSnackbar();
     const [serveTime, setServeTime] = useState(30);
     const [requestReply, setRequestReply] = useState('');
@@ -130,6 +131,14 @@ const OrderOthers = (props) => {
     };
 
     /**
+     * This function is called when waiter has been sent to the table
+     */
+    const serverSentHandler = async () => {
+        history.goBack();
+        await updateOrderWhenWaiterIsCalledFirestoreAPI(globalState.restaurantIdPortal, orderId, false);
+    };
+
+    /**
      * This functionis used for sending requests
      */
     const sendRequest = async () => {
@@ -172,6 +181,15 @@ const OrderOthers = (props) => {
                     onClick={servedClickHandler}
                 >
                     Served
+                </Button>
+            ) : null}
+            {callWaiter ? (
+                <Button
+                    className="success-buttons"
+                    variant="contained"
+                    onClick={serverSentHandler}
+                >
+                    Server Sent
                 </Button>
             ) : null}
             <Button
@@ -360,6 +378,7 @@ OrderOthers.propTypes = {
     dishes: PropTypes.array.isRequired,
     tip: PropTypes.number.isRequired,
     serveTimeFromServer: PropTypes.object,
+    callWaiter: PropTypes.bool.isRequired,
 };
 
 OrderOthers.defaultProps = {
