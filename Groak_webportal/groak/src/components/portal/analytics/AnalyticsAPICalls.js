@@ -69,10 +69,10 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     const totalUsersArray = new Array(labels.length).fill(0);
     const totalScansArray = new Array(labels.length).fill(0);
     const qrCodesIds = [];
-    const qrCodesLabels = [];
+    let qrCodesLabels = [];
     const qrCodesValues = [];
     const tableCodesIds = [];
-    const tableCodesLabels = [];
+    let tableCodesLabels = [];
     const tableCodesValues = [];
 
     // Orders
@@ -81,21 +81,21 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     const totalOrdersArray = new Array(labels.length).fill(0);
     const priceOrdersArray = new Array(labels.length).fill(0);
     const dishesOrdersTotalIds = [];
-    const dishesOrdersTotalLabels = [];
+    let dishesOrdersTotalLabels = [];
     const dishesOrdersTotalValues = [];
     const dishesOrdersPriceIds = [];
-    const dishesOrdersPriceLabels = [];
+    let dishesOrdersPriceLabels = [];
     const dishesOrdersPriceValues = [];
     const tableOrdersTotalIds = [];
-    const tableOrdersTotalLabels = [];
+    let tableOrdersTotalLabels = [];
     const tableOrdersTotalValues = [];
     const tableOrdersPriceIds = [];
-    const tableOrdersPriceLabels = [];
+    let tableOrdersPriceLabels = [];
     const tableOrdersPriceValues = [];
 
     // Dishes
     const dishesIds = [];
-    const dishesLabels = [];
+    let dishesLabels = [];
     const dishesLikes = [];
 
     // Restaurant
@@ -266,80 +266,87 @@ export const fetchAnalyticsAPI = async (restaurantId, dateRange, setState, snack
     });
 
     // Users
-    await Promise.all(tableCodesIds.map(async (tableId) => {
+    tableCodesLabels = new Array(tableCodesIds.length);
+    await Promise.all(tableCodesIds.map(async (tableId, index) => {
         if (tableId === viewOnlyQRMenuPageId) {
-            tableCodesLabels.push('View Only Menu');
+            tableCodesLabels.splice(index, 1, 'View Only Menu');
         } else if (tableId === frontDoorQRMenuPageId) {
-            tableCodesLabels.push('Front Door Menu');
+            tableCodesLabels.splice(index, 1, 'Front Door Menu');
         } else {
             const tableDoc = await fetchTableFirestoreAPI(restaurantId, tableId);
             if (tableDoc && tableDoc.data() && tableDoc.data().name) {
-                tableCodesLabels.push(tableDoc.data().name);
+                tableCodesLabels.splice(index, 1, tableDoc.data().name);
             } else {
-                tableCodesLabels.push('Unavaialable');
+                tableCodesLabels.splice(index, 1, 'Unavailable');
             }
         }
     }));
-    await Promise.all(qrCodesIds.map(async (qrCodeId) => {
+    qrCodesLabels = new Array(qrCodesIds.length);
+    await Promise.all(qrCodesIds.map(async (qrCodeId, index) => {
         const qrCodeDoc = await fetchQRCodeFirestoreAPI(restaurantId, qrCodeId);
         if (qrCodeDoc && qrCodeDoc.data() && qrCodeDoc.data().name) {
-            qrCodesLabels.push(qrCodeDoc.data().name);
+            qrCodesLabels.splice(index, 1, qrCodeDoc.data().name);
         } else {
-            qrCodesLabels.push('Unavaialable');
+            qrCodesLabels.splice(index, 1, 'Unavailable');
         }
     }));
 
     // Orders
-    await Promise.all(tableOrdersTotalIds.map(async (tableId) => {
+    tableOrdersTotalLabels = new Array(tableOrdersTotalIds.length);
+    await Promise.all(tableOrdersTotalIds.map(async (tableId, index) => {
         if (tableId === viewOnlyQRMenuPageId) {
-            tableOrdersTotalLabels.push('View Only Menu');
+            tableOrdersTotalLabels.splice(index, 1, 'View Only Menu');
         } else if (tableId === frontDoorQRMenuPageId) {
-            tableOrdersTotalLabels.push('Front Door Menu');
+            tableOrdersTotalLabels.splice(index, 1, 'Front Door Menu');
         } else {
             const tableDoc = await fetchTableFirestoreAPI(restaurantId, tableId);
             if (tableDoc && tableDoc.data() && tableDoc.data().name) {
-                tableOrdersTotalLabels.push(tableDoc.data().name);
+                tableOrdersTotalLabels.splice(index, 1, tableDoc.data().name);
             } else {
-                tableOrdersTotalLabels.push('Unavaialable');
+                tableOrdersTotalLabels.splice(index, 1, 'Unavailable');
             }
         }
     }));
-    await Promise.all(tableOrdersPriceIds.map(async (tableId) => {
+    tableOrdersPriceLabels = new Array(tableOrdersPriceIds.length);
+    await Promise.all(tableOrdersPriceIds.map(async (tableId, index) => {
         if (tableId === viewOnlyQRMenuPageId) {
-            tableOrdersPriceLabels.push('View Only Menu');
+            tableOrdersPriceLabels.splice(index, 1, 'View Only Menu');
         } else if (tableId === frontDoorQRMenuPageId) {
-            tableOrdersPriceLabels.push('Front Door Menu');
+            tableOrdersPriceLabels.splice(index, 1, 'Front Door Menu');
         } else {
             const tableDoc = await fetchTableFirestoreAPI(restaurantId, tableId);
             if (tableDoc && tableDoc.data() && tableDoc.data().name) {
-                tableOrdersPriceLabels.push(tableDoc.data().name);
+                tableOrdersPriceLabels.splice(index, 1, tableDoc.data().name);
             } else {
-                tableOrdersPriceLabels.push('Unavaialable');
+                tableOrdersPriceLabels.splice(index, 1, 'Unavaialable');
             }
         }
     }));
-    await Promise.all(dishesOrdersTotalIds.map(async (dishId) => {
+    dishesOrdersTotalLabels = new Array(dishesOrdersTotalIds.length);
+    await Promise.all(dishesOrdersTotalIds.map(async (dishId, index) => {
         const dishDoc = await fetchDishFirestoreAPI(restaurantId, dishId);
         if (dishDoc && dishDoc.data() && dishDoc.data().name) {
-            dishesOrdersTotalLabels.push(dishDoc.data().name);
+            dishesOrdersTotalLabels.splice(index, 1, dishDoc.data().name);
         } else {
-            dishesOrdersTotalLabels.push('Unavaialable');
+            dishesOrdersTotalLabels.splice(index, 1, 'Unavaialable');
         }
     }));
-    await Promise.all(dishesOrdersPriceIds.map(async (dishId) => {
+    dishesOrdersPriceLabels = new Array(dishesOrdersPriceIds.length);
+    await Promise.all(dishesOrdersPriceIds.map(async (dishId, index) => {
         const dishDoc = await fetchDishFirestoreAPI(restaurantId, dishId);
         if (dishDoc && dishDoc.data() && dishDoc.data().name) {
-            dishesOrdersPriceLabels.push(dishDoc.data().name);
+            dishesOrdersPriceLabels.splice(index, 1, dishDoc.data().name);
         } else {
-            dishesOrdersPriceLabels.push('Unavaialable');
+            dishesOrdersPriceLabels.splice(index, 1, 'Unavaialable');
         }
     }));
-    await Promise.all(dishesIds.map(async (dishId) => {
+    dishesLabels = new Array(dishesIds.length);
+    await Promise.all(dishesIds.map(async (dishId, index) => {
         const dishDoc = await fetchDishFirestoreAPI(restaurantId, dishId);
         if (dishDoc && dishDoc.data() && dishDoc.data().name) {
-            dishesLabels.push(dishDoc.data());
+            dishesLabels.splice(index, 1, dishDoc.data());
         } else {
-            dishesLabels.push({ name: 'Unavaialable', reference: null });
+            dishesLabels.splice(index, 1, { name: 'Unavaialable', reference: null });
         }
     }));
 

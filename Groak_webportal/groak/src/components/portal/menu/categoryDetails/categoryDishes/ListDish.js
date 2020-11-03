@@ -17,22 +17,22 @@ const ListDish = (props) => {
 
     return (
         <TableRow
-            className="dishes-list-view-row"
+            className="dish-item-list-view-row"
             onClick={dishDetailHandler}
         >
-            <TableCell style={{ minWidth: '200px' }} component="th" scope="row">
+            <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-twohundred" component="th" scope="row">
                 {dishItem.name}
             </TableCell>
-            <TableCell style={{ minWidth: '150px' }} align="center">
+            <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-hundredfifty" align="center">
                 {getPrice(dishItem.price)}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-hundredfifty" align="center">
                 <img className="dish-item-list-view-row-image" src={dishItem.image ? getImageLink(dishItem.image) : NoImage} alt={dishItem.name || 'Dish Image'} />
             </TableCell>
-            <TableCell align="center">
+            <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-fivehundred" align="center">
                 {dishItem.shortInfo}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-fifty" align="center">
                 <Checkbox
                     className="check-box"
                     icon={<CheckBoxOutlineBlank fontSize="large" />}

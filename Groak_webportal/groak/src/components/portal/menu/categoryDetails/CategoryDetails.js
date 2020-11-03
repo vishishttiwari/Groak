@@ -59,6 +59,7 @@ const initialState = {
     allDishes: [],
     allDishesMap: new Map(),
     loadingSpinner: true,
+    loadingSpinnerDishes: true,
 };
 
 function reducer(state, action) {
@@ -78,9 +79,11 @@ function reducer(state, action) {
         case 'setSelectedDishesPath':
             return { ...state, selectedDishesPath: action.selectedDishesPath };
         case 'setAllDishes':
-            return { ...state, allDishes: action.allDishes, allDishesMap: action.allDishesMap, loadingSpinner: false };
+            return { ...state, allDishes: action.allDishes, allDishesMap: action.allDishesMap, loadingSpinner: false, loadingSpinnerDishes: false };
         case 'setLoadingSpinner':
             return { ...state, loadingSpinner: action.loadingSpinner };
+        case 'setLoadingSpinnerDishes':
+            return { ...state, loadingSpinnerDishes: action.loadingSpinner };
         case 'fetchCategory':
             return { ...state,
                 name: action.name,
@@ -224,16 +227,19 @@ const CategoryDetails = (props) => {
     return (
         <div className="category-details">
             <Heading heading={state.newCategory || state.name.length === 0 ? 'Category Details' : state.name} />
-            <Spinner show={state.loadingSpinner} />
             {!state.loadingSpinner ? (
                 <form>
                     <CategoryTitle checkFields={state.checkFields} name={state.name} setState={setState} />
                     <CategoryDays days={state.days} startTime={state.startTime} endTime={state.endTime} setState={setState} />
-                    <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} refresh={refresh} />
-                    <CategoryUnselectedDishes selectedDishesPath={state.selectedDishesPath} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
+                    {!state.loadingSpinnerDishes ? (
+                        <>
+                            <CategorySelectedDishes selectedDishesPath={state.selectedDishesPath} allDishesMap={state.allDishesMap} checkDishHandler={checkDishHandler} changeDishPositionHandler={changeDishPositionHandler} refresh={refresh} />
+                            <CategoryUnselectedDishes selectedDishesPath={state.selectedDishesPath} allDishes={state.allDishes} checkDishHandler={checkDishHandler} />
+                        </>
+                    ) : <Spinner show={state.loadingSpinnerDishes} />}
                     <CategoryDetailsMainButtons goBackHandler={goBackHandler} submitHandler={submitHandler} newCategory={state.newCategory} deleteHandler={deleteHandler} />
                 </form>
-            ) : null}
+            ) : <Spinner show={state.loadingSpinner} />}
         </div>
     );
 };

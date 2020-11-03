@@ -105,7 +105,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
         advertisement: {
             position: 'absolute',
             right: 10,
-            bottom: 20,
+            top: 10,
             left: '80%',
         },
         advertisementImage: {
@@ -223,7 +223,7 @@ const QRPageStyles = (pageSize, pageBackgroundColor, font, textColor, includeTab
                 qrText: { ...styles.qrText, fontSize: 7 },
                 qrCode: { ...styles.qrCode, borderRadius: '5', marginBottom: 0, borderWidth: '1pt' },
                 qr: { ...styles.qr, marginBottom: 0 },
-                advertisement: { ...styles.advertisement, right: 5, bottom: 10 },
+                advertisement: { ...styles.advertisement, right: 5, top: 10 },
             };
             break;
         default:

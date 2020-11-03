@@ -26,7 +26,7 @@ exports.restaurantOrders = functions.firestore
 		const restaurant = db.collection('restaurants').doc(context.params.restaurantId).get()
 			.then((querySnapshot) => {
 				if (querySnapshot) {
-					const registrationTokens = querySnapshot.data().registrationTokens
+					const registrationTokens = querySnapshot.data().registrationTokens ? querySnapshot.data().registrationTokens : []
 					const smsNotificationRestaurant = querySnapshot.data().smsNotificationRestaurant
 					const timezone = querySnapshot.data().timezone ? querySnapshot.data().timezone : 'America/Los_Angeles'
 					const phoneNumbers = []
@@ -102,7 +102,6 @@ exports.restaurantOrders = functions.firestore
 									let dayValid = false;
 									phone.days.forEach((day) => {
 										if (day.day === getDay(timezone) && compareCurrentTimeToRange(day.startTime, day.endTime, timezone)) {
-											console.log('in');
 											dayValid = true;
 										}
 									})
@@ -164,7 +163,7 @@ exports.restaurantRequests = functions.firestore
 		const restaurant = db.collection('restaurants').doc(context.params.restaurantId).get()
 			.then((querySnapshot) => {
 				if (querySnapshot) {
-					const registrationTokens = querySnapshot.data().registrationTokens
+					const registrationTokens = querySnapshot.data().registrationTokens ? querySnapshot.data().registrationTokens : []
 					const smsNotificationRestaurant = querySnapshot.data().smsNotificationRestaurant
 					const timezone = querySnapshot.data().timezone ? querySnapshot.data().timezone : 'America/Los_Angeles'
 					const phoneNumbers = []
@@ -312,6 +311,9 @@ function sendNotification(title, body, orderId, category) {
 }
 
 function sendNotificationToDevices(title, body, category, registrationTokens) {
+	if (registrationTokens === null || registrationTokens === undefined || registrationTokens.length <= 0) {
+		return;
+	}
     let message = {
         data: {
             title,
@@ -377,7 +379,15 @@ function compareCurrentTimeToRange(startTime, endTime, timezone) {
 	const endDate = endTime.toDate();
 	const endDateMoment = moment(endDate);
 	endDateMoment.tz(timezone);
-	const endDateMinutesFromMidnight = endDateMoment.hours() * 60 + endDateMoment.minutes();
+	let endDateMinutesFromMidnight = endDateMoment.hours() * 60 + endDateMoment.minutes();
+	
+	if ((endDateMinutesFromMidnight - startDateMinutesFromMidnight) <= 1) {
+		return true;
+	}
+	
+	if (endDateMinutesFromMidnight <= startDateMinutesFromMidnight) {
+		endDateMinutesFromMidnight = endDateMinutesFromMidnight + 1440;
+	}
 	
 	return (currentDateMinutesFromMidnight >= startDateMinutesFromMidnight && currentDateMinutesFromMidnight <= endDateMinutesFromMidnight)
 }

@@ -144,13 +144,7 @@ export const getAbbreviatedDay = (day) => {
  */
 export const getMinutesFromMidnight = () => {
     const now = new Date();
-    const then = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        0, 0, 0,
-    );
-    return Math.floor((now.getTime() - then.getTime()) / (1000 * 60)); // difference in milliseconds
+    return now.getHours() * 60 + now.getMinutes();
 };
 
 /**

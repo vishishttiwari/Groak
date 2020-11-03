@@ -122,7 +122,7 @@ export const incrementCodeScannedWebFirestoreAPI = (restaurantId, tableId, qrCod
     });
 };
 
-export const restaurantFeedbackSubmitted = (restaurantId, foodRating, serverRating, message) => {
+export const restaurantFeedbackSubmitted = (restaurantId, foodRatingFromUser, serverRatingFromUser, message) => {
     const analyticsReference = createAnalyticsReference(restaurantId);
     return db.runTransaction(async (transaction) => {
         const analyticsDoc = await transaction.get(analyticsReference);
@@ -134,8 +134,8 @@ export const restaurantFeedbackSubmitted = (restaurantId, foodRating, serverRati
                 let newFoodRating = restaurant.foodRating ? restaurant.foodRating : 0;
                 let newServerRating = restaurant.serverRating ? restaurant.serverRating : 0;
                 let newTotalRatingEntries = restaurant.totalRatingEntries ? restaurant.totalRatingEntries : 0;
-                newFoodRating = ((newFoodRating * newTotalRatingEntries) + newFoodRating) / (newTotalRatingEntries + 1);
-                newServerRating = ((newServerRating * newTotalRatingEntries) + newServerRating) / (newTotalRatingEntries + 1);
+                newFoodRating = ((newFoodRating * newTotalRatingEntries) + foodRatingFromUser) / (newTotalRatingEntries + 1);
+                newServerRating = ((newServerRating * newTotalRatingEntries) + serverRatingFromUser) / (newTotalRatingEntries + 1);
 
                 newTotalRatingEntries += 1;
                 if (message && message.length > 0) {
@@ -150,8 +150,8 @@ export const restaurantFeedbackSubmitted = (restaurantId, foodRating, serverRati
             let newFoodRating = 0;
             let newServerRating = 0;
             let newTotalRatingEntries = 0;
-            newFoodRating = ((newFoodRating * newTotalRatingEntries) + newFoodRating) / (newTotalRatingEntries + 1);
-            newServerRating = ((newServerRating * newTotalRatingEntries) + newServerRating) / (newTotalRatingEntries + 1);
+            newFoodRating = ((newFoodRating * newTotalRatingEntries) + foodRatingFromUser) / (newTotalRatingEntries + 1);
+            newServerRating = ((newServerRating * newTotalRatingEntries) + serverRatingFromUser) / (newTotalRatingEntries + 1);
             newTotalRatingEntries += 1;
             if (message && message.length > 0) {
                 const newMessages = [];
@@ -178,9 +178,9 @@ export const restaurantFeedbackSubmitted = (restaurantId, foodRating, serverRati
         const newDishes = {};
         let newRestaurant = {};
         if (message && message.length > 0) {
-            newRestaurant = { foodRating, serverRating, totalRatingEntries: 1, messages: [{ message, created: getCurrentDateTime() }] };
+            newRestaurant = { foodRating: foodRatingFromUser, serverRating: serverRatingFromUser, totalRatingEntries: 1, messages: [{ message, created: getCurrentDateTime() }] };
         } else {
-            newRestaurant = { foodRating, serverRating, totalRatingEntries: 1, messages: [] };
+            newRestaurant = { foodRating: foodRatingFromUser, serverRating: serverRatingFromUser, totalRatingEntries: 1, messages: [] };
         }
         return transaction.set(createAnalyticsReference(restaurantId), {
             qrCodeScannedWeb: newQRCodeScannedWeb,

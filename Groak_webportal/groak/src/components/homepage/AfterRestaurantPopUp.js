@@ -142,7 +142,7 @@ const AfterRestaurantPopUp = (props) => {
                     </Typography>
                     <div className="pop-up-after-restaurant-actions-box-rating-and-text">
                         <Rating
-                            name="restaurant-rating"
+                            name="food-rating"
                             className="pop-up-after-restaurant-actions-box-rating"
                             value={state.foodRating}
                             defaultValue={5}
@@ -169,7 +169,7 @@ const AfterRestaurantPopUp = (props) => {
                     </Typography>
                     <div className="pop-up-after-restaurant-actions-box-rating-and-text">
                         <Rating
-                            name="restaurant-rating"
+                            name="server-rating"
                             className="pop-up-after-restaurant-actions-box-rating"
                             value={state.serverRating}
                             defaultValue={5}

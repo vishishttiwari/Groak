@@ -123,45 +123,140 @@ html {
             }
         }
 
-        .dish-item-list-view-row-cell-width-fifty {
-            min-width: 50px;
+        .dish-item-list-view-table {
+            margin: 20px auto;
         }
 
-        .dish-item-list-view-row-cell-width-hundred {
-            min-width: 100px;
-        }
-
-        .dish-item-list-view-row-cell-width-hundredfifty {
-            min-width: 150px;
-        }
-
-        .dish-item-list-view-row-cell-width-twohundred {
-            min-width: 200px;
-        }
-
-        .dish-item-list-view-row-cell-width-fivehundred {
-            min-width: 500px;
-        }
-
-        .dish-item-list-view-row-image {
-            width: 108px;
-            background-color: $secondaryColor;
-            height: 72px;
-            border-radius: 20px;
+        .dish-item-list-view-row-header {
             overflow-x: scroll;
-        }
 
-        .dish-item-list-view-row-buttons {
-            min-width: 100px;
-            display: 'flex';
-            flex-direction: 'column';
-            width: 100px;
-            
-            .dish-item-list-view-row-button {
+            @media (max-width: $phoneMaxWidth) {
+                display: none;
+            }
+
+            .dish-items-list-view-heading {
+                font-size: 20px;
+                font-weight: 500;
+
+                @media (max-width: $phoneMaxWidth) {
+                    border: none;
+                }
+            }
+        }
+        
+        .dish-item-list-view-row {
+            :hover {
+                cursor: pointer;
+            }
+
+            @media (max-width: $phoneMaxWidth) {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 20px auto;
+                border-style: solid;
+                border-width: 1px;
+                border-radius: 10px;
+                border-color: gray;
+                padding: 20px;
+                overflow: hidden;
+            }
+
+            .dish-item-list-view-row-cell {
+                @media (max-width: $phoneMaxWidth) {
+                    border: none;
+                }
+                
+            }
+
+            .dish-item-list-view-row-cell-width-fifty {
+                min-width: 50px;
+
+                @media (max-width: $phoneMaxWidth) {
+                    text-align: center;
+                    min-width: 200px;
+                    width: 100%;
+                }
+            }
+
+            .dish-item-list-view-row-cell-width-hundred {
                 min-width: 100px;
-                font-size: 12px;
-                margin: 5px auto;
-                height: '50px';
+
+                @media (max-width: $phoneMaxWidth) {
+                    text-align: center;
+                    min-width: 200px;
+                    width: 100%;
+                }
+            }
+
+            .dish-item-list-view-row-cell-width-hundredfifty {
+                min-width: 150px;
+
+                @media (max-width: $phoneMaxWidth) {
+                    font-size: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                    min-width: 200px;
+                    width: 100%;
+                }
+            }
+
+            .dish-item-list-view-row-cell-width-twohundred {
+                min-width: 200px;
+
+                @media (max-width: $phoneMaxWidth) {
+                    font-size: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                    min-width: 200px;
+                    width: 100%;
+                }
+            }
+
+            .dish-item-list-view-row-cell-width-fivehundred {
+                min-width: 500px;
+
+                @media (max-width: $phoneMaxWidth) {
+                    min-width: 200px;
+                    width: 100%;
+                }
+            }
+
+            .dish-item-list-view-row-image {
+                width: 108px;
+                background-color: $secondaryColor;
+                height: 72px;
+                border-radius: 20px;
+                overflow-x: scroll;
+
+                @media (max-width: $phoneMaxWidth) {
+                    width: 0;
+                    height: 0;
+                    display: none;
+                }
+            }
+
+            .dish-item-list-view-row-buttons {
+                min-width: 100px;
+                display: 'flex';
+                flex-direction: 'column';
+                width: 100px;
+                
+                .dish-item-list-view-row-button {
+                    min-width: 100px;
+                    font-size: 12px;
+                    margin: 5px auto;
+                    height: '50px';
+                }
+
+                .dish-item-list-view-row-button-non-save {
+                    @media (max-width: $phoneMaxWidth) {
+                        width: 0;
+                        height: 0;
+                        display: none;
+                    }
+                }
             }
         }
 

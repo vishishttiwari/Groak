@@ -390,20 +390,10 @@
   overflow-x: scroll;
 }
 
-.category-details form .category-dishes .dishes-list-view .dish-item-list-view-row :hover {
-  cursor: pointer;
-}
-
-.category-details form .category-dishes .dishes-list-view .dish-item-list-view-row-image {
-  width: 108px;
-  background-color: #F0F0F0;
-  height: 72px;
-  border-radius: 20px;
-}
-
-.category-details form .category-dishes .dishes-list-view .dish-items-list-view-heading {
-  font-size: 20px;
-  font-weight: 500;
+@media (max-width: 700px) {
+  .category-details form .category-dishes .dishes-list-view {
+    overflow: hidden;
+  }
 }
 
 .category-details form .category-details-main-buttons {

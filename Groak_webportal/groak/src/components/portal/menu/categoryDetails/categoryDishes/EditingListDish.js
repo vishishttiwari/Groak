@@ -16,8 +16,9 @@ import { getImageLink } from '../../../../../catalog/Others';
 import { DemoDishName, DemoDishPrice } from '../../../../../catalog/Demo';
 
 import Spinner from '../../../../ui/spinner/Spinner';
-import { InvalidDishPrice, NoDishTitle } from '../../../../../catalog/NotificationsComments';
+import { DishUpdated, InvalidDishPrice, NoDishTitle } from '../../../../../catalog/NotificationsComments';
 import { updateDishAPI } from '../../dishes/DishesAPICalls';
+import { updateDishFirestoreAPI } from '../../../../../firebase/FirestoreAPICalls/FirestoreAPICallsDishes';
 
 const initialState = {
     changed: false,
@@ -36,6 +37,8 @@ function reducer(state, action) {
             return { ...state, dishItem: { ...state.dishItem, name: action.name }, changed: true };
         case 'setPrice':
             return { ...state, dishItem: { ...state.dishItem, price: action.price }, changed: true };
+        case 'setAvailable':
+            return { ...state, dishItem: { ...state.dishItem, available: action.available } };
         case 'removeImage':
             return { ...state, image: { file: null, link: '' }, changed: true };
         case 'setImage':
@@ -79,6 +82,18 @@ const EditingListDish = (props) => {
         setState({ type: 'setChanged', changed: false });
     };
 
+    /**
+     * This function is passed into the dish component which is called everytime
+     * the available button is pressed
+     *
+     * @param {*} changedDish this is the dish for which availability is changed
+     */
+    const availableDishHandler = async (changedDish) => {
+        await updateDishFirestoreAPI(restaurantId, changedDish.id, { available: !changedDish.available });
+        setState({ type: 'setAvailable', available: !changedDish.available });
+        enqueueSnackbar(DishUpdated, { variant: 'success' });
+    };
+
     return (
         <>
             {!state.loadingSpinner ? (
@@ -88,7 +103,7 @@ const EditingListDish = (props) => {
                         dishDetailHandler(state.dishItem.id);
                     }}
                 >
-                    <TableCell className="dish-item-list-view-row-cell-width-twohundred" component="th" scope="row">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-twohundred" component="th" scope="row">
                         <TextField
                             title="Dish Name"
                             label="Dish Name"
@@ -108,7 +123,7 @@ const EditingListDish = (props) => {
                             }}
                         />
                     </TableCell>
-                    <TableCell className="dish-item-list-view-row-cell-width-twohundred" align="center">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-twohundred" align="center">
                         <TextField
                             title="Price"
                             label="Price"
@@ -129,10 +144,10 @@ const EditingListDish = (props) => {
                             }}
                         />
                     </TableCell>
-                    <TableCell className="dish-item-list-view-row-cell-width-hundredfifty" align="center">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-hundredfifty" align="center">
                         <img className="dish-item-list-view-row-image" src={state.image.link ? getImageLink(state.image.link) : NoImage} alt={state.name || 'Dish Image'} />
                     </TableCell>
-                    <TableCell className="dish-item-list-view-row-cell-width-fivehundred" align="center">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-fivehundred" align="center">
                         <TextField
                             rows="4"
                             title="Short Info"
@@ -152,7 +167,7 @@ const EditingListDish = (props) => {
                             }}
                         />
                     </TableCell>
-                    <TableCell className="dish-item-list-view-row-buttons dish-item-list-view-row-cell-width-hundred" align="center">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-buttons dish-item-list-view-row-cell-width-hundred" align="center">
                         <input
                             accept="image/*"
                             id={`icon-button-photo-${state.dishItem.id}`}
@@ -166,7 +181,7 @@ const EditingListDish = (props) => {
                         <label htmlFor={`icon-button-photo-${state.dishItem.id}`}>
                             <Button
                                 variant="contained"
-                                className="normal-buttons buttons dish-item-list-view-row-button"
+                                className="normal-buttons buttons dish-item-list-view-row-button dish-item-list-view-row-button-non-save"
                                 component="span"
                                 onClick={(event) => {
                                     event.stopPropagation();
@@ -177,7 +192,7 @@ const EditingListDish = (props) => {
                         </label>
                         <Button
                             variant="contained"
-                            className="normal-buttons buttons dish-item-list-view-row-button"
+                            className="normal-buttons buttons dish-item-list-view-row-button dish-item-list-view-row-button-non-save"
                             onClick={(event) => {
                                 event.stopPropagation();
                                 setState({ type: 'removeImage' });
@@ -187,8 +202,18 @@ const EditingListDish = (props) => {
                         </Button>
                         <Button
                             variant="contained"
+                            className={state.dishItem.available ? 'dish-item-list-view-row-button dish-item-list-view-row-button-save normal-buttons buttons' : 'dish-item-list-view-row-button dish-item-list-view-row-button-save cancel-buttons buttons'}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                availableDishHandler(state.dishItem);
+                            }}
+                        >
+                            {state.dishItem.available ? 'Available' : 'Unavailable'}
+                        </Button>
+                        <Button
+                            variant="contained"
                             style={{ minWidth: '100px', fontSize: '12px', margin: '5px auto' }}
-                            className="success-buttons buttons dish-item-list-view-row-button"
+                            className="success-buttons buttons dish-item-list-view-row-button dish-item-list-view-row-button-save"
                             disabled={!state.changed}
                             disableElevation
                             disableRipple
@@ -202,7 +227,7 @@ const EditingListDish = (props) => {
                             Save
                         </Button>
                     </TableCell>
-                    <TableCell className="dish-item-list-view-row-cell-width-fifty" align="center">
+                    <TableCell className="dish-item-list-view-row-cell dish-item-list-view-row-cell-width-fifty" align="center">
                         <Checkbox
                             className="check-box"
                             icon={<CheckBoxOutlineBlank fontSize="large" />}

@@ -69,9 +69,9 @@ const CategoryUnselectedDishes = (props) => {
             />
             <div className="dishes-list-view">
                 <Paper>
-                    <TableContainer>
-                        <Table size="small" aria-label="dishes table">
-                            <TableHead style={{ overflowX: 'scroll' }}>
+                    <TableContainer className="dish-item-list-view-table-container">
+                        <Table className="dish-item-list-view-table" size="small" aria-label="dishes table">
+                            <TableHead className="dish-item-list-view-row-header">
                                 <TableRow>
                                     <TableCell width="200px" className="dish-items-list-view-heading">Name</TableCell>
                                     <TableCell width="150px" className="dish-items-list-view-heading" align="center">Price</TableCell>

@@ -126,7 +126,7 @@ const Covid = (props) => {
                         >
                             <div className="ratings">
                                 <Rating
-                                    name="restaurant-rating"
+                                    name="food-rating"
                                     className="rating"
                                     value={state.foodRating}
                                     defaultValue={5}
@@ -148,7 +148,7 @@ const Covid = (props) => {
                         >
                             <div className="ratings">
                                 <Rating
-                                    name="restaurant-rating"
+                                    name="server-rating"
                                     className="rating"
                                     value={state.serverRating}
                                     defaultValue={5}

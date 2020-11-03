@@ -13,6 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
 import { context } from '../../../../../globalState/globalState';
@@ -32,6 +33,7 @@ const initialState = {
     popup: false,
     popupCategory: '',
     checkedDishes: [],
+    changeOrder: false,
 };
 
 function reducer(state, action) {
@@ -44,6 +46,8 @@ function reducer(state, action) {
             return { ...state, searchField: action.searchField };
         case 'setPopup':
             return { ...state, popup: action.popup, popupCategory: action.popupCategory };
+        case 'setChangeOrder':
+            return { ...state, changeOrder: action.changeOrder };
         default:
             return initialState;
     }
@@ -148,6 +152,15 @@ const CategorySelectedDishes = (props) => {
         setState({ type: 'setDeletePermission', deletePermission: false });
     };
 
+    /**
+     * This function is called when order toggle is pressed
+     *
+     * @param {*} checked
+     */
+    const orderToggle = (checked) => {
+        setState({ type: 'setChangeOrder', changeOrder: checked });
+    };
+
     return (
         <div className="category-dishes">
             <Decision open={state.deletePermission} response={userPermissionResponse} title={DeleteDishesPopUpTitle} content={DeleteDishesPopUp} />
@@ -246,11 +259,22 @@ const CategorySelectedDishes = (props) => {
                 restaurantId={globalState.restaurantIdPortal}
                 dishIds={state.checkedDishes}
             />
+            <div className="order-change-toggle">
+                <Switch
+                    checked={state.changeOrder}
+                    size="medium"
+                    onChange={(event) => { orderToggle(event.target.checked); }}
+                    name="changeOrder"
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                    color="primary"
+                />
+                <p className="toggle-label">Change Order</p>
+            </div>
             <div className="dishes-list-view">
                 <Paper>
-                    <TableContainer>
-                        <Table size="small" aria-label="dishes table">
-                            <TableHead style={{ overflowX: 'scroll' }}>
+                    <TableContainer className="dish-item-list-view-table-container">
+                        <Table className="dish-item-list-view-table" size="small" aria-label="dishes table">
+                            <TableHead className="dish-item-list-view-row-header">
                                 <TableRow>
                                     <TableCell width="200px" className="dish-items-list-view-heading">Name</TableCell>
                                     <TableCell width="200px" className="dish-items-list-view-heading" align="center">Price</TableCell>
@@ -267,7 +291,7 @@ const CategorySelectedDishes = (props) => {
                                         const dish = allDishesMap.get(dishPath);
                                         return (isDishVisible(dish)
                                             ? (
-                                                <SortableItem key={dish.id} index={index}>
+                                                <SortableItem key={dish.id} index={index} disabled={!state.changeOrder}>
                                                     <EditingListDish
                                                         key={dish.id}
                                                         restaurantId={globalState.restaurantIdPortal}

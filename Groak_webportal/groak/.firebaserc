@@ -7,6 +7,9 @@
       "hosting": {
         "groak-test": [
           "groak-test"
+        ],
+        "groak-1": [
+          "groak-1"
         ]
       }
     }
