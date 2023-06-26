@@ -1,4 +1,4 @@
-# Groak
+# Groak(<a href="https://groakapp.com/" target="_blank">https://groakapp.com/</a>)
 ## A whole new dine-in experience! ##
 
 Still waiting for the waiter to bring you a menu and take your order? Wait no more, Groak is here! Explore the menus directly from your phone and place an order with the touch of a single button. Discover the ingredients and nutritional content of each dish on the menu and dive into details if you’re a curious one! Love spicy food? Let your chefs know with the chat feature and customize your dish in the way you love. After savoring the dish, request to pay with a single click and save the receipt in your camera roll! Enjoy your favorite restaurants while maintaining social-distancing norms.
