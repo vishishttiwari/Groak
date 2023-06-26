@@ -7,16 +7,17 @@ As a restaurant, display a high-quality interactive menu and enable your custome
 
 ### Features: ###
 * <a href="https://groakapp.com/static/media/computer_1.8e7d30bf.png" target="_blank">Customizable QR Menu Creation</a>
-* Digital Menu Experience
-* Customize Digital Menu. Anytime, Anyplace, Anywhere!
-* Flexible Service Management
-* Best-in-class Table Management System
-* Automatic receipt generation
+* <a href="https://groakapp.com/static/media/phone_3_1.96b12ca2.png" target="_blank">Digital Menu Experience</a>
+* <a href="https://groakapp.com/static/media/computer_4_1.60619db1.png" target="_blank">Customize Digital Menu. Anytime, Anyplace, Anywhere!</a>
+* <a href="https://groakapp.com/static/media/computer_3_1.a2c7ba1f.png" target="_blank">Flexible Service Management</a>
+* <a href="https://groakapp.com/static/media/computer_2_1.90b9cbe2.png" target="_blank">Best-in-class Table Management System</a>
+* <a href="https://groakapp.com/static/media/phone_2_1.1330855c.png" target="_blank">Automatic receipt generation</a>
 
 <p align="center">
   <img src="https://groakapp.com/static/media/computer_1.8e7d30bf.png">
   <img src="https://groakapp.com/static/media/phone_3_1.96b12ca2.png">
   <img src="https://groakapp.com/static/media/computer_4_1.60619db1.png">
   <img src="https://groakapp.com/static/media/computer_3_1.a2c7ba1f.png">
+  <img src="https://groakapp.com/static/media/computer_2_1.90b9cbe2.png">
   <img src="https://groakapp.com/static/media/phone_2_1.1330855c.png">
 </p>
